@@ -6,11 +6,10 @@ from array import array
 
 class HistStack(object):    
     """draw stacked histogram"""
-    def __init__(self, dic_df, variable, weight_dic, weight, nbin, xl, xh, xtitle="DNN Score"):
+    def __init__(self, dic_df, variable, weight, nbin, xl, xh, xtitle="DNN Score"):
         self.dic_df = dic_df
         self.variable = variable
         self.weight = weight
-        self.weight_dic = weight_dic
         self.nbin = nbin
         self.xl = xl
         self.xh = xh
@@ -27,7 +26,7 @@ class HistStack(object):
             h = rt.TH1D("", "",  self.nbin, self.xl, self.xh)
             h.Sumw2()
             for i, v in enumerate(df[self.variable]): 
-                h.Fill(v, self.weight_dic[k][self.weight].iat[i])
+                h.Fill(v, df[self.weight].iat[i])
             # overflow
             h.SetBinContent(h.GetNbinsX(),h.GetBinContent(h.GetNbinsX())+h.GetBinContent(h.GetNbinsX()+1))
             self.hist_all[k]=h
