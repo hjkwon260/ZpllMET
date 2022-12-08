@@ -17,7 +17,7 @@ TEST:
         - echo $PATH
         - echo $LD_LIBRARY_PATH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-        - ls
+        - ls ee
         - kdestroy
 
 
