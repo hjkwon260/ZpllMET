@@ -1,6 +1,6 @@
 variables: #blah#blah
     #INPUT_DIR: 20220215/ #20220131/
-    INPUT_DIR: /eos/user/h/hkwon/Run2/20221122_16pre_zpeak/ee/
+    INPUT_DIR: Run2/20221122_16pre_zpeak/ee/
 
 stages:
     - test
@@ -16,7 +16,7 @@ TEST:
         - type -a xrdcp
         - echo $PATH
         - echo $LD_LIBRARY_PATH
-        - xrdcp -r ${INPUT_DIR} .  2>/dev/null
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - ls
         - kdestroy
 
