@@ -2,5 +2,5 @@ stages:
     - test
 TEST:
     stage: test
-    scripts:
+    script:
         - cat /proc/meminfo
