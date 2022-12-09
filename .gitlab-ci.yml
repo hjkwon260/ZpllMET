@@ -25,7 +25,7 @@ TEST:
         - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python Zpeak_v1-dev.ipynb
-        - python Zpeak_v1-dev.py ee18 20221208 ${CI_PROJECT_DIR}/ee
+        - python Zpeak_v1-dev.py ee18 20221208 ${CI_PROJECT_DIR}/ee/
 
 
 
