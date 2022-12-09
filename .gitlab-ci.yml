@@ -1,6 +1,6 @@
 variables: #blah#blah
     #INPUT_DIR: 20220215/ #20220131/
-    INPUT_DIR: Run2/20221122_16pre_zpeak/ee/
+    INPUT_DIR: Run2/20221208_18_zpeak/ee/
 
 stages:
     - test
@@ -8,6 +8,10 @@ TEST:
     stage: test
     tags:
         - cvmfs
+    artifacts:
+        paths:
+            - 20221208/
+        expire_in: 10 min
     script:
         - cat /proc/meminfo
         - export PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin:$PATH"
@@ -19,5 +23,10 @@ TEST:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - ls ee
         - kdestroy
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+        - jupyter nbconvert --to python Zpeak_v1-dev.ipynb
+        - python Zpeak_v1-dev.py ee18 20221208 ${CI_PROJECT_DIR}/ee
+
+
 
 
