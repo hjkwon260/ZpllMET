@@ -228,8 +228,8 @@ mm18:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221122_18_zpeak/mm/
-        DATE: 20221122
+        INPUT_DIR: Run2/20221209_18_zpeak/mm/
+        DATE: 20221209
         ERA: mm18
         CHANNEL: mm/    
     artifacts:
@@ -252,8 +252,8 @@ ee18:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221122_18_zpeak/ee/
-        DATE: 20221122
+        INPUT_DIR: Run2/20221209_18_zpeak/ee/
+        DATE: 20221209
         ERA: ee18
         CHANNEL: ee/    
     artifacts:
@@ -276,8 +276,8 @@ em18:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221122_18_zpeak/em/
-        DATE: 20221122
+        INPUT_DIR: Run2/20221209_18_zpeak/em/
+        DATE: 20221209
         ERA: em18
         CHANNEL: em/    
     artifacts:
