@@ -1,19 +1,19 @@
 # variables: #blah#blah
 #     #INPUT_DIR: 20220215/ #20220131/
-#     INPUT_DIR: Run2/20221122_17_zpeak/ee/
-#     DATE: 20221122
+#     INPUT_DIR: Run2/20221225_17/ee/
+#     DATE: 20221225
 #     ERA: ee17
 
 stages:
-    - zpeak
+    - presel
 
 mm16pre:
-    stage: zpeak
+    stage: presel
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221122_16pre_zpeak/mm/
-        DATE: 20221122
+        INPUT_DIR: Run2/20221225_16pre/mm/
+        DATE: 20221225
         ERA: mm16pre
         CHANNEL: mm/    
     artifacts:
@@ -28,16 +28,16 @@ mm16pre:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Zpeak_v1-dev.ipynb
-        - python Zpeak_v1-dev.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
+        - jupyter nbconvert --to python Preselection_v2.ipynb
+        - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
 
 ee16pre:
-    stage: zpeak
+    stage: presel
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221122_16pre_zpeak/ee/
-        DATE: 20221122
+        INPUT_DIR: Run2/20221225_16pre/ee/
+        DATE: 20221225
         ERA: ee16pre
         CHANNEL: ee/    
     artifacts:
@@ -52,16 +52,16 @@ ee16pre:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Zpeak_v1-dev.ipynb
-        - python Zpeak_v1-dev.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
+        - jupyter nbconvert --to python Preselection_v2.ipynb
+        - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
 
 em16pre:
-    stage: zpeak
+    stage: presel
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221122_16pre_zpeak/em/
-        DATE: 20221122
+        INPUT_DIR: Run2/20221225_16pre/em/
+        DATE: 20221225
         ERA: em16pre
         CHANNEL: em/    
     artifacts:
@@ -76,16 +76,16 @@ em16pre:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Zpeak_v1-dev.ipynb
-        - python Zpeak_v1-dev.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}        
+        - jupyter nbconvert --to python Preselection_v2.ipynb
+        - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}        
 
 mm16post:
-    stage: zpeak
+    stage: presel
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221122_16post_zpeak/mm/
-        DATE: 20221122
+        INPUT_DIR: Run2/20221225_16post/mm/
+        DATE: 20221225
         ERA: mm16post
         CHANNEL: mm/    
     artifacts:
@@ -100,16 +100,16 @@ mm16post:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Zpeak_v1-dev.ipynb
-        - python Zpeak_v1-dev.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}   
+        - jupyter nbconvert --to python Preselection_v2.ipynb
+        - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}   
 
 ee16post:
-    stage: zpeak
+    stage: presel
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221122_16post_zpeak/ee/
-        DATE: 20221122
+        INPUT_DIR: Run2/20221225_16post/ee/
+        DATE: 20221225
         ERA: ee16post
         CHANNEL: ee/    
     artifacts:
@@ -124,16 +124,16 @@ ee16post:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Zpeak_v1-dev.ipynb
-        - python Zpeak_v1-dev.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
+        - jupyter nbconvert --to python Preselection_v2.ipynb
+        - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
 
 em16post:
-    stage: zpeak
+    stage: presel
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221122_16post_zpeak/em/
-        DATE: 20221122
+        INPUT_DIR: Run2/20221225_16post/em/
+        DATE: 20221225
         ERA: em16post
         CHANNEL: em/    
     artifacts:
@@ -148,16 +148,16 @@ em16post:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Zpeak_v1-dev.ipynb
-        - python Zpeak_v1-dev.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}          
+        - jupyter nbconvert --to python Preselection_v2.ipynb
+        - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}          
 
 mm17:
-    stage: zpeak
+    stage: presel
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221122_17_zpeak/mm/
-        DATE: 20221122
+        INPUT_DIR: Run2/20221225_17/mm/
+        DATE: 20221225
         ERA: mm17
         CHANNEL: mm/    
     artifacts:
@@ -172,16 +172,16 @@ mm17:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Zpeak_v1-dev.ipynb
-        - python Zpeak_v1-dev.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}    
+        - jupyter nbconvert --to python Preselection_v2.ipynb
+        - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}    
 
 ee17:
-    stage: zpeak
+    stage: presel
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221122_17_zpeak/ee/
-        DATE: 20221122
+        INPUT_DIR: Run2/20221225_17/ee/
+        DATE: 20221225
         ERA: ee17
         CHANNEL: ee/    
     artifacts:
@@ -196,16 +196,16 @@ ee17:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Zpeak_v1-dev.ipynb
-        - python Zpeak_v1-dev.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}    
+        - jupyter nbconvert --to python Preselection_v2.ipynb
+        - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}    
 
 em17:
-    stage: zpeak
+    stage: presel
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221122_17_zpeak/em/
-        DATE: 20221122
+        INPUT_DIR: Run2/20221225_17/em/
+        DATE: 20221225
         ERA: em17
         CHANNEL: em/    
     artifacts:
@@ -220,15 +220,15 @@ em17:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Zpeak_v1-dev.ipynb
-        - python Zpeak_v1-dev.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
+        - jupyter nbconvert --to python Preselection_v2.ipynb
+        - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
 
 mm18:
-    stage: zpeak
+    stage: presel
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221212_18_zpeak/mm/
+        INPUT_DIR: Run2/20221212_18/mm/
         DATE: 20221212
         ERA: mm18
         CHANNEL: mm/    
@@ -244,15 +244,15 @@ mm18:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Zpeak_v1-dev.ipynb
-        - python Zpeak_v1-dev.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}     
+        - jupyter nbconvert --to python Preselection_v2.ipynb
+        - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}     
 
 ee18:
-    stage: zpeak
+    stage: presel
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221212_18_zpeak/ee/
+        INPUT_DIR: Run2/20221212_18/ee/
         DATE: 20221212
         ERA: ee18
         CHANNEL: ee/    
@@ -268,15 +268,15 @@ ee18:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Zpeak_v1-dev.ipynb
-        - python Zpeak_v1-dev.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
+        - jupyter nbconvert --to python Preselection_v2.ipynb
+        - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
 
 em18:
-    stage: zpeak
+    stage: presel
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221212_18_zpeak/em/
+        INPUT_DIR: Run2/20221212_18/em/
         DATE: 20221212
         ERA: em18
         CHANNEL: em/    
@@ -292,5 +292,5 @@ em18:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Zpeak_v1-dev.ipynb
-        - python Zpeak_v1-dev.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}                                   
+        - jupyter nbconvert --to python Preselection_v2.ipynb
+        - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}                                   
