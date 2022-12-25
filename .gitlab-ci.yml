@@ -77,10 +77,11 @@ em16pre:
         - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-        - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python Preselection_v2.ipynb
         - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}        
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy 
 
 mm16post:
     stage: presel
@@ -101,10 +102,11 @@ mm16post:
         - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-        - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python Preselection_v2.ipynb
         - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}   
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy 
 
 ee16post:
     stage: presel
@@ -125,10 +127,11 @@ ee16post:
         - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-        - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python Preselection_v2.ipynb
         - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy 
 
 em16post:
     stage: presel
@@ -149,10 +152,11 @@ em16post:
         - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-        - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python Preselection_v2.ipynb
         - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}          
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy 
 
 mm17:
     stage: presel
@@ -173,10 +177,11 @@ mm17:
         - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-        - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python Preselection_v2.ipynb
         - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}    
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy 
 
 ee17:
     stage: presel
@@ -197,10 +202,11 @@ ee17:
         - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-        - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python Preselection_v2.ipynb
         - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}    
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy 
 
 em17:
     stage: presel
@@ -221,10 +227,11 @@ em17:
         - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-        - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python Preselection_v2.ipynb
         - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy 
 
 mm18:
     stage: presel
@@ -245,10 +252,11 @@ mm18:
         - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-        - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python Preselection_v2.ipynb
         - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}     
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy 
 
 ee18:
     stage: presel
@@ -269,10 +277,11 @@ ee18:
         - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-        - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python Preselection_v2.ipynb
         - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy 
 
 em18:
     stage: presel
@@ -293,7 +302,8 @@ em18:
         - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-        - kdestroy
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python Preselection_v2.ipynb
-        - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}                                   
+        - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}   
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy                                         
