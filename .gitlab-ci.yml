@@ -3,6 +3,12 @@
 #     INPUT_DIR: Run2/20221225_17/ee/
 #     DATE: 20221225
 #     ERA: ee17
+# include:
+#   - local: run.yml
+before_script:
+    - cat /proc/meminfo
+    - export PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin:$PATH"
+    - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
 
 stages:
     - presel
@@ -21,9 +27,6 @@ mm16pre:
             - ${DATE}/
         expire_in: 10 min            
     script:
-        - cat /proc/meminfo
-        - export PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin:$PATH"
-        - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
@@ -47,9 +50,6 @@ ee16pre:
             - ${DATE}/
         expire_in: 10 min            
     script:
-        - cat /proc/meminfo
-        - export PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin:$PATH"
-        - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
@@ -72,9 +72,6 @@ em16pre:
             - ${DATE}/
         expire_in: 10 min            
     script:
-        - cat /proc/meminfo
-        - export PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin:$PATH"
-        - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
@@ -97,9 +94,6 @@ mm16post:
             - ${DATE}/
         expire_in: 10 min            
     script:
-        - cat /proc/meminfo
-        - export PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin:$PATH"
-        - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
@@ -122,9 +116,6 @@ ee16post:
             - ${DATE}/
         expire_in: 10 min            
     script:
-        - cat /proc/meminfo
-        - export PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin:$PATH"
-        - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
@@ -147,9 +138,6 @@ em16post:
             - ${DATE}/
         expire_in: 10 min            
     script:
-        - cat /proc/meminfo
-        - export PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin:$PATH"
-        - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
@@ -172,9 +160,6 @@ mm17:
             - ${DATE}/
         expire_in: 10 min            
     script:
-        - cat /proc/meminfo
-        - export PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin:$PATH"
-        - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
@@ -197,9 +182,6 @@ ee17:
             - ${DATE}/
         expire_in: 10 min            
     script:
-        - cat /proc/meminfo
-        - export PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin:$PATH"
-        - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
@@ -222,9 +204,6 @@ em17:
             - ${DATE}/
         expire_in: 10 min            
     script:
-        - cat /proc/meminfo
-        - export PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin:$PATH"
-        - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
@@ -247,9 +226,6 @@ mm18:
             - ${DATE}/
         expire_in: 10 min            
     script:
-        - cat /proc/meminfo
-        - export PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin:$PATH"
-        - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
@@ -272,9 +248,6 @@ ee18:
             - ${DATE}/
         expire_in: 10 min            
     script:
-        - cat /proc/meminfo
-        - export PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin:$PATH"
-        - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
@@ -297,9 +270,6 @@ em18:
             - ${DATE}/
         expire_in: 10 min            
     script:
-        - cat /proc/meminfo
-        - export PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin:$PATH"
-        - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
