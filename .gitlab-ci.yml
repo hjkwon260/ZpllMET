@@ -18,13 +18,15 @@ mm16pre:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221225_16pre/mm/
-        DATE: 20221225
+        INPUT_DIR: Run2/20220110_16pre/mm/
+        DATE: 20220110
         ERA: mm16pre
         CHANNEL: mm/    
     artifacts:
         paths:
             - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
@@ -33,21 +35,22 @@ mm16pre:
         - jupyter nbconvert --to python Preselection_v2.ipynb
         - python Preselection_v2.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-        - kdestroy        
-
+        - kdestroy    
 
 ee16pre:
     stage: presel
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221225_16pre/ee/
-        DATE: 20221225
+        INPUT_DIR: Run2/20220110_16pre/ee/
+        DATE: 20220110
         ERA: ee16pre
         CHANNEL: ee/    
     artifacts:
         paths:
             - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl            
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
@@ -63,13 +66,15 @@ em16pre:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221225_16pre/em/
-        DATE: 20221225
+        INPUT_DIR: Run2/20220110_16pre/em/
+        DATE: 20220110
         ERA: em16pre
         CHANNEL: em/    
     artifacts:
         paths:
             - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
@@ -85,13 +90,15 @@ mm16post:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221225_16post/mm/
-        DATE: 20221225
+        INPUT_DIR: Run2/20220110_16post/mm/
+        DATE: 20220110
         ERA: mm16post
         CHANNEL: mm/    
     artifacts:
         paths:
             - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
@@ -107,13 +114,15 @@ ee16post:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221225_16post/ee/
-        DATE: 20221225
+        INPUT_DIR: Run2/20220110_16post/ee/
+        DATE: 20220110
         ERA: ee16post
         CHANNEL: ee/    
     artifacts:
         paths:
             - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
@@ -129,13 +138,15 @@ em16post:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221225_16post/em/
-        DATE: 20221225
+        INPUT_DIR: Run2/20220110_16post/em/
+        DATE: 20220110
         ERA: em16post
         CHANNEL: em/    
     artifacts:
         paths:
             - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
@@ -151,13 +162,15 @@ mm17:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221225_17/mm/
-        DATE: 20221225
+        INPUT_DIR: Run2/20220110_17/mm/
+        DATE: 20220110
         ERA: mm17
         CHANNEL: mm/    
     artifacts:
         paths:
             - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
@@ -173,13 +186,15 @@ ee17:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221225_17/ee/
-        DATE: 20221225
+        INPUT_DIR: Run2/20220110_17/ee/
+        DATE: 20220110
         ERA: ee17
         CHANNEL: ee/    
     artifacts:
         paths:
             - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
@@ -195,13 +210,15 @@ em17:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221225_17/em/
-        DATE: 20221225
+        INPUT_DIR: Run2/20220110_17/em/
+        DATE: 20220110
         ERA: em17
         CHANNEL: em/    
     artifacts:
         paths:
             - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
@@ -217,13 +234,15 @@ mm18:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221225_18/mm/
-        DATE: 20221225
+        INPUT_DIR: Run2/20220110_18/mm/
+        DATE: 20220110
         ERA: mm18
         CHANNEL: mm/    
     artifacts:
         paths:
             - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
@@ -239,13 +258,15 @@ ee18:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221225_18/ee/
-        DATE: 20221225
+        INPUT_DIR: Run2/20220110_18/ee/
+        DATE: 20220110
         ERA: ee18
         CHANNEL: ee/    
     artifacts:
         paths:
             - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
@@ -261,13 +282,15 @@ em18:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20221225_18/em/
-        DATE: 20221225
+        INPUT_DIR: Run2/20220110_18/em/
+        DATE: 20220110
         ERA: em18
         CHANNEL: em/    
     artifacts:
         paths:
             - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
