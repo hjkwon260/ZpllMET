@@ -18,8 +18,8 @@ mm16pre:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20220110_16pre/mm/
-        DATE: 20220110
+        INPUT_DIR: Run2/20230110_16pre/mm/
+        DATE: 20230110
         ERA: mm16pre
         CHANNEL: mm/    
     artifacts:
@@ -42,8 +42,8 @@ ee16pre:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20220110_16pre/ee/
-        DATE: 20220110
+        INPUT_DIR: Run2/20230110_16pre/ee/
+        DATE: 20230110
         ERA: ee16pre
         CHANNEL: ee/    
     artifacts:
@@ -66,8 +66,8 @@ em16pre:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20220110_16pre/em/
-        DATE: 20220110
+        INPUT_DIR: Run2/20230110_16pre/em/
+        DATE: 20230110
         ERA: em16pre
         CHANNEL: em/    
     artifacts:
@@ -90,8 +90,8 @@ mm16post:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20220110_16post/mm/
-        DATE: 20220110
+        INPUT_DIR: Run2/20230110_16post/mm/
+        DATE: 20230110
         ERA: mm16post
         CHANNEL: mm/    
     artifacts:
@@ -114,8 +114,8 @@ ee16post:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20220110_16post/ee/
-        DATE: 20220110
+        INPUT_DIR: Run2/20230110_16post/ee/
+        DATE: 20230110
         ERA: ee16post
         CHANNEL: ee/    
     artifacts:
@@ -138,8 +138,8 @@ em16post:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20220110_16post/em/
-        DATE: 20220110
+        INPUT_DIR: Run2/20230110_16post/em/
+        DATE: 20230110
         ERA: em16post
         CHANNEL: em/    
     artifacts:
@@ -162,8 +162,8 @@ mm17:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20220110_17/mm/
-        DATE: 20220110
+        INPUT_DIR: Run2/20230110_17/mm/
+        DATE: 20230110
         ERA: mm17
         CHANNEL: mm/    
     artifacts:
@@ -186,8 +186,8 @@ ee17:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20220110_17/ee/
-        DATE: 20220110
+        INPUT_DIR: Run2/20230110_17/ee/
+        DATE: 20230110
         ERA: ee17
         CHANNEL: ee/    
     artifacts:
@@ -210,8 +210,8 @@ em17:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20220110_17/em/
-        DATE: 20220110
+        INPUT_DIR: Run2/20230110_17/em/
+        DATE: 20230110
         ERA: em17
         CHANNEL: em/    
     artifacts:
@@ -234,8 +234,8 @@ mm18:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20220110_18/mm/
-        DATE: 20220110
+        INPUT_DIR: Run2/20230110_18/mm/
+        DATE: 20230110
         ERA: mm18
         CHANNEL: mm/    
     artifacts:
@@ -258,8 +258,8 @@ ee18:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20220110_18/ee/
-        DATE: 20220110
+        INPUT_DIR: Run2/20230110_18/ee/
+        DATE: 20230110
         ERA: ee18
         CHANNEL: ee/    
     artifacts:
@@ -282,8 +282,8 @@ em18:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20220110_18/em/
-        DATE: 20220110
+        INPUT_DIR: Run2/20230110_18/em/
+        DATE: 20230110
         ERA: em18
         CHANNEL: em/    
     artifacts:
