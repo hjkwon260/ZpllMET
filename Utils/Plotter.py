@@ -5,8 +5,8 @@ import math
 from array import array
 
 class HistStack(object):    
-    """draw stacked histogram"""
-    def __init__(self, dic_df, variable, weight, nbin, xl, xh, xtitle="DNN Score"):
+    """draw stacked histogram"""    
+    def __init__(self, dic_df, variable, weight, nbin, xl, xh, xtitle="DNN Score", dic_sys=None):
         self.dic_df = dic_df
         self.variable = variable
         self.weight = weight
@@ -19,7 +19,8 @@ class HistStack(object):
         self.xtitle= xtitle
         self.option = ""
         self.str_sig = ""
-        self.yeilds={}        
+        self.yeilds={}
+        self.dic_sys=dic_sys       
 
     def get_dic_hist(self):
         for k, df in self.dic_df.items():
@@ -116,34 +117,90 @@ class HistStack(object):
             str_lumi="59.83"
         return str_channel, str_lumi
 
-    def get_stat_err(self):
-        # dependency: self.h_bkg in draw_hist()
-        x_cen,y_cen,stat_u,stat_d,stat_u_ratio,stat_d_ratio=([] for i in range(6))
+    def get_stat_sys_err(self):
+        '''
+            dependency: self.h_bkg in draw_hist()
+            return: list of TGraphAsymmErrors, legends. 0: stat, 1: stat+s, ...
+                sumi(si^2/n^2)/(tot/n)
+        '''  
         
+        list_graphs = []
+        list_legends = []
+        
+        xl=np.ones(self.nbin)*self.h_bkg.GetBinWidth(1)/2          
+        xh=np.ones(self.nbin)*self.h_bkg.GetBinWidth(1)/2            
+        
+        x_cen, y_cen, stat_unc = ([] for i in range(3))
         for i in range(self.nbin):
             x_cen.append(self.h_bkg.GetXaxis().GetBinCenter(i+1))
             y_cen.append(self.h_bkg.GetBinContent(i+1))
-            stat_u.append(self.h_bkg.GetBinError(i+1))
-            stat_d.append(self.h_bkg.GetBinError(i+1))
-            if self.h_bkg.GetBinContent(i+1)!=0:
-                stat_u_ratio.append(self.h_bkg.GetBinError(i+1)/self.h_bkg.GetBinContent(i+1))
-                stat_d_ratio.append(self.h_bkg.GetBinError(i+1)/self.h_bkg.GetBinContent(i+1))
-            else:
-                stat_u_ratio.append(0)
-                stat_d_ratio.append(0)                
-        xl=np.ones(self.nbin)*self.h_bkg.GetBinWidth(1)/2          
-        xh=np.ones(self.nbin)*self.h_bkg.GetBinWidth(1)/2                  
-        gberr = rt.TGraphAsymmErrors(self.nbin, np.array(x_cen), np.array(y_cen), xl, xh, np.array(stat_u), np.array(stat_d))
-        gberr_ratio = rt.TGraphAsymmErrors(self.nbin, np.array(x_cen), np.ones(self.nbin), xl, xh, np.array(stat_u_ratio), np.array(stat_d_ratio))
+            stat_unc.append(self.h_bkg.GetBinError(i+1))
+        gberr = rt.TGraphAsymmErrors(self.nbin, np.array(x_cen), np.array(y_cen), xl, xh, np.array(stat_unc), np.array(stat_unc))
         gberr.SetLineWidth(0)
         gberr.SetLineColor(0)        
         gberr.SetFillColor(14)
         gberr.SetFillStyle(3001) 
-        gberr_ratio.SetLineWidth(0)
-        gberr_ratio.SetLineColor(0)        
-        gberr_ratio.SetFillColor(14)
-        gberr_ratio.SetFillStyle(3001)       
-        return gberr, gberr_ratio
+        
+        stat_unc2 = np.array(stat_unc)*np.array(stat_unc)       
+ 
+        n = np.array(y_cen)
+        stat_rel = np.divide(stat_unc2, n*n, out=np.zeros(n.shape, dtype=float), where=n!=0)
+
+
+        if self.dic_sys:
+
+            totsys_up = np.sqrt(self.dic_sys['sum_up']*self.dic_sys['sum_up'] + stat_unc2)
+            totsys_down = np.sqrt(self.dic_sys['sum_down']*self.dic_sys['sum_down'] + stat_unc2)
+            
+            totsys_up = np.divide(totsys_up, n, out=np.zeros(n.shape, dtype=float), where=n!=0)
+            totsys_down = np.divide(totsys_down, n, out=np.zeros(n.shape, dtype=float), where=n!=0)
+
+            sys_comb_up = stat_rel.copy()
+            sys_comb_down = stat_rel.copy()
+
+            sys_up = np.divide(sys_comb_up, totsys_up, out=np.zeros(totsys_up.shape, dtype=float), where=totsys_up!=0)
+            sys_down = np.divide(sys_comb_down, totsys_down, out=np.zeros(totsys_down.shape, dtype=float), where=totsys_down!=0)
+
+            gerr = rt.TGraphAsymmErrors(self.nbin, np.array(x_cen), np.ones(self.nbin), xl, xh, sys_down, sys_up)
+            gerr.SetLineWidth(0)
+            gerr.SetLineColor(0)        
+            gerr.SetFillColor(14)
+            gerr.SetFillStyle(3001)
+            list_graphs.append(gerr)
+            list_legends.append('MC stat')              
+        
+            sys_list = [] 
+            for s in self.dic_sys:
+                if "Up" in s:
+                    sys_list.append(s.rstrip("Up"))
+                    
+            for i, s in enumerate(sys_list):
+                a = self.dic_sys[s+'Up'].copy()
+                a = np.divide(a, n*n, out=np.zeros(a.shape, dtype=float), where=n!=0)
+                sys_comb_up += a
+                sys_up = np.divide(sys_comb_up, totsys_up, out=np.zeros(totsys_up.shape, dtype=float), where=totsys_up!=0)
+                b = self.dic_sys[s+'Down'].copy()
+                b = np.divide(b, n*n, out=np.zeros(b.shape, dtype=float), where=n!=0)
+                sys_comb_down += b
+                sys_down = np.divide(sys_comb_down, totsys_down, out=np.zeros(totsys_down.shape, dtype=float), where=totsys_down!=0)
+                
+                gerr = rt.TGraphAsymmErrors(self.nbin, np.array(x_cen), np.ones(self.nbin), xl, xh, sys_up, sys_down) # flipped since MC is denominator
+                gerr.SetLineWidth(0)
+                gerr.SetLineColor(0)        
+                gerr.SetFillColor(i+3)
+                gerr.SetFillStyle(3001)
+                list_graphs.append(gerr)
+                list_legends.append(str(s))     
+        else:
+            sqrt_stat_rel = np.sqrt(stat_rel)
+            gerr = rt.TGraphAsymmErrors(self.nbin, np.array(x_cen), np.ones(self.nbin), xl, xh, sqrt_stat_rel, sqrt_stat_rel)
+            gerr.SetLineWidth(0)
+            gerr.SetLineColor(0)        
+            gerr.SetFillColor(14)
+            gerr.SetFillStyle(3001) 
+            list_graphs.append(gerr)
+            list_legends.append('MC stat')
+        return gberr, list_graphs, list_legends
     
     def draw_hist(self, sig_key, era, file_name, is_dnn=False):
         c1 = rt.TCanvas("c1","",800,800)
@@ -189,7 +246,7 @@ class HistStack(object):
         h_data.Draw("same EP")
         h_data.SetMarkerStyle(8)
         
-        gberr, gberr_ratio=self.get_stat_err()
+        gberr, list_graphs, list_legends = self.get_stat_sys_err()
         gberr.Draw("E2 same")    
         
         # draw sig
@@ -226,12 +283,22 @@ class HistStack(object):
             h_ratio = self.get_ratio(sig_key)
         else:    
             h_ratio = self.get_ratio("Data")
-        
-        h_ratio.Draw()        
-        gberr_ratio.Draw("E2 same")
-        
+        h_ratio.Draw()
+
         l2 = self.set_legend(0.75, 0.9, 0.92, 0.99)
-        l2.AddEntry(gberr_ratio, "MC stat. err.", "f")
+        
+        # sys
+        if self.dic_sys:
+            for i in reversed(range(len(list_graphs)-1)):
+                list_graphs[i+1].Draw("E2 same")
+                l2.AddEntry(list_graphs[i+1], list_legends[i+1], "f")                
+        
+        # stat
+        list_graphs[0].Draw("E2 same")
+        l2.AddEntry(list_graphs[0], list_legends[0], "f")
+            
+        h_ratio.Draw("same")        
+        
         l2.Draw()      
         c1.SaveAs(file_name+"_"+self.variable+".pdf")
         if not is_dnn:
@@ -314,130 +381,6 @@ class HistStack(object):
         l.Draw()    
         cpie.SaveAs(file_name+"yeilds"+self.variable+"_"+self.option+'.pdf')
         cpie.SaveAs(file_name+"yeilds"+self.variable+"_"+self.option+'.png')    
-    
-    def get_yeilds_table(self, ):
-        with open('yields_table_'+self.str_sig+'.txt', 'a') as yf:
-            #bkgs
-            dic_merged=self.get_merged_hist()
-            yf.write(r"\begin{landscape}"+"\n")
-            div=2
-            nbin=16
-            for i in range(div):
-                binning="DNN score bin & "
-                ntab="|c|"            
-                for nb in range(int(nbin/div)):
-#                     print(i*int(nbin/2))
-                    ntab+="c|"
-                    binning+=str(round(dic_merged["TT"].GetBinLowEdge(i*int(nbin/div)+nb+1+4),2))+"-"+str(round(dic_merged["TT"].GetBinLowEdge(i*int(nbin/div)+nb+2+4),2))
-                    if nb==int(nbin/div)-1:
-                        binning+=" \\\\ \hline"
-                    else:
-                        binning+=" & "
-                
-                yf.write(r"\begin{table}[htbp]"+"\n")
-                yf.write(r"\centering"+"\n")
-                yf.write(r"\caption{Background samples used in the analysis.}"+"\n")
-                yf.write(r"\label{tab:bkg_samples}"+"\n")                        
-                yf.write(r"\begin{tabular}{"+ntab+r"} \hline"+"\n")
-                yf.write(binning+"\n")
-                for key in reversed(dic_merged):
-                    yeilds=key+" & "
-                    for nb in range(int(nbin/div)):
-#                         yeilds+=str(round(dic_merged[key].GetBinContent(i*int(nbin/div)+nb+1+4),1))+"$\pm$"+str(round(dic_merged[key].GetBinError(i*int(nbin/div)+nb+1+4),1))
-                        yeilds+=str(round(dic_merged[key].GetBinContent(i*int(nbin/div)+nb+1+4),2))
-                        if nb==int(nbin/div)-1:
-                            yeilds+=" \\\\ "
-                        else:
-                            yeilds+=" & "
-                    yf.write(yeilds)
-                #bkg sum
-                yf.write("\hline\n")
-                yeilds="Total Bkgs & "
-                for nb in range(int(nbin/div)):
-#                     yeilds+=str(round(self.h_bkg.GetBinContent(i*int(nbin/div)+nb+1+4),1))+"$\pm$"+str(round(self.h_bkg.GetBinError(i*int(nbin/div)+nb+1+4),1))
-                    yeilds+=str(round(self.h_bkg.GetBinContent(i*int(nbin/div)+nb+1+4),2))
-                    if nb==int(nbin/div)-1:
-                        yeilds+=" \\\\ "
-                    else:
-                        yeilds+=" & "
-                yf.write(yeilds+"\n")
-                #sigs
-                yf.write("\hline\n")
-                for key2 in self.hist_all:
-                    if "Zp-" in key2:
-                        yeilds=self.str_sig+" & "
-                        for nb in range(int(nbin/div)):
-#                             yeilds+=str(round(self.hist_all[key2].GetBinContent(i*int(nbin/div)+nb+1+4),1))+"$\pm$"+str(round(self.hist_all[key2].GetBinError(i*int(nbin/div)+nb+1+4),1))
-                            yeilds+=str(round(self.hist_all[key2].GetBinContent(i*int(nbin/div)+nb+1+4),2))
-                            if nb==int(nbin/div)-1:
-                                yeilds+=" \\\\ \hline"
-                            else:
-                                yeilds+=" & "
-                        yf.write(yeilds+"\n")
-                yf.write(r"\end{tabular}"+"\n")
-                yf.write(r"\end{table}"+"\n")
-            yf.write(r"\end{landscape}"+"\n")
-            
-    def get_yeilds_table_syst(self, sys_tot_u, sys_tot_d, channel):
-        with open('./Outputs/'+channel+'/yields_table_width_syst_'+self.str_sig+'.txt', 'a') as yf:
-            #bkgs
-            dic_merged=self.get_merged_hist()
-            div=4
-            nbin=16
-            yf.write(r"\begin{table}[htbp]"+"\n")
-            yf.write(r"\centering"+"\n")
-            yf.write(r"\caption{Background samples used in the analysis.}"+"\n")
-            yf.write(r"\label{tab:bkg_samples}"+"\n") 
-            for i in range(div):
-                binning="DNN score bin & "
-                ntab="|c|"            
-                for nb in range(int(nbin/div)):
-#                     print(i*int(nbin/2))
-                    ntab+="c|"
-                    binning+=str(round(dic_merged["TT"].GetBinLowEdge(i*int(nbin/div)+nb+1+4),2))+"-"+str(round(dic_merged["TT"].GetBinLowEdge(i*int(nbin/div)+nb+2+4),2))
-                    if nb==int(nbin/div)-1:
-                        binning+=" \\\\ \hline"
-                    else:
-                        binning+=" & "
-                                       
-                yf.write(r"\begin{tabular}{"+ntab+r"} \hline"+"\n")
-                yf.write(binning+"\n")
-                for key in reversed(dic_merged):
-                    yeilds=key+" & "
-                    for nb in range(int(nbin/div)):
-                        yeilds+="$"+str(int(dic_merged[key].GetBinContent(i*int(nbin/div)+nb+1+4)))+"\pm"+str(int(rt.sqrt(dic_merged[key].GetBinContent(i*int(nbin/div)+nb+1+4))))+"^{+"+str(int(sys_tot_u[key][i*int(nbin/div)+nb+4]))+"}_{-"+str(int(sys_tot_d[key][i*int(nbin/div)+nb+4]))+"}$"
-#                         yeilds+=str(round(dic_merged[key].GetBinContent(i*int(nbin/div)+nb+1+4),2))
-                        if nb==int(nbin/div)-1:
-                            yeilds+=" \\\\ "
-                        else:
-                            yeilds+=" & "
-                    yf.write(yeilds)
-                #bkg sum
-                yf.write("\hline\n")
-                yeilds="Total Bkgs & "
-                for nb in range(int(nbin/div)):
-#                     yeilds+=str(round(self.h_bkg.GetBinContent(i*int(nbin/div)+nb+1+4),1))+"$\pm$"+str(round(self.h_bkg.GetBinError(i*int(nbin/div)+nb+1+4),1))
-                    yeilds+="$"+str(int(self.h_bkg.GetBinContent(i*int(nbin/div)+nb+1+4)))+"\pm"+str(int(rt.sqrt(self.h_bkg.GetBinContent(i*int(nbin/div)+nb+1+4))))+"^{+"+str(int(sys_tot_u["bkg"][i*int(nbin/div)+nb+4]))+"}_{-"+str(int(sys_tot_d["bkg"][i*int(nbin/div)+nb+4]))+"}$"
-                    if nb==int(nbin/div)-1:
-                        yeilds+=" \\\\ "
-                    else:
-                        yeilds+=" & "
-                yf.write(yeilds+"\n")
-                #sigs
-                yf.write("\hline\n")
-                for key2 in self.hist_all:
-                    if "Zp-" in key2:
-                        yeilds="$"+self.str_sig.replace("#", "\\")+"$ & "
-                        for nb in range(int(nbin/div)):
-#                             yeilds+=str(round(self.hist_all[key2].GetBinContent(i*int(nbin/div)+nb+1+4),1))+"$\pm$"+str(round(self.hist_all[key2].GetBinError(i*int(nbin/div)+nb+1+4),1))
-                            yeilds+="$"+str(int(self.hist_all[key2].GetBinContent(i*int(nbin/div)+nb+1+4)))+"\pm"+str(int(rt.sqrt(self.hist_all[key2].GetBinContent(i*int(nbin/div)+nb+1+4))))+"^{+"+str(int(sys_tot_u[key2][i*int(nbin/div)+nb+4]))+"}_{-"+str(int(sys_tot_d[key2][i*int(nbin/div)+nb+4]))+"}$"
-                            if nb==int(nbin/div)-1:
-                                yeilds+=" \\\\ \hline"
-                            else:
-                                yeilds+=" & "
-                        yf.write(yeilds+"\n")
-                yf.write(r"\end{tabular}"+"\n")
-            yf.write(r"\end{table}"+"\n")
             
     def create_root_file(self, sig_key, nclass, channel):
         f = rt.TFile("./Outputs/"+channel+"/shape_"+sig_key+"_"+str(nclass)+".root","RECREATE")

@@ -1,5 +1,6 @@
 from IPython.display import Audio
 from IPython.core.display import display
+import numpy as np
 
 def beep():
     sr = 22050 # sample rate
