@@ -41,9 +41,13 @@ class HistStack(object):
                     h_tw.Add(hist_all[key])
                 else:
                     h_tw=hist_all[key].Clone("")
-            if key=="DY":
+            if "DY" in key:
+                if 'h_dy' in locals():
+                    h_dy.Add(hist_all[key])
+                else:
                     h_dy=hist_all[key].Clone("")
-            if key=="TT" or key=="TTSemi":
+            #if key=="TT" or key=="TTSemi":
+            if key=="TT":
                 if 'h_tt' in locals():
                     h_tt.Add(hist_all[key])
                 else:
@@ -54,10 +58,11 @@ class HistStack(object):
         self.merged_hist['WW']=hist_all["WW"].Clone("")
         if 'h_tw' in locals():
             self.merged_hist['TW']=h_tw
+        self.merged_hist['TTSemi']=hist_all["TTSemi"].Clone("")               
         if 'h_tt' in locals():
             self.merged_hist['TT']=h_tt 
         if 'h_dy' in locals():
-            self.merged_hist['DY']=h_dy   
+            self.merged_hist['DY']=h_dy               
         return self.merged_hist
     
     def set_pad(self, loc, xl, yl, xh, yh):
@@ -202,7 +207,7 @@ class HistStack(object):
             list_legends.append('MC stat')
         return gberr, list_graphs, list_legends
     
-    def draw_hist(self, sig_key, era, file_name, is_dnn=False):
+    def draw_hist(self, sig_key, era, file_name, blind_from=1):
         c1 = rt.TCanvas("c1","",800,800)
         c1.cd()
         p1 = self.set_pad("top", 0, 0.3, 1, 1)
@@ -224,10 +229,10 @@ class HistStack(object):
         self.h_bkg = h_bkg        
         hstack.Draw("pfc hist")
         hstack.SetMaximum(hstack.GetMaximum()*5000) # cannot use SetRangeUser 
-        if is_dnn:
-            hstack.SetMinimum(self.hist_all["Zp-2500_CH-345"].GetMaximum()*0.01)
-        else:
-            hstack.SetMinimum(self.hist_all["Zp-3700_CH-1095"].GetMaximum()*0.01)        
+#         if is_dnn:
+#             hstack.SetMinimum(self.hist_all["Zp-2500_CH-345"].GetMaximum()*0.01)
+#         else:
+        hstack.SetMinimum(self.hist_all["Zp-3700_CH-1095"].GetMaximum()*0.01)        
         hstack.GetYaxis().SetTitle("Events")
         hstack.GetXaxis().SetTitle("DNN score")
         hstack.GetYaxis().SetTitleSize(0.06)
@@ -238,10 +243,10 @@ class HistStack(object):
             
         # draw data
         h_data=self.hist_all["Data"].Clone("")
-        if is_dnn: # blind
+        if blind_from!=1: # blind
             for i in range(self.nbin):
-                # blind threshold: 0.25
-                if i > self.nbin/4:
+                threshold = self.nbin*blind_from
+                if i > threshold:
                     h_data.SetBinContent(i+1, 1e15)
         h_data.Draw("same EP")
         h_data.SetMarkerStyle(8)
@@ -250,7 +255,8 @@ class HistStack(object):
         gberr.Draw("E2 same")    
         
         # draw sig
-        if is_dnn:
+#         if is_dnn:
+        if self.variable=='score':
             sig_keys = [sig_key]
         else:
             sig_keys = ["Zp-2500_CH-345", "Zp-3700_CH-345", "Zp-3700_CH-1095"]
@@ -279,7 +285,7 @@ class HistStack(object):
         p2.Draw()
         p2.cd()    
         
-        if is_dnn:
+        if self.variable=='score':
             h_ratio = self.get_ratio(sig_key)
         else:    
             h_ratio = self.get_ratio("Data")
@@ -296,13 +302,18 @@ class HistStack(object):
         # stat
         list_graphs[0].Draw("E2 same")
         l2.AddEntry(list_graphs[0], list_legends[0], "f")
-            
+        
+        if blind_from!=1: # blind
+            for i in range(self.nbin):
+                threshold = self.nbin*blind_from
+                if i > threshold:
+                    h_ratio.SetBinContent(i+1, 1e15)        
         h_ratio.Draw("same")        
         
         l2.Draw()      
         c1.SaveAs(file_name+"_"+self.variable+".pdf")
-        if not is_dnn:
-            c1.SaveAs(file_name+"_"+self.variable+".png")
+#         if not is_dnn:
+#             c1.SaveAs(file_name+"_"+self.variable+".png")
         return c1     
 
     def get_yeilds(self):
