@@ -328,4 +328,56 @@ eval mm16pre:
         - jupyter nbconvert --to python Evaluate-v2.ipynb
         - python Evaluate-v2.py
         # - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-        - kdestroy                                                
+        - kdestroy     
+
+eval ee16pre:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16pre/
+        DATE: ${DATE1}
+        ERA: ee16pre
+        CHANNEL: ee/ 
+    needs:
+        - job: ee16pre        
+    artifacts:
+        paths:
+            - Outputs/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR}/*.pkl .  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+        - jupyter nbconvert --to python Evaluate-v2.ipynb
+        - python Evaluate-v2.py
+        # - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy 
+
+eval mm17:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm17/
+        DATE: ${DATE1}
+        ERA: mm17
+        CHANNEL: ee/ 
+    needs:
+        - job: mm17        
+    artifacts:
+        paths:
+            - Outputs/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR}/*.pkl .  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+        - jupyter nbconvert --to python Evaluate-v2.ipynb
+        - python Evaluate-v2.py
+        # - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy                                                             
