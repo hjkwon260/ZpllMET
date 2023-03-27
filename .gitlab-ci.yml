@@ -45,8 +45,8 @@ ee16pre:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/${DATE}_16pre/ee/
-        DATE: ${DATE}
+        INPUT_DIR: Run2/${DATE1}_16pre/ee/
+        DATE: ${DATE1}
         ERA: ee16pre
         CHANNEL: ee/    
     artifacts:
@@ -69,8 +69,8 @@ em16pre:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/${DATE}_16pre/em/
-        DATE: ${DATE}
+        INPUT_DIR: Run2/${DATE1}_16pre/em/
+        DATE: ${DATE1}
         ERA: em16pre
         CHANNEL: em/    
     artifacts:
@@ -93,8 +93,8 @@ mm16post:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/${DATE}_16post/mm/
-        DATE: ${DATE}
+        INPUT_DIR: Run2/${DATE1}_16post/mm/
+        DATE: ${DATE1}
         ERA: mm16post
         CHANNEL: mm/    
     artifacts:
@@ -117,8 +117,8 @@ ee16post:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/${DATE}_16post/ee/
-        DATE: ${DATE}
+        INPUT_DIR: Run2/${DATE1}_16post/ee/
+        DATE: ${DATE1}
         ERA: ee16post
         CHANNEL: ee/    
     artifacts:
@@ -141,8 +141,8 @@ em16post:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/${DATE}_16post/em/
-        DATE: ${DATE}
+        INPUT_DIR: Run2/${DATE1}_16post/em/
+        DATE: ${DATE1}
         ERA: em16post
         CHANNEL: em/    
     artifacts:
@@ -165,8 +165,8 @@ mm17:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/${DATE}_17/mm/
-        DATE: ${DATE}
+        INPUT_DIR: Run2/${DATE1}_17/mm/
+        DATE: ${DATE1}
         ERA: mm17
         CHANNEL: mm/    
     artifacts:
@@ -189,8 +189,8 @@ ee17:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/${DATE}_17/ee/
-        DATE: ${DATE}
+        INPUT_DIR: Run2/${DATE1}_17/ee/
+        DATE: ${DATE1}
         ERA: ee17
         CHANNEL: ee/    
     artifacts:
@@ -213,8 +213,8 @@ em17:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/${DATE}_17/em/
-        DATE: ${DATE}
+        INPUT_DIR: Run2/${DATE1}_17/em/
+        DATE: ${DATE1}
         ERA: em17
         CHANNEL: em/    
     artifacts:
@@ -237,8 +237,8 @@ mm18:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/${DATE}_18/mm/
-        DATE: ${DATE}
+        INPUT_DIR: Run2/${DATE1}_18/mm/
+        DATE: ${DATE1}
         ERA: mm18
         CHANNEL: mm/    
     artifacts:
@@ -261,8 +261,8 @@ ee18:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/${DATE}_18/ee/
-        DATE: ${DATE}
+        INPUT_DIR: Run2/${DATE1}_18/ee/
+        DATE: ${DATE1}
         ERA: ee18
         CHANNEL: ee/    
     artifacts:
@@ -285,8 +285,8 @@ em18:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/${DATE}_18/em/
-        DATE: ${DATE}
+        INPUT_DIR: Run2/${DATE1}_18/em/
+        DATE: ${DATE1}
         ERA: em18
         CHANNEL: em/    
     artifacts:
@@ -309,8 +309,8 @@ eval mm16pre:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/Preselection/${DATE}/Presel/mm16pre/
-        DATE: ${DATE}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm16pre/
+        DATE: ${DATE1}
         ERA: mm16pre
         CHANNEL: mm/ 
     needs:
