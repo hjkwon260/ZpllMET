@@ -1,5 +1,5 @@
 variables:
-    DATE: 20230301
+    DATE1: 20230301
 #     #INPUT_DIR: 20220215/ #20220131/
 #     INPUT_DIR: Run2/20221225_17/ee/
 #     DATE: 20221225
@@ -20,8 +20,8 @@ mm16pre:
     tags:
         - cvmfs
     variables:
-        DATE: ${DATE}
-        INPUT_DIR: Run2/${DATE}_16pre/mm/
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_16pre/mm/
         ERA: mm16pre
         CHANNEL: mm/    
     artifacts:
