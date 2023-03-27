@@ -285,7 +285,7 @@ class HistStack(object):
         p2.Draw()
         p2.cd()    
         
-        if self.variable=='score':
+        if self.variable=="score" and blind_from!=1:
             h_ratio = self.get_ratio(sig_key)
         else:    
             h_ratio = self.get_ratio("Data")
@@ -296,7 +296,8 @@ class HistStack(object):
         # sys
         if self.dic_sys:
             for i in reversed(range(len(list_graphs)-1)):
-                list_graphs[i+1].Draw("E2 same")
+                gr = list_graphs[i+1].Clone("")
+                gr.Draw("E2 same")
                 l2.AddEntry(list_graphs[i+1], list_legends[i+1], "f")                
         
         # stat
@@ -311,9 +312,35 @@ class HistStack(object):
         h_ratio.Draw("same")        
         
         l2.Draw()      
-        c1.SaveAs(file_name+"_"+self.variable+".pdf")
+        c1.SaveAs(file_name+"_"+self.variable+"breakdown.pdf")
 #         if not is_dnn:
 #             c1.SaveAs(file_name+"_"+self.variable+".png")
+
+        p2.cd()
+        p2.Clear()
+        p2.Draw()
+        h_ratio.Draw()
+        l3 = self.set_legend(0.75, 0.9, 0.92, 0.99)
+        
+        # sys
+        if self.dic_sys:
+            for i in reversed(range(len(list_graphs)-1)):
+                gr = list_graphs[i+1].Clone("")
+                gr.Draw("E2 same")                
+                gr.SetFillColor(3)
+            l3.AddEntry(list_graphs[1], "tot. sys.", "f")
+        # stat
+        list_graphs[0].Draw("E2 same")
+        l3.AddEntry(list_graphs[0], list_legends[0], "f")
+        
+        if blind_from!=1: # blind
+            for i in range(self.nbin):
+                threshold = self.nbin*blind_from
+                if i > threshold:
+                    h_ratio.SetBinContent(i+1, 1e15)        
+        h_ratio.Draw("same")        
+        l3.Draw("same")
+        c1.SaveAs(file_name+"_"+self.variable+".pdf")                
         return c1     
 
     def get_yeilds(self):

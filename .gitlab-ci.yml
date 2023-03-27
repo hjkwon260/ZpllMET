@@ -1,4 +1,5 @@
-# variables: #blah#blah
+variables:
+    DATE: 20230301
 #     #INPUT_DIR: 20220215/ #20220131/
 #     INPUT_DIR: Run2/20221225_17/ee/
 #     DATE: 20221225
@@ -12,14 +13,15 @@ before_script:
 
 stages:
     - presel
+    - evaluate
 
 mm16pre:
     stage: presel
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20230301_16pre/mm/
-        DATE: 20230301
+        INPUT_DIR: Run2/${DATE}_16pre/mm/
+        DATE: ${DATE}
         ERA: mm16pre
         CHANNEL: mm/    
     artifacts:
@@ -42,8 +44,8 @@ ee16pre:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20230301_16pre/ee/
-        DATE: 20230301
+        INPUT_DIR: Run2/${DATE}_16pre/ee/
+        DATE: ${DATE}
         ERA: ee16pre
         CHANNEL: ee/    
     artifacts:
@@ -66,8 +68,8 @@ em16pre:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20230301_16pre/em/
-        DATE: 20230301
+        INPUT_DIR: Run2/${DATE}_16pre/em/
+        DATE: ${DATE}
         ERA: em16pre
         CHANNEL: em/    
     artifacts:
@@ -90,8 +92,8 @@ mm16post:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20230301_16post/mm/
-        DATE: 20230301
+        INPUT_DIR: Run2/${DATE}_16post/mm/
+        DATE: ${DATE}
         ERA: mm16post
         CHANNEL: mm/    
     artifacts:
@@ -114,8 +116,8 @@ ee16post:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20230301_16post/ee/
-        DATE: 20230301
+        INPUT_DIR: Run2/${DATE}_16post/ee/
+        DATE: ${DATE}
         ERA: ee16post
         CHANNEL: ee/    
     artifacts:
@@ -138,8 +140,8 @@ em16post:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20230301_16post/em/
-        DATE: 20230301
+        INPUT_DIR: Run2/${DATE}_16post/em/
+        DATE: ${DATE}
         ERA: em16post
         CHANNEL: em/    
     artifacts:
@@ -162,8 +164,8 @@ mm17:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20230301_17/mm/
-        DATE: 20230301
+        INPUT_DIR: Run2/${DATE}_17/mm/
+        DATE: ${DATE}
         ERA: mm17
         CHANNEL: mm/    
     artifacts:
@@ -186,8 +188,8 @@ ee17:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20230301_17/ee/
-        DATE: 20230301
+        INPUT_DIR: Run2/${DATE}_17/ee/
+        DATE: ${DATE}
         ERA: ee17
         CHANNEL: ee/    
     artifacts:
@@ -210,8 +212,8 @@ em17:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20230301_17/em/
-        DATE: 20230301
+        INPUT_DIR: Run2/${DATE}_17/em/
+        DATE: ${DATE}
         ERA: em17
         CHANNEL: em/    
     artifacts:
@@ -234,8 +236,8 @@ mm18:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20230301_18/mm/
-        DATE: 20230301
+        INPUT_DIR: Run2/${DATE}_18/mm/
+        DATE: ${DATE}
         ERA: mm18
         CHANNEL: mm/    
     artifacts:
@@ -258,8 +260,8 @@ ee18:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20230301_18/ee/
-        DATE: 20230301
+        INPUT_DIR: Run2/${DATE}_18/ee/
+        DATE: ${DATE}
         ERA: ee18
         CHANNEL: ee/    
     artifacts:
@@ -282,8 +284,8 @@ em18:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/20230301_18/em/
-        DATE: 20230301
+        INPUT_DIR: Run2/${DATE}_18/em/
+        DATE: ${DATE}
         ERA: em18
         CHANNEL: em/    
     artifacts:
@@ -299,4 +301,30 @@ em18:
         - jupyter nbconvert --to python Preselection_v3.ipynb
         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}   
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-        - kdestroy                                         
+        - kdestroy  
+
+eval mm16pre:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/Preselection/${DATE}/Presel/mm16pre/
+        DATE: ${DATE}
+        ERA: mm16pre
+        CHANNEL: mm/ 
+    needs:
+        - job: mm16pre        
+    artifacts:
+        paths:
+            - Outputs/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR}/*.pkl .  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+        - jupyter nbconvert --to python Evaluate-v2.ipynb
+        - python Evaluate-v2.py
+        # - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy                                                
