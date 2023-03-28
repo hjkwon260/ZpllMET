@@ -12,297 +12,297 @@ before_script:
     - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
 
 stages:
-    # - presel
+    - presel
     - evaluate
 
-# mm16pre:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_16pre/mm/
-#         ERA: mm16pre
-#         CHANNEL: mm/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${DATE}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python Preselection_v3.ipynb
-#         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy    
+mm16pre:
+    stage: presel
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_16pre/mm/
+        ERA: mm16pre
+        CHANNEL: mm/    
+    artifacts:
+        paths:
+            - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - echo ${DATE}
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy    
 
-# ee16pre:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_16pre/ee/
-#         DATE: ${DATE1}
-#         ERA: ee16pre
-#         CHANNEL: ee/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl            
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python Preselection_v3.ipynb
-#         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy 
-        
-# em16pre:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_16pre/em/
-#         DATE: ${DATE1}
-#         ERA: em16pre
-#         CHANNEL: em/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python Preselection_v3.ipynb
-#         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}        
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy 
+ee16pre:
+    stage: presel
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/${DATE1}_16pre/ee/
+        DATE: ${DATE1}
+        ERA: ee16pre
+        CHANNEL: ee/    
+    artifacts:
+        paths:
+            - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl            
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy 
+      
+em16pre:
+    stage: presel
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/${DATE1}_16pre/em/
+        DATE: ${DATE1}
+        ERA: em16pre
+        CHANNEL: em/    
+    artifacts:
+        paths:
+            - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}        
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy 
 
-# mm16post:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_16post/mm/
-#         DATE: ${DATE1}
-#         ERA: mm16post
-#         CHANNEL: mm/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python Preselection_v3.ipynb
-#         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}   
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy 
+mm16post:
+    stage: presel
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/${DATE1}_16post/mm/
+        DATE: ${DATE1}
+        ERA: mm16post
+        CHANNEL: mm/    
+    artifacts:
+        paths:
+            - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}   
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy 
 
-# ee16post:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_16post/ee/
-#         DATE: ${DATE1}
-#         ERA: ee16post
-#         CHANNEL: ee/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python Preselection_v3.ipynb
-#         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy 
+ee16post:
+    stage: presel
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/${DATE1}_16post/ee/
+        DATE: ${DATE1}
+        ERA: ee16post
+        CHANNEL: ee/    
+    artifacts:
+        paths:
+            - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy 
 
-# em16post:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_16post/em/
-#         DATE: ${DATE1}
-#         ERA: em16post
-#         CHANNEL: em/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python Preselection_v3.ipynb
-#         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}          
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy 
+em16post:
+    stage: presel
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/${DATE1}_16post/em/
+        DATE: ${DATE1}
+        ERA: em16post
+        CHANNEL: em/    
+    artifacts:
+        paths:
+            - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}          
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy 
 
-# mm17:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_17/mm/
-#         DATE: ${DATE1}
-#         ERA: mm17
-#         CHANNEL: mm/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python Preselection_v3.ipynb
-#         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}    
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy 
+mm17:
+    stage: presel
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/${DATE1}_17/mm/
+        DATE: ${DATE1}
+        ERA: mm17
+        CHANNEL: mm/    
+    artifacts:
+        paths:
+            - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}    
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy 
 
-# ee17:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_17/ee/
-#         DATE: ${DATE1}
-#         ERA: ee17
-#         CHANNEL: ee/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python Preselection_v3.ipynb
-#         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}    
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy 
+ee17:
+    stage: presel
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/${DATE1}_17/ee/
+        DATE: ${DATE1}
+        ERA: ee17
+        CHANNEL: ee/    
+    artifacts:
+        paths:
+            - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}    
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy 
 
-# em17:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_17/em/
-#         DATE: ${DATE1}
-#         ERA: em17
-#         CHANNEL: em/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python Preselection_v3.ipynb
-#         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy 
+em17:
+    stage: presel
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/${DATE1}_17/em/
+        DATE: ${DATE1}
+        ERA: em17
+        CHANNEL: em/    
+    artifacts:
+        paths:
+            - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy 
 
-# mm18:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_18/mm/
-#         DATE: ${DATE1}
-#         ERA: mm18
-#         CHANNEL: mm/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python Preselection_v3.ipynb
-#         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}     
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy 
+mm18:
+    stage: presel
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/${DATE1}_18/mm/
+        DATE: ${DATE1}
+        ERA: mm18
+        CHANNEL: mm/    
+    artifacts:
+        paths:
+            - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}     
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy 
 
-# ee18:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_18/ee/
-#         DATE: ${DATE1}
-#         ERA: ee18
-#         CHANNEL: ee/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python Preselection_v3.ipynb
-#         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy 
+ee18:
+    stage: presel
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/${DATE1}_18/ee/
+        DATE: ${DATE1}
+        ERA: ee18
+        CHANNEL: ee/    
+    artifacts:
+        paths:
+            - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy 
 
-# em18:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_18/em/
-#         DATE: ${DATE1}
-#         ERA: em18
-#         CHANNEL: em/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python Preselection_v3.ipynb
-#         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}   
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy  
+em18:
+    stage: presel
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/${DATE1}_18/em/
+        DATE: ${DATE1}
+        ERA: em18
+        CHANNEL: em/    
+    artifacts:
+        paths:
+            - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}   
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - kdestroy  
 
 # eval mm16pre:
 #     stage: evaluate
@@ -365,8 +365,8 @@ eval mm17:
         DATE: ${DATE1}
         ERA: mm17
         CHANNEL: ee/ 
-    # needs:
-    #     - job: mm17        
+    needs:
+        - job: mm17        
     artifacts:
         paths:
             - Outputs/
