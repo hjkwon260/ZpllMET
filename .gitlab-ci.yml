@@ -328,7 +328,7 @@ eval ee16post:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} SR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
 
 eval mm16post:
@@ -355,7 +355,7 @@ eval mm16post:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} SR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy                                                             
 
 eval em16post:
@@ -382,7 +382,7 @@ eval em16post:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} SR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy   
 
 eval ee16pre:
@@ -409,7 +409,7 @@ eval ee16pre:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} SR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
 
 eval mm16pre:
@@ -436,7 +436,7 @@ eval mm16pre:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} SR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy                                                             
 
 eval em16pre:
@@ -463,7 +463,7 @@ eval em16pre:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} SR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
 eval ee17:
@@ -490,7 +490,7 @@ eval ee17:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} SR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
 
 eval mm17:
@@ -517,7 +517,7 @@ eval mm17:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} SR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy                                                             
 
 eval em17:
@@ -544,7 +544,7 @@ eval em17:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} SR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
 
 eval ee18:
@@ -571,7 +571,7 @@ eval ee18:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} SR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
 
 eval mm18:
@@ -598,7 +598,7 @@ eval mm18:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} SR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy                                                             
 
 eval em18:
@@ -625,7 +625,7 @@ eval em18:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} SR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy    
 
 eval2 ee16post:
@@ -652,7 +652,7 @@ eval2 ee16post:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} VR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
 
 eval2 mm16post:
@@ -679,7 +679,7 @@ eval2 mm16post:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} VR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy                                                             
 
 eval2 em16post:
@@ -706,7 +706,7 @@ eval2 em16post:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} VR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy   
 
 eval2 ee16pre:
@@ -733,7 +733,7 @@ eval2 ee16pre:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} VR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
 
 eval2 mm16pre:
@@ -760,7 +760,7 @@ eval2 mm16pre:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} VR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy                                                             
 
 eval2 em16pre:
@@ -787,7 +787,7 @@ eval2 em16pre:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} VR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
 eval2 ee17:
@@ -814,7 +814,7 @@ eval2 ee17:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} VR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
 
 eval2 mm17:
@@ -841,7 +841,7 @@ eval2 mm17:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} VR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy                                                             
 
 eval2 em17:
@@ -868,7 +868,7 @@ eval2 em17:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} VR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
 
 eval2 ee18:
@@ -895,7 +895,7 @@ eval2 ee18:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} VR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
 
 eval2 mm18:
@@ -922,7 +922,7 @@ eval2 mm18:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} VR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy                                                             
 
 eval2 em18:
@@ -949,5 +949,5 @@ eval2 em18:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python EvaluatePNN-v1.ipynb
         - python EvaluatePNN-v1.py ${ERA} VR
-        - xrdcp -r Outputs/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy               
