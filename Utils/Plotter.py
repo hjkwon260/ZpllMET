@@ -422,23 +422,21 @@ class HistStack(object):
         cpie.SaveAs(file_name+"yeilds"+self.variable+"_"+self.option+'.pdf')
         cpie.SaveAs(file_name+"yeilds"+self.variable+"_"+self.option+'.png')    
             
-    def create_root_file(self, sig_key, nclass, channel):
-        f = rt.TFile("./Outputs/"+channel+"/shape_"+sig_key+"_"+str(nclass)+".root","RECREATE")
+    def create_root_file(self, file_name):
+        f = rt.TFile(file_name+"_v1.root","RECREATE")
         subdir = f.mkdir("signal_region");
         subdir.cd()
         self.hist_all["Data"].SetName("data_obs")
         self.hist_all["Data"].SetTitle("data_obs")
-        self.hist_all["Data"].Write("data_obs",rt.TObject.kWriteDelete)
-#         self.h_bkg.SetName("data_obs")
-#         self.h_bkg.SetTitle("data_obs")
-#         self.h_bkg.Write("data_obs",rt.TObject.kWriteDelete)        
+        self.hist_all["Data"].Write("data_obs",rt.TObject.kWriteDelete)     
         f.Close()  
-    def export_hist(self, sig_key, nclass, channel):
-        str_sys = self.option
+
+    def export_hist(self, sig_key, file_name):
+        str_sys = self.weight
         str_sys = str_sys.replace("weight", "")
         if str_sys!="":
             str_sys = "_"+str_sys
-        f = rt.TFile("./Outputs/"+channel+"/shape_"+sig_key+"_"+str(nclass)+".root","UPDATE") 
+        f = rt.TFile(file_name+"_v1.root","UPDATE") 
         f.cd("signal_region")
         self.hist_all[sig_key].SetName("zp"+str_sys)
         self.hist_all[sig_key].SetTitle("zp"+str_sys)
@@ -464,3 +462,6 @@ class HistStack(object):
         self.merged_hist["TTZ"].SetName("ttz"+str_sys)
         self.merged_hist["TTZ"].SetTitle("ttz"+str_sys)
         self.merged_hist["TTZ"].Write("ttz"+str_sys,rt.TObject.kWriteDelete) 
+        self.h_bkg.SetName("total_bkg"+str_sys)
+        self.h_bkg.SetTitle("total_bkg"+str_sys)
+        self.h_bkg.Write("total_bkg"+str_sys,rt.TObject.kWriteDelete)
