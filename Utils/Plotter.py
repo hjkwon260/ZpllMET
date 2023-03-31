@@ -256,7 +256,7 @@ class HistStack(object):
         
         # draw sig
 #         if is_dnn:
-        if self.variable=='score':
+        if 'score' in self.variable:
             sig_keys = [sig_key]
         else:
             sig_keys = ["Zp-2500_CH-345", "Zp-3700_CH-345", "Zp-3700_CH-1095"]
@@ -285,7 +285,7 @@ class HistStack(object):
         p2.Draw()
         p2.cd()    
         
-        if self.variable=="score" and blind_from!=1:
+        if "score" in self.variable and blind_from!=1:
             h_ratio = self.get_ratio(sig_key)
         else:    
             h_ratio = self.get_ratio("Data")
@@ -304,14 +304,15 @@ class HistStack(object):
         list_graphs[0].Draw("E2 same")
         l2.AddEntry(list_graphs[0], list_legends[0], "f")
         
-        if blind_from!=1: # blind
+        if blind_from!=1 and not "score" in self.variable: # blind
             for i in range(self.nbin):
                 threshold = self.nbin*blind_from
                 if i > threshold:
-                    h_ratio.SetBinContent(i+1, 1e15)        
-        h_ratio.Draw("same")        
-        
-        l2.Draw()      
+                    h_ratio.SetBinContent(i+1, 1e15) 
+        h_ratio.Draw("same")
+
+        if not "score" in self.variable or blind_from==1:        
+            l2.Draw()      
         c1.SaveAs(file_name+"_"+self.variable+"breakdown.pdf")
 #         if not is_dnn:
 #             c1.SaveAs(file_name+"_"+self.variable+".png")
@@ -333,13 +334,14 @@ class HistStack(object):
         list_graphs[0].Draw("E2 same")
         l3.AddEntry(list_graphs[0], list_legends[0], "f")
         
-        if blind_from!=1: # blind
+        if blind_from!=1 and not "score" in self.variable: # blind
             for i in range(self.nbin):
                 threshold = self.nbin*blind_from
                 if i > threshold:
                     h_ratio.SetBinContent(i+1, 1e15)        
-        h_ratio.Draw("same")        
-        l3.Draw("same")
+        h_ratio.Draw("same") 
+        if not "score" in self.variable or blind_from==1:                       
+            l3.Draw("same")
         c1.SaveAs(file_name+"_"+self.variable+".pdf")                
         return c1     
 
