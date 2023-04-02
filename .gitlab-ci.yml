@@ -330,6 +330,7 @@ eval ee16post:
         - python EvaluatePNN-v2.py ${ERA} SR
         - python EvaluatePNN-v2.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
 
 eval mm16post:
@@ -358,6 +359,7 @@ eval mm16post:
         - python EvaluatePNN-v2.py ${ERA} SR
         - python EvaluatePNN-v2.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy                                                             
 
 eval em16post:
@@ -386,6 +388,7 @@ eval em16post:
         - python EvaluatePNN-v2.py ${ERA} SR
         - python EvaluatePNN-v2.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy   
 
 eval ee16pre:
@@ -414,6 +417,7 @@ eval ee16pre:
         - python EvaluatePNN-v2.py ${ERA} SR
         - python EvaluatePNN-v2.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
 
 eval mm16pre:
@@ -442,6 +446,7 @@ eval mm16pre:
         - python EvaluatePNN-v2.py ${ERA} SR
         - python EvaluatePNN-v2.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy                                                             
 
 eval em16pre:
@@ -470,6 +475,7 @@ eval em16pre:
         - python EvaluatePNN-v2.py ${ERA} SR
         - python EvaluatePNN-v2.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
 eval ee17:
@@ -498,6 +504,7 @@ eval ee17:
         - python EvaluatePNN-v2.py ${ERA} SR
         - python EvaluatePNN-v2.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
 
 eval mm17:
@@ -526,6 +533,7 @@ eval mm17:
         - python EvaluatePNN-v2.py ${ERA} SR
         - python EvaluatePNN-v2.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy                                                             
 
 eval em17:
@@ -554,6 +562,7 @@ eval em17:
         - python EvaluatePNN-v2.py ${ERA} SR
         - python EvaluatePNN-v2.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
 
 eval ee18:
@@ -582,6 +591,7 @@ eval ee18:
         - python EvaluatePNN-v2.py ${ERA} SR
         - python EvaluatePNN-v2.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
 
 eval mm18:
@@ -610,6 +620,7 @@ eval mm18:
         - python EvaluatePNN-v2.py ${ERA} SR
         - python EvaluatePNN-v2.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy                                                             
 
 eval em18:
@@ -638,4 +649,43 @@ eval em18:
         - python EvaluatePNN-v2.py ${ERA} SR
         - python EvaluatePNN-v2.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-        - kdestroy               
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy   
+
+limit ee16post:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16post/
+        DATE: ${DATE1}
+        ERA: ee16post
+        CHANNEL: ee/ 
+        CMS_PATH: /cvmfs/cms.cern.ch
+        CMSSW_RELEASE: CMSSW_10_2_13
+        CMSSW_ARCH: slc7_amd64_gcc700
+    needs:
+        - job: eval ee16post        
+    artifacts:
+        paths:
+            - Logs_v1/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - shopt -s expand_aliases
+        - set +u && source ${CMS_PATH}/cmsset_default.sh; set -u
+        - cmsrel ${CMSSW_RELEASE}
+        - cd ${CMSSW_RELEASE}/src
+        - cmsenv
+        - git clone https://github.com/cms-analysis/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/CombinedLimit
+        - cd HiggsAnalysis/CombinedLimit
+        - cd $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit
+        - git fetch origin
+        - git checkout v8.1.0
+        - cd $CMSSW_BASE/src
+        #- bash <(curl -s https://raw.githubusercontent.com/cms-analysis/CombineHarvester/master/CombineTools/scripts/sparse-checkout-https.sh)
+        - scram b -j 20
+        - cd ${CI_PROJECT_DIR}
+        - python limits_v2.py
+

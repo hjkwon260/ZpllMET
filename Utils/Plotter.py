@@ -105,6 +105,42 @@ class HistStack(object):
         h.SetTitleSize(0.15,"x")          
         return h   
     
+    def get_significance(self, sig_key):
+        yields=defaultdict(list)
+        for nb in range(self.nbin):
+            yields["bkg"].append(self.h_bkg.GetBinContent(nb+1))
+        #sigs
+        for key2 in self.hist_all:
+            if "Zp-" in key2:
+                for nb in range(self.nbin):
+                    yields[key2].append(self.hist_all[key2].GetBinContent(nb+1))  
+                    
+#         yields = self.get_yields_by_bin() # problem, why?
+        s = yields[sig_key]
+        b = yields['bkg'] 
+
+        q = []
+        for j in range(len(s)):
+            if b[j]==0: #temp
+                continue
+            q_j = 2*((s[j]+b[j])*math.log((s[j]+b[j])/b[j])-s[j])
+            q.append(q_j)
+        z = np.sqrt(np.array(q)) 
+        
+        h = rt.TH1D("", "",  self.nbin, self.xl, self.xh)
+        for i in range(self.nbin):
+            h.Fill(i/self.nbin, z[i])
+        h.SetLineWidth(3)
+        h.GetYaxis().SetTitle("Z_{A}")
+        h.GetXaxis().SetLabelSize(0.08)
+        h.GetYaxis().SetLabelSize(0.07)   
+        h.GetXaxis().SetTitleOffset(0.8)       
+        h.GetYaxis().SetTitleOffset(0.35)
+        h.GetXaxis().SetTitle(self.xtitle)
+        h.SetTitleSize(0.12,"y")
+        h.SetTitleSize(0.15,"x")             
+        return h
+
     def get_str_lumi_channel(self, era):
         if("mm" in era):
             str_channel="#mu#mu"          
@@ -260,7 +296,7 @@ class HistStack(object):
             sig_keys = [sig_key]
         else:
             sig_keys = ["Zp-2500_CH-345", "Zp-3700_CH-345", "Zp-3700_CH-1095"]
-        
+
         for i, sig in enumerate(sig_keys):
             self.hist_all[sig].Draw("same hist")
             self.hist_all[sig].SetLineColor(2+i)
@@ -286,30 +322,36 @@ class HistStack(object):
         p2.cd()    
         
         if "score" in self.variable and blind_from!=1:
-            h_ratio = self.get_ratio(sig_key)
+#             h_ratio = self.get_ratio(sig_key)
+            h_ratio = self.get_significance(sig_key)
         else:    
             h_ratio = self.get_ratio("Data")
-        h_ratio.Draw()
+        # h_ratio.Draw()
 
         l2 = self.set_legend(0.75, 0.9, 0.92, 0.99)
-        
-        # sys
-        if self.dic_sys:
-            for i in reversed(range(len(list_graphs)-1)):
-                gr = list_graphs[i+1].Clone("")
-                gr.Draw("E2 same")
-                l2.AddEntry(list_graphs[i+1], list_legends[i+1], "f")                
-        
-        # stat
-        list_graphs[0].Draw("E2 same")
-        l2.AddEntry(list_graphs[0], list_legends[0], "f")
+
+        if not "score" in self.variable or blind_from==1:                
+            # sys
+            if self.dic_sys:
+                for i in reversed(range(len(list_graphs)-1)):
+                    gr = list_graphs[i+1].Clone("")
+                    gr.Draw("E2 same")
+                    l2.AddEntry(list_graphs[i+1], list_legends[i+1], "f")                
+
+            # stat
+            list_graphs[0].Draw("E2 same")
+            l2.AddEntry(list_graphs[0], list_legends[0], "f")
         
         if blind_from!=1 and not "score" in self.variable: # blind
             for i in range(self.nbin):
                 threshold = self.nbin*blind_from
                 if i > threshold:
                     h_ratio.SetBinContent(i+1, 1e15) 
-        h_ratio.Draw("same")
+        if "score" in self.variable:
+            h_ratio.Draw("same hist")
+            h_ratio.SetLineWidth(2)
+        else:
+            h_ratio.Draw("same")
 
         if not "score" in self.variable or blind_from==1:        
             l2.Draw()      
@@ -317,29 +359,37 @@ class HistStack(object):
 #         if not is_dnn:
 #             c1.SaveAs(file_name+"_"+self.variable+".png")
 
-        p2.cd()
-        p2.Clear()
+        c1.cd()
+#         p2.Clear()
+        p2 = self.set_pad("bottom", 0, 0, 1, 0.3)
         p2.Draw()
-        h_ratio.Draw()
+        p2.cd()
+#         h_ratio.Draw()
         l3 = self.set_legend(0.75, 0.9, 0.92, 0.99)
         
-        # sys
-        if self.dic_sys:
-            for i in reversed(range(len(list_graphs)-1)):
-                gr = list_graphs[i+1].Clone("")
-                gr.Draw("E2 same")                
-                gr.SetFillColor(3)
-            l3.AddEntry(list_graphs[1], "tot. sys.", "f")
-        # stat
-        list_graphs[0].Draw("E2 same")
-        l3.AddEntry(list_graphs[0], list_legends[0], "f")
+        if not "score" in self.variable or blind_from==1:        
+            # sys
+            if self.dic_sys:
+                for i in reversed(range(len(list_graphs)-1)):
+                    gr = list_graphs[i+1].Clone("")
+                    gr.Draw("E2 same")                
+                    gr.SetFillColor(3)
+                l3.AddEntry(list_graphs[1], "tot. sys.", "f")
+            # stat
+            list_graphs[0].Draw("E2 same")
+            l3.AddEntry(list_graphs[0], list_legends[0], "f")
         
         if blind_from!=1 and not "score" in self.variable: # blind
             for i in range(self.nbin):
                 threshold = self.nbin*blind_from
                 if i > threshold:
                     h_ratio.SetBinContent(i+1, 1e15)        
-        h_ratio.Draw("same") 
+        if "score" in self.variable:
+            h_ratio.Draw("same hist")
+            h_ratio.SetLineWidth(2)
+        else:
+            h_ratio.Draw("same")        
+
         if not "score" in self.variable or blind_from==1:                       
             l3.Draw("same")
         c1.SaveAs(file_name+"_"+self.variable+".pdf")                
@@ -378,6 +428,9 @@ class HistStack(object):
         
     
     def draw_pie(self, file_name):
+        """
+            depandancy: get_yields()
+        """
         list_yeild=[]
         for key in self.yeilds:
             if key!="Data":
@@ -421,7 +474,15 @@ class HistStack(object):
         l.Draw()    
         cpie.SaveAs(file_name+"yeilds"+self.variable+"_"+self.option+'.pdf')
         cpie.SaveAs(file_name+"yeilds"+self.variable+"_"+self.option+'.png')    
+    
+    def export_yields_table(self, file_name):
+        """
+            depandancy: get_yields_by_bin()
+        """
+        with open(file_name+'.txt', 'w') as yf:
+            yields = self.get_yields_by_bin()
             
+            yf.write(str(yields["bkg"]))
     def create_root_file(self, file_name):
         f = rt.TFile(file_name+"_v1.root","RECREATE")
         subdir = f.mkdir("signal_region");
