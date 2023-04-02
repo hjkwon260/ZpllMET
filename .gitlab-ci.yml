@@ -670,6 +670,7 @@ limit ee16post:
     artifacts:
         paths:
             - Combine/Logs_v1
+            - Combine/Plots    
         exclude:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
@@ -690,4 +691,7 @@ limit ee16post:
         - ls ${CI_PROJECT_DIR}
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python 2Dlimit.ipynb
+        - python 2Dlimit.py ${ERA}
 
