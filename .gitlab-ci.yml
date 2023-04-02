@@ -687,6 +687,7 @@ limit ee16post:
         - cd $CMSSW_BASE/src
         #- bash <(curl -s https://raw.githubusercontent.com/cms-analysis/CombineHarvester/master/CombineTools/scripts/sparse-checkout-https.sh)
         - scram b -j 20
+        - ls ${CI_PROJECT_DIR}
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
 
