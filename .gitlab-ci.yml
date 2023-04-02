@@ -688,5 +688,5 @@ limit ee16post:
         #- bash <(curl -s https://raw.githubusercontent.com/cms-analysis/CombineHarvester/master/CombineTools/scripts/sparse-checkout-https.sh)
         - scram b -j 20
         - cd ${CI_PROJECT_DIR}
-        - python limits_v2.py
+        - python Combine/limits_v2.py
 
