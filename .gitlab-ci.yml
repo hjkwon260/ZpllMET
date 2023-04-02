@@ -669,7 +669,7 @@ limit ee16post:
         - job: eval ee16post        
     artifacts:
         paths:
-            - Logs_v1/
+            - Combine/Logs_v1
         exclude:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
@@ -687,6 +687,6 @@ limit ee16post:
         - cd $CMSSW_BASE/src
         #- bash <(curl -s https://raw.githubusercontent.com/cms-analysis/CombineHarvester/master/CombineTools/scripts/sparse-checkout-https.sh)
         - scram b -j 20
-        - cd ${CI_PROJECT_DIR}
-        - python Combine/limits_v2.py
+        - cd ${CI_PROJECT_DIR}/Combine
+        - python limits_v2.py
 

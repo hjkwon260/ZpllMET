@@ -10,7 +10,7 @@ dic_limits={}
 
 ##-- set config --##
 setting={}
-with open('config/Settrain.json') as json_file:
+with open('../config/Settrain.json') as json_file:
     data = json.load(json_file)
     setting=data
 INPUTDIR = setting["INPUTDIR"]
