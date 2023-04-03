@@ -675,7 +675,7 @@ limit ee16post:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
-        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - export JUPYTER_PATH=/cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/share/jupyter:/cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/etc/notebook
         - jupyter nbconvert --to python 2Dlimit.ipynb        
         - shopt -s expand_aliases
         - set +u && source ${CMS_PATH}/cmsset_default.sh; set -u
