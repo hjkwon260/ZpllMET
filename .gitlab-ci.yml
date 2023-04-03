@@ -15,6 +15,7 @@ stages:
     - presel
     - evaluate
     - limit
+    - draw
 
 mm16pre:
     stage: presel
@@ -674,9 +675,7 @@ limit ee16post:
         exclude:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
-    script:
-        - export JUPYTER_PATH=/cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/share/jupyter:/cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/etc/notebook
-        - jupyter nbconvert --to python 2Dlimit.ipynb        
+    script:      
         - shopt -s expand_aliases
         - set +u && source ${CMS_PATH}/cmsset_default.sh; set -u
         - cmsrel ${CMSSW_RELEASE}
@@ -693,5 +692,25 @@ limit ee16post:
         - ls ${CI_PROJECT_DIR}
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
-        - python 2Dlimit.py ${ERA}
 
+draw ee16post:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16post/
+        DATE: ${DATE1}
+        ERA: ee16post
+        CHANNEL: ee/ 
+    needs:
+        - job: limit ee16post        
+    artifacts:
+        paths:
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python 2Dlimit.ipynb
+        - python 2Dlimit.py ${ERA}   
