@@ -326,11 +326,12 @@ class HistStack(object):
             h_ratio = self.get_significance(sig_key)
         else:    
             h_ratio = self.get_ratio("Data")
-        # h_ratio.Draw()
+        
 
         l2 = self.set_legend(0.75, 0.9, 0.92, 0.99)
 
-        if not "score" in self.variable or blind_from==1:                
+        if not "score" in self.variable or blind_from==1: 
+            h_ratio.Draw()
             # sys
             if self.dic_sys:
                 for i in reversed(range(len(list_graphs)-1)):
@@ -347,7 +348,7 @@ class HistStack(object):
                 threshold = self.nbin*blind_from
                 if i > threshold:
                     h_ratio.SetBinContent(i+1, 1e15) 
-        if "score" in self.variable:
+        if "score" in self.variable and blind_from!=1:
             h_ratio.Draw("same hist")
             h_ratio.SetLineWidth(2)
         else:
@@ -367,7 +368,8 @@ class HistStack(object):
 #         h_ratio.Draw()
         l3 = self.set_legend(0.75, 0.9, 0.92, 0.99)
         
-        if not "score" in self.variable or blind_from==1:        
+        if not "score" in self.variable or blind_from==1: 
+            h_ratio.Draw()
             # sys
             if self.dic_sys:
                 for i in reversed(range(len(list_graphs)-1)):
@@ -384,7 +386,7 @@ class HistStack(object):
                 threshold = self.nbin*blind_from
                 if i > threshold:
                     h_ratio.SetBinContent(i+1, 1e15)        
-        if "score" in self.variable:
+        if "score" in self.variable and blind_from!=1:
             h_ratio.Draw("same hist")
             h_ratio.SetLineWidth(2)
         else:
