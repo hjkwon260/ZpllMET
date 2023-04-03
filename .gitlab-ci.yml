@@ -1,5 +1,8 @@
 variables:
     DATE1: 20230301
+    CMS_PATH: /cvmfs/cms.cern.ch
+    CMSSW_RELEASE: CMSSW_10_2_13
+    CMSSW_ARCH: slc7_amd64_gcc700    
 #     #INPUT_DIR: 20220215/ #20220131/
 #     INPUT_DIR: Run2/20221225_17/ee/
 #     DATE: 20221225
@@ -10,6 +13,21 @@ before_script:
     - cat /proc/meminfo
     - export PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin:$PATH"
     - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
+
+.set_combine: &set_combine
+    - shopt -s expand_aliases
+    - set +u && source ${CMS_PATH}/cmsset_default.sh; set -u
+    - cmsrel ${CMSSW_RELEASE}
+    - cd ${CMSSW_RELEASE}/src
+    - cmsenv
+    - git clone https://github.com/cms-analysis/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/CombinedLimit
+    - cd HiggsAnalysis/CombinedLimit
+    - cd $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit
+    - git fetch origin
+    - git checkout v8.1.0
+    - cd $CMSSW_BASE/src
+    #- bash <(curl -s https://raw.githubusercontent.com/cms-analysis/CombineHarvester/master/CombineTools/scripts/sparse-checkout-https.sh)
+    - scram b -j 20
 
 stages:
     - presel
@@ -659,13 +677,9 @@ limit ee16post:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16post/
         DATE: ${DATE1}
         ERA: ee16post
         CHANNEL: ee/ 
-        CMS_PATH: /cvmfs/cms.cern.ch
-        CMSSW_RELEASE: CMSSW_10_2_13
-        CMSSW_ARCH: slc7_amd64_gcc700
     needs:
         - job: eval ee16post        
     artifacts:
@@ -676,20 +690,249 @@ limit ee16post:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:      
-        - shopt -s expand_aliases
-        - set +u && source ${CMS_PATH}/cmsset_default.sh; set -u
-        - cmsrel ${CMSSW_RELEASE}
-        - cd ${CMSSW_RELEASE}/src
-        - cmsenv
-        - git clone https://github.com/cms-analysis/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/CombinedLimit
-        - cd HiggsAnalysis/CombinedLimit
-        - cd $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit
-        - git fetch origin
-        - git checkout v8.1.0
-        - cd $CMSSW_BASE/src
-        #- bash <(curl -s https://raw.githubusercontent.com/cms-analysis/CombineHarvester/master/CombineTools/scripts/sparse-checkout-https.sh)
-        - scram b -j 20
-        - ls ${CI_PROJECT_DIR}
+        - *set_combine
+        - cd ${CI_PROJECT_DIR}/Combine
+        - python limits_v2.py
+
+limit mm16post:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: mm16post
+        CHANNEL: mm/ 
+    needs:
+        - job: eval mm16post        
+    artifacts:
+        paths:
+            - Combine/Logs_v1
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:      
+        - *set_combine
+        - cd ${CI_PROJECT_DIR}/Combine
+        - python limits_v2.py
+
+limit em16post:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: em16post
+        CHANNEL: em/ 
+    needs:
+        - job: eval em16post        
+    artifacts:
+        paths:
+            - Combine/Logs_v1
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:      
+        - *set_combine
+        - cd ${CI_PROJECT_DIR}/Combine
+        - python limits_v2.py        
+
+limit ee16pre:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: ee16pre
+        CHANNEL: ee/ 
+    needs:
+        - job: eval ee16pre        
+    artifacts:
+        paths:
+            - Combine/Logs_v1
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:      
+        - *set_combine
+        - cd ${CI_PROJECT_DIR}/Combine
+        - python limits_v2.py
+
+limit mm16pre:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: mm16pre
+        CHANNEL: mm/ 
+    needs:
+        - job: eval mm16pre        
+    artifacts:
+        paths:
+            - Combine/Logs_v1
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:      
+        - *set_combine
+        - cd ${CI_PROJECT_DIR}/Combine
+        - python limits_v2.py
+
+limit em16pre:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: em16pre
+        CHANNEL: em/ 
+    needs:
+        - job: eval em16pre        
+    artifacts:
+        paths:
+            - Combine/Logs_v1
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:      
+        - *set_combine
+        - cd ${CI_PROJECT_DIR}/Combine
+        - python limits_v2.py
+
+limit ee17:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: ee17
+        CHANNEL: ee/ 
+    needs:
+        - job: eval ee17        
+    artifacts:
+        paths:
+            - Combine/Logs_v1
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:      
+        - *set_combine
+        - cd ${CI_PROJECT_DIR}/Combine
+        - python limits_v2.py
+
+limit mm17:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: mm17
+        CHANNEL: mm/ 
+    needs:
+        - job: eval mm17        
+    artifacts:
+        paths:
+            - Combine/Logs_v1
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:      
+        - *set_combine
+        - cd ${CI_PROJECT_DIR}/Combine
+        - python limits_v2.py
+
+limit em17:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: em17
+        CHANNEL: em/ 
+    needs:
+        - job: eval em17        
+    artifacts:
+        paths:
+            - Combine/Logs_v1
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:      
+        - *set_combine
+        - cd ${CI_PROJECT_DIR}/Combine
+        - python limits_v2.py
+
+limit ee18:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: ee18
+        CHANNEL: ee/ 
+    needs:
+        - job: eval ee18        
+    artifacts:
+        paths:
+            - Combine/Logs_v1
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:      
+        - *set_combine
+        - cd ${CI_PROJECT_DIR}/Combine
+        - python limits_v2.py
+
+limit mm18:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: mm18
+        CHANNEL: mm/ 
+    needs:
+        - job: eval mm18        
+    artifacts:
+        paths:
+            - Combine/Logs_v1
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:      
+        - *set_combine
+        - cd ${CI_PROJECT_DIR}/Combine
+        - python limits_v2.py
+
+limit em18:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: em18
+        CHANNEL: em/ 
+    needs:
+        - job: eval em18        
+    artifacts:
+        paths:
+            - Combine/Logs_v1
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:      
+        - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
 
@@ -698,7 +941,6 @@ draw ee16post:
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16post/
         DATE: ${DATE1}
         ERA: ee16post
         CHANNEL: ee/ 
@@ -714,3 +956,234 @@ draw ee16post:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA}   
+
+draw mm16post:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: mm16post
+        CHANNEL: mm/ 
+    needs:
+        - job: limit mm16post        
+    artifacts:
+        paths:
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python 2Dlimit.ipynb
+        - python 2Dlimit.py ${ERA} 
+
+draw em16post:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: em16post
+        CHANNEL: em/ 
+    needs:
+        - job: limit em16post        
+    artifacts:
+        paths:
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python 2Dlimit.ipynb
+        - python 2Dlimit.py ${ERA} 
+
+draw ee16pre:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: ee16pre
+        CHANNEL: ee/ 
+    needs:
+        - job: limit ee16pre        
+    artifacts:
+        paths:
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python 2Dlimit.ipynb
+        - python 2Dlimit.py ${ERA}   
+
+draw mm16pre:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: mm16pre
+        CHANNEL: mm/ 
+    needs:
+        - job: limit mm16pre        
+    artifacts:
+        paths:
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python 2Dlimit.ipynb
+        - python 2Dlimit.py ${ERA} 
+
+draw em16pre:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: em16pre
+        CHANNEL: em/ 
+    needs:
+        - job: limit em16pre        
+    artifacts:
+        paths:
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python 2Dlimit.ipynb
+        - python 2Dlimit.py ${ERA}  
+
+draw ee17:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: ee17
+        CHANNEL: ee/ 
+    needs:
+        - job: limit ee17        
+    artifacts:
+        paths:
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python 2Dlimit.ipynb
+        - python 2Dlimit.py ${ERA}   
+
+draw mm17:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: mm17
+        CHANNEL: mm/ 
+    needs:
+        - job: limit mm17        
+    artifacts:
+        paths:
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python 2Dlimit.ipynb
+        - python 2Dlimit.py ${ERA} 
+
+draw em17:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: em17
+        CHANNEL: em/ 
+    needs:
+        - job: limit em17        
+    artifacts:
+        paths:
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python 2Dlimit.ipynb
+        - python 2Dlimit.py ${ERA}  
+
+draw ee18:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: ee18
+        CHANNEL: ee/ 
+    needs:
+        - job: limit ee18        
+    artifacts:
+        paths:
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python 2Dlimit.ipynb
+        - python 2Dlimit.py ${ERA}   
+
+draw mm18:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: mm18
+        CHANNEL: mm/ 
+    needs:
+        - job: limit mm18        
+    artifacts:
+        paths:
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python 2Dlimit.ipynb
+        - python 2Dlimit.py ${ERA} 
+
+draw em18:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: em18
+        CHANNEL: em/ 
+    needs:
+        - job: limit em18        
+    artifacts:
+        paths:
+            - Combine/Plots    
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python 2Dlimit.ipynb
+        - python 2Dlimit.py ${ERA}                    
