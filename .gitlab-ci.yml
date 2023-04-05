@@ -689,10 +689,10 @@ limit ee16post:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:      
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy   
 
@@ -713,10 +713,10 @@ limit mm16post:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:      
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -737,10 +737,10 @@ limit em16post:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:      
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py        
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -761,10 +761,10 @@ limit ee16pre:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:      
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -785,10 +785,10 @@ limit mm16pre:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:      
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -809,10 +809,10 @@ limit em16pre:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:      
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -833,10 +833,10 @@ limit ee17:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:      
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -857,10 +857,10 @@ limit mm17:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:      
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -881,10 +881,10 @@ limit em17:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:      
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -905,10 +905,10 @@ limit ee18:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:      
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -929,10 +929,10 @@ limit mm18:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:      
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -953,10 +953,10 @@ limit em18:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:      
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -977,10 +977,10 @@ draw ee16post:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA}   
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -1001,10 +1001,10 @@ draw mm16post:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA} 
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -1025,10 +1025,10 @@ draw em16post:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA} 
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -1049,10 +1049,10 @@ draw ee16pre:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA}   
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -1073,10 +1073,10 @@ draw mm16pre:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA} 
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -1097,10 +1097,10 @@ draw em16pre:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA}  
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -1121,10 +1121,10 @@ draw ee17:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA}   
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -1145,10 +1145,10 @@ draw mm17:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA} 
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -1169,10 +1169,10 @@ draw em17:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA}  
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -1193,10 +1193,10 @@ draw ee18:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA}   
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -1217,10 +1217,10 @@ draw mm18:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA} 
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -1241,10 +1241,10 @@ draw em18:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
     script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA}    
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
                                 
