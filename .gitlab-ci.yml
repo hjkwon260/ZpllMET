@@ -685,7 +685,6 @@ limit ee16post:
     artifacts:
         paths:
             - Combine/Logs_v1
-            - Combine/Plots    
         exclude:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
@@ -693,6 +692,9 @@ limit ee16post:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy   
 
 limit mm16post:
     stage: limit
@@ -707,7 +709,6 @@ limit mm16post:
     artifacts:
         paths:
             - Combine/Logs_v1
-            - Combine/Plots    
         exclude:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
@@ -715,6 +716,9 @@ limit mm16post:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 limit em16post:
     stage: limit
@@ -729,7 +733,6 @@ limit em16post:
     artifacts:
         paths:
             - Combine/Logs_v1
-            - Combine/Plots    
         exclude:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
@@ -737,6 +740,9 @@ limit em16post:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py        
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 limit ee16pre:
     stage: limit
@@ -751,7 +757,6 @@ limit ee16pre:
     artifacts:
         paths:
             - Combine/Logs_v1
-            - Combine/Plots    
         exclude:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
@@ -759,6 +764,9 @@ limit ee16pre:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 limit mm16pre:
     stage: limit
@@ -773,7 +781,6 @@ limit mm16pre:
     artifacts:
         paths:
             - Combine/Logs_v1
-            - Combine/Plots    
         exclude:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
@@ -781,6 +788,9 @@ limit mm16pre:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 limit em16pre:
     stage: limit
@@ -795,7 +805,6 @@ limit em16pre:
     artifacts:
         paths:
             - Combine/Logs_v1
-            - Combine/Plots    
         exclude:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
@@ -803,6 +812,9 @@ limit em16pre:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 limit ee17:
     stage: limit
@@ -817,7 +829,6 @@ limit ee17:
     artifacts:
         paths:
             - Combine/Logs_v1
-            - Combine/Plots    
         exclude:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
@@ -825,6 +836,9 @@ limit ee17:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 limit mm17:
     stage: limit
@@ -839,7 +853,6 @@ limit mm17:
     artifacts:
         paths:
             - Combine/Logs_v1
-            - Combine/Plots    
         exclude:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
@@ -847,6 +860,9 @@ limit mm17:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 limit em17:
     stage: limit
@@ -861,7 +877,6 @@ limit em17:
     artifacts:
         paths:
             - Combine/Logs_v1
-            - Combine/Plots    
         exclude:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
@@ -869,6 +884,9 @@ limit em17:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 limit ee18:
     stage: limit
@@ -883,7 +901,6 @@ limit ee18:
     artifacts:
         paths:
             - Combine/Logs_v1
-            - Combine/Plots    
         exclude:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
@@ -891,6 +908,9 @@ limit ee18:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 limit mm18:
     stage: limit
@@ -905,7 +925,6 @@ limit mm18:
     artifacts:
         paths:
             - Combine/Logs_v1
-            - Combine/Plots    
         exclude:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
@@ -913,6 +932,9 @@ limit mm18:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 limit em18:
     stage: limit
@@ -927,7 +949,6 @@ limit em18:
     artifacts:
         paths:
             - Combine/Logs_v1
-            - Combine/Plots    
         exclude:
             - ${DATE}/Presel/**/*.pkl
         expire_in: 10 min            
@@ -935,6 +956,9 @@ limit em18:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 draw ee16post:
     stage: draw
@@ -956,6 +980,9 @@ draw ee16post:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA}   
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 draw mm16post:
     stage: draw
@@ -977,6 +1004,9 @@ draw mm16post:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA} 
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 draw em16post:
     stage: draw
@@ -998,6 +1028,9 @@ draw em16post:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA} 
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 draw ee16pre:
     stage: draw
@@ -1019,6 +1052,9 @@ draw ee16pre:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA}   
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 draw mm16pre:
     stage: draw
@@ -1040,6 +1076,9 @@ draw mm16pre:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA} 
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 draw em16pre:
     stage: draw
@@ -1061,6 +1100,9 @@ draw em16pre:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA}  
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 draw ee17:
     stage: draw
@@ -1082,6 +1124,9 @@ draw ee17:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA}   
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 draw mm17:
     stage: draw
@@ -1103,6 +1148,9 @@ draw mm17:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA} 
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 draw em17:
     stage: draw
@@ -1124,6 +1172,9 @@ draw em17:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA}  
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 draw ee18:
     stage: draw
@@ -1145,6 +1196,9 @@ draw ee18:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA}   
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 draw mm18:
     stage: draw
@@ -1166,6 +1220,9 @@ draw mm18:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA} 
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 draw em18:
     stage: draw
@@ -1186,4 +1243,8 @@ draw em18:
     script:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
-        - python 2Dlimit.py ${ERA}                    
+        - python 2Dlimit.py ${ERA}    
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
+                                
