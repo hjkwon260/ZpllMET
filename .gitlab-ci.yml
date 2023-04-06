@@ -694,6 +694,7 @@ limit ee16post:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy   
 
@@ -719,6 +720,7 @@ limit mm16post:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -744,6 +746,7 @@ limit em16post:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py        
+        - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -769,6 +772,7 @@ limit ee16pre:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -794,6 +798,7 @@ limit mm16pre:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -819,6 +824,7 @@ limit em16pre:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -844,6 +850,7 @@ limit ee17:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -869,6 +876,7 @@ limit mm17:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -894,6 +902,7 @@ limit em17:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -919,6 +928,7 @@ limit ee18:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -944,6 +954,7 @@ limit mm18:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -969,6 +980,7 @@ limit em18:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py
+        - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
