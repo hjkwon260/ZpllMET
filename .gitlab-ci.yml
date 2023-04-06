@@ -677,6 +677,7 @@ limit ee16post:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16post/
         DATE: ${DATE1}
         ERA: ee16post
         CHANNEL: ee/ 
@@ -701,6 +702,7 @@ limit mm16post:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm16post/
         DATE: ${DATE1}
         ERA: mm16post
         CHANNEL: mm/ 
@@ -725,6 +727,7 @@ limit em16post:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em16post/
         DATE: ${DATE1}
         ERA: em16post
         CHANNEL: em/ 
@@ -749,6 +752,7 @@ limit ee16pre:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16pre/
         DATE: ${DATE1}
         ERA: ee16pre
         CHANNEL: ee/ 
@@ -773,6 +777,7 @@ limit mm16pre:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm16pre/
         DATE: ${DATE1}
         ERA: mm16pre
         CHANNEL: mm/ 
@@ -797,6 +802,7 @@ limit em16pre:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em16pre/
         DATE: ${DATE1}
         ERA: em16pre
         CHANNEL: em/ 
@@ -821,6 +827,7 @@ limit ee17:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee17/
         DATE: ${DATE1}
         ERA: ee17
         CHANNEL: ee/ 
@@ -845,6 +852,7 @@ limit mm17:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm17/
         DATE: ${DATE1}
         ERA: mm17
         CHANNEL: mm/ 
@@ -869,6 +877,7 @@ limit em17:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em17/
         DATE: ${DATE1}
         ERA: em17
         CHANNEL: em/ 
@@ -893,6 +902,7 @@ limit ee18:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee18/
         DATE: ${DATE1}
         ERA: ee18
         CHANNEL: ee/ 
@@ -917,6 +927,7 @@ limit mm18:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm18/
         DATE: ${DATE1}
         ERA: mm18
         CHANNEL: mm/ 
@@ -941,6 +952,7 @@ limit em18:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em18/
         DATE: ${DATE1}
         ERA: em18
         CHANNEL: em/ 
@@ -965,6 +977,7 @@ draw ee16post:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16post/
         DATE: ${DATE1}
         ERA: ee16post
         CHANNEL: ee/ 
@@ -989,6 +1002,7 @@ draw mm16post:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm16post/
         DATE: ${DATE1}
         ERA: mm16post
         CHANNEL: mm/ 
@@ -1013,6 +1027,7 @@ draw em16post:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em16post/
         DATE: ${DATE1}
         ERA: em16post
         CHANNEL: em/ 
@@ -1037,6 +1052,7 @@ draw ee16pre:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16pre/
         DATE: ${DATE1}
         ERA: ee16pre
         CHANNEL: ee/ 
@@ -1061,6 +1077,7 @@ draw mm16pre:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm16pre/
         DATE: ${DATE1}
         ERA: mm16pre
         CHANNEL: mm/ 
@@ -1085,6 +1102,7 @@ draw em16pre:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em16pre/
         DATE: ${DATE1}
         ERA: em16pre
         CHANNEL: em/ 
@@ -1109,6 +1127,7 @@ draw ee17:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee17/
         DATE: ${DATE1}
         ERA: ee17
         CHANNEL: ee/ 
@@ -1133,6 +1152,7 @@ draw mm17:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm17/
         DATE: ${DATE1}
         ERA: mm17
         CHANNEL: mm/ 
@@ -1157,6 +1177,7 @@ draw em17:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em17/
         DATE: ${DATE1}
         ERA: em17
         CHANNEL: em/ 
@@ -1181,6 +1202,7 @@ draw ee18:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee18/
         DATE: ${DATE1}
         ERA: ee18
         CHANNEL: ee/ 
@@ -1205,6 +1227,7 @@ draw mm18:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm18/
         DATE: ${DATE1}
         ERA: mm18
         CHANNEL: mm/ 
@@ -1229,6 +1252,7 @@ draw em18:
     tags:
         - cvmfs
     variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em18/
         DATE: ${DATE1}
         ERA: em18
         CHANNEL: em/ 
