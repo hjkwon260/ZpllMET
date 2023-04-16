@@ -1,8 +1,9 @@
 variables:
-    DATE1: 20230301
+    DATE1: 20230416
     CMS_PATH: /cvmfs/cms.cern.ch
     CMSSW_RELEASE: CMSSW_10_2_13
-    CMSSW_ARCH: slc7_amd64_gcc700    
+    CMSSW_ARCH: slc7_amd64_gcc700
+    SCRIPT_PRESEL: Preselection_v4.ipynb    
 #     #INPUT_DIR: 20220215/ #20220131/
 #     INPUT_DIR: Run2/20221225_17/ee/
 #     DATE: 20221225
@@ -55,7 +56,7 @@ mm16pre:
         - echo ${DATE}
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - jupyter nbconvert --to python ${SCRIPT_PRESEL}
         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
         - kdestroy    
@@ -79,7 +80,7 @@ ee16pre:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - jupyter nbconvert --to python ${SCRIPT_PRESEL}
         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
         - kdestroy 
@@ -103,7 +104,7 @@ em16pre:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - jupyter nbconvert --to python ${SCRIPT_PRESEL}
         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}        
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
         - kdestroy 
@@ -127,7 +128,7 @@ mm16post:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - jupyter nbconvert --to python ${SCRIPT_PRESEL}
         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}   
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
         - kdestroy 
@@ -151,7 +152,7 @@ ee16post:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - jupyter nbconvert --to python ${SCRIPT_PRESEL}
         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
         - kdestroy 
@@ -175,7 +176,7 @@ em16post:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - jupyter nbconvert --to python ${SCRIPT_PRESEL}
         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}          
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
         - kdestroy 
@@ -199,7 +200,7 @@ mm17:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - jupyter nbconvert --to python ${SCRIPT_PRESEL}
         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}    
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
         - kdestroy 
@@ -223,7 +224,7 @@ ee17:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - jupyter nbconvert --to python ${SCRIPT_PRESEL}
         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}    
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
         - kdestroy 
@@ -247,7 +248,7 @@ em17:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - jupyter nbconvert --to python ${SCRIPT_PRESEL}
         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
         - kdestroy 
@@ -271,7 +272,7 @@ mm18:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - jupyter nbconvert --to python ${SCRIPT_PRESEL}
         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}     
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
         - kdestroy 
@@ -295,7 +296,7 @@ ee18:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - jupyter nbconvert --to python ${SCRIPT_PRESEL}
         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
         - kdestroy 
@@ -319,7 +320,7 @@ em18:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-        - jupyter nbconvert --to python Preselection_v3.ipynb
+        - jupyter nbconvert --to python ${SCRIPT_PRESEL}
         - python Preselection_v3.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}   
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
         - kdestroy  

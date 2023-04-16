@@ -2,6 +2,7 @@ import os, sys
 import json
 #
 os.system("mkdir Logs_v1")
+os.system("mkdir Plots")
 
 input_datacard = 'datacard_ll_SR_v2.txt'
 # input_root_file = '../Outputs/mm/shape_v1_dummyZp-2500_CH-345_v1.root'
@@ -16,12 +17,13 @@ with open('../config/Settrain.json') as json_file:
 INPUTDIR = setting["INPUTDIR"]
 VERSION = setting["VERSION"]
 SIGNAL_MASSES = setting["ALL_MASSES"]
-# SIGNAL_MASSES = ['Zp-2500_CH-845']
+SIGNAL_MASSES = ['Zp-2500_CH-845']
 
 
 for m in SIGNAL_MASSES:
 
 	input_root_file = '../Outputs/SR/shape_v1_2803_equalpropv1'+m+'_v1.root'
+
 	# Read in the file
 	with open(input_datacard, 'r') as file :
 		filedata = file.read()
@@ -68,5 +70,5 @@ for m in SIGNAL_MASSES:
 		print(lst_limits)
 		dic_limits[m]=lst_limits
 import json
-with open('Logs_v1/limits_v2.json', 'w') as fp:
+with open('Logs_v1/limits_v2dev.json', 'w') as fp:
     json.dump(dic_limits, fp)		
