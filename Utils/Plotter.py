@@ -46,8 +46,8 @@ class HistStack(object):
                     h_dy.Add(hist_all[key])
                 else:
                     h_dy=hist_all[key].Clone("")
-            #if key=="TT" or key=="TTSemi":
-            if key=="TT":
+            if key=="TT" or key=="TTSemi":
+            # if key=="TT":
                 if 'h_tt' in locals():
                     h_tt.Add(hist_all[key])
                 else:
@@ -58,7 +58,7 @@ class HistStack(object):
         self.merged_hist['WW']=hist_all["WW"].Clone("")
         if 'h_tw' in locals():
             self.merged_hist['TW']=h_tw
-        self.merged_hist['TTSemi']=hist_all["TTSemi"].Clone("")               
+        # self.merged_hist['TTSemi']=hist_all["TTSemi"].Clone("")               
         if 'h_tt' in locals():
             self.merged_hist['TT']=h_tt 
         if 'h_dy' in locals():
