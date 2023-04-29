@@ -334,7 +334,7 @@ merge ee16:
         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
         DATE: ${DATE1}
         ERA: ee16post
-        CHANNEL: ee/ 
+        CHANNEL: ee
     needs:
         - job: ee16pre        
         - job: ee16post        
