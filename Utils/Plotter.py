@@ -52,6 +52,26 @@ class HistStack(object):
                     h_tt.Add(hist_all[key])
                 else:
                     h_tt=hist_all[key].Clone("")
+            if key=="TThdampUp" or key=="TTSemi":
+                if 'h_tthdampup' in locals():
+                    h_tthdampup.Add(hist_all[key])
+                else:
+                    h_tthdampup=hist_all[key].Clone("")
+            if key=="TThdampDown" or key=="TTSemi":
+                if 'h_tthdampdown' in locals():
+                    h_tthdampdown.Add(hist_all[key])
+                else:
+                    h_tthdampdown=hist_all[key].Clone("")
+            if key=="TTUp" or key=="TTSemi":
+                if 'h_ttup' in locals():
+                    h_ttup.Add(hist_all[key])
+                else:
+                    h_ttup=hist_all[key].Clone("")                    
+            if key=="TTDown" or key=="TTSemi":
+                if 'h_ttdown' in locals():
+                    h_ttdown.Add(hist_all[key])
+                else:
+                    h_ttdown=hist_all[key].Clone("")
         self.merged_hist['TTZ']=hist_all["TTZ"].Clone("")   
         self.merged_hist['ZZ']=hist_all["ZZ"].Clone("")
         self.merged_hist['WZ']=hist_all["WZ"].Clone("")
@@ -61,6 +81,14 @@ class HistStack(object):
         # self.merged_hist['TTSemi']=hist_all["TTSemi"].Clone("")               
         if 'h_tt' in locals():
             self.merged_hist['TT']=h_tt 
+        if 'h_tthdampup' in locals():
+            self.merged_hist['TThdampUp']=h_tthdampup
+        if 'h_tthdampdown' in locals():
+            self.merged_hist['TThdampDown']=h_tthdampdown
+        if 'h_ttup' in locals():
+            self.merged_hist['TTUp']=h_ttup            
+        if 'h_ttdown' in locals():
+            self.merged_hist['TTDown']=h_ttdown   
         if 'h_dy' in locals():
             self.merged_hist['DY']=h_dy               
         return self.merged_hist
@@ -148,6 +176,8 @@ class HistStack(object):
             str_channel="ee"               
         if("em" in era):
             str_channel="e#mu"
+        if "16" in era:
+            str_lumi="37.33"
         if "16pre" in era:
             str_lumi="19.52" 
         if "16post" in era:
@@ -212,9 +242,10 @@ class HistStack(object):
         
             sys_list = [] 
             for s in self.dic_sys:
-                if "Up" in s:
-                    sys_list.append(s.rstrip("Up"))
-                    
+                print(s)
+                if "Down" in s:
+                    sys_list.append(s.rstrip("Down"))
+            print(sys_list)        
             for i, s in enumerate(sys_list):
                 a = self.dic_sys[s+'Up'].copy()
                 a = np.divide(a, n*n, out=np.zeros(a.shape, dtype=float), where=n!=0)
@@ -228,7 +259,7 @@ class HistStack(object):
                 gerr = rt.TGraphAsymmErrors(self.nbin, np.array(x_cen), np.ones(self.nbin), xl, xh, sys_up, sys_down) # flipped since MC is denominator
                 gerr.SetLineWidth(0)
                 gerr.SetLineColor(0)        
-                gerr.SetFillColor(i+3)
+                gerr.SetFillColor(i+2)
                 gerr.SetFillStyle(3001)
                 list_graphs.append(gerr)
                 list_legends.append(str(s))     
@@ -258,7 +289,17 @@ class HistStack(object):
         hstack=rt.THStack("","")
         h_bkg=rt.TH1D("", "",  self.nbin, self.xl, self.xh)
         dic_merged=self.get_merged_hist()
-        for key in dic_merged:
+        if "hdampUp" in self.weight:
+            bkg_keys = ['TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TThdampUp', 'DY']
+        elif "hdampDown" in self.weight:
+            bkg_keys = ['TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TThdampDown', 'DY']
+        elif "PSUp" in self.weight:
+            bkg_keys = ['TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TTUp', 'DY']
+        elif "PSDown" in self.weight:
+            bkg_keys = ['TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TTDown', 'DY'] 
+        else:
+            bkg_keys = ['TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TT', 'DY']
+        for key in bkg_keys:
             hstack.Add(dic_merged[key])
             h_bkg.Add(dic_merged[key])
 
@@ -274,7 +315,7 @@ class HistStack(object):
         hstack.GetYaxis().SetTitleSize(0.06)
         hstack.GetYaxis().SetTitleOffset(0.6)   
 
-        for keyr in reversed(dic_merged):
+        for keyr in reversed(bkg_keys):
             l.AddEntry(dic_merged[keyr], keyr, "f")
             
         # draw data

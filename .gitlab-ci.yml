@@ -1,9 +1,9 @@
 variables:
-    DATE1: 20230427wp80
+    DATE1: 20230430wp80
     CMS_PATH: /cvmfs/cms.cern.ch
     CMSSW_RELEASE: CMSSW_10_2_13
     CMSSW_ARCH: slc7_amd64_gcc700
-    SCRIPT_PRESEL: Preselection_v4   
+    SCRIPT_PRESEL: Preselection_v5  
 #     #INPUT_DIR: 20220215/ #20220131/
 #     INPUT_DIR: Run2/20221225_17/ee/
 #     DATE: 20221225
@@ -423,7 +423,7 @@ eval ee16:
     variables:
         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16/
         DATE: ${DATE1}
-        ERA: ee16post
+        ERA: ee16
         CHANNEL: ee/ 
     needs:
         - job: ee16        
@@ -452,7 +452,7 @@ eval mm16:
     variables:
         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm16/
         DATE: ${DATE1}
-        ERA: mm16post
+        ERA: mm16
         CHANNEL: ee/ 
     needs:
         - job: mm16       
@@ -481,7 +481,7 @@ eval em16:
     variables:
         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em16/
         DATE: ${DATE1}
-        ERA: em16post
+        ERA: em16
         CHANNEL: ee/ 
     needs:
         - job: em16        
