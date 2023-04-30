@@ -353,7 +353,7 @@ merge ee16:
         - jupyter nbconvert --to python MergeEra.ipynb
         - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} SR ${DATE}
         - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} VR ${DATE}
-        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+        - xrdcp -r ${DATE}/Presel/${CHANNEL}16 ${ROOT_EOS_USER}/Run2/Preselection
         - kdestroy 
 
 eval ee16post:
