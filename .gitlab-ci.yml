@@ -351,8 +351,8 @@ merge ee16:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR}/ee16post ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python MergeEra.ipynb
-        - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} SR
-        - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} VR
+        - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} SR ${DATE}
+        - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} VR ${DATE}
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
         - kdestroy 
 
