@@ -5,6 +5,7 @@ variables:
     CMSSW_ARCH: slc7_amd64_gcc700
     SCRIPT_PRESEL: Preselection_v5  
     SCRIPT_EVAL: EvaluatePNN-v3  
+    SCRIPT_LIMIT: limits_v3  
 #     #INPUT_DIR: 20220215/ #20220131/
 #     INPUT_DIR: Run2/20221225_17/ee/
 #     DATE: 20221225
@@ -699,7 +700,7 @@ limit ee16:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
-        - python limits_v2.py
+        - python ${SCRIPT_LIMIT}.py
         - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy   
@@ -725,7 +726,7 @@ limit mm16:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
-        - python limits_v2.py
+        - python ${SCRIPT_LIMIT}.py
         - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
@@ -751,7 +752,7 @@ limit em16:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
-        - python limits_v2.py        
+        - python ${SCRIPT_LIMIT}.py        
         - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
@@ -777,7 +778,7 @@ limit ee17:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
-        - python limits_v2.py
+        - python ${SCRIPT_LIMIT}.py
         - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
@@ -803,7 +804,7 @@ limit mm17:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
-        - python limits_v2.py
+        - python ${SCRIPT_LIMIT}.py
         - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
@@ -829,7 +830,7 @@ limit em17:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
-        - python limits_v2.py
+        - python ${SCRIPT_LIMIT}.py
         - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
@@ -855,7 +856,7 @@ limit ee18:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
-        - python limits_v2.py
+        - python ${SCRIPT_LIMIT}.py
         - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
@@ -881,7 +882,7 @@ limit mm18:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
-        - python limits_v2.py
+        - python ${SCRIPT_LIMIT}.py
         - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
@@ -907,7 +908,7 @@ limit em18:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
-        - python limits_v2.py
+        - python ${SCRIPT_LIMIT}.py
         - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
