@@ -360,43 +360,41 @@ class HistStack(object):
         c1.cd()
         p2 = self.set_pad("bottom", 0, 0, 1, 0.3)
         p2.Draw()
-        p2.cd()    
+        p2.cd()  
         
-        if "score" in self.variable and blind_from!=1:
-#             h_ratio = self.get_ratio(sig_key)
-            h_ratio = self.get_significance(sig_key)
-        else:    
-            h_ratio = self.get_ratio("Data")
+        h_ratio = self.get_ratio("Data")
         
+        if "score" in self.variable:
+            h_ratio1 = self.get_significance(sig_key)        
 
         l2 = self.set_legend(0.75, 0.9, 0.92, 0.99)
 
-        if not "score" in self.variable or blind_from==1: 
-            h_ratio.Draw()
-            # sys
-            if self.dic_sys:
-                for i in reversed(range(len(list_graphs)-1)):
-                    gr = list_graphs[i+1].Clone("")
-                    gr.Draw("E2 same")
-                    l2.AddEntry(list_graphs[i+1], list_legends[i+1], "f")                
+#         if not "score" in self.variable or blind_from==1: 
+        h_ratio.Draw()
+        # sys
+        if self.dic_sys:
+            for i in reversed(range(len(list_graphs)-1)):
+                gr = list_graphs[i+1].Clone("")
+                gr.Draw("E2 same")
+                l2.AddEntry(list_graphs[i+1], list_legends[i+1], "f")                
 
             # stat
             list_graphs[0].Draw("E2 same")
             l2.AddEntry(list_graphs[0], list_legends[0], "f")
         
-        if blind_from!=1 and not "score" in self.variable: # blind
+        if blind_from!=1: # blind
             for i in range(self.nbin):
                 threshold = self.nbin*blind_from
                 if i > threshold:
                     h_ratio.SetBinContent(i+1, 1e15) 
-        if "score" in self.variable and blind_from!=1:
-            h_ratio.Draw("same hist")
-            h_ratio.SetLineWidth(2)
-        else:
-            h_ratio.Draw("same")
+#         if "score" in self.variable and blind_from!=1:
+#             h_ratio.Draw("same hist")
+#             h_ratio.SetLineWidth(2)
+#         else:
+        h_ratio.Draw("same")
 
-        if not "score" in self.variable or blind_from==1:        
-            l2.Draw()      
+#         if not "score" in self.variable or blind_from==1:        
+        l2.Draw()      
         c1.SaveAs(file_name+"_"+self.variable+"breakdown.pdf")
 #         if not is_dnn:
 #             c1.SaveAs(file_name+"_"+self.variable+".png")
@@ -409,33 +407,43 @@ class HistStack(object):
 #         h_ratio.Draw()
         l3 = self.set_legend(0.75, 0.9, 0.92, 0.99)
         
-        if not "score" in self.variable or blind_from==1: 
-            h_ratio.Draw()
-            # sys
-            if self.dic_sys:
-                for i in reversed(range(len(list_graphs)-1)):
-                    gr = list_graphs[i+1].Clone("")
-                    gr.Draw("E2 same")                
-                    gr.SetFillColor(3)
-                l3.AddEntry(list_graphs[2], "tot. sys.", "f")
-            # stat
-            list_graphs[0].Draw("E2 same")
-            l3.AddEntry(list_graphs[0], list_legends[0], "f")
+#         if not "score" in self.variable or blind_from==1: 
+        h_ratio.Draw()
+        # sys
+        if self.dic_sys:
+            for i in reversed(range(len(list_graphs)-1)):
+                gr = list_graphs[i+1].Clone("")
+                gr.Draw("E2 same")                
+                gr.SetFillColor(3)
+            l3.AddEntry(list_graphs[2], "tot. sys.", "f")
+        # stat
+        list_graphs[0].Draw("E2 same")
+        l3.AddEntry(list_graphs[0], list_legends[0], "f")
         
-        if blind_from!=1 and not "score" in self.variable: # blind
+        if blind_from!=1: # blind
             for i in range(self.nbin):
                 threshold = self.nbin*blind_from
                 if i > threshold:
                     h_ratio.SetBinContent(i+1, 1e15)        
-        if "score" in self.variable and blind_from!=1:
-            h_ratio.Draw("same hist")
-            h_ratio.SetLineWidth(2)
-        else:
-            h_ratio.Draw("same")        
+#         if "score" in self.variable and blind_from!=1:
+#             h_ratio.Draw("same hist")
+#             h_ratio.SetLineWidth(2)
+#         else:
+        h_ratio.Draw("same")        
 
-        if not "score" in self.variable or blind_from==1:                       
-            l3.Draw("same")
-        c1.SaveAs(file_name+"_"+self.variable+".pdf")                
+#         if not "score" in self.variable or blind_from==1:                       
+        l3.Draw("same")
+        c1.SaveAs(file_name+"_"+self.variable+".pdf") 
+        
+        if "score" in self.variable:
+            c1.cd()
+    #         p2.Clear()
+            p2 = self.set_pad("bottom", 0, 0, 1, 0.3)
+            p2.Draw()
+            p2.cd()
+            h_ratio1.Draw("same hist")
+            h_ratio1.SetLineWidth(2)
+            c1.SaveAs(file_name+"_sign_"+self.variable+".pdf")
         return c1     
 
     def get_yeilds(self):
@@ -545,9 +553,19 @@ class HistStack(object):
         self.hist_all[sig_key].SetName("zp"+str_sys)
         self.hist_all[sig_key].SetTitle("zp"+str_sys)
         self.hist_all[sig_key].Write("zp"+str_sys,rt.TObject.kWriteDelete)
-        self.merged_hist["TT"].SetName("ttbar"+str_sys)
-        self.merged_hist["TT"].SetTitle("ttbar"+str_sys)
-        self.merged_hist["TT"].Write("ttbar"+str_sys,rt.TObject.kWriteDelete)
+        if "hdampUp" in str_sys:
+            TTkey = "TThdampUp"
+        elif "hdampDown" in str_sys:
+            TTkey = "TThdampDown"
+        elif "PSUp" in str_sys:
+            TTkey = "TTUp"  
+        elif "PSDown" in str_sys:
+            TTkey = "TTDown"
+        else:
+            TTkey = "TT"
+        self.merged_hist[TTkey].SetName("ttbar"+str_sys)
+        self.merged_hist[TTkey].SetTitle("ttbar"+str_sys)
+        self.merged_hist[TTkey].Write("ttbar"+str_sys,rt.TObject.kWriteDelete)
         self.merged_hist["DY"].SetName("dy"+str_sys)
         self.merged_hist["DY"].SetTitle("dy"+str_sys)
         self.merged_hist["DY"].Write("dy"+str_sys,rt.TObject.kWriteDelete)

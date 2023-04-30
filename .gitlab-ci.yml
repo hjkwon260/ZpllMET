@@ -4,6 +4,7 @@ variables:
     CMSSW_RELEASE: CMSSW_10_2_13
     CMSSW_ARCH: slc7_amd64_gcc700
     SCRIPT_PRESEL: Preselection_v5  
+    SCRIPT_EVAL: EvaluatePNN-v3  
 #     #INPUT_DIR: 20220215/ #20220131/
 #     INPUT_DIR: Run2/20221225_17/ee/
 #     DATE: 20221225
@@ -438,9 +439,9 @@ eval ee16:
         - echo ${INPUT_DIR}
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-        - jupyter nbconvert --to python EvaluatePNN-v2.ipynb
-        - python EvaluatePNN-v2.py ${ERA} SR
-        - python EvaluatePNN-v2.py ${ERA} VR
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} SR
+        - python ${SCRIPT_EVAL}.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
@@ -467,9 +468,9 @@ eval mm16:
         - echo ${INPUT_DIR}
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-        - jupyter nbconvert --to python EvaluatePNN-v2.ipynb
-        - python EvaluatePNN-v2.py ${ERA} SR
-        - python EvaluatePNN-v2.py ${ERA} VR
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} SR
+        - python ${SCRIPT_EVAL}.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy                                                             
@@ -496,9 +497,9 @@ eval em16:
         - echo ${INPUT_DIR}
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-        - jupyter nbconvert --to python EvaluatePNN-v2.ipynb
-        - python EvaluatePNN-v2.py ${ERA} SR
-        - python EvaluatePNN-v2.py ${ERA} VR
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} SR
+        - python ${SCRIPT_EVAL}.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy   
@@ -525,9 +526,9 @@ eval ee17:
         - echo ${INPUT_DIR}
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-        - jupyter nbconvert --to python EvaluatePNN-v2.ipynb
-        - python EvaluatePNN-v2.py ${ERA} SR
-        - python EvaluatePNN-v2.py ${ERA} VR
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} SR
+        - python ${SCRIPT_EVAL}.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
@@ -554,9 +555,9 @@ eval mm17:
         - echo ${INPUT_DIR}
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-        - jupyter nbconvert --to python EvaluatePNN-v2.ipynb
-        - python EvaluatePNN-v2.py ${ERA} SR
-        - python EvaluatePNN-v2.py ${ERA} VR
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} SR
+        - python ${SCRIPT_EVAL}.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy                                                             
@@ -583,9 +584,9 @@ eval em17:
         - echo ${INPUT_DIR}
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-        - jupyter nbconvert --to python EvaluatePNN-v2.ipynb
-        - python EvaluatePNN-v2.py ${ERA} SR
-        - python EvaluatePNN-v2.py ${ERA} VR
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} SR
+        - python ${SCRIPT_EVAL}.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
@@ -612,9 +613,9 @@ eval ee18:
         - echo ${INPUT_DIR}
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-        - jupyter nbconvert --to python EvaluatePNN-v2.ipynb
-        - python EvaluatePNN-v2.py ${ERA} SR
-        - python EvaluatePNN-v2.py ${ERA} VR
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} SR
+        - python ${SCRIPT_EVAL}.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
@@ -641,9 +642,9 @@ eval mm18:
         - echo ${INPUT_DIR}
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-        - jupyter nbconvert --to python EvaluatePNN-v2.ipynb
-        - python EvaluatePNN-v2.py ${ERA} SR
-        - python EvaluatePNN-v2.py ${ERA} VR
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} SR
+        - python ${SCRIPT_EVAL}.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy                                                             
@@ -670,9 +671,9 @@ eval em18:
         - echo ${INPUT_DIR}
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-        - jupyter nbconvert --to python EvaluatePNN-v2.ipynb
-        - python EvaluatePNN-v2.py ${ERA} SR
-        - python EvaluatePNN-v2.py ${ERA} VR
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} SR
+        - python ${SCRIPT_EVAL}.py ${ERA} VR
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy   
