@@ -426,7 +426,7 @@ eval ee16:
         ERA: ee16post
         CHANNEL: ee/ 
     needs:
-        - job: ee16        
+        - job: merge ee16        
     artifacts:
         paths:
             - Outputs/
@@ -455,7 +455,7 @@ eval mm16:
         ERA: mm16post
         CHANNEL: ee/ 
     needs:
-        - job: mm16       
+        - job: merge mm16       
     artifacts:
         paths:
             - Outputs/
@@ -484,7 +484,7 @@ eval em16:
         ERA: em16post
         CHANNEL: ee/ 
     needs:
-        - job: em16        
+        - job: merge em16        
     artifacts:
         paths:
             - Outputs/
@@ -677,17 +677,17 @@ eval em18:
         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy   
 
-limit ee16post:
+limit ee16:
     stage: limit
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16post/
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16/
         DATE: ${DATE1}
         ERA: ee16post
         CHANNEL: ee/ 
     needs:
-        - job: eval ee16post        
+        - job: eval ee16      
     artifacts:
         paths:
             - Combine/Logs_v1
@@ -703,17 +703,17 @@ limit ee16post:
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy   
 
-limit mm16post:
+limit mm16:
     stage: limit
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm16post/
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm16/
         DATE: ${DATE1}
         ERA: mm16post
         CHANNEL: mm/ 
     needs:
-        - job: eval mm16post        
+        - job: eval mm16        
     artifacts:
         paths:
             - Combine/Logs_v1
@@ -729,17 +729,17 @@ limit mm16post:
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
-limit em16post:
+limit em16:
     stage: limit
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em16post/
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em16/
         DATE: ${DATE1}
         ERA: em16post
         CHANNEL: em/ 
     needs:
-        - job: eval em16post        
+        - job: eval em16        
     artifacts:
         paths:
             - Combine/Logs_v1
@@ -751,84 +751,6 @@ limit em16post:
         - *set_combine
         - cd ${CI_PROJECT_DIR}/Combine
         - python limits_v2.py        
-        - cd ..
-        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
-        - kdestroy 
-
-limit ee16pre:
-    stage: limit
-    tags:
-        - cvmfs
-    variables:
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16pre/
-        DATE: ${DATE1}
-        ERA: ee16pre
-        CHANNEL: ee/ 
-    needs:
-        - job: eval ee16pre        
-    artifacts:
-        paths:
-            - Combine/Logs_v1
-        exclude:
-            - ${DATE}/Presel/**/*.pkl
-        expire_in: 10 min            
-    script:      
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - *set_combine
-        - cd ${CI_PROJECT_DIR}/Combine
-        - python limits_v2.py
-        - cd ..
-        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
-        - kdestroy 
-
-limit mm16pre:
-    stage: limit
-    tags:
-        - cvmfs
-    variables:
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm16pre/
-        DATE: ${DATE1}
-        ERA: mm16pre
-        CHANNEL: mm/ 
-    needs:
-        - job: eval mm16pre        
-    artifacts:
-        paths:
-            - Combine/Logs_v1
-        exclude:
-            - ${DATE}/Presel/**/*.pkl
-        expire_in: 10 min            
-    script:      
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - *set_combine
-        - cd ${CI_PROJECT_DIR}/Combine
-        - python limits_v2.py
-        - cd ..
-        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
-        - kdestroy 
-
-limit em16pre:
-    stage: limit
-    tags:
-        - cvmfs
-    variables:
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em16pre/
-        DATE: ${DATE1}
-        ERA: em16pre
-        CHANNEL: em/ 
-    needs:
-        - job: eval em16pre        
-    artifacts:
-        paths:
-            - Combine/Logs_v1
-        exclude:
-            - ${DATE}/Presel/**/*.pkl
-        expire_in: 10 min            
-    script:      
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - *set_combine
-        - cd ${CI_PROJECT_DIR}/Combine
-        - python limits_v2.py
         - cd ..
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
@@ -989,17 +911,17 @@ limit em18:
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
-draw ee16post:
+draw ee16:
     stage: draw
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16post/
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16/
         DATE: ${DATE1}
         ERA: ee16post
         CHANNEL: ee/ 
     needs:
-        - job: limit ee16post        
+        - job: limit ee16        
     artifacts:
         paths:
             - Combine/Plots    
@@ -1014,17 +936,17 @@ draw ee16post:
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
-draw mm16post:
+draw mm16:
     stage: draw
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm16post/
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm16/
         DATE: ${DATE1}
         ERA: mm16post
         CHANNEL: mm/ 
     needs:
-        - job: limit mm16post        
+        - job: limit mm16       
     artifacts:
         paths:
             - Combine/Plots    
@@ -1039,17 +961,17 @@ draw mm16post:
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
-draw em16post:
+draw em16:
     stage: draw
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em16post/
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em16/
         DATE: ${DATE1}
         ERA: em16post
         CHANNEL: em/ 
     needs:
-        - job: limit em16post        
+        - job: limit em16       
     artifacts:
         paths:
             - Combine/Plots    
@@ -1061,81 +983,6 @@ draw em16post:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python 2Dlimit.ipynb
         - python 2Dlimit.py ${ERA} 
-        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
-        - kdestroy 
-
-draw ee16pre:
-    stage: draw
-    tags:
-        - cvmfs
-    variables:
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16pre/
-        DATE: ${DATE1}
-        ERA: ee16pre
-        CHANNEL: ee/ 
-    needs:
-        - job: limit ee16pre        
-    artifacts:
-        paths:
-            - Combine/Plots    
-        exclude:
-            - ${DATE}/Presel/**/*.pkl
-        expire_in: 10 min            
-    script:
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-        - jupyter nbconvert --to python 2Dlimit.ipynb
-        - python 2Dlimit.py ${ERA}   
-        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
-        - kdestroy 
-
-draw mm16pre:
-    stage: draw
-    tags:
-        - cvmfs
-    variables:
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm16pre/
-        DATE: ${DATE1}
-        ERA: mm16pre
-        CHANNEL: mm/ 
-    needs:
-        - job: limit mm16pre        
-    artifacts:
-        paths:
-            - Combine/Plots    
-        exclude:
-            - ${DATE}/Presel/**/*.pkl
-        expire_in: 10 min            
-    script:
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-        - jupyter nbconvert --to python 2Dlimit.ipynb
-        - python 2Dlimit.py ${ERA} 
-        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
-        - kdestroy 
-
-draw em16pre:
-    stage: draw
-    tags:
-        - cvmfs
-    variables:
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em16pre/
-        DATE: ${DATE1}
-        ERA: em16pre
-        CHANNEL: em/ 
-    needs:
-        - job: limit em16pre        
-    artifacts:
-        paths:
-            - Combine/Plots    
-        exclude:
-            - ${DATE}/Presel/**/*.pkl
-        expire_in: 10 min            
-    script:
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-        - jupyter nbconvert --to python 2Dlimit.ipynb
-        - python 2Dlimit.py ${ERA}  
         - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
