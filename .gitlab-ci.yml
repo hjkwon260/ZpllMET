@@ -352,7 +352,7 @@ merge ee16:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python MergeEra.ipynb
         - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} SR ${DATE}
-        - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} VR ${DATE}
+        - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} PTSB ${DATE}
         - xrdcp -r ${DATE}/Presel/${CHANNEL}16 ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel
         - kdestroy 
 
@@ -382,7 +382,7 @@ merge mm16:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python MergeEra.ipynb
         - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} SR ${DATE}
-        - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} VR ${DATE}
+        - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} PTSB ${DATE}
         - xrdcp -r ${DATE}/Presel/${CHANNEL}16 ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel
         - kdestroy 
 
@@ -412,21 +412,21 @@ merge em16:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python MergeEra.ipynb
         - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} SR ${DATE}
-        - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} VR ${DATE}
+        - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} PTSB ${DATE}
         - xrdcp -r ${DATE}/Presel/${CHANNEL}16 ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel
         - kdestroy 
 
-eval ee16post:
+eval ee16:
     stage: evaluate
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16post/
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16/
         DATE: ${DATE1}
         ERA: ee16post
         CHANNEL: ee/ 
     needs:
-        - job: ee16post        
+        - job: ee16        
     artifacts:
         paths:
             - Outputs/
@@ -445,17 +445,17 @@ eval ee16post:
         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
 
-eval mm16post:
+eval mm16:
     stage: evaluate
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm16post/
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm16/
         DATE: ${DATE1}
         ERA: mm16post
         CHANNEL: ee/ 
     needs:
-        - job: mm16post        
+        - job: mm16       
     artifacts:
         paths:
             - Outputs/
@@ -474,17 +474,17 @@ eval mm16post:
         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy                                                             
 
-eval em16post:
+eval em16:
     stage: evaluate
     tags:
         - cvmfs
     variables:
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em16post/
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em16/
         DATE: ${DATE1}
         ERA: em16post
         CHANNEL: ee/ 
     needs:
-        - job: em16post        
+        - job: em16        
     artifacts:
         paths:
             - Outputs/
@@ -502,93 +502,6 @@ eval em16post:
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy   
-
-eval ee16pre:
-    stage: evaluate
-    tags:
-        - cvmfs
-    variables:
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16pre/
-        DATE: ${DATE1}
-        ERA: ee16pre
-        CHANNEL: ee/ 
-    needs:
-        - job: ee16pre        
-    artifacts:
-        paths:
-            - Outputs/
-        exclude:
-            - ${DATE}/Presel/**/*.pkl
-        expire_in: 10 min            
-    script:
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - echo ${INPUT_DIR}
-        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-        - jupyter nbconvert --to python EvaluatePNN-v2.ipynb
-        - python EvaluatePNN-v2.py ${ERA} SR
-        - python EvaluatePNN-v2.py ${ERA} VR
-        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
-        - kdestroy  
-
-eval mm16pre:
-    stage: evaluate
-    tags:
-        - cvmfs
-    variables:
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm16pre/
-        DATE: ${DATE1}
-        ERA: mm16pre
-        CHANNEL: ee/ 
-    needs:
-        - job: mm16pre        
-    artifacts:
-        paths:
-            - Outputs/
-        exclude:
-            - ${DATE}/Presel/**/*.pkl
-        expire_in: 10 min            
-    script:
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - echo ${INPUT_DIR}
-        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-        - jupyter nbconvert --to python EvaluatePNN-v2.ipynb
-        - python EvaluatePNN-v2.py ${ERA} SR
-        - python EvaluatePNN-v2.py ${ERA} VR
-        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
-        - kdestroy                                                             
-
-eval em16pre:
-    stage: evaluate
-    tags:
-        - cvmfs
-    variables:
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em16pre/
-        DATE: ${DATE1}
-        ERA: em16pre
-        CHANNEL: ee/ 
-    needs:
-        - job: em16pre        
-    artifacts:
-        paths:
-            - Outputs/
-        exclude:
-            - ${DATE}/Presel/**/*.pkl
-        expire_in: 10 min            
-    script:
-        - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - echo ${INPUT_DIR}
-        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-        - jupyter nbconvert --to python EvaluatePNN-v2.ipynb
-        - python EvaluatePNN-v2.py ${ERA} SR
-        - python EvaluatePNN-v2.py ${ERA} VR
-        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
-        - kdestroy 
 
 eval ee17:
     stage: evaluate
