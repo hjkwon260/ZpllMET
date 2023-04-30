@@ -356,6 +356,66 @@ merge ee16:
         - xrdcp -r ${DATE}/Presel/${CHANNEL}16 ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel
         - kdestroy 
 
+merge mm16:
+    stage: merge
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        DATE: ${DATE1}
+        ERA: mm16post
+        CHANNEL: mm
+    needs:
+        - job: mm16pre        
+        - job: mm16post        
+    artifacts:
+        paths:
+            - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - echo ${INPUT_DIR}
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR}/mm16pre ${CI_PROJECT_DIR}  2>/dev/null
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR}/mm16post ${CI_PROJECT_DIR}  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python MergeEra.ipynb
+        - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} SR ${DATE}
+        - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} VR ${DATE}
+        - xrdcp -r ${DATE}/Presel/${CHANNEL}16 ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel
+        - kdestroy 
+
+merge em16:
+    stage: merge
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        DATE: ${DATE1}
+        ERA: em16post
+        CHANNEL: em
+    needs:
+        - job: em16pre        
+        - job: em16post        
+    artifacts:
+        paths:
+            - ${DATE}/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - echo ${INPUT_DIR}
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR}/em16pre ${CI_PROJECT_DIR}  2>/dev/null
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR}/em16post ${CI_PROJECT_DIR}  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python MergeEra.ipynb
+        - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} SR ${DATE}
+        - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} VR ${DATE}
+        - xrdcp -r ${DATE}/Presel/${CHANNEL}16 ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel
+        - kdestroy 
+
 eval ee16post:
     stage: evaluate
     tags:
