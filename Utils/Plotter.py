@@ -417,7 +417,7 @@ class HistStack(object):
                     gr = list_graphs[i+1].Clone("")
                     gr.Draw("E2 same")                
                     gr.SetFillColor(3)
-                l3.AddEntry(list_graphs[1], "tot. sys.", "f")
+                l3.AddEntry(list_graphs[2], "tot. sys.", "f")
             # stat
             list_graphs[0].Draw("E2 same")
             l3.AddEntry(list_graphs[0], list_legends[0], "f")
