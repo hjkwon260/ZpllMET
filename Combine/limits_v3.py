@@ -46,12 +46,12 @@ for m in SIGNAL_MASSES:
 # 		print("//----Significance----//")
 # 		os.system("combine -M Significance workspace_"+d+".root -m 200 --rMin -2 --rMax 2")
 	##----- impact -----##
-	if m == 'Zp-2500_CH-845':
+	if m == 'Zp-2500_CH-345':
 		os.system("text2workspace.py "+new_datacard+" -m 800 -o "+new_datacard+".root")
 		os.system("combineTool.py -M Impacts -d "+new_datacard+".root -m 200 --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doInitialFit")
 		os.system("combineTool.py -M Impacts -d "+new_datacard+".root -m 200 --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doFits")
 		os.system("combineTool.py -M Impacts -d "+new_datacard+".root -m 200 --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --output impacts"+new_datacard+".json")
-		os.system("plotImpacts.py -i impacts"+new_datacard+".json -o ./Plots/impacts"+m)
+		os.system("plotImpacts.py -i impacts"+new_datacard+".json -o ./Logs_v1/impacts"+m)
 
 
 
