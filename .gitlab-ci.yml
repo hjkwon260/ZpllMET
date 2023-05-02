@@ -418,7 +418,7 @@ merge em16:
         - xrdcp -r ${DATE}/Presel/${CHANNEL}16 ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel
         - kdestroy 
 
-eval ee16:
+eval ee16 SR 1:
     stage: evaluate
     tags:
         - cvmfs
@@ -441,13 +441,65 @@ eval ee16:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-        - python ${SCRIPT_EVAL}.py ${ERA} SR
-        - python ${SCRIPT_EVAL}.py ${ERA} VR
+        - python ${SCRIPT_EVAL}.py ${ERA} SR one
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
 
-eval mm16:
+eval ee16 SR 2:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16/
+        DATE: ${DATE1}
+        ERA: ee16
+        CHANNEL: ee/ 
+    needs:
+        - job: merge ee16        
+    artifacts:
+        paths:
+            - Outputs/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - echo ${INPUT_DIR}
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} SR two
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
+
+eval ee16 VR:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16/
+        DATE: ${DATE1}
+        ERA: ee16
+        CHANNEL: ee/ 
+    needs:
+        - job: merge ee16        
+    artifacts:
+        paths:
+            - Outputs/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - echo ${INPUT_DIR}
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} VR dummy
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
+
+eval mm16 SR 1:
     stage: evaluate
     tags:
         - cvmfs
@@ -470,13 +522,65 @@ eval mm16:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-        - python ${SCRIPT_EVAL}.py ${ERA} SR
-        - python ${SCRIPT_EVAL}.py ${ERA} VR
+        - python ${SCRIPT_EVAL}.py ${ERA} SR one
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy                                                             
 
-eval em16:
+eval mm16 SR 2:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm16/
+        DATE: ${DATE1}
+        ERA: mm16
+        CHANNEL: ee/ 
+    needs:
+        - job: merge mm16       
+    artifacts:
+        paths:
+            - Outputs/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - echo ${INPUT_DIR}
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} SR two
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
+
+eval mm16 VR:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm16/
+        DATE: ${DATE1}
+        ERA: mm16
+        CHANNEL: ee/ 
+    needs:
+        - job: merge mm16       
+    artifacts:
+        paths:
+            - Outputs/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - echo ${INPUT_DIR}
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} VR dummy
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
+
+eval em16 SR 1:
     stage: evaluate
     tags:
         - cvmfs
@@ -499,13 +603,65 @@ eval em16:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-        - python ${SCRIPT_EVAL}.py ${ERA} SR
-        - python ${SCRIPT_EVAL}.py ${ERA} VR
+        - python ${SCRIPT_EVAL}.py ${ERA} SR one
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy   
 
-eval ee17 SR:
+eval em16 SR 2:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em16/
+        DATE: ${DATE1}
+        ERA: em16
+        CHANNEL: ee/ 
+    needs:
+        - job: merge em16        
+    artifacts:
+        paths:
+            - Outputs/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - echo ${INPUT_DIR}
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} SR two
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy  
+
+eval em16 VR:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em16/
+        DATE: ${DATE1}
+        ERA: em16
+        CHANNEL: ee/ 
+    needs:
+        - job: merge em16        
+    artifacts:
+        paths:
+            - Outputs/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - echo ${INPUT_DIR}
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} VR dummy
+        - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
+
+eval ee17 SR 1:
     stage: evaluate
     tags:
         - cvmfs
@@ -528,9 +684,36 @@ eval ee17 SR:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-        - python ${SCRIPT_EVAL}.py ${ERA} SR
+        - python ${SCRIPT_EVAL}.py ${ERA} SR one
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-        - kdestroy  
+        - kdestroy 
+
+eval ee17 SR 2:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee17/
+        DATE: ${DATE1}
+        ERA: ee17
+        CHANNEL: ee/ 
+    needs:
+        - job: ee17        
+    artifacts:
+        paths:
+            - Outputs/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - echo ${INPUT_DIR}
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} SR two
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy
 
 eval ee17 VR:
     stage: evaluate
@@ -555,11 +738,11 @@ eval ee17 VR:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-        - python ${SCRIPT_EVAL}.py ${ERA} VR
+        - python ${SCRIPT_EVAL}.py ${ERA} VR dummy
         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
-eval mm17 SR:
+eval mm17 SR 1:
     stage: evaluate
     tags:
         - cvmfs
@@ -582,9 +765,36 @@ eval mm17 SR:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-        - python ${SCRIPT_EVAL}.py ${ERA} SR
+        - python ${SCRIPT_EVAL}.py ${ERA} SR one
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy                                                             
+
+eval mm17 SR 2:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm17/
+        DATE: ${DATE1}
+        ERA: mm17
+        CHANNEL: ee/ 
+    needs:
+        - job: mm17        
+    artifacts:
+        paths:
+            - Outputs/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - echo ${INPUT_DIR}
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} SR two
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 eval mm17 VR:
     stage: evaluate
@@ -609,11 +819,11 @@ eval mm17 VR:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-        - python ${SCRIPT_EVAL}.py ${ERA} VR
+        - python ${SCRIPT_EVAL}.py ${ERA} VR dummy
         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
-eval em17 SR:
+eval em17 SR 1:
     stage: evaluate
     tags:
         - cvmfs
@@ -636,7 +846,34 @@ eval em17 SR:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-        - python ${SCRIPT_EVAL}.py ${ERA} SR
+        - python ${SCRIPT_EVAL}.py ${ERA} SR one
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy  
+
+eval em17 SR 2:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em17/
+        DATE: ${DATE1}
+        ERA: em17
+        CHANNEL: ee/ 
+    needs:
+        - job: em17        
+    artifacts:
+        paths:
+            - Outputs/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - echo ${INPUT_DIR}
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} SR two
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
 
@@ -663,11 +900,11 @@ eval em17 VR:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-        - python ${SCRIPT_EVAL}.py ${ERA} VR
+        - python ${SCRIPT_EVAL}.py ${ERA} VR dummy
         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
-eval ee18 SR:
+eval ee18 SR 1:
     stage: evaluate
     tags:
         - cvmfs
@@ -690,9 +927,36 @@ eval ee18 SR:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-        - python ${SCRIPT_EVAL}.py ${ERA} SR
+        - python ${SCRIPT_EVAL}.py ${ERA} SR one
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy  
+
+eval ee18 SR 2:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee18/
+        DATE: ${DATE1}
+        ERA: ee18
+        CHANNEL: ee/ 
+    needs:
+        - job: ee18        
+    artifacts:
+        paths:
+            - Outputs/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - echo ${INPUT_DIR}
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} SR two
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 eval ee18 VR:
     stage: evaluate
@@ -717,11 +981,11 @@ eval ee18 VR:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-        - python ${SCRIPT_EVAL}.py ${ERA} VR
+        - python ${SCRIPT_EVAL}.py ${ERA} VR dummy
         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
-eval mm18 SR:
+eval mm18 SR 1:
     stage: evaluate
     tags:
         - cvmfs
@@ -744,9 +1008,36 @@ eval mm18 SR:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-        - python ${SCRIPT_EVAL}.py ${ERA} SR
+        - python ${SCRIPT_EVAL}.py ${ERA} SR one
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy                                                             
+
+eval mm18 SR 2:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm18/
+        DATE: ${DATE1}
+        ERA: mm18
+        CHANNEL: ee/ 
+    needs:
+        - job: mm18        
+    artifacts:
+        paths:
+            - Outputs/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - echo ${INPUT_DIR}
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} SR two
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy 
 
 eval mm18 VR:
     stage: evaluate
@@ -771,11 +1062,11 @@ eval mm18 VR:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-        - python ${SCRIPT_EVAL}.py ${ERA} VR
+        - python ${SCRIPT_EVAL}.py ${ERA} VR dummy
         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
-eval em18 SR:
+eval em18 SR 1:
     stage: evaluate
     tags:
         - cvmfs
@@ -798,9 +1089,36 @@ eval em18 SR:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-        - python ${SCRIPT_EVAL}.py ${ERA} SR
+        - python ${SCRIPT_EVAL}.py ${ERA} SR one
         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy   
+
+eval em18 SR 2:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em18/
+        DATE: ${DATE1}
+        ERA: em18
+        CHANNEL: ee/ 
+    needs:
+        - job: em18        
+    artifacts:
+        paths:
+            - Outputs/
+        exclude:
+            - ${DATE}/Presel/**/*.pkl
+        expire_in: 10 min            
+    script:
+        - printf $PASS | base64 -d | kinit $USER@CERN.CH
+        - echo ${INPUT_DIR}
+        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+        - python ${SCRIPT_EVAL}.py ${ERA} SR two
+        - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
+        - kdestroy  
 
 eval em18 VR:
     stage: evaluate
@@ -825,7 +1143,7 @@ eval em18 VR:
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-        - python ${SCRIPT_EVAL}.py ${ERA} VR
+        - python ${SCRIPT_EVAL}.py ${ERA} VR dummy
         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
@@ -839,7 +1157,8 @@ limit ee16:
         ERA: ee16post
         CHANNEL: ee/ 
     needs:
-        - job: eval ee16      
+        - job: eval ee16 SR 1     
+        - job: eval ee16 SR 2     
     artifacts:
         paths:
             - Combine/Logs_v1
@@ -865,7 +1184,8 @@ limit mm16:
         ERA: mm16post
         CHANNEL: mm/ 
     needs:
-        - job: eval mm16        
+        - job: eval mm16 SR 1       
+        - job: eval mm16 SR 2       
     artifacts:
         paths:
             - Combine/Logs_v1
@@ -891,7 +1211,8 @@ limit em16:
         ERA: em16post
         CHANNEL: em/ 
     needs:
-        - job: eval em16        
+        - job: eval em16 SR 1       
+        - job: eval em16 SR 2       
     artifacts:
         paths:
             - Combine/Logs_v1
@@ -917,7 +1238,8 @@ limit ee17:
         ERA: ee17
         CHANNEL: ee/ 
     needs:
-        - job: eval ee17 SR       
+        - job: eval ee17 SR 1      
+        - job: eval ee17 SR 2      
     artifacts:
         paths:
             - Combine/Logs_v1
@@ -943,7 +1265,8 @@ limit mm17:
         ERA: mm17
         CHANNEL: mm/ 
     needs:
-        - job: eval mm17 SR       
+        - job: eval mm17 SR 1      
+        - job: eval mm17 SR 2      
     artifacts:
         paths:
             - Combine/Logs_v1
@@ -969,7 +1292,8 @@ limit em17:
         ERA: em17
         CHANNEL: em/ 
     needs:
-        - job: eval em17 SR       
+        - job: eval em17 SR 1      
+        - job: eval em17 SR 2      
     artifacts:
         paths:
             - Combine/Logs_v1
@@ -995,7 +1319,8 @@ limit ee18:
         ERA: ee18
         CHANNEL: ee/ 
     needs:
-        - job: eval ee18 SR       
+        - job: eval ee18 SR 1      
+        - job: eval ee18 SR 2      
     artifacts:
         paths:
             - Combine/Logs_v1
@@ -1021,7 +1346,8 @@ limit mm18:
         ERA: mm18
         CHANNEL: mm/ 
     needs:
-        - job: eval mm18 SR      
+        - job: eval mm18 SR 1     
+        - job: eval mm18 SR 2     
     artifacts:
         paths:
             - Combine/Logs_v1
@@ -1047,7 +1373,8 @@ limit em18:
         ERA: em18
         CHANNEL: em/ 
     needs:
-        - job: eval em18 SR       
+        - job: eval em18 SR 1      
+        - job: eval em18 SR 2      
     artifacts:
         paths:
             - Combine/Logs_v1
