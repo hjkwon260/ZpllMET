@@ -29,7 +29,7 @@ before_script:
     - git fetch origin
     - git checkout v8.1.0
     - cd $CMSSW_BASE/src
-    #- bash <(curl -s https://raw.githubusercontent.com/cms-analysis/CombineHarvester/master/CombineTools/scripts/sparse-checkout-https.sh)
+    - bash <(curl -s https://raw.githubusercontent.com/cms-analysis/CombineHarvester/master/CombineTools/scripts/sparse-checkout-https.sh)
     - scram b -j 20
 
 stages:

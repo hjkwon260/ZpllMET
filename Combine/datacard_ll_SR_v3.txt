@@ -20,8 +20,8 @@ met               shape  1               1               1               1      
 effSF             shape  1               1               1               1       1        1        1         1 
 trigSF            shape  1               1               1               1       1        1        1         1 
 topSF             shape  1               -               -               -       -        -        -         - 
-#hdamp             shape  1               -               -               -       -        -        -         - 
-#PS                shape  1               -               -               -       -        -        -         - 
+hdamp             shape  1               -               -               -       -        -        -         - 
+PS                shape  1               -               -               -       -        -        -         - 
 # btag_eff        shape    1               1               1               1             -                   -
 # jes             shape    1               1               1               1             -                   1
 # MET_jes         shape    1               1               1               1             -                  1
