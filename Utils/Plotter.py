@@ -550,9 +550,7 @@ class HistStack(object):
             str_sys = "_"+str_sys
         f = rt.TFile(file_name+"_v1.root","UPDATE") 
         f.cd("signal_region")
-        self.hist_all[sig_key].SetName("zp"+str_sys)
-        self.hist_all[sig_key].SetTitle("zp"+str_sys)
-        self.hist_all[sig_key].Write("zp"+str_sys,rt.TObject.kWriteDelete)
+
         if "hdampUp" in str_sys:
             TTkey = "TThdampUp"
         elif "hdampDown" in str_sys:
@@ -571,6 +569,9 @@ class HistStack(object):
             str_sys = str_sys.replace("trigSF", "trig_eff")
         if "topSF" in str_sys:
             str_sys = str_sys.replace("topSF", "toppt")
+        self.hist_all[sig_key].SetName("zp"+str_sys)
+        self.hist_all[sig_key].SetTitle("zp"+str_sys)
+        self.hist_all[sig_key].Write("zp"+str_sys,rt.TObject.kWriteDelete)            
         self.merged_hist[TTkey].SetName("ttbar"+str_sys)
         self.merged_hist[TTkey].SetTitle("ttbar"+str_sys)
         self.merged_hist[TTkey].Write("ttbar"+str_sys,rt.TObject.kWriteDelete)
