@@ -563,6 +563,14 @@ class HistStack(object):
             TTkey = "TTDown"
         else:
             TTkey = "TT"
+        if "PS" in str_sys:
+            str_sys = str_sys.replace("PS", "UE")
+        if "effSF" in str_sys:
+            str_sys = str_sys.replace("effSF", "ll_eff")
+        if "trigSF" in str_sys:
+            str_sys = str_sys.replace("trigSF", "trig_eff")
+        if "topSF" in str_sys:
+            str_sys = str_sys.replace("topSF", "toppt")
         self.merged_hist[TTkey].SetName("ttbar"+str_sys)
         self.merged_hist[TTkey].SetTitle("ttbar"+str_sys)
         self.merged_hist[TTkey].Write("ttbar"+str_sys,rt.TObject.kWriteDelete)

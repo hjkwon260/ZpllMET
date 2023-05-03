@@ -21,7 +21,7 @@ SIGNAL_MASSES = setting["ALL_MASSES"]
 
 
 for m in SIGNAL_MASSES:
-	input_root_file = '../Outputs/SR/shape_v1_2803_equalpropv1'+m+'_v1.root'
+	input_root_file = '../Outputs/SR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
 
 	# Read in the file
 	with open(input_datacard, 'r') as file :
@@ -46,7 +46,7 @@ for m in SIGNAL_MASSES:
 # 		print("//----Significance----//")
 # 		os.system("combine -M Significance workspace_"+d+".root -m 200 --rMin -2 --rMax 2")
 	##----- impact -----##
-	if m == 'Zp-2500_CH-345':
+	if m == 'Zp-2500_CH-345' or m == 'Zp-2500_CH-845' or m == 'Zp-4100_CH-345':
 		os.system("text2workspace.py "+new_datacard+" -m 800 -o "+new_datacard+".root")
 		os.system("combineTool.py -M Impacts -d "+new_datacard+".root -m 200 --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doInitialFit")
 		os.system("combineTool.py -M Impacts -d "+new_datacard+".root -m 200 --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doFits")
