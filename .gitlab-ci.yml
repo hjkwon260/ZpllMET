@@ -1,9 +1,9 @@
 variables:
-    DATE1: 20230514wp80
+    DATE1: 20230523deepCSV
     CMS_PATH: /cvmfs/cms.cern.ch
     CMSSW_RELEASE: CMSSW_10_2_13
     CMSSW_ARCH: slc7_amd64_gcc700
-    SCRIPT_PRESEL: Preselection_v5  
+    SCRIPT_PRESEL: Preselection_v6  
     SCRIPT_EVAL: EvaluatePNN-v3  
     SCRIPT_LIMIT: limits_v3  
 #     #INPUT_DIR: 20220215/ #20220131/
