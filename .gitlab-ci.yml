@@ -57,7 +57,7 @@ mm16pre:
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
         - echo ${DATE}
-        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
@@ -81,7 +81,7 @@ ee16pre:
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
@@ -105,7 +105,7 @@ em16pre:
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}        
@@ -129,7 +129,7 @@ mm16post:
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}   
@@ -153,7 +153,7 @@ ee16post:
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
@@ -177,7 +177,7 @@ em16post:
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}          
@@ -201,7 +201,7 @@ mm17:
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}    
@@ -225,7 +225,7 @@ ee17:
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}    
@@ -249,7 +249,7 @@ em17:
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
@@ -273,7 +273,7 @@ mm18:
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}     
@@ -297,7 +297,7 @@ ee18:
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
@@ -321,7 +321,7 @@ em18:
         expire_in: 10 min            
     script:
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
+        - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  2>/dev/null
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}   
