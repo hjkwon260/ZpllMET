@@ -77,10 +77,16 @@ class HistStack(object):
                     h_wz.Add(hist_all[key])
                 else:
                     h_wz=hist_all[key].Clone("")
-        self.merged_hist['WWW']=hist_all["WWW"].Clone("")   
-        self.merged_hist['WWZ']=hist_all["WWZ"].Clone("")   
-        self.merged_hist['H']=hist_all["H"].Clone("")   
-        self.merged_hist['HWW']=hist_all["HWW"].Clone("")   
+            if key=="WWW" or key=="WWZ" or key=="H" or key=="HWW":
+                if 'h_others' in locals():
+                    h_others.Add(hist_all[key])
+                else:
+                    h_others=hist_all[key].Clone("")
+        # self.merged_hist['WWW']=hist_all["WWW"].Clone("")   
+        # self.merged_hist['WWZ']=hist_all["WWZ"].Clone("")   
+        # self.merged_hist['H']=hist_all["H"].Clone("")   
+        # self.merged_hist['HWW']=hist_all["HWW"].Clone("")   
+        self.merged_hist['Others']=h_others
         self.merged_hist['TTZ']=hist_all["TTZ"].Clone("")   
         self.merged_hist['ZZ']=hist_all["ZZ"].Clone("")
         self.merged_hist['WZ']=h_wz
@@ -301,15 +307,16 @@ class HistStack(object):
         h_bkg=rt.TH1D("", "",  self.nbin, self.xl, self.xh)
         dic_merged=self.get_merged_hist()
         if "hdampUp" in self.weight:
-            bkg_keys = ['WWW', 'WWZ', 'H', 'HWW', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TThdampUp', 'DY']
+            bkg_keys = ['Others', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TThdampUp', 'DY']
         elif "hdampDown" in self.weight:
-            bkg_keys = ['WWW', 'WWZ', 'H', 'HWW', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TThdampDown', 'DY']
+            bkg_keys = ['Others', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TThdampDown', 'DY']
         elif "PSUp" in self.weight:
-            bkg_keys = ['WWW', 'WWZ', 'H', 'HWW', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TTUp', 'DY']
+            bkg_keys = ['Others', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TTUp', 'DY']
         elif "PSDown" in self.weight:
-            bkg_keys = ['WWW', 'WWZ', 'H', 'HWW', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TTDown', 'DY'] 
+            bkg_keys = ['Others', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TTDown', 'DY'] 
         else:
-            bkg_keys = ['WWW', 'WWZ', 'H', 'HWW', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TT', 'DY']
+            bkg_keys = ['Others', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TT', 'DY']
+            # bkg_keys = ['WWW', 'WWZ', 'H', 'HWW', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TT', 'DY']
             # bkg_keys = ['TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TTSemi', 'TT', 'DY'] #temp
         for key in bkg_keys:
             hstack.Add(dic_merged[key])
