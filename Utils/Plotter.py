@@ -71,10 +71,19 @@ class HistStack(object):
                 if 'h_ttdown' in locals():
                     h_ttdown.Add(hist_all[key])
                 else:
-                    h_ttdown=hist_all[key].Clone("")
+                    h_ttdown=hist_all[key].Clone("")            
+            if key=="WZ" or key=="WZQQ":
+                if 'h_wz' in locals():
+                    h_wz.Add(hist_all[key])
+                else:
+                    h_wz=hist_all[key].Clone("")
+        self.merged_hist['WWW']=hist_all["WWW"].Clone("")   
+        self.merged_hist['WWZ']=hist_all["WWZ"].Clone("")   
+        self.merged_hist['H']=hist_all["H"].Clone("")   
+        self.merged_hist['HWW']=hist_all["HWW"].Clone("")   
         self.merged_hist['TTZ']=hist_all["TTZ"].Clone("")   
         self.merged_hist['ZZ']=hist_all["ZZ"].Clone("")
-        self.merged_hist['WZ']=hist_all["WZ"].Clone("")
+        self.merged_hist['WZ']=h_wz
         self.merged_hist['WW']=hist_all["WW"].Clone("")
         if 'h_tw' in locals():
             self.merged_hist['TW']=h_tw
@@ -260,6 +269,8 @@ class HistStack(object):
                 gerr.SetLineWidth(0)
                 gerr.SetLineColor(0)        
                 gerr.SetFillColor(i+2)
+                if i > 7:
+                    gerr.SetFillColor(i-7+2)
                 gerr.SetFillStyle(3001)
                 list_graphs.append(gerr)
                 list_legends.append(str(s))     
@@ -290,15 +301,16 @@ class HistStack(object):
         h_bkg=rt.TH1D("", "",  self.nbin, self.xl, self.xh)
         dic_merged=self.get_merged_hist()
         if "hdampUp" in self.weight:
-            bkg_keys = ['TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TThdampUp', 'DY']
+            bkg_keys = ['WWW', 'WWZ', 'H', 'HWW', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TThdampUp', 'DY']
         elif "hdampDown" in self.weight:
-            bkg_keys = ['TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TThdampDown', 'DY']
+            bkg_keys = ['WWW', 'WWZ', 'H', 'HWW', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TThdampDown', 'DY']
         elif "PSUp" in self.weight:
-            bkg_keys = ['TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TTUp', 'DY']
+            bkg_keys = ['WWW', 'WWZ', 'H', 'HWW', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TTUp', 'DY']
         elif "PSDown" in self.weight:
-            bkg_keys = ['TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TTDown', 'DY'] 
+            bkg_keys = ['WWW', 'WWZ', 'H', 'HWW', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TTDown', 'DY'] 
         else:
-            bkg_keys = ['TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TT', 'DY']
+            bkg_keys = ['WWW', 'WWZ', 'H', 'HWW', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TT', 'DY']
+            # bkg_keys = ['TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TTSemi', 'TT', 'DY'] #temp
         for key in bkg_keys:
             hstack.Add(dic_merged[key])
             h_bkg.Add(dic_merged[key])
