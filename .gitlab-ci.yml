@@ -1,5 +1,5 @@
 variables:
-    DATE1: 20230523deepCSV
+    DATE1: 20230526deepCSV
     CMS_PATH: /cvmfs/cms.cern.ch
     CMSSW_RELEASE: CMSSW_10_2_13
     CMSSW_ARCH: slc7_amd64_gcc700
