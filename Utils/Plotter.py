@@ -77,7 +77,7 @@ class HistStack(object):
                     h_wz.Add(hist_all[key])
                 else:
                     h_wz=hist_all[key].Clone("")
-            if key=="WWW" or key=="WWZ" or key=="H" or key=="HWW":
+            if key=="TTZ" or key=="WWW" or key=="WWZ" or key=="H" or key=="HWW":
                 if 'h_others' in locals():
                     h_others.Add(hist_all[key])
                 else:
@@ -87,7 +87,7 @@ class HistStack(object):
         # self.merged_hist['H']=hist_all["H"].Clone("")   
         # self.merged_hist['HWW']=hist_all["HWW"].Clone("")   
         self.merged_hist['Others']=h_others
-        self.merged_hist['TTZ']=hist_all["TTZ"].Clone("")   
+        # self.merged_hist['TTZ']=hist_all["TTZ"].Clone("")   
         self.merged_hist['ZZ']=hist_all["ZZ"].Clone("")
         self.merged_hist['WZ']=h_wz
         self.merged_hist['WW']=hist_all["WW"].Clone("")
@@ -307,15 +307,15 @@ class HistStack(object):
         h_bkg=rt.TH1D("", "",  self.nbin, self.xl, self.xh)
         dic_merged=self.get_merged_hist()
         if "hdampUp" in self.weight:
-            bkg_keys = ['Others', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TThdampUp', 'DY']
+            bkg_keys = ['Others', 'ZZ', 'WZ', 'WW', 'TW', 'TThdampUp', 'DY']
         elif "hdampDown" in self.weight:
-            bkg_keys = ['Others', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TThdampDown', 'DY']
+            bkg_keys = ['Others', 'ZZ', 'WZ', 'WW', 'TW', 'TThdampDown', 'DY']
         elif "PSUp" in self.weight:
-            bkg_keys = ['Others', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TTUp', 'DY']
+            bkg_keys = ['Others', 'ZZ', 'WZ', 'WW', 'TW', 'TTUp', 'DY']
         elif "PSDown" in self.weight:
-            bkg_keys = ['Others', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TTDown', 'DY'] 
+            bkg_keys = ['Others', 'ZZ', 'WZ', 'WW', 'TW', 'TTDown', 'DY'] 
         else:
-            bkg_keys = ['Others', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TT', 'DY']
+            bkg_keys = ['Others', 'ZZ', 'WZ', 'WW', 'TW', 'TT', 'DY']
             # bkg_keys = ['WWW', 'WWZ', 'H', 'HWW', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TT', 'DY']
             # bkg_keys = ['TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TTSemi', 'TT', 'DY'] #temp
         for key in bkg_keys:
@@ -340,10 +340,16 @@ class HistStack(object):
         # draw data
         h_data=self.hist_all["Data"].Clone("")
         if blind_from!=1: # blind
-            for i in range(self.nbin):
-                threshold = self.nbin*blind_from
-                if i > threshold:
-                    h_data.SetBinContent(i+1, 1e15)
+            if blind_from < 0:
+                for i in range(self.nbin):
+                    threshold = self.nbin*math.fabs(blind_from)
+                    if i+1 < threshold:
+                        h_data.SetBinContent(i+1, 1e15)                
+            else:    
+                for i in range(self.nbin):
+                    threshold = self.nbin*blind_from
+                    if i+1 > threshold:
+                        h_data.SetBinContent(i+1, 1e15)
         h_data.Draw("same EP")
         h_data.SetMarkerStyle(8)
         
@@ -402,10 +408,16 @@ class HistStack(object):
             l2.AddEntry(list_graphs[0], list_legends[0], "f")
         
         if blind_from!=1: # blind
-            for i in range(self.nbin):
-                threshold = self.nbin*blind_from
-                if i > threshold:
-                    h_ratio.SetBinContent(i+1, 1e15) 
+            if blind_from < 0:
+                for i in range(self.nbin):
+                    threshold = self.nbin*math.fabs(blind_from)
+                    if i+1 < threshold:
+                        h_ratio.SetBinContent(i+1, 1e15) 
+            else:         
+                for i in range(self.nbin):
+                    threshold = self.nbin*blind_from
+                    if i+1 > threshold:
+                        h_ratio.SetBinContent(i+1, 1e15) 
 #         if "score" in self.variable and blind_from!=1:
 #             h_ratio.Draw("same hist")
 #             h_ratio.SetLineWidth(2)
@@ -440,10 +452,16 @@ class HistStack(object):
         l3.AddEntry(list_graphs[0], list_legends[0], "f")
         
         if blind_from!=1: # blind
-            for i in range(self.nbin):
-                threshold = self.nbin*blind_from
-                if i > threshold:
-                    h_ratio.SetBinContent(i+1, 1e15)        
+            if blind_from < 0:
+                for i in range(self.nbin):
+                    threshold = self.nbin*math.fabs(blind_from)
+                    if i+1 < threshold:
+                        h_ratio.SetBinContent(i+1, 1e15)        
+            else:         
+                for i in range(self.nbin):
+                    threshold = self.nbin*blind_from
+                    if i+1 > threshold:
+                        h_ratio.SetBinContent(i+1, 1e15)        
 #         if "score" in self.variable and blind_from!=1:
 #             h_ratio.Draw("same hist")
 #             h_ratio.SetLineWidth(2)
@@ -609,9 +627,9 @@ class HistStack(object):
         self.merged_hist["ZZ"].SetName("zz"+str_sys)
         self.merged_hist["ZZ"].SetTitle("zz"+str_sys)
         self.merged_hist["ZZ"].Write("zz"+str_sys,rt.TObject.kWriteDelete)
-        self.merged_hist["TTZ"].SetName("ttz"+str_sys)
-        self.merged_hist["TTZ"].SetTitle("ttz"+str_sys)
-        self.merged_hist["TTZ"].Write("ttz"+str_sys,rt.TObject.kWriteDelete) 
+        # self.merged_hist["TTZ"].SetName("ttz"+str_sys)
+        # self.merged_hist["TTZ"].SetTitle("ttz"+str_sys)
+        # self.merged_hist["TTZ"].Write("ttz"+str_sys,rt.TObject.kWriteDelete) 
         self.h_bkg.SetName("total_bkg"+str_sys)
         self.h_bkg.SetTitle("total_bkg"+str_sys)
         self.h_bkg.Write("total_bkg"+str_sys,rt.TObject.kWriteDelete)
