@@ -4,7 +4,8 @@ import json
 os.system("mkdir Logs_v1")
 os.system("mkdir Plots")
 
-input_datacard = 'datacard_ll_SR_v3.txt'
+# input_datacard = 'datacard_ll_SR_v3.txt'
+input_datacard = 'datacard_ll_SR_v4.txt'
 # input_root_file = '../Outputs/mm/shape_v1_dummyZp-2500_CH-345_v1.root'
 
 dic_limits={}
@@ -17,11 +18,15 @@ with open('../config/Settrain.json') as json_file:
 INPUTDIR = setting["INPUTDIR"]
 VERSION = setting["VERSION"]
 SIGNAL_MASSES = setting["ALL_MASSES"]
-# SIGNAL_MASSES = ['Zp-2500_CH-845']
+# SIGNAL_MASSES = ['Zp-2500_CH-345']
+# SIGNAL_MASSES = ['Zp-3300_CH-595']
 
 
 for m in SIGNAL_MASSES:
 	input_root_file = '../Outputs/SR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+	# input_root_file = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/em17/SR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+	# input_root_file = '/eos/user/h/hkwon/Run2/Preselection/20230430wp80/Presel/em17/SR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+	# input_root_file = '../Outputs/SRbak/shape_v1_20230430wp80_ANv3Zp-2500_CH-345_v1_smooted.root'
 
 	# Read in the file
 	with open(input_datacard, 'r') as file :
@@ -36,6 +41,7 @@ for m in SIGNAL_MASSES:
 		file.write(filedata)
 	os.system("sleep 10s") # give some time file written completely
 
+	# os.system("combine -M AsymptoticLimits --run blind -t -1 "+new_datacard)
 	os.system("combine -M AsymptoticLimits --run blind -t -1 "+new_datacard+" > ./Logs_v1/"+str(m)+".log")
 
 # 		# best fit
@@ -46,7 +52,8 @@ for m in SIGNAL_MASSES:
 # 		print("//----Significance----//")
 # 		os.system("combine -M Significance workspace_"+d+".root -m 200 --rMin -2 --rMax 2")
 	##----- impact -----##
-	if m == 'Zp-2500_CH-345' or m == 'Zp-2500_CH-845' or m == 'Zp-4100_CH-345':
+	# if m == 'Zp-2500_CH-345' or m == 'Zp-2500_CH-845' or m == 'Zp-4100_CH-345':
+	if m == 'Zp-2500_CH-345':
 		os.system("text2workspace.py "+new_datacard+" -m 800 -o "+new_datacard+".root")
 		os.system("combineTool.py -M Impacts -d "+new_datacard+".root -m 200 --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doInitialFit")
 		os.system("combineTool.py -M Impacts -d "+new_datacard+".root -m 200 --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doFits")
