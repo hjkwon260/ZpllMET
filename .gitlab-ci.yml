@@ -59,7 +59,7 @@ limit ee16:
         - python ${SCRIPT_LIMIT}.py
         - cd ..
         - mkdir Limit
-        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}/Limit
+        - xrdcp -r Combine/Logs_v1 ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy   
 
 limit mm16:
@@ -85,7 +85,7 @@ limit mm16:
         - python ${SCRIPT_LIMIT}.py
         - cd ..
         - mkdir Limit
-        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}/Limit
+        - xrdcp -r Combine/Logs_v1 ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
 limit em16:
@@ -111,7 +111,7 @@ limit em16:
         - python ${SCRIPT_LIMIT}.py        
         - cd ..
         - mkdir Limit
-        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}/Limit
+        - xrdcp -r Combine/Logs_v1 ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
 limit ee17:
@@ -137,7 +137,7 @@ limit ee17:
         - python ${SCRIPT_LIMIT}.py
         - cd ..
         - mkdir Limit
-        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}/Limit
+        - xrdcp -r Combine/Logs_v1 ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
 limit mm17:
@@ -163,7 +163,7 @@ limit mm17:
         - python ${SCRIPT_LIMIT}.py
         - cd ..
         - mkdir Limit
-        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}/Limit
+        - xrdcp -r Combine/Logs_v1 ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
 limit em17:
@@ -189,7 +189,7 @@ limit em17:
         - python ${SCRIPT_LIMIT}.py
         - cd ..
         - mkdir Limit
-        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}/Limit
+        - xrdcp -r Combine/Logs_v1 ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
 limit ee18:
@@ -215,7 +215,7 @@ limit ee18:
         - python ${SCRIPT_LIMIT}.py
         - cd ..
         - mkdir Limit
-        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}/Limit
+        - xrdcp -r Combine/Logs_v1 ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
 limit mm18:
@@ -241,7 +241,7 @@ limit mm18:
         - python ${SCRIPT_LIMIT}.py
         - cd ..
         - mkdir Limit
-        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}/Limit
+        - xrdcp -r Combine/Logs_v1 ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
 limit em18:
@@ -267,7 +267,7 @@ limit em18:
         - python ${SCRIPT_LIMIT}.py
         - cd ..
         - mkdir Limit
-        - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}/Limit
+        - xrdcp -r Combine/Logs_v1 ${ROOT_EOS_USER}/${INPUT_DIR}
         - kdestroy 
 
 draw ee16:
