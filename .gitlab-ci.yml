@@ -53,7 +53,6 @@ limit ee16:
         expire_in: 10 min            
     script:      
         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-        - mkdir Outputs
         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR}/SR ${CI_PROJECT_DIR}/Outputs
         - ls
         - ls Outputs
