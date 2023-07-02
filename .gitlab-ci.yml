@@ -8,7 +8,7 @@ variables:
     SCRIPT_LIMIT: limits_v3  
     SCRIPT_DUMP: Dump_v1  
     SCRIPT_DRAW: Draw_v1  
-    DUMP: 'no'
+    DUMP: 'yes'
     DRAW: 'yes'
 #     #INPUT_DIR: 20220215/ #20220131/
 #     INPUT_DIR: Run2/20221225_17/ee/
@@ -47,7 +47,7 @@ before_script:
     - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
     - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
     - python ${SCRIPT_EVAL}.py ${ERA} ${REGION} ${PART}
-    - xrdcp -r Outputs/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel/${ERA}
+    - xrdcp -r Outputs/DNN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel/${ERA}
     - kdestroy
 
 .set_combine: &set_combine
