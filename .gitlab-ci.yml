@@ -8,7 +8,7 @@ variables:
     SCRIPT_LIMIT: limits_v3  
     SCRIPT_DUMP: Dump_v1  
     SCRIPT_DRAW: Draw_v1  
-    DUMP: 'yes'
+    DUMP: 'no'
     DRAW: 'no'
 #     #INPUT_DIR: 20220215/ #20220131/
 #     INPUT_DIR: Run2/20221225_17/ee/
