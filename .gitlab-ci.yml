@@ -9,7 +9,7 @@ variables:
     SCRIPT_DUMP: Dump_v1  
     SCRIPT_DRAW: Draw_v1  
     DUMP: 'yes'
-    DRAW: 'yes'
+    DRAW: 'no'
 #     #INPUT_DIR: 20220215/ #20220131/
 #     INPUT_DIR: Run2/20221225_17/ee/
 #     DATE: 20221225
@@ -40,6 +40,16 @@ before_script:
     - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
     - kdestroy 
 
+.script_eval: &script_eval
+    - mkdir ${ERA}
+    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/nested_dic_df_SR1.pkl ${ERA}  
+    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/nested_dic_df_TTCR.pkl ${ERA} 
+    - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+    - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+    - python ${SCRIPT_EVAL}.py ${ERA} ${REGION} ${PART}
+    - xrdcp -r Outputs/${REGION} ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel/${ERA}
+    - kdestroy
+
 .set_combine: &set_combine
     - shopt -s expand_aliases
     - set +u && source ${CMS_PATH}/cmsset_default.sh; set -u
@@ -55,15 +65,13 @@ before_script:
     - bash <(curl -s https://raw.githubusercontent.com/cms-analysis/CombineHarvester/master/CombineTools/scripts/sparse-checkout-https.sh)
     - scram b -j 20
 
-
-
 stages:
     - dump
+    - draw
     # - presel
     # - merge
-    # - evaluate
+    - evaluate
     # - limit
-    - draw
 
 dump mm17:
     stage: dump
@@ -98,6 +106,26 @@ draw mm17:
     script:
         - *script_draw 
 
+eval mm17:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: mm17
+        REGION: SR
+        PART: one
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump mm17
+          optional: true
+     
+    script:
+        - *script_eval 
 # ee16pre:
 #     stage: presel
 #     tags:
