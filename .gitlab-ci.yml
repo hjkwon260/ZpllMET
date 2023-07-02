@@ -71,8 +71,8 @@ dump mm17:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/${DATE1}_16pre/mm/
-        ERA: mm16pre
+        INPUT_DIR: Run2/${DATE1}_17/mm/
+        ERA: mm17
         CHANNEL: mm/    
     rules:
         - if: $DUMP == 'yes'          
