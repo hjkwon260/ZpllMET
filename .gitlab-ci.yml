@@ -87,14 +87,13 @@ draw mm17:
         DATE: ${DATE1}
         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
         ERA: mm17
-        CHANNEL: mm/    
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
         - if: $DRAW == 'yes' && $DUMP == 'no'
           when: always
     needs:
-        - job: dump1
+        - job: dump mm17
           optional: true      
     script:
         - *script_draw 
