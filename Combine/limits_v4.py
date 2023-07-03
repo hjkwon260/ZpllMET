@@ -1,15 +1,15 @@
 import os, sys
 import json
-#
-os.system("mkdir Logs_v1")
-os.system("mkdir Plots")
 
-channel = sys.argv[1]
+ERA = sys.argv[1]
+
+os.system("mkdir -p LIMIT/"+ERA+"/Logs_v1")
+os.system("mkdir LIMIT/"+ERA+"/Plots")
 
 # input_datacard = 'datacard_ll_SR_v3.txt'
 # input_datacard = 'datacard_allyears_channels.txt'
 # input_datacard = 'datacard_ll_SR_smooth_v4.txt'
-if channel == "combine":
+if ERA == "all":
 	input_datacard = 'datacard_allyears_channels.txt'
 else:
 	input_datacard = 'datacard_ll_combine_v4.txt'
@@ -30,7 +30,7 @@ SIGNAL_MASSES = ['Zp-2500_CH-345']
 
 
 for m in SIGNAL_MASSES:
-	if channel == "combine":
+	if ERA == "all":
 		print('blah')
 	# input_root_file_sree16 = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/ee16/SR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
 	# input_root_file_ttcree16 = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/ee16/VR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
@@ -61,7 +61,7 @@ for m in SIGNAL_MASSES:
 		filedata = file.read()
 
 	# Replace the target string
-	if channel == "combine":	
+	if ERA == "all":	
 		print('blah')
 		# filedata = filedata.replace('INPUT_ROOT_FILE_SR_16ee', input_root_file_sree16)
 		# filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_16ee', input_root_file_ttcree16)
@@ -108,11 +108,11 @@ for m in SIGNAL_MASSES:
 		os.system("combineTool.py -M Impacts -d "+new_datacard+".root -m 200 --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doInitialFit")
 		os.system("combineTool.py -M Impacts -d "+new_datacard+".root -m 200 --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doFits")
 		os.system("combineTool.py -M Impacts -d "+new_datacard+".root -m 200 --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --output impacts"+new_datacard+".json")
-		os.system("plotImpacts.py -i impacts"+new_datacard+".json -o ./Logs_v1/impacts"+m)
+		os.system("plotImpacts.py -i impacts"+new_datacard+".json -o LIMIT/"+ERA+"/Plots/impacts"+m)
 
 
 
-	with open("./Logs_v1/"+str(m)+".log", 'r') as file:
+	with open("LIMIT/"+ERA+"/Logs_v1/"+str(m)+".log", 'r') as file:
 		lst_limits=[]
 		for line in file:
 			if "Expected  2.5%: r <" in line:
@@ -128,5 +128,5 @@ for m in SIGNAL_MASSES:
 		print(lst_limits)
 		dic_limits[m]=lst_limits
 import json
-with open('Logs_v1/limits_v4.json', 'w') as fp:
+with open('LIMIT/'+ERA+'/Logs_v1/limits_v4.json', 'w') as fp:
     json.dump(dic_limits, fp)		

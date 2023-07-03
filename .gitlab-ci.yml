@@ -100,9 +100,9 @@ before_script:
     - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR
     - *set_combine
     - cd ${CI_PROJECT_DIR}/Combine
-    - python ${SCRIPT_LIMIT}.py ${CHANNEL}
+    - python ${SCRIPT_LIMIT}.py ${ERA}
     - cd ..
-    - xrdcp -r Combine/Logs_v1 ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel/
+    - xrdcp -r Combine/LIMIT ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel/
     - kdestroy
 
 stages:
@@ -1257,7 +1257,6 @@ limit mm17:
     variables:
         DATE: ${DATE1}
         ERA: mm17
-        CHANNEL: mm 
         INPUT_DIR: ${INPUT_DNN}
     rules:    
         - if: $LIMIT == 'yes' && $EVAL == 'yes'
