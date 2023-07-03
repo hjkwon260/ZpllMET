@@ -521,7 +521,7 @@ class HistStack(object):
         """
         list_yeild=[]
         for key in self.yeilds:
-            if key!="Data":
+            if key!="Data" and not "Up" in key and not "Down" in key:
                 list_yeild.append(self.yeilds[key])
 
         arr_yeilds = array('f', list_yeild)
@@ -549,6 +549,10 @@ class HistStack(object):
         latex.DrawLatexNDC( 0.2,0.77, "# Total bkg: "+str(round( (sum(list_yeild)-list_yeild[-1]),2 )))
         soverb=float("{:.5f}".format(list_yeild[-1]/math.sqrt(sum(list_yeild))))
         latex.DrawLatexNDC( 0.2,0.2, "s/#sqrt{b}: "+str(soverb))
+        latex.DrawLatexNDC( 0.2,0.17, "TTUp: "+str(round(self.yeilds["TTUp"],2)))
+        latex.DrawLatexNDC( 0.2,0.14, "TTDown: "+str(round(self.yeilds["TTDown"],2)))
+        latex.DrawLatexNDC( 0.2,0.11, "TThdampUp: "+str(round(self.yeilds["TThdampUp"],2)))
+        latex.DrawLatexNDC( 0.2,0.08, "TThdampDown: "+str( round(self.yeilds["TThdampDown"],2)))
         cpie.Draw()
     
         cpie.cd()
