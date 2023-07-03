@@ -10,7 +10,7 @@ variables:
     SCRIPT_DRAW: Draw_v1  
     DUMP: 'no'
     DRAW: 'no'
-    EVAL: 'no'
+    EVAL: 'yes'
     LIMIT: 'yes'
     INPUT_DUMP: Run2/Preselection/${DATE1}/Presel/DUMP/
     INPUT_DNN: Run2/Preselection/${DATE1}/Presel/DNN/
