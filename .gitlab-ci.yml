@@ -9,8 +9,8 @@ variables:
     SCRIPT_DUMP: Dump_v1  
     SCRIPT_DRAW: Draw_v1  
     DUMP: 'no'
-    DRAW: 'yes'
-    EVAL: 'yes'
+    DRAW: 'no'
+    EVAL: 'no'
     LIMIT: 'yes'
     INPUT_DUMP: Run2/Preselection/${DATE1}/Presel/DUMP/
     INPUT_DNN: Run2/Preselection/${DATE1}/Presel/DNN/
@@ -66,7 +66,7 @@ before_script:
     - *load16
     - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
     - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-    - python ${SCRIPT_EVAL}.py ${ERA} ${REGION} ${PART}
+    - python ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART}
     - xrdcp -r Outputs/DNN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel/
     - kdestroy
 
@@ -74,7 +74,7 @@ before_script:
     - *load
     - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
     - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-    - python ${SCRIPT_EVAL}.py ${ERA} ${REGION} ${PART}
+    - python ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART}
     - xrdcp -r Outputs/DNN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel/
     - kdestroy
 
@@ -97,6 +97,7 @@ before_script:
     - *set_combine
     - cd ${CI_PROJECT_DIR}
     - mkdir SR
+    - echo ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files
     - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR
     - cd ${CI_PROJECT_DIR}/Combine
     - python ${SCRIPT_LIMIT}.py
@@ -490,7 +491,7 @@ eval mm16 SR 1:
     script:
         - *script_eval16 
 
-eval mm16 SR 2:
+eval mm16 SR 1:
     stage: evaluate
     tags:
         - cvmfs
@@ -580,7 +581,7 @@ eval mm17 SR 1:
     script:
         - *script_eval 
 
-eval mm17 SR 2:
+eval mm17 SR 1:
     stage: evaluate
     tags:
         - cvmfs
@@ -664,7 +665,7 @@ eval mm18 SR 1:
     script:
         - *script_eval 
 
-eval mm18 SR 2:
+eval mm18 SR 1:
     stage: evaluate
     tags:
         - cvmfs
@@ -751,7 +752,7 @@ eval ee16 SR 1:
     script:
         - *script_eval16 
 
-eval ee16 SR 2:
+eval ee16 SR 1:
     stage: evaluate
     tags:
         - cvmfs
@@ -841,7 +842,7 @@ eval ee17 SR 1:
     script:
         - *script_eval 
 
-eval ee17 SR 2:
+eval ee17 SR 1:
     stage: evaluate
     tags:
         - cvmfs
@@ -925,7 +926,7 @@ eval ee18 SR 1:
     script:
         - *script_eval
 
-eval ee18 SR 2:
+eval ee18 SR 1:
     stage: evaluate
     tags:
         - cvmfs
@@ -1012,7 +1013,7 @@ eval em16 SR 1:
     script:
         - *script_eval16 
 
-eval em16 SR 2:
+eval em16 SR 1:
     stage: evaluate
     tags:
         - cvmfs
@@ -1102,7 +1103,7 @@ eval em17 SR 1:
     script:
         - *script_eval 
 
-eval em17 SR 2:
+eval em17 SR 1:
     stage: evaluate
     tags:
         - cvmfs
@@ -1186,7 +1187,7 @@ eval em18 SR 1:
     script:
         - *script_eval 
 
-eval em18 SR 2:
+eval em18 SR 1:
     stage: evaluate
     tags:
         - cvmfs
