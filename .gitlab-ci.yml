@@ -10,7 +10,10 @@ variables:
     SCRIPT_DRAW: Draw_v1  
     DUMP: 'yes'
     DRAW: 'yes'
-#     #INPUT_DIR: 20220215/ #20220131/
+    EVAL: 'yes'
+    LIMIT: 'yes'
+    INPUT_DUMP: Run2/Preselection/${DATE1}/Presel/DUMP/
+    INPUT_DNN: Run2/Preselection/${DATE1}/Presel/DNN/
 #     INPUT_DIR: Run2/20221225_17/ee/
 #     DATE: 20221225
 #     ERA: ee17
@@ -30,13 +33,21 @@ before_script:
     - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
     - kdestroy 
 
-.script_draw16: &script_draw16 # temp
+.load16: &load16
     - mkdir ${ERA}pre
     - mkdir ${ERA}post
     - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}pre/nested_dic_df_SR1.pkl ${ERA}pre  
     - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}pre/nested_dic_df_TTCR.pkl ${ERA}pre  
     - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}post/nested_dic_df_SR1.pkl ${ERA}post  
     - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}post/nested_dic_df_TTCR.pkl ${ERA}post
+
+.load: &load
+    - mkdir ${ERA}
+    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/nested_dic_df_SR1.pkl ${ERA}  
+    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/nested_dic_df_TTCR.pkl ${ERA}  
+
+.script_draw16: &script_draw16
+    - *load16
     - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
     - jupyter nbconvert --to python ${SCRIPT_DRAW}.ipynb 
     - python ${SCRIPT_DRAW}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}
@@ -44,23 +55,27 @@ before_script:
     - kdestroy 
 
 .script_draw: &script_draw
-    - mkdir ${ERA}
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/nested_dic_df_SR1.pkl ${ERA}  
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/nested_dic_df_TTCR.pkl ${ERA}  
+    - *load
     - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
     - jupyter nbconvert --to python ${SCRIPT_DRAW}.ipynb 
     - python ${SCRIPT_DRAW}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}
     - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
     - kdestroy
 
-.script_eval: &script_eval
-    - mkdir ${ERA}
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/nested_dic_df_SR1.pkl ${ERA}  
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/nested_dic_df_TTCR.pkl ${ERA} 
+.script_eval16: &script_eval16
+    - *load16
     - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
     - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
     - python ${SCRIPT_EVAL}.py ${ERA} ${REGION} ${PART}
-    - xrdcp -r Outputs/DNN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel/${ERA}
+    - xrdcp -r Outputs/DNN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel/
+    - kdestroy
+
+.script_eval: &script_eval
+    - *load
+    - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+    - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+    - python ${SCRIPT_EVAL}.py ${ERA} ${REGION} ${PART}
+    - xrdcp -r Outputs/DNN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel/
     - kdestroy
 
 .set_combine: &set_combine
@@ -78,13 +93,21 @@ before_script:
     - bash <(curl -s https://raw.githubusercontent.com/cms-analysis/CombineHarvester/master/CombineTools/scripts/sparse-checkout-https.sh)
     - scram b -j 20
 
+.script_limit: &script_limit
+    - *set_combine
+    - cd ${CI_PROJECT_DIR}/Combine
+    - python ${SCRIPT_LIMIT}.py
+    - cd ..
+    - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+    - kdestroy
+
 stages:
     - dump
     - draw
     # - presel
     # - merge
     - evaluate
-    # - limit
+    - limit
 
 ########## stage: dump ############
 ##-- mm --##
@@ -266,7 +289,7 @@ draw mm16:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: mm16
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
@@ -287,7 +310,7 @@ draw mm17:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: mm17
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
@@ -306,7 +329,7 @@ draw mm18:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: mm18
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
@@ -326,7 +349,7 @@ draw ee16:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: ee16
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
@@ -347,7 +370,7 @@ draw ee17:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: ee17
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
@@ -366,7 +389,7 @@ draw ee18:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: ee18
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
@@ -386,7 +409,7 @@ draw em16:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: em16
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
@@ -407,7 +430,7 @@ draw em17:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: em17
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
@@ -426,7 +449,7 @@ draw em18:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: em18
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
@@ -447,14 +470,15 @@ eval mm16 SR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: mm16
         REGION: SR
         PART: one
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump mm16pre
           optional: true      
@@ -469,14 +493,15 @@ eval mm16 SR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: mm16
         REGION: SR
         PART: two
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump mm16pre
           optional: true      
@@ -491,14 +516,15 @@ eval mm16 VR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: mm16
         REGION: VR
         PART: one
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump mm16pre
           optional: true      
@@ -513,14 +539,15 @@ eval mm16 VR 2:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: mm16
         REGION: VR
         PART: two
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump mm16pre
           optional: true      
@@ -535,14 +562,15 @@ eval mm17 SR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: mm17
         REGION: SR
         PART: one
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump mm17
           optional: true     
@@ -555,14 +583,15 @@ eval mm17 SR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: mm17
         REGION: SR
         PART: two
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump mm17
           optional: true     
@@ -575,14 +604,15 @@ eval mm17 VR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: mm17
         REGION: VR
         PART: one
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump mm17
           optional: true     
@@ -595,14 +625,15 @@ eval mm17 VR 2:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: mm17
         REGION: VR
         PART: two
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump mm17
           optional: true     
@@ -615,14 +646,15 @@ eval mm18 SR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: mm18
         REGION: SR
         PART: one
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump mm18
           optional: true     
@@ -635,14 +667,15 @@ eval mm18 SR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: mm18
         REGION: SR
         PART: two
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump mm18
           optional: true     
@@ -655,14 +688,15 @@ eval mm18 VR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: mm18
         REGION: VR
         PART: one
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump mm18
           optional: true    
@@ -675,14 +709,15 @@ eval mm18 VR 2:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: mm18
         REGION: VR
         PART: two
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump mm18
           optional: true     
@@ -696,14 +731,15 @@ eval ee16 SR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: ee16
         REGION: SR
         PART: one
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump ee16pre
           optional: true      
@@ -718,14 +754,15 @@ eval ee16 SR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: ee16
         REGION: SR
         PART: two
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump ee16pre
           optional: true      
@@ -740,14 +777,15 @@ eval ee16 VR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: ee16
         REGION: VR
         PART: one
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump ee16pre
           optional: true      
@@ -762,14 +800,15 @@ eval ee16 VR 2:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: ee16
         REGION: VR
         PART: two
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump ee16pre
           optional: true      
@@ -784,14 +823,15 @@ eval ee17 SR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: ee17
         REGION: SR
         PART: one
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump ee17
           optional: true     
@@ -804,14 +844,15 @@ eval ee17 SR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: ee17
         REGION: SR
         PART: two
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump ee17
           optional: true     
@@ -824,14 +865,15 @@ eval ee17 VR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: ee17
         REGION: VR
         PART: one
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump ee17
           optional: true    
@@ -844,14 +886,15 @@ eval ee17 VR 2:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: ee17
         REGION: VR
         PART: two
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump ee17
           optional: true    
@@ -864,14 +907,15 @@ eval ee18 SR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: ee18
         REGION: SR
         PART: one
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump ee18
           optional: true    
@@ -884,14 +928,15 @@ eval ee18 SR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: ee18
         REGION: SR
         PART: two
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump ee18
           optional: true     
@@ -904,14 +949,15 @@ eval ee18 VR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: ee18
         REGION: VR
         PART: one
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump ee18
           optional: true    
@@ -924,14 +970,15 @@ eval ee18 VR 2:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: ee18
         REGION: VR
         PART: two
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump ee18
           optional: true    
@@ -945,14 +992,15 @@ eval em16 SR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: em16
         REGION: SR
         PART: one
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump em16pre
           optional: true      
@@ -967,14 +1015,15 @@ eval em16 SR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: em16
         REGION: SR
         PART: two
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump em16pre
           optional: true      
@@ -989,14 +1038,15 @@ eval em16 VR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: em16
         REGION: VR
         PART: one
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump em16pre
           optional: true      
@@ -1011,14 +1061,15 @@ eval em16 VR 2:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: em16
         REGION: VR
         PART: two
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump em16pre
           optional: true      
@@ -1033,14 +1084,15 @@ eval em17 SR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: em17
         REGION: SR
         PART: one
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump em17
           optional: true     
@@ -1053,14 +1105,15 @@ eval em17 SR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: em17
         REGION: SR
         PART: two
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump em17
           optional: true    
@@ -1073,14 +1126,15 @@ eval em17 VR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: em17
         REGION: VR
         PART: one
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump em17
           optional: true     
@@ -1093,14 +1147,15 @@ eval em17 VR 2:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: em17
         REGION: VR
         PART: two
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump em17
           optional: true     
@@ -1113,14 +1168,15 @@ eval em18 SR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: em18
         REGION: SR
         PART: one
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump em18
           optional: true    
@@ -1133,14 +1189,15 @@ eval em18 SR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: em18
         REGION: SR
         PART: two
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump em18
           optional: true     
@@ -1153,14 +1210,15 @@ eval em18 VR 1:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: em18
         REGION: VR
         PART: one
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump em18
           optional: true     
@@ -1173,749 +1231,42 @@ eval em18 VR 2:
         - cvmfs
     variables:
         DATE: ${DATE1}
-        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        INPUT_DIR: ${INPUT_DUMP}
         ERA: em18
         REGION: VR
         PART: two
     rules:    
-        - if: $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $EVAL == 'yes' && $DUMP == 'no'
           when: always
-        - when: on_success
     needs:
         - job: dump em18
           optional: true     
     script:
         - *script_eval 
-        
-# eval ee16 SR 1:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16/
-#         DATE: ${DATE1}
-#         ERA: ee16
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: merge ee16        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} SR one
-#         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy  
 
-# eval ee16 SR 2:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16/
-#         DATE: ${DATE1}
-#         ERA: ee16
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: merge ee16        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} SR two
-#         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy 
-
-# eval ee16 VR:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee16/
-#         DATE: ${DATE1}
-#         ERA: ee16
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: merge ee16        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} VR dummy
-#         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy 
-
-# eval mm16 SR 1:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm16/
-#         DATE: ${DATE1}
-#         ERA: mm16
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: merge mm16       
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} SR one
-#         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy                                                             
-
-# eval mm16 SR 2:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm16/
-#         DATE: ${DATE1}
-#         ERA: mm16
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: merge mm16       
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} SR two
-#         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy 
-
-# eval mm16 VR:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm16/
-#         DATE: ${DATE1}
-#         ERA: mm16
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: merge mm16       
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} VR dummy
-#         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy 
-
-# eval em16 SR 1:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em16/
-#         DATE: ${DATE1}
-#         ERA: em16
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: merge em16        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} SR one
-#         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy   
-
-# eval em16 SR 2:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em16/
-#         DATE: ${DATE1}
-#         ERA: em16
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: merge em16        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} SR two
-#         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy  
-
-# eval em16 VR:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em16/
-#         DATE: ${DATE1}
-#         ERA: em16
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: merge em16        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} VR dummy
-#         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy 
-
-# eval ee17 SR 1:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee17/
-#         DATE: ${DATE1}
-#         ERA: ee17
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: ee17        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} SR one
-#         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy 
-
-# eval ee17 SR 2:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee17/
-#         DATE: ${DATE1}
-#         ERA: ee17
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: ee17        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} SR two
-#         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy
-
-# eval ee17 VR:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee17/
-#         DATE: ${DATE1}
-#         ERA: ee17
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: ee17        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} VR dummy
-#         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy 
-
-# eval mm17 SR 1:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm17/
-#         DATE: ${DATE1}
-#         ERA: mm17
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: mm17        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} SR one
-#         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy                                                             
-
-# eval mm17 SR 2:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm17/
-#         DATE: ${DATE1}
-#         ERA: mm17
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: mm17        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} SR two
-#         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy 
-
-# eval mm17 VR:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm17/
-#         DATE: ${DATE1}
-#         ERA: mm17
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: mm17        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} VR dummy
-#         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy 
-
-# eval em17 SR 1:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em17/
-#         DATE: ${DATE1}
-#         ERA: em17
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: em17        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} SR one
-#         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy  
-
-# eval em17 SR 2:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em17/
-#         DATE: ${DATE1}
-#         ERA: em17
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: em17        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} SR two
-#         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy  
-
-# eval em17 VR:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em17/
-#         DATE: ${DATE1}
-#         ERA: em17
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: em17        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} VR dummy
-#         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy 
-
-# eval ee18 SR 1:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee18/
-#         DATE: ${DATE1}
-#         ERA: ee18
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: ee18        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} SR one
-#         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy  
-
-# eval ee18 SR 2:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee18/
-#         DATE: ${DATE1}
-#         ERA: ee18
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: ee18        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} SR two
-#         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy 
-
-# eval ee18 VR:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/ee18/
-#         DATE: ${DATE1}
-#         ERA: ee18
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: ee18        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} VR dummy
-#         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy 
-
-# eval mm18 SR 1:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm18/
-#         DATE: ${DATE1}
-#         ERA: mm18
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: mm18        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} SR one
-#         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy                                                             
-
-# eval mm18 SR 2:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm18/
-#         DATE: ${DATE1}
-#         ERA: mm18
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: mm18        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} SR two
-#         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy 
-
-# eval mm18 VR:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/mm18/
-#         DATE: ${DATE1}
-#         ERA: mm18
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: mm18        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} VR dummy
-#         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy 
-
-# eval em18 SR 1:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em18/
-#         DATE: ${DATE1}
-#         ERA: em18
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: em18        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} SR one
-#         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy   
-
-# eval em18 SR 2:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em18/
-#         DATE: ${DATE1}
-#         ERA: em18
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: em18        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} SR two
-#         - xrdcp -r Outputs/SR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy  
-
-# eval em18 VR:
-#     stage: evaluate
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/em18/
-#         DATE: ${DATE1}
-#         ERA: em18
-#         CHANNEL: ee/ 
-#     needs:
-#         - job: em18        
-#     artifacts:
-#         paths:
-#             - Outputs/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR} ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-#         - python ${SCRIPT_EVAL}.py ${ERA} VR dummy
-#         - xrdcp -r Outputs/VR ${ROOT_EOS_USER}/${INPUT_DIR}
-#         - kdestroy 
-
+limit mm17:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: mm17
+        CHANNEL: mm/ 
+        INPUT_DIR: ${INPUT_DNN}/${ERA}/root_files
+    rules:    
+        - if: $LIMIT == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $LIMIT == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval mm17 SR 1
+          optional: true 
+        - job: eval mm17 SR 2
+          optional: true
+    script:
+        - *script_limit 
 # limit ee16:
 #     stage: limit
 #     tags:
