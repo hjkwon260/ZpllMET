@@ -10,7 +10,7 @@ variables:
     SCRIPT_DRAW: Draw_v1  
     DUMP: 'no'
     DRAW: 'no'
-    EVAL: 'yes'
+    EVAL: 'no'
     LIMIT: 'yes'
     INPUT_DUMP: Run2/Preselection/${DATE1}/Presel/DUMP/
     INPUT_DNN: Run2/Preselection/${DATE1}/Presel/DNN/
@@ -95,11 +95,12 @@ before_script:
 
 .script_limit: &script_limit
     - mkdir SR
-    - echo ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files
+    - mkdir VR
     - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR
     - *set_combine
     - cd ${CI_PROJECT_DIR}/Combine
-    - python ${SCRIPT_LIMIT}.py
+    - python ${SCRIPT_LIMIT}.py ${CHANNEL}
     - cd ..
     - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
     - kdestroy
@@ -1256,7 +1257,7 @@ limit mm17:
     variables:
         DATE: ${DATE1}
         ERA: mm17
-        CHANNEL: mm/ 
+        CHANNEL: mm 
         INPUT_DIR: ${INPUT_DNN}
     rules:    
         - if: $LIMIT == 'yes' && $EVAL == 'yes'
@@ -1267,6 +1268,10 @@ limit mm17:
         - job: eval mm17 SR 1
           optional: true 
         - job: eval mm17 SR 2
+          optional: true
+        - job: eval mm17 VR 1
+          optional: true 
+        - job: eval mm17 VR 2
           optional: true
     script:
         - *script_limit 
