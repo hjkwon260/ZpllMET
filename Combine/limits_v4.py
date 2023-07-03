@@ -25,8 +25,8 @@ with open('../config/Settrain.json') as json_file:
 INPUTDIR = setting["INPUTDIR"]
 VERSION = setting["VERSION"]
 SIGNAL_MASSES = setting["ALL_MASSES"]
-SIGNAL_MASSES = ['Zp-2500_CH-345']
-# SIGNAL_MASSES = ['Zp-3300_CH-595']
+# SIGNAL_MASSES = ['Zp-2500_CH-345']
+SIGNAL_MASSES = ['Zp-3300_CH-595']
 
 
 for m in SIGNAL_MASSES:
@@ -53,7 +53,8 @@ for m in SIGNAL_MASSES:
 	else:
 		input_root_file_sr = '../SR/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
 		input_root_file_ttcr = '../VR/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-		# input_root_file = "../Outputs/SR/shape_v1_20230529deepCSV_ANv3Zp-2500_CH-345_v1_smoothed.root"
+		input_root_file_sr = "../Outputs/SR/shape_v1_20230529deepCSV_ANv3Zp-2500_CH-345_v1_smoothed.root"
+		input_root_file_ttcr = "../Outputs/SR/shape_v1_20230529deepCSV_ANv3Zp-2500_CH-345_v1_smoothed.root"
 		# input_root_file = '../Outputs/SRbak/shape_v1_20230430wp80_ANv3Zp-2500_CH-345_v1_smooted.root'
 
 	# Read in the file
@@ -92,7 +93,7 @@ for m in SIGNAL_MASSES:
 	os.system("sleep 10s") # give some time file written completely
 
 	# os.system("combine -M AsymptoticLimits --run blind -t -1 "+new_datacard)
-	os.system("combine -M AsymptoticLimits --run blind -t -1 "+new_datacard+" > ./Logs_v1/"+str(m)+".log")
+	os.system("combine -M AsymptoticLimits --run blind -t -1 "+new_datacard+" > LIMIT/"+ERA+"/Logs_v1/"+str(m)+".log")
 
 # 		# best fit
 # 		os.system("text2workspace.py datacard_shape_mm_new.txt -m 800 -o workspace_"+d+".root")
@@ -112,7 +113,7 @@ for m in SIGNAL_MASSES:
 
 
 
-	with open("./LIMIT/"+ERA+"/Logs_v1/"+str(m)+".log", 'r') as file:
+	with open("LIMIT/"+ERA+"/Logs_v1/"+str(m)+".log", 'r') as file:
 		lst_limits=[]
 		for line in file:
 			if "Expected  2.5%: r <" in line:
@@ -128,5 +129,5 @@ for m in SIGNAL_MASSES:
 		print(lst_limits)
 		dic_limits[m]=lst_limits
 import json
-with open('./LIMIT/'+ERA+'/Logs_v1/limits_v4.json', 'w') as fp:
-    json.dump(dic_limits, fp)		
+with open('LIMIT/'+ERA+'/Logs_v1/limits_v4.json', 'w') as fp:
+    json.dump(dic_limits

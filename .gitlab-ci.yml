@@ -9,7 +9,7 @@ variables:
     SCRIPT_DUMP: Dump_v1  
     SCRIPT_DRAW: Draw_v1  
     DUMP: 'no'
-    DRAW: 'no'
+    DRAW: 'yes'
     EVAL: 'no'
     LIMIT: 'yes'
     INPUT_DUMP: Run2/Preselection/${DATE1}/Presel/DUMP/
