@@ -112,7 +112,7 @@ for m in SIGNAL_MASSES:
 
 
 
-	with open("LIMIT/"+ERA+"/Logs_v1/"+str(m)+".log", 'r') as file:
+	with open("./LIMIT/"+ERA+"/Logs_v1/"+str(m)+".log", 'r') as file:
 		lst_limits=[]
 		for line in file:
 			if "Expected  2.5%: r <" in line:
@@ -128,5 +128,5 @@ for m in SIGNAL_MASSES:
 		print(lst_limits)
 		dic_limits[m]=lst_limits
 import json
-with open('LIMIT/'+ERA+'/Logs_v1/limits_v4.json', 'w') as fp:
+with open('./LIMIT/'+ERA+'/Logs_v1/limits_v4.json', 'w') as fp:
     json.dump(dic_limits, fp)		
