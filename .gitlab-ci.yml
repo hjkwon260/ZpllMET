@@ -456,9 +456,10 @@ eval mm16 SR 1:
           when: always
         - when: on_success
     needs:
-        - job: dump mm16
-          optional: true
-     
+        - job: dump mm16pre
+          optional: true      
+        - job: dump mm16post
+          optional: true     
     script:
         - *script_eval 
 
@@ -477,9 +478,10 @@ eval mm16 SR 1:
           when: always
         - when: on_success
     needs:
-        - job: dump mm16
-          optional: true
-     
+        - job: dump mm16pre
+          optional: true      
+        - job: dump mm16post
+          optional: true    
     script:
         - *script_eval 
 
@@ -498,9 +500,10 @@ eval mm16 VR 1:
           when: always
         - when: on_success
     needs:
-        - job: dump mm16
-          optional: true
-     
+        - job: dump mm16pre
+          optional: true      
+        - job: dump mm16post
+          optional: true     
     script:
         - *script_eval 
 
@@ -519,9 +522,10 @@ eval mm16 VR 2:
           when: always
         - when: on_success
     needs:
-        - job: dump mm16
-          optional: true
-     
+        - job: dump mm16pre
+          optional: true      
+        - job: dump mm16post
+          optional: true     
     script:
         - *script_eval 
 
@@ -541,8 +545,7 @@ eval mm17 SR 1:
         - when: on_success
     needs:
         - job: dump mm17
-          optional: true
-     
+          optional: true     
     script:
         - *script_eval 
 
@@ -562,8 +565,7 @@ eval mm17 SR 1:
         - when: on_success
     needs:
         - job: dump mm17
-          optional: true
-     
+          optional: true     
     script:
         - *script_eval 
 
@@ -583,8 +585,7 @@ eval mm17 VR 1:
         - when: on_success
     needs:
         - job: dump mm17
-          optional: true
-     
+          optional: true     
     script:
         - *script_eval 
 
@@ -604,8 +605,7 @@ eval mm17 VR 2:
         - when: on_success
     needs:
         - job: dump mm17
-          optional: true
-     
+          optional: true     
     script:
         - *script_eval 
 
@@ -625,8 +625,7 @@ eval mm18 SR 1:
         - when: on_success
     needs:
         - job: dump mm18
-          optional: true
-     
+          optional: true     
     script:
         - *script_eval 
 
@@ -646,8 +645,7 @@ eval mm18 SR 1:
         - when: on_success
     needs:
         - job: dump mm18
-          optional: true
-     
+          optional: true     
     script:
         - *script_eval 
 
@@ -667,8 +665,7 @@ eval mm18 VR 1:
         - when: on_success
     needs:
         - job: dump mm18
-          optional: true
-     
+          optional: true    
     script:
         - *script_eval 
 
@@ -688,8 +685,7 @@ eval mm18 VR 2:
         - when: on_success
     needs:
         - job: dump mm18
-          optional: true
-     
+          optional: true     
     script:
         - *script_eval 
 
@@ -709,9 +705,10 @@ eval ee16 SR 1:
           when: always
         - when: on_success
     needs:
-        - job: dump ee16
-          optional: true
-     
+        - job: dump ee16pre
+          optional: true      
+        - job: dump ee16post
+          optional: true    
     script:
         - *script_eval 
 
@@ -730,9 +727,10 @@ eval ee16 SR 1:
           when: always
         - when: on_success
     needs:
-        - job: dump ee16
+        - job: dump ee16pre
+          optional: true      
+        - job: dump ee16post
           optional: true
-     
     script:
         - *script_eval 
 
@@ -751,9 +749,10 @@ eval ee16 VR 1:
           when: always
         - when: on_success
     needs:
-        - job: dump ee16
+        - job: dump ee16pre
+          optional: true      
+        - job: dump ee16post
           optional: true
-     
     script:
         - *script_eval 
 
@@ -772,9 +771,10 @@ eval ee16 VR 2:
           when: always
         - when: on_success
     needs:
-        - job: dump ee16
+        - job: dump ee16pre
+          optional: true      
+        - job: dump ee16post
           optional: true
-     
     script:
         - *script_eval 
 
@@ -794,8 +794,7 @@ eval ee17 SR 1:
         - when: on_success
     needs:
         - job: dump ee17
-          optional: true
-     
+          optional: true     
     script:
         - *script_eval 
 
@@ -815,8 +814,7 @@ eval ee17 SR 1:
         - when: on_success
     needs:
         - job: dump ee17
-          optional: true
-     
+          optional: true     
     script:
         - *script_eval 
 
@@ -836,8 +834,7 @@ eval ee17 VR 1:
         - when: on_success
     needs:
         - job: dump ee17
-          optional: true
-     
+          optional: true    
     script:
         - *script_eval 
 
@@ -857,8 +854,7 @@ eval ee17 VR 2:
         - when: on_success
     needs:
         - job: dump ee17
-          optional: true
-     
+          optional: true    
     script:
         - *script_eval 
 
@@ -878,8 +874,7 @@ eval ee18 SR 1:
         - when: on_success
     needs:
         - job: dump ee18
-          optional: true
-     
+          optional: true    
     script:
         - *script_eval 
 
@@ -899,8 +894,7 @@ eval ee18 SR 1:
         - when: on_success
     needs:
         - job: dump ee18
-          optional: true
-     
+          optional: true     
     script:
         - *script_eval 
 
@@ -920,8 +914,7 @@ eval ee18 VR 1:
         - when: on_success
     needs:
         - job: dump ee18
-          optional: true
-     
+          optional: true    
     script:
         - *script_eval 
 
@@ -941,8 +934,7 @@ eval ee18 VR 2:
         - when: on_success
     needs:
         - job: dump ee18
-          optional: true
-     
+          optional: true    
     script:
         - *script_eval 
 
@@ -962,9 +954,10 @@ eval em16 SR 1:
           when: always
         - when: on_success
     needs:
-        - job: dump em16
-          optional: true
-     
+        - job: dump em16pre
+          optional: true      
+        - job: dump em16post
+          optional: true   
     script:
         - *script_eval 
 
@@ -983,9 +976,10 @@ eval em16 SR 1:
           when: always
         - when: on_success
     needs:
-        - job: dump em16
-          optional: true
-     
+        - job: dump em16pre
+          optional: true      
+        - job: dump em16post
+          optional: true  
     script:
         - *script_eval 
 
@@ -1004,9 +998,10 @@ eval em16 VR 1:
           when: always
         - when: on_success
     needs:
-        - job: dump em16
-          optional: true
-     
+        - job: dump em16pre
+          optional: true      
+        - job: dump em16post
+          optional: true  
     script:
         - *script_eval 
 
@@ -1025,9 +1020,10 @@ eval em16 VR 2:
           when: always
         - when: on_success
     needs:
-        - job: dump em16
-          optional: true
-     
+        - job: dump em16pre
+          optional: true      
+        - job: dump em16post
+          optional: true  
     script:
         - *script_eval 
 
@@ -1047,8 +1043,7 @@ eval em17 SR 1:
         - when: on_success
     needs:
         - job: dump em17
-          optional: true
-     
+          optional: true     
     script:
         - *script_eval 
 
@@ -1068,8 +1063,7 @@ eval em17 SR 1:
         - when: on_success
     needs:
         - job: dump em17
-          optional: true
-     
+          optional: true    
     script:
         - *script_eval 
 
@@ -1089,8 +1083,7 @@ eval em17 VR 1:
         - when: on_success
     needs:
         - job: dump em17
-          optional: true
-     
+          optional: true     
     script:
         - *script_eval 
 
@@ -1110,8 +1103,7 @@ eval em17 VR 2:
         - when: on_success
     needs:
         - job: dump em17
-          optional: true
-     
+          optional: true     
     script:
         - *script_eval 
 
@@ -1131,8 +1123,7 @@ eval em18 SR 1:
         - when: on_success
     needs:
         - job: dump em18
-          optional: true
-     
+          optional: true    
     script:
         - *script_eval 
 
@@ -1152,8 +1143,7 @@ eval em18 SR 1:
         - when: on_success
     needs:
         - job: dump em18
-          optional: true
-     
+          optional: true     
     script:
         - *script_eval 
 
@@ -1173,8 +1163,7 @@ eval em18 VR 1:
         - when: on_success
     needs:
         - job: dump em18
-          optional: true
-     
+          optional: true     
     script:
         - *script_eval 
 
@@ -1194,8 +1183,7 @@ eval em18 VR 2:
         - when: on_success
     needs:
         - job: dump em18
-          optional: true
-     
+          optional: true     
     script:
         - *script_eval 
         
