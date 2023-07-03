@@ -5,7 +5,7 @@ variables:
     CMSSW_ARCH: slc7_amd64_gcc700
     SCRIPT_PRESEL: Preselection_v6  
     SCRIPT_EVAL: EvaluatePNN-v3  
-    SCRIPT_LIMIT: limits_v3  
+    SCRIPT_LIMIT: limits_v4  
     SCRIPT_DUMP: Dump_v1  
     SCRIPT_DRAW: Draw_v1  
     DUMP: 'no'
@@ -102,7 +102,7 @@ before_script:
     - cd ${CI_PROJECT_DIR}/Combine
     - python ${SCRIPT_LIMIT}.py ${CHANNEL}
     - cd ..
-    - xrdcp -r Combine/ ${ROOT_EOS_USER}/${INPUT_DIR}
+    - xrdcp -r Combine/Logs_v1 ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel/
     - kdestroy
 
 stages:
