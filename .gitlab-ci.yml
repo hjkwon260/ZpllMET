@@ -85,6 +85,8 @@ stages:
     - evaluate
     # - limit
 
+########## stage: dump ############
+##-- mm --##
 dump mm16pre:
     stage: dump
     tags:
@@ -127,6 +129,136 @@ dump mm17:
     script:
         - *script_dump 
 
+dump mm18:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_18/mm/
+        ERA: mm18
+        CHANNEL: mm/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump
+
+##-- ee --##
+dump ee16pre:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_16pre/ee/
+        ERA: ee16pre
+        CHANNEL: ee/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
+
+dump ee16post:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_16post/ee/
+        ERA: ee16post
+        CHANNEL: ee/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
+
+dump ee17:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_17/ee/
+        ERA: ee17
+        CHANNEL: ee/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
+
+dump ee18:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_18/ee/
+        ERA: ee18
+        CHANNEL: ee/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump
+
+##-- em --##        
+dump em16pre:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_16pre/em/
+        ERA: em16pre
+        CHANNEL: em/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
+
+dump em16post:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_16post/em/
+        ERA: em16post
+        CHANNEL: em/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
+
+dump em17:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_17/em/
+        ERA: em17
+        CHANNEL: em/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
+
+dump em18:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_18/em/
+        ERA: em18
+        CHANNEL: em/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump
+
+########## stage: draw ############
+##-- mm --##
 draw mm16:
     stage: draw
     tags:
@@ -167,6 +299,147 @@ draw mm17:
     script:
         - *script_draw 
 
+draw mm18:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: mm18
+    rules:
+        - if: $DRAW == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $DRAW == 'yes' && $DUMP == 'no'
+          when: always
+    needs:
+        - job: dump mm18
+          optional: true      
+    script:
+        - *script_draw 
+
+##-- ee --##        
+draw ee16:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: ee16
+    rules:
+        - if: $DRAW == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $DRAW == 'yes' && $DUMP == 'no'
+          when: always
+    needs:
+        - job: dump ee16pre
+          optional: true      
+        - job: dump ee16post
+          optional: true
+    script:
+        - *script_draw16 
+
+draw ee17:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: ee17
+    rules:
+        - if: $DRAW == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $DRAW == 'yes' && $DUMP == 'no'
+          when: always
+    needs:
+        - job: dump ee17
+          optional: true      
+    script:
+        - *script_draw 
+
+draw ee18:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: ee18
+    rules:
+        - if: $DRAW == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $DRAW == 'yes' && $DUMP == 'no'
+          when: always
+    needs:
+        - job: dump ee18
+          optional: true      
+    script:
+        - *script_draw 
+
+##-- em --##
+draw em16:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: em16
+    rules:
+        - if: $DRAW == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $DRAW == 'yes' && $DUMP == 'no'
+          when: always
+    needs:
+        - job: dump em16pre
+          optional: true      
+        - job: dump em16post
+          optional: true
+    script:
+        - *script_draw16 
+
+draw em17:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: em17
+    rules:
+        - if: $DRAW == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $DRAW == 'yes' && $DUMP == 'no'
+          when: always
+    needs:
+        - job: dump em17
+          optional: true      
+    script:
+        - *script_draw 
+
+draw em18:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: em18
+    rules:
+        - if: $DRAW == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $DRAW == 'yes' && $DUMP == 'no'
+          when: always
+    needs:
+        - job: dump em18
+          optional: true      
+    script:
+        - *script_draw 
+
+########## stage: evaluate ############
+##-- mm --##
 eval mm17:
     stage: evaluate
     tags:
