@@ -491,7 +491,7 @@ eval mm16 SR 1:
     script:
         - *script_eval16 
 
-eval mm16 SR 1:
+eval mm16 SR 2:
     stage: evaluate
     tags:
         - cvmfs
@@ -581,7 +581,7 @@ eval mm17 SR 1:
     script:
         - *script_eval 
 
-eval mm17 SR 1:
+eval mm17 SR 2:
     stage: evaluate
     tags:
         - cvmfs
@@ -665,7 +665,7 @@ eval mm18 SR 1:
     script:
         - *script_eval 
 
-eval mm18 SR 1:
+eval mm18 SR 2:
     stage: evaluate
     tags:
         - cvmfs
@@ -752,7 +752,7 @@ eval ee16 SR 1:
     script:
         - *script_eval16 
 
-eval ee16 SR 1:
+eval ee16 SR 2:
     stage: evaluate
     tags:
         - cvmfs
@@ -842,7 +842,7 @@ eval ee17 SR 1:
     script:
         - *script_eval 
 
-eval ee17 SR 1:
+eval ee17 SR 2:
     stage: evaluate
     tags:
         - cvmfs
@@ -926,7 +926,7 @@ eval ee18 SR 1:
     script:
         - *script_eval
 
-eval ee18 SR 1:
+eval ee18 SR 2:
     stage: evaluate
     tags:
         - cvmfs
@@ -1013,7 +1013,7 @@ eval em16 SR 1:
     script:
         - *script_eval16 
 
-eval em16 SR 1:
+eval em16 SR 2:
     stage: evaluate
     tags:
         - cvmfs
@@ -1103,7 +1103,7 @@ eval em17 SR 1:
     script:
         - *script_eval 
 
-eval em17 SR 1:
+eval em17 SR 2:
     stage: evaluate
     tags:
         - cvmfs
@@ -1187,7 +1187,7 @@ eval em18 SR 1:
     script:
         - *script_eval 
 
-eval em18 SR 1:
+eval em18 SR 2:
     stage: evaluate
     tags:
         - cvmfs
