@@ -94,11 +94,10 @@ before_script:
     - scram b -j 20
 
 .script_limit: &script_limit
-    - *set_combine
-    - cd ${CI_PROJECT_DIR}
     - mkdir SR
     - echo ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files
     - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR
+    - *set_combine
     - cd ${CI_PROJECT_DIR}/Combine
     - python ${SCRIPT_LIMIT}.py
     - cd ..
