@@ -128,6 +128,7 @@ for m in SIGNAL_MASSES:
 				lst_limits.append(line.split(" ")[4].rstrip("\n"))
 		print(lst_limits)
 		dic_limits[m]=lst_limits
+
 import json
 with open('LIMIT/'+ERA+'/Logs_v1/limits_v4.json', 'w') as fp:
-    json.dump(dic_limits
+    json.dump(dic_limits, fp)	
