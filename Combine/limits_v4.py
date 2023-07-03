@@ -3,8 +3,8 @@ import json
 
 ERA = sys.argv[1]
 
-os.system("mkdir -p LIMIT/"+ERA+"/Logs_v1")
-os.system("mkdir LIMIT/"+ERA+"/Plots")
+os.system("mkdir -p LIMIT/LIMIT/"+ERA+"/Logs_v1") # temp solu...?
+os.system("mkdir LIMIT/LIMIT/"+ERA+"/Plots")
 
 # input_datacard = 'datacard_ll_SR_v3.txt'
 # input_datacard = 'datacard_allyears_channels.txt'
@@ -93,7 +93,7 @@ for m in SIGNAL_MASSES:
 	os.system("sleep 10s") # give some time file written completely
 
 	# os.system("combine -M AsymptoticLimits --run blind -t -1 "+new_datacard)
-	os.system("combine -M AsymptoticLimits --run blind -t -1 "+new_datacard+" > LIMIT/"+ERA+"/Logs_v1/"+str(m)+".log")
+	os.system("combine -M AsymptoticLimits --run blind -t -1 "+new_datacard+" > LIMIT/LIMIT/"+ERA+"/Logs_v1/"+str(m)+".log")
 
 # 		# best fit
 # 		os.system("text2workspace.py datacard_shape_mm_new.txt -m 800 -o workspace_"+d+".root")
@@ -109,11 +109,11 @@ for m in SIGNAL_MASSES:
 		os.system("combineTool.py -M Impacts -d "+new_datacard+".root -m 200 --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doInitialFit")
 		os.system("combineTool.py -M Impacts -d "+new_datacard+".root -m 200 --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doFits")
 		os.system("combineTool.py -M Impacts -d "+new_datacard+".root -m 200 --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --output impacts"+new_datacard+".json")
-		os.system("plotImpacts.py -i impacts"+new_datacard+".json -o LIMIT/"+ERA+"/Plots/impacts"+m)
+		os.system("plotImpacts.py -i impacts"+new_datacard+".json -o LIMIT/LIMIT/"+ERA+"/Plots/impacts"+m)
 
 
 
-	with open("LIMIT/"+ERA+"/Logs_v1/"+str(m)+".log", 'r') as file:
+	with open("LIMIT/LIMIT/"+ERA+"/Logs_v1/"+str(m)+".log", 'r') as file:
 		lst_limits=[]
 		for line in file:
 			if "Expected  2.5%: r <" in line:
@@ -130,5 +130,5 @@ for m in SIGNAL_MASSES:
 		dic_limits[m]=lst_limits
 
 import json
-with open('LIMIT/'+ERA+'/Logs_v1/limits_v4.json', 'w') as fp:
+with open('LIMIT/LIMIT/'+ERA+'/Logs_v1/limits_v4.json', 'w') as fp:
     json.dump(dic_limits, fp)	
