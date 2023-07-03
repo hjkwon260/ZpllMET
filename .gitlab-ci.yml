@@ -441,7 +441,91 @@ draw em18:
 
 ########## stage: evaluate ############
 ##-- mm --##
-eval mm17:
+eval mm16 SR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: mm16
+        REGION: SR
+        PART: one
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump mm16
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval mm16 SR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: mm16
+        REGION: SR
+        PART: two
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump mm16
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval mm16 VR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: mm16
+        REGION: VR
+        PART: one
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump mm16
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval mm16 VR 2:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: mm16
+        REGION: VR
+        PART: two
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump mm16
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval mm17 SR 1:
     stage: evaluate
     tags:
         - cvmfs
@@ -461,357 +545,660 @@ eval mm17:
      
     script:
         - *script_eval 
-# ee16pre:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_16pre/ee/
-#         DATE: ${DATE1}
-#         ERA: ee16pre
-#         CHANNEL: ee/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl            
-#         expire_in: 10 min            
-#     script:
-#         - *set_combine
-      
-# em16pre:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_16pre/em/
-#         DATE: ${DATE1}
-#         ERA: em16pre
-#         CHANNEL: em/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
-#         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}        
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy 
 
-# mm16post:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_16post/mm/
-#         DATE: ${DATE1}
-#         ERA: mm16post
-#         CHANNEL: mm/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
-#         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}   
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy 
+eval mm17 SR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: mm17
+        REGION: SR
+        PART: two
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump mm17
+          optional: true
+     
+    script:
+        - *script_eval 
 
-# ee16post:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_16post/ee/
-#         DATE: ${DATE1}
-#         ERA: ee16post
-#         CHANNEL: ee/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
-#         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy 
+eval mm17 VR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: mm17
+        REGION: VR
+        PART: one
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump mm17
+          optional: true
+     
+    script:
+        - *script_eval 
 
-# em16post:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_16post/em/
-#         DATE: ${DATE1}
-#         ERA: em16post
-#         CHANNEL: em/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
-#         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}          
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy 
+eval mm17 VR 2:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: mm17
+        REGION: VR
+        PART: two
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump mm17
+          optional: true
+     
+    script:
+        - *script_eval 
 
-# mm17:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_17/mm/
-#         DATE: ${DATE1}
-#         ERA: mm17
-#         CHANNEL: mm/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
-#         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}    
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy 
+eval mm18 SR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: mm18
+        REGION: SR
+        PART: one
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump mm18
+          optional: true
+     
+    script:
+        - *script_eval 
 
-# ee17:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_17/ee/
-#         DATE: ${DATE1}
-#         ERA: ee17
-#         CHANNEL: ee/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
-#         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}    
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy 
+eval mm18 SR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: mm18
+        REGION: SR
+        PART: two
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump mm18
+          optional: true
+     
+    script:
+        - *script_eval 
 
-# em17:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_17/em/
-#         DATE: ${DATE1}
-#         ERA: em17
-#         CHANNEL: em/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
-#         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy 
+eval mm18 VR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: mm18
+        REGION: VR
+        PART: one
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump mm18
+          optional: true
+     
+    script:
+        - *script_eval 
 
-# mm18:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_18/mm/
-#         DATE: ${DATE1}
-#         ERA: mm18
-#         CHANNEL: mm/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
-#         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}     
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy 
+eval mm18 VR 2:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: mm18
+        REGION: VR
+        PART: two
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump mm18
+          optional: true
+     
+    script:
+        - *script_eval 
 
-# ee18:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_18/ee/
-#         DATE: ${DATE1}
-#         ERA: ee18
-#         CHANNEL: ee/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
-#         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}  
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy 
+##-- ee --##
+eval ee16 SR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: ee16
+        REGION: SR
+        PART: one
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump ee16
+          optional: true
+     
+    script:
+        - *script_eval 
 
-# em18:
-#     stage: presel
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/${DATE1}_18/em/
-#         DATE: ${DATE1}
-#         ERA: em18
-#         CHANNEL: em/    
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-#         - jupyter nbconvert --to python ${SCRIPT_PRESEL}.ipynb 
-#         - python ${SCRIPT_PRESEL}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}   
-#         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-#         - kdestroy 
+eval ee16 SR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: ee16
+        REGION: SR
+        PART: two
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump ee16
+          optional: true
+     
+    script:
+        - *script_eval 
 
-# merge ee16:
-#     stage: merge
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
-#         DATE: ${DATE1}
-#         ERA: ee16post
-#         CHANNEL: ee
-#     needs:
-#         - job: ee16pre        
-#         - job: ee16post        
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR}/ee16pre ${CI_PROJECT_DIR}  2>/dev/null
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR}/ee16post ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python MergeEra.ipynb
-#         - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} SR ${DATE}
-#         - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} SR1 ${DATE}
-#         - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} TTCR ${DATE}
-#         - xrdcp -r ${DATE}/Presel/${CHANNEL}16 ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel
-#         - kdestroy 
+eval ee16 VR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: ee16
+        REGION: VR
+        PART: one
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump ee16
+          optional: true
+     
+    script:
+        - *script_eval 
 
-# merge mm16:
-#     stage: merge
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
-#         DATE: ${DATE1}
-#         ERA: mm16post
-#         CHANNEL: mm
-#     needs:
-#         - job: mm16pre        
-#         - job: mm16post        
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR}/mm16pre ${CI_PROJECT_DIR}  2>/dev/null
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR}/mm16post ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python MergeEra.ipynb
-#         - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} SR ${DATE}
-#         - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} SR1 ${DATE}
-#         - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} TTCR ${DATE}
-#         - xrdcp -r ${DATE}/Presel/${CHANNEL}16 ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel
-#         - kdestroy 
+eval ee16 VR 2:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: ee16
+        REGION: VR
+        PART: two
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump ee16
+          optional: true
+     
+    script:
+        - *script_eval 
 
-# merge em16:
-#     stage: merge
-#     tags:
-#         - cvmfs
-#     variables:
-#         INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
-#         DATE: ${DATE1}
-#         ERA: em16post
-#         CHANNEL: em
-#     needs:
-#         - job: em16pre        
-#         - job: em16post        
-#     artifacts:
-#         paths:
-#             - ${DATE}/
-#         exclude:
-#             - ${DATE}/Presel/**/*.pkl
-#         expire_in: 10 min            
-#     script:
-#         - printf $PASS | base64 -d | kinit $USER@CERN.CH
-#         - echo ${INPUT_DIR}
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR}/em16pre ${CI_PROJECT_DIR}  2>/dev/null
-#         - xrdcp -r ${ROOT_EOS_USER}/${INPUT_DIR}/em16post ${CI_PROJECT_DIR}  2>/dev/null
-#         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-#         - jupyter nbconvert --to python MergeEra.ipynb
-#         - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} SR ${DATE}
-#         - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} SR1 ${DATE}
-#         - python MergeEra.py ${CI_PROJECT_DIR} ${CHANNEL} TTCR ${DATE}
-#         - xrdcp -r ${DATE}/Presel/${CHANNEL}16 ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel
-#         - kdestroy 
+eval ee17 SR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: ee17
+        REGION: SR
+        PART: one
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump ee17
+          optional: true
+     
+    script:
+        - *script_eval 
 
+eval ee17 SR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: ee17
+        REGION: SR
+        PART: two
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump ee17
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval ee17 VR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: ee17
+        REGION: VR
+        PART: one
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump ee17
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval ee17 VR 2:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: ee17
+        REGION: VR
+        PART: two
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump ee17
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval ee18 SR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: ee18
+        REGION: SR
+        PART: one
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump ee18
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval ee18 SR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: ee18
+        REGION: SR
+        PART: two
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump ee18
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval ee18 VR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: ee18
+        REGION: VR
+        PART: one
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump ee18
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval ee18 VR 2:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: ee18
+        REGION: VR
+        PART: two
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump ee18
+          optional: true
+     
+    script:
+        - *script_eval 
+
+##-- em --##
+eval em16 SR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: em16
+        REGION: SR
+        PART: one
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump em16
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval em16 SR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: em16
+        REGION: SR
+        PART: two
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump em16
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval em16 VR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: em16
+        REGION: VR
+        PART: one
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump em16
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval em16 VR 2:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: em16
+        REGION: VR
+        PART: two
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump em16
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval em17 SR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: em17
+        REGION: SR
+        PART: one
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump em17
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval em17 SR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: em17
+        REGION: SR
+        PART: two
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump em17
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval em17 VR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: em17
+        REGION: VR
+        PART: one
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump em17
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval em17 VR 2:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: em17
+        REGION: VR
+        PART: two
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump em17
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval em18 SR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: em18
+        REGION: SR
+        PART: one
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump em18
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval em18 SR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: em18
+        REGION: SR
+        PART: two
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump em18
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval em18 VR 1:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: em18
+        REGION: VR
+        PART: one
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump em18
+          optional: true
+     
+    script:
+        - *script_eval 
+
+eval em18 VR 2:
+    stage: evaluate
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: em18
+        REGION: VR
+        PART: two
+    rules:    
+        - if: $DUMP == 'no'
+          when: always
+        - when: on_success
+    needs:
+        - job: dump em18
+          optional: true
+     
+    script:
+        - *script_eval 
+        
 # eval ee16 SR 1:
 #     stage: evaluate
 #     tags:
