@@ -30,6 +30,18 @@ before_script:
     - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
     - kdestroy 
 
+.script_draw16: &script_draw16 # temp
+    - mkdir ${ERA}
+    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}pre/nested_dic_df_SR1.pkl ${ERA}  
+    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}pre/nested_dic_df_TTCR.pkl ${ERA}  
+    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}post/nested_dic_df_SR1.pkl ${ERA}  
+    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}post/nested_dic_df_TTCR.pkl ${ERA}
+    - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+    - jupyter nbconvert --to python ${SCRIPT_DRAW}.ipynb 
+    - python ${SCRIPT_DRAW}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}
+    - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+    - kdestroy 
+
 .script_draw: &script_draw
     - mkdir ${ERA}
     - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/nested_dic_df_SR1.pkl ${ERA}  
@@ -38,7 +50,7 @@ before_script:
     - jupyter nbconvert --to python ${SCRIPT_DRAW}.ipynb 
     - python ${SCRIPT_DRAW}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}
     - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-    - kdestroy 
+    - kdestroy
 
 .script_eval: &script_eval
     - mkdir ${ERA}
@@ -73,6 +85,34 @@ stages:
     - evaluate
     # - limit
 
+dump mm16pre:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_16pre/mm/
+        ERA: mm16pre
+        CHANNEL: mm/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
+
+dump mm16post:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_16post/mm/
+        ERA: mm16post
+        CHANNEL: mm/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
+
 dump mm17:
     stage: dump
     tags:
@@ -86,6 +126,27 @@ dump mm17:
         - if: $DUMP == 'yes'          
     script:
         - *script_dump 
+
+draw mm16:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/Preselection/${DATE1}/Presel/
+        ERA: mm16
+    rules:
+        - if: $DRAW == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $DRAW == 'yes' && $DUMP == 'no'
+          when: always
+    needs:
+        - job: dump mm16pre
+          optional: true      
+        - job: dump mm16post
+          optional: true
+    script:
+        - *script_draw16 
 
 draw mm17:
     stage: draw
