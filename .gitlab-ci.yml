@@ -8,7 +8,7 @@ variables:
     SCRIPT_LIMIT: limits_v3  
     SCRIPT_DUMP: Dump_v1  
     SCRIPT_DRAW: Draw_v1  
-    DUMP: 'yes'
+    DUMP: 'no'
     DRAW: 'yes'
     EVAL: 'yes'
     LIMIT: 'yes'
@@ -95,6 +95,9 @@ before_script:
 
 .script_limit: &script_limit
     - *set_combine
+    - cd ${CI_PROJECT_DIR}
+    - mkdir SR
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR
     - cd ${CI_PROJECT_DIR}/Combine
     - python ${SCRIPT_LIMIT}.py
     - cd ..
@@ -485,7 +488,7 @@ eval mm16 SR 1:
         - job: dump mm16post
           optional: true     
     script:
-        - *script_eval 
+        - *script_eval16 
 
 eval mm16 SR 1:
     stage: evaluate
@@ -508,7 +511,7 @@ eval mm16 SR 1:
         - job: dump mm16post
           optional: true    
     script:
-        - *script_eval 
+        - *script_eval16 
 
 eval mm16 VR 1:
     stage: evaluate
@@ -531,7 +534,7 @@ eval mm16 VR 1:
         - job: dump mm16post
           optional: true     
     script:
-        - *script_eval 
+        - *script_eval16 
 
 eval mm16 VR 2:
     stage: evaluate
@@ -554,7 +557,7 @@ eval mm16 VR 2:
         - job: dump mm16post
           optional: true     
     script:
-        - *script_eval 
+        - *script_eval16 
 
 eval mm17 SR 1:
     stage: evaluate
@@ -746,7 +749,7 @@ eval ee16 SR 1:
         - job: dump ee16post
           optional: true    
     script:
-        - *script_eval 
+        - *script_eval16 
 
 eval ee16 SR 1:
     stage: evaluate
@@ -769,7 +772,7 @@ eval ee16 SR 1:
         - job: dump ee16post
           optional: true
     script:
-        - *script_eval 
+        - *script_eval16 
 
 eval ee16 VR 1:
     stage: evaluate
@@ -792,7 +795,7 @@ eval ee16 VR 1:
         - job: dump ee16post
           optional: true
     script:
-        - *script_eval 
+        - *script_eval16 
 
 eval ee16 VR 2:
     stage: evaluate
@@ -815,7 +818,7 @@ eval ee16 VR 2:
         - job: dump ee16post
           optional: true
     script:
-        - *script_eval 
+        - *script_eval16 
 
 eval ee17 SR 1:
     stage: evaluate
@@ -920,7 +923,7 @@ eval ee18 SR 1:
         - job: dump ee18
           optional: true    
     script:
-        - *script_eval 
+        - *script_eval
 
 eval ee18 SR 1:
     stage: evaluate
@@ -1007,7 +1010,7 @@ eval em16 SR 1:
         - job: dump em16post
           optional: true   
     script:
-        - *script_eval 
+        - *script_eval16 
 
 eval em16 SR 1:
     stage: evaluate
@@ -1030,7 +1033,7 @@ eval em16 SR 1:
         - job: dump em16post
           optional: true  
     script:
-        - *script_eval 
+        - *script_eval16 
 
 eval em16 VR 1:
     stage: evaluate
@@ -1053,7 +1056,7 @@ eval em16 VR 1:
         - job: dump em16post
           optional: true  
     script:
-        - *script_eval 
+        - *script_eval16 
 
 eval em16 VR 2:
     stage: evaluate
@@ -1076,7 +1079,7 @@ eval em16 VR 2:
         - job: dump em16post
           optional: true  
     script:
-        - *script_eval 
+        - *script_eval16 
 
 eval em17 SR 1:
     stage: evaluate
@@ -1254,7 +1257,7 @@ limit mm17:
         DATE: ${DATE1}
         ERA: mm17
         CHANNEL: mm/ 
-        INPUT_DIR: ${INPUT_DNN}/${ERA}/root_files
+        INPUT_DIR: ${INPUT_DNN}
     rules:    
         - if: $LIMIT == 'yes' && $EVAL == 'yes'
           when: on_success

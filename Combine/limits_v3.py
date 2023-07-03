@@ -21,7 +21,8 @@ SIGNAL_MASSES = setting["ALL_MASSES"]
 
 
 for m in SIGNAL_MASSES:
-	input_root_file = '../Outputs/SR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+	# input_root_file = '../Outputs/SR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+	input_root_file = '../SR/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
 
 	# Read in the file
 	with open(input_datacard, 'r') as file :
