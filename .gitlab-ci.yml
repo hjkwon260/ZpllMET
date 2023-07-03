@@ -8,7 +8,7 @@ variables:
     SCRIPT_LIMIT: limits_v3  
     SCRIPT_DUMP: Dump_v1  
     SCRIPT_DRAW: Draw_v1  
-    DUMP: 'yes'
+    DUMP: 'no'
     DRAW: 'yes'
 #     #INPUT_DIR: 20220215/ #20220131/
 #     INPUT_DIR: Run2/20221225_17/ee/
@@ -31,11 +31,12 @@ before_script:
     - kdestroy 
 
 .script_draw16: &script_draw16 # temp
-    - mkdir ${ERA}
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}pre/nested_dic_df_SR1.pkl ${ERA}  
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}pre/nested_dic_df_TTCR.pkl ${ERA}  
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}post/nested_dic_df_SR1.pkl ${ERA}  
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}post/nested_dic_df_TTCR.pkl ${ERA}
+    - mkdir ${ERA}pre
+    - mkdir ${ERA}post
+    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}pre/nested_dic_df_SR1.pkl ${ERA}pre  
+    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}pre/nested_dic_df_TTCR.pkl ${ERA}pre  
+    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}post/nested_dic_df_SR1.pkl ${ERA}post  
+    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}post/nested_dic_df_TTCR.pkl ${ERA}post
     - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
     - jupyter nbconvert --to python ${SCRIPT_DRAW}.ipynb 
     - python ${SCRIPT_DRAW}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}
