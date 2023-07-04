@@ -28,36 +28,36 @@ INPUTDIR = setting["INPUTDIR"]
 VERSION = setting["VERSION"]
 SIGNAL_MASSES = setting["ALL_MASSES"]
 # SIGNAL_MASSES = ['Zp-2500_CH-345']
-SIGNAL_MASSES = ['Zp-3300_CH-595']
+# SIGNAL_MASSES = ['Zp-3300_CH-595']
 
 
 for m in SIGNAL_MASSES:
 	if ERA == "all":
-		input_root_file_sr_mm16 = '../SR/root_filesmm16/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-		input_root_file_ttcr_mm16 = '../VR/root_filesmm16/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
-		input_root_file_sr_mm17 = '../SR/root_filesmm17/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-		input_root_file_ttcr_mm17 = '../VR/root_filesmm17/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
-		input_root_file_sr_mm18 = '../SR/root_filesmm18/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-		input_root_file_ttcr_mm18 = '../VR/root_filesmm18/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
-		input_root_file_sr_ee16 = '../SR/root_filesee16/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-		input_root_file_ttcr_ee16 = '../VR/root_filesee16/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
-		input_root_file_sr_ee17 = '../SR/root_filesee17/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-		input_root_file_ttcr_ee17 = '../VR/root_filesee17/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
-		input_root_file_sr_ee18 = '../SR/root_filesee18/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-		input_root_file_ttcr_ee18 = '../VR/root_filesee18/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
-		input_root_file_sr_em16 = '../SR/root_filesem16/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-		input_root_file_ttcr_em16 = '../VR/root_filesem16/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
-		input_root_file_sr_em17 = '../SR/root_filesem17/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-		input_root_file_ttcr_em17 = '../VR/root_filesem17/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
-		input_root_file_sr_em18 = '../SR/root_filesem18/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-		input_root_file_ttcr_em18 = '../VR/root_filesem18/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_sr_mm16 = '../SR/mm16/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_mm16 = '../VR/mm16/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_mm17 = '../SR/mm17/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_mm17 = '../VR/mm17/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_mm18 = '../SR/mm18/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_mm18 = '../VR/mm18/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_ee16 = '../SR/ee16/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_ee16 = '../VR/ee16/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_ee17 = '../SR/ee17/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_ee17 = '../VR/ee17/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_ee18 = '../SR/ee18/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_ee18 = '../VR/ee18/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_em16 = '../SR/em16/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_em16 = '../VR/em16/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_em17 = '../SR/em17/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_em17 = '../VR/em17/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_em18 = '../SR/em18/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_em18 = '../VR/em18/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
 	elif ERA == "mm" or ERA == "ee" or ERA == "em":
-		input_root_file_sr_16 = '../SR/root_files16/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-		input_root_file_ttcr_16 = '../VR/root_files16/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
-		input_root_file_sr_17 = '../SR/root_files17/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-		input_root_file_ttcr_17 = '../VR/root_files17/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
-		input_root_file_sr_18 = '../SR/root_files18/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-		input_root_file_ttcr_18 = '../VR/root_files18/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_16 = '../SR/16/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_16 = '../VR/16/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_17 = '../SR/17/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_17 = '../VR/17/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_18 = '../SR/18/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_18 = '../VR/18/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
 	else:
 		input_root_file_sr = '../SR/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
 		input_root_file_ttcr = '../VR/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'

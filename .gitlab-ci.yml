@@ -100,43 +100,57 @@ before_script:
     - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR  
 
 .load_root_files_channel: &load_root_files_channel
-    - mkdir -p SR
-    - mkdir -p VR
+    - mkdir -p SR/16
+    - mkdir -p SR/17
+    - mkdir -p SR/18
+    - mkdir -p VR/16
+    - mkdir -p VR/17
+    - mkdir -p VR/18
     - export CHANNEL=${ERA}
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}16/SR/root_files SR
-    - mv SR/root_files SR/root_files16
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}16/VR/root_files VR
-    - mv VR/root_files VR/root_files16  
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}17/SR/root_files SR
-    - mv SR/root_files SR/root_files17
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}17/VR/root_files VR
-    - mv VR/root_files VR/root_files17 
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}18/SR/root_files SR
-    - mv SR/root_files SR/root_files18
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}18/VR/root_files VR
-    - mv VR/root_files VR/root_files18  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}16/SR/root_files SR/16
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}16/VR/root_files VR/16
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}17/SR/root_files SR/17
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}17/VR/root_files VR/17
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}18/SR/root_files SR/18
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}18/VR/root_files VR/18
 
 .load_root_files_all: &load_root_files_all
-    - mkdir -p SR
-    - mkdir -p VR
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm16/SR/root_files SR/root_filesmm16
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm16/VR/root_files VR/root_filesmm16  
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm17/SR/root_files SR/root_filesmm17
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm17/VR/root_files VR/root_filesmm17  
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm18/SR/root_files SR/root_filesmm18
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm18/VR/root_files VR/root_filesmm18 
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee16/SR/root_files SR/root_filesee16
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee16/VR/root_files VR/root_filesee16  
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee17/SR/root_files SR/root_filesee17
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee17/VR/root_files VR/root_filesee17  
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee18/SR/root_files SR/root_filesee18
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee18/VR/root_files VR/root_filesee18 
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em16/SR/root_files SR/root_filesem16
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em16/VR/root_files VR/root_filesem16  
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em17/SR/root_files SR/root_filesem17
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em17/VR/root_files VR/root_filesem17  
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em18/SR/root_files SR/root_filesem18
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em18/VR/root_files VR/root_filesem18 
+    - mkdir -p SR/mm16
+    - mkdir -p SR/mm17
+    - mkdir -p SR/mm18    
+    - mkdir -p SR/ee16
+    - mkdir -p SR/ee17
+    - mkdir -p SR/ee18    
+    - mkdir -p SR/em16
+    - mkdir -p SR/em17
+    - mkdir -p SR/em18
+    - mkdir -p VR/mm16
+    - mkdir -p VR/mm17
+    - mkdir -p VR/mm18    
+    - mkdir -p VR/ee16
+    - mkdir -p VR/ee17
+    - mkdir -p VR/ee18    
+    - mkdir -p VR/em16
+    - mkdir -p VR/em17
+    - mkdir -p VR/em18    
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm16/SR/root_files SR/mm16
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm16/VR/root_files VR/mm16  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm17/SR/root_files SR/mm17
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm17/VR/root_files VR/mm17  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm18/SR/root_files SR/mm18
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm18/VR/root_files VR/mm18 
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee16/SR/root_files SR/ee16
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee16/VR/root_files VR/ee16  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee17/SR/root_files SR/ee17
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee17/VR/root_files VR/ee17  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee18/SR/root_files SR/ee18
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee18/VR/root_files VR/ee18 
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em16/SR/root_files SR/em16
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em16/VR/root_files VR/em16  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em17/SR/root_files SR/em17
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em17/VR/root_files VR/em17  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em18/SR/root_files SR/em18
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em18/VR/root_files VR/em18 
 
 .script_limit: &script_limit
     - cd ${CI_PROJECT_DIR}/Combine
