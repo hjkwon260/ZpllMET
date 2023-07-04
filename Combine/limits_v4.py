@@ -53,8 +53,8 @@ for m in SIGNAL_MASSES:
 	else:
 		input_root_file_sr = '../SR/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
 		input_root_file_ttcr = '../VR/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-		input_root_file_sr = "../Outputs/SR/shape_v1_20230529deepCSV_ANv3Zp-2500_CH-345_v1_smoothed.root"
-		input_root_file_ttcr = "../Outputs/SR/shape_v1_20230529deepCSV_ANv3Zp-2500_CH-345_v1_smoothed.root"
+		# input_root_file_sr = "../Outputs/SR/shape_v1_20230529deepCSV_ANv3Zp-2500_CH-345_v1_smoothed.root"
+		# input_root_file_ttcr = "../Outputs/SR/shape_v1_20230529deepCSV_ANv3Zp-2500_CH-345_v1_smoothed.root"
 		# input_root_file = '../Outputs/SRbak/shape_v1_20230430wp80_ANv3Zp-2500_CH-345_v1_smooted.root'
 
 	# Read in the file
