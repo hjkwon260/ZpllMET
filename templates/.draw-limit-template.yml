@@ -1,0 +1,239 @@
+########## stage: draw limit ############
+##-- mm --##
+draw mm16:
+    stage: draw limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: mm16
+    rules:    
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'yes'
+          when: on_success
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'no'
+          when: always
+    needs:
+        - job: limit mm16
+          optional: true            
+    script:
+        - *script_draw_limit
+
+draw mm17:
+    stage: draw limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: mm17
+    rules:    
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'yes'
+          when: on_success
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'no'
+          when: always
+    needs:
+        - job: limit mm17
+          optional: true            
+    script:
+        - *script_draw_limit
+
+draw mm18:
+    stage: draw limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: mm18
+    rules:    
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'yes'
+          when: on_success
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'no'
+          when: always
+    needs:
+        - job: limit mm18
+          optional: true            
+    script:
+        - *script_draw_limit
+
+##-- ee --##
+draw ee16:
+    stage: draw limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: ee16
+    rules:    
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'yes'
+          when: on_success
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'no'
+          when: always
+    needs:
+        - job: limit ee16
+          optional: true            
+    script:
+        - *script_draw_limit
+
+draw ee17:
+    stage: draw limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: ee17
+    rules:    
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'yes'
+          when: on_success
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'no'
+          when: always
+    needs:
+        - job: limit ee17
+          optional: true            
+    script:
+        - *script_draw_limit
+
+draw ee18:
+    stage: draw limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: ee18
+    rules:    
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'yes'
+          when: on_success
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'no'
+          when: always
+    needs:
+        - job: limit ee18
+          optional: true            
+    script:
+        - *script_draw_limit
+
+##-- em --##
+draw em16:
+    stage: draw limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: em16
+    rules:    
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'yes'
+          when: on_success
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'no'
+          when: always
+    needs:
+        - job: limit em16
+          optional: true            
+    script:
+        - *script_draw_limit
+
+draw em17:
+    stage: draw limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: em17
+    rules:    
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'yes'
+          when: on_success
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'no'
+          when: always
+    needs:
+        - job: limit em17
+          optional: true            
+    script:
+        - *script_draw_limit
+
+draw em18:
+    stage: draw limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: em18
+    rules:    
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'yes'
+          when: on_success
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'no'
+          when: always
+    needs:
+        - job: limit em18
+          optional: true            
+    script:
+        - *script_draw_limit
+
+##-- channel --##
+draw mm:
+    stage: draw limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: mm
+    rules:    
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'yes'
+          when: on_success
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'no'
+          when: always
+    needs:
+        - job: limit mm
+          optional: true            
+    script:
+        - *script_draw_limit
+
+draw ee:
+    stage: draw limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: ee
+    rules:    
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'yes'
+          when: on_success
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'no'
+          when: always
+    needs:
+        - job: limit ee
+          optional: true            
+    script:
+        - *script_draw_limit
+
+draw em:
+    stage: draw limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: em
+    rules:    
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'yes'
+          when: on_success
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'no'
+          when: always
+    needs:
+        - job: limit em
+          optional: true            
+    script:
+        - *script_draw_limit
+
+##-- all --##
+draw all:
+    stage: draw limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: all
+    rules:    
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'yes'
+          when: on_success
+        - if: $DRAW_LIMIT == 'yes' && $LIMIT == 'no'
+          when: always
+    needs:
+        - job: limit all
+          optional: true            
+    script:
+        - *script_draw_limit
