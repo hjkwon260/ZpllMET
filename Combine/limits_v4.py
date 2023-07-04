@@ -3,16 +3,18 @@ import json
 
 ERA = sys.argv[1]
 
-os.system("mkdir -p LIMIT/LIMIT/"+ERA+"/Logs_v1") # temp solu...?
+os.system("mkdir -p LIMIT/LIMIT/"+ERA+"/Logs_v1") # temp solution... xrdcp works differently
 os.system("mkdir LIMIT/LIMIT/"+ERA+"/Plots")
 
 # input_datacard = 'datacard_ll_SR_v3.txt'
 # input_datacard = 'datacard_allyears_channels.txt'
 # input_datacard = 'datacard_ll_SR_smooth_v4.txt'
 if ERA == "all":
-	input_datacard = 'datacard_allyears_channels.txt'
+	input_datacard = 'datacards/datacard_allyears_channels.txt'
+elif ERA == "mm" or ERA == "ee" or ERA == "em":
+	input_datacard = 'datacards/datacard_allyears.txt'	
 else:
-	input_datacard = 'datacard_ll_combine_v4.txt'
+	input_datacard = 'datacards/datacard_ll_combine_v4.txt'
 
 
 dic_limits={}
@@ -31,25 +33,31 @@ SIGNAL_MASSES = ['Zp-3300_CH-595']
 
 for m in SIGNAL_MASSES:
 	if ERA == "all":
-		print('blah')
-	# input_root_file_sree16 = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/ee16/SR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-	# input_root_file_ttcree16 = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/ee16/VR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-	# input_root_file_sree17 = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/ee17/SR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-	# input_root_file_ttcree17 = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/ee17/VR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-	# input_root_file_sree18 = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/ee18/SR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-	# input_root_file_ttcree18 = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/ee18/VR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-	# input_root_file_srmm16 = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/mm16/SR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-	# input_root_file_ttcrmm16 = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/mm16/VR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-	# input_root_file_srmm17 = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/mm17/SR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-	# input_root_file_ttcrmm17 = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/mm17/VR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-	# input_root_file_srmm18 = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/mm18/SR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-	# input_root_file_ttcrmm18 = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/mm18/VR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-	# input_root_file_srem16 = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/em16/SR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-	# input_root_file_ttcrem16 = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/em16/VR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-	# input_root_file_srem17 = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/em17/SR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-	# input_root_file_ttcrem17 = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/em17/VR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-	# input_root_file_srem18 = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/em18/SR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
-	# input_root_file_ttcrem18 = '/eos/user/h/hkwon/Run2/Preselection/20230529deepCSV/Presel/em18/VR/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_sr_mm16 = '../SR/root_filesmm16/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_mm16 = '../VR/root_filesmm16/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_mm17 = '../SR/root_filesmm17/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_mm17 = '../VR/root_filesmm17/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_mm18 = '../SR/root_filesmm18/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_mm18 = '../VR/root_filesmm18/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_ee16 = '../SR/root_filesee16/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_ee16 = '../VR/root_filesee16/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_ee17 = '../SR/root_filesee17/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_ee17 = '../VR/root_filesee17/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_ee18 = '../SR/root_filesee18/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_ee18 = '../VR/root_filesee18/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_em16 = '../SR/root_filesem16/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_em16 = '../VR/root_filesem16/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_em17 = '../SR/root_filesem17/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_em17 = '../VR/root_filesem17/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_em18 = '../SR/root_filesem18/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_em18 = '../VR/root_filesem18/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+	elif ERA == "mm" or ERA == "ee" or ERA == "em":
+		input_root_file_sr_16 = '../SR/root_files16/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_16 = '../VR/root_files16/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_17 = '../SR/root_files17/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_17 = '../VR/root_files17/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
+		input_root_file_sr_18 = '../SR/root_files18/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
+		input_root_file_ttcr_18 = '../VR/root_files18/shape_v1_20230430wp80_ANv3'+m+'_v1.root'		
 	else:
 		input_root_file_sr = '../SR/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
 		input_root_file_ttcr = '../VR/root_files/shape_v1_20230430wp80_ANv3'+m+'_v1.root'
@@ -63,25 +71,31 @@ for m in SIGNAL_MASSES:
 
 	# Replace the target string
 	if ERA == "all":	
-		print('blah')
-		# filedata = filedata.replace('INPUT_ROOT_FILE_SR_16ee', input_root_file_sree16)
-		# filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_16ee', input_root_file_ttcree16)
-		# filedata = filedata.replace('INPUT_ROOT_FILE_SR_17ee', input_root_file_sree17)
-		# filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_17ee', input_root_file_ttcree17)
-		# filedata = filedata.replace('INPUT_ROOT_FILE_SR_18ee', input_root_file_sree18)
-		# filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_18ee', input_root_file_ttcree18)
-		# filedata = filedata.replace('INPUT_ROOT_FILE_SR_16mm', input_root_file_srmm16)
-		# filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_16mm', input_root_file_ttcrmm16)
-		# filedata = filedata.replace('INPUT_ROOT_FILE_SR_17mm', input_root_file_srmm17)
-		# filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_17mm', input_root_file_ttcrmm17)
-		# filedata = filedata.replace('INPUT_ROOT_FILE_SR_18mm', input_root_file_srmm18)
-		# filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_18mm', input_root_file_ttcrmm18)
-		# filedata = filedata.replace('INPUT_ROOT_FILE_SR_16em', input_root_file_srem16)
-		# filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_16em', input_root_file_ttcrem16)
-		# filedata = filedata.replace('INPUT_ROOT_FILE_SR_17em', input_root_file_srem17)
-		# filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_17em', input_root_file_ttcrem17)
-		# filedata = filedata.replace('INPUT_ROOT_FILE_SR_18em', input_root_file_srem18)
-		# filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_18em', input_root_file_ttcrem18)
+		filedata = filedata.replace('INPUT_ROOT_FILE_SR_16ee', input_root_file_sr_ee16)
+		filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_16ee', input_root_file_ttcr_ee16)
+		filedata = filedata.replace('INPUT_ROOT_FILE_SR_17ee', input_root_file_sr_ee17)
+		filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_17ee', input_root_file_ttcr_ee17)
+		filedata = filedata.replace('INPUT_ROOT_FILE_SR_18ee', input_root_file_sr_ee18)
+		filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_18ee', input_root_file_ttcr_ee18)
+		filedata = filedata.replace('INPUT_ROOT_FILE_SR_16mm', input_root_file_sr_mm16)
+		filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_16mm', input_root_file_ttcr_mm16)
+		filedata = filedata.replace('INPUT_ROOT_FILE_SR_17mm', input_root_file_sr_mm17)
+		filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_17mm', input_root_file_ttcr_mm17)
+		filedata = filedata.replace('INPUT_ROOT_FILE_SR_18mm', input_root_file_sr_mm18)
+		filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_18mm', input_root_file_ttcr_mm18)
+		filedata = filedata.replace('INPUT_ROOT_FILE_SR_16em', input_root_file_sr_em16)
+		filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_16em', input_root_file_ttcr_em16)
+		filedata = filedata.replace('INPUT_ROOT_FILE_SR_17em', input_root_file_sr_em17)
+		filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_17em', input_root_file_ttcr_em17)
+		filedata = filedata.replace('INPUT_ROOT_FILE_SR_18em', input_root_file_sr_em18)
+		filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_18em', input_root_file_ttcr_em18)
+	elif ERA == "mm" or ERA == "ee" or ERA == "em":
+		filedata = filedata.replace('INPUT_ROOT_FILE_SR_16', input_root_file_sr_16)
+		filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_16', input_root_file_ttcr_16)
+		filedata = filedata.replace('INPUT_ROOT_FILE_SR_17', input_root_file_sr_17)
+		filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_17', input_root_file_ttcr_17)
+		filedata = filedata.replace('INPUT_ROOT_FILE_SR_18', input_root_file_sr_18)
+		filedata = filedata.replace('INPUT_ROOT_FILE_TTCR_18', input_root_file_ttcr_18)
 	else:
 		filedata = filedata.replace('INPUT_ROOT_FILE_SR', input_root_file_sr)
 		filedata = filedata.replace('INPUT_ROOT_FILE_TTCR', input_root_file_ttcr)
@@ -104,12 +118,12 @@ for m in SIGNAL_MASSES:
 # 		os.system("combine -M Significance workspace_"+d+".root -m 200 --rMin -2 --rMax 2")
 	##----- impact -----##
 	# if m == 'Zp-2500_CH-345' or m == 'Zp-2500_CH-845' or m == 'Zp-4100_CH-345':
-	if m == 'Zp-2500_CH-345':
-		os.system("text2workspace.py "+new_datacard+" -m 800 -o "+new_datacard+".root")
-		os.system("combineTool.py -M Impacts -d "+new_datacard+".root -m 200 --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doInitialFit")
-		os.system("combineTool.py -M Impacts -d "+new_datacard+".root -m 200 --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doFits")
-		os.system("combineTool.py -M Impacts -d "+new_datacard+".root -m 200 --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --output impacts"+new_datacard+".json")
-		os.system("plotImpacts.py -i impacts"+new_datacard+".json -o LIMIT/LIMIT/"+ERA+"/Plots/impacts"+m)
+	# if m == 'Zp-2500_CH-345':
+	# 	os.system("text2workspace.py "+new_datacard+" -m 800 -o "+new_datacard+".root")
+	# 	os.system("combineTool.py -M Impacts -d "+new_datacard+".root -m 200 --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doInitialFit")
+	# 	os.system("combineTool.py -M Impacts -d "+new_datacard+".root -m 200 --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doFits")
+	# 	os.system("combineTool.py -M Impacts -d "+new_datacard+".root -m 200 --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --output impacts"+new_datacard+".json")
+	# 	os.system("plotImpacts.py -i impacts"+new_datacard+".json -o LIMIT/LIMIT/"+ERA+"/Plots/impacts"+m)
 
 
 

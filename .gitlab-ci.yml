@@ -93,12 +93,46 @@ before_script:
     - bash <(curl -s https://raw.githubusercontent.com/cms-analysis/CombineHarvester/master/CombineTools/scripts/sparse-checkout-https.sh)
     - scram b -j 20
 
-.script_limit: &script_limit
+.load_root_files: &load_root_files
     - mkdir SR
     - mkdir VR
     - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR
-    - *set_combine
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR  
+
+.load_root_files_channel: &load_root_files_channel
+    - mkdir -p SR
+    - mkdir -p VR
+    - export CHANNEL = ${ERA}
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}16/SR/root_files SR/root_files16
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}16/VR/root_files VR/root_files16  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}17/SR/root_files SR/root_files17
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}17/VR/root_files VR/root_files17  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}18/SR/root_files SR/root_files18
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}18/VR/root_files VR/root_files18  
+
+.load_root_files_all: &load_root_files_all
+    - mkdir -p SR
+    - mkdir -p VR
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm16/SR/root_files SR/root_filesmm16
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm16/VR/root_files VR/root_filesmm16  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm17/SR/root_files SR/root_filesmm17
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm17/VR/root_files VR/root_filesmm17  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm18/SR/root_files SR/root_filesmm18
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm18/VR/root_files VR/root_filesmm18 
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee16/SR/root_files SR/root_filesee16
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee16/VR/root_files VR/root_filesee16  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee17/SR/root_files SR/root_filesee17
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee17/VR/root_files VR/root_filesee17  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee18/SR/root_files SR/root_filesee18
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee18/VR/root_files VR/root_filesee18 
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em16/SR/root_files SR/root_filesem16
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em16/VR/root_files VR/root_filesem16  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em17/SR/root_files SR/root_filesem17
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em17/VR/root_files VR/root_filesem17  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em18/SR/root_files SR/root_filesem18
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em18/VR/root_files VR/root_filesem18 
+
+.script_limit: &script_limit
     - cd ${CI_PROJECT_DIR}/Combine
     - python ${SCRIPT_LIMIT}.py ${ERA}
     - cd ..
@@ -1273,7 +1307,74 @@ limit mm17:
         - job: eval mm17 VR 2
           optional: true
     script:
+        - *load_root_files
+        - *set_combine
         - *script_limit 
+
+limit mm:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: mm
+        INPUT_DIR: ${INPUT_DNN}
+    rules:    
+        - if: $LIMIT == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $LIMIT == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval mm16 SR 1
+          optional: true 
+        - job: eval mm16 SR 2
+          optional: true
+        - job: eval mm16 VR 1
+          optional: true 
+        - job: eval mm16 VR 2
+          optional: true
+        - job: eval mm17 SR 1
+          optional: true 
+        - job: eval mm17 SR 2
+          optional: true
+        - job: eval mm17 VR 1
+          optional: true 
+        - job: eval mm17 VR 2
+          optional: true
+        - job: eval mm18 SR 1
+          optional: true 
+        - job: eval mm18 SR 2
+          optional: true
+        - job: eval mm18 VR 1
+          optional: true 
+        - job: eval mm18 VR 2
+          optional: true          
+    script:
+        - *load_root_files_channel
+        - *set_combine
+        - *script_limit 
+
+limit all:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: all
+        INPUT_DIR: ${INPUT_DNN}
+    rules:    
+        - if: $LIMIT == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $LIMIT == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval mm16 SR 1 # dummy
+          optional: true          
+    script:
+        - *load_root_files_all
+        - *set_combine
+        - *script_limit 
+
 # limit ee16:
 #     stage: limit
 #     tags:
