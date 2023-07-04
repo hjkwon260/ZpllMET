@@ -12,7 +12,7 @@ variables:
     DRAW: 'no'
     EVAL: 'no'
     LIMIT: 'yes'
-    DRAW_LIMIT: 'yes'
+    DRAW_LIMIT: 'no'
     INPUT_DUMP: Run2/Preselection/${DATE1}/Presel/DUMP/
     INPUT_DNN: Run2/Preselection/${DATE1}/Presel/DNN/
 #     INPUT_DIR: Run2/20221225_17/ee/
