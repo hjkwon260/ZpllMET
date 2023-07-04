@@ -102,13 +102,19 @@ before_script:
 .load_root_files_channel: &load_root_files_channel
     - mkdir -p SR
     - mkdir -p VR
-    - export CHANNEL = ${ERA}
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}16/SR/root_files SR/root_files16
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}16/VR/root_files VR/root_files16  
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}17/SR/root_files SR/root_files17
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}17/VR/root_files VR/root_files17  
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}18/SR/root_files SR/root_files18
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}18/VR/root_files VR/root_files18  
+    - export CHANNEL=${ERA}
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}16/SR/root_files SR
+    - mv SR/root_files SR/root_files16
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}16/VR/root_files VR/root_files
+    - mv SR/root_files VR/root_files16  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}17/SR/root_files SR/root_files
+    - mv SR/root_files SR/root_files17
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}17/VR/root_files VR/root_files
+    - mv SR/root_files VR/root_files17 
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}18/SR/root_files SR/root_files
+    - mv SR/root_files SR/root_files18
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}18/VR/root_files VR/root_files
+    - mv SR/root_files VR/root_files18  
 
 .load_root_files_all: &load_root_files_all
     - mkdir -p SR
