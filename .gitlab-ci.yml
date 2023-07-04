@@ -11,7 +11,7 @@ variables:
     DUMP: 'no'
     DRAW: 'no'
     EVAL: 'no'
-    LIMIT: 'no'
+    LIMIT: 'yes'
     DRAW_LIMIT: 'yes'
     INPUT_DUMP: Run2/Preselection/${DATE1}/Presel/DUMP/
     INPUT_DNN: Run2/Preselection/${DATE1}/Presel/DNN/

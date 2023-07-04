@@ -1,5 +1,3 @@
-stages:
-    - draw limit
 ########## stage: draw limit ############
 ##-- mm --##
 draw mm16:
