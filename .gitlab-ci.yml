@@ -331,26 +331,26 @@ dump em18:
 
 ########## stage: draw ############
 ##-- mm --##
-# draw mm16:
-#     stage: draw
-#     tags:
-#         - cvmfs
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: ${INPUT_DUMP}
-#         ERA: mm16
-#     rules:
-#         - if: $DRAW == 'yes' && $DUMP == 'yes'
-#           when: on_success
-#         - if: $DRAW == 'yes' && $DUMP == 'no'
-#           when: always
-#     needs:
-#         - job: dump mm16pre
-#           optional: true      
-#         - job: dump mm16post
-#           optional: true
-#     script:
-#         - *script_draw16 
+draw mm16:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: ${INPUT_DUMP}
+        ERA: mm16
+    rules:
+        - if: $DRAW == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $DRAW == 'yes' && $DUMP == 'no'
+          when: always
+    needs:
+        - job: dump mm16pre
+          optional: true      
+        - job: dump mm16post
+          optional: true
+    script:
+        - *script_draw16 
 
 # draw mm17:
 #     stage: draw
