@@ -1,4 +1,4 @@
-variables:
+variables: #test
     DATE1: 20230529deepCSV
     CMS_PATH: /cvmfs/cms.cern.ch
     CMSSW_RELEASE: CMSSW_10_2_13
