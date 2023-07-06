@@ -9,7 +9,7 @@ variables: #testtest
     SCRIPT_DUMP: Dump_v1  
     SCRIPT_DRAW: Draw_v1  
     DUMP: 'no'
-    DRAW: 'no'
+    DRAW: 'yes'
     EVAL: 'no'
     LIMIT: 'no'
     DRAW_LIMIT: 'yes'
