@@ -9,10 +9,10 @@ variables: #testtest
     SCRIPT_DUMP: Dump_v1  
     SCRIPT_DRAW: Draw_v1  
     DUMP: 'no'
-    DRAW: 'yes'
+    DRAW: 'no'
     EVAL: 'no'
     LIMIT: 'no'
-    DRAW_LIMIT: 'no'
+    DRAW_LIMIT: 'yes'
     INPUT_DUMP: Run2/Preselection/${DATE1}/Presel/DUMP/
     INPUT_DNN: Run2/Preselection/${DATE1}/Presel/DNN/
 #     INPUT_DIR: Run2/20221225_17/ee/
