@@ -12,7 +12,7 @@ variables: #testtest
     DRAW: 'yes'
     EVAL: 'no'
     LIMIT: 'no'
-    DRAW_LIMIT: 'yes'
+    DRAW_LIMIT: 'no'
     INPUT_DUMP: Run2/Preselection/${DATE1}/Presel/DUMP/
     INPUT_DNN: Run2/Preselection/${DATE1}/Presel/DNN/
 #     INPUT_DIR: Run2/20221225_17/ee/
@@ -331,26 +331,26 @@ dump em18:
 
 ########## stage: draw ############
 ##-- mm --##
-draw mm16:
-    stage: draw
-    tags:
-        - cvmfs
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: mm16
-    rules:
-        - if: $DRAW == 'yes' && $DUMP == 'yes'
-          when: on_success
-        - if: $DRAW == 'yes' && $DUMP == 'no'
-          when: always
-    needs:
-        - job: dump mm16pre
-          optional: true      
-        - job: dump mm16post
-          optional: true
-    script:
-        - *script_draw16 
+# draw mm16:
+#     stage: draw
+#     tags:
+#         - cvmfs
+#     variables:
+#         DATE: ${DATE1}
+#         INPUT_DIR: ${INPUT_DUMP}
+#         ERA: mm16
+#     rules:
+#         - if: $DRAW == 'yes' && $DUMP == 'yes'
+#           when: on_success
+#         - if: $DRAW == 'yes' && $DUMP == 'no'
+#           when: always
+#     needs:
+#         - job: dump mm16pre
+#           optional: true      
+#         - job: dump mm16post
+#           optional: true
+#     script:
+#         - *script_draw16 
 
 # draw mm17:
 #     stage: draw
@@ -1695,7 +1695,7 @@ limit all:
 
 ########## stage: draw limit ############
 ##-- mm --##
-draw mm16:
+draw limit mm16:
     stage: draw limit
     tags:
         - cvmfs
@@ -1713,7 +1713,7 @@ draw mm16:
     script:
         - *script_draw_limit
 
-draw mm17:
+draw limit mm17:
     stage: draw limit
     tags:
         - cvmfs
@@ -1731,7 +1731,7 @@ draw mm17:
     script:
         - *script_draw_limit
 
-draw mm18:
+draw limit mm18:
     stage: draw limit
     tags:
         - cvmfs
@@ -1750,7 +1750,7 @@ draw mm18:
         - *script_draw_limit
 
 ##-- ee --##
-draw ee16:
+draw limit ee16:
     stage: draw limit
     tags:
         - cvmfs
@@ -1768,7 +1768,7 @@ draw ee16:
     script:
         - *script_draw_limit
 
-draw ee17:
+draw limit ee17:
     stage: draw limit
     tags:
         - cvmfs
@@ -1786,7 +1786,7 @@ draw ee17:
     script:
         - *script_draw_limit
 
-draw ee18:
+draw limit ee18:
     stage: draw limit
     tags:
         - cvmfs
@@ -1805,7 +1805,7 @@ draw ee18:
         - *script_draw_limit
 
 ##-- em --##
-draw em16:
+draw limit em16:
     stage: draw limit
     tags:
         - cvmfs
@@ -1823,7 +1823,7 @@ draw em16:
     script:
         - *script_draw_limit
 
-draw em17:
+draw limit em17:
     stage: draw limit
     tags:
         - cvmfs
@@ -1841,7 +1841,7 @@ draw em17:
     script:
         - *script_draw_limit
 
-draw em18:
+draw limit em18:
     stage: draw limit
     tags:
         - cvmfs
@@ -1860,7 +1860,7 @@ draw em18:
         - *script_draw_limit
 
 ##-- channel --##
-draw mm:
+draw limit mm:
     stage: draw limit
     tags:
         - cvmfs
@@ -1878,7 +1878,7 @@ draw mm:
     script:
         - *script_draw_limit
 
-draw ee:
+draw limit ee:
     stage: draw limit
     tags:
         - cvmfs
@@ -1896,7 +1896,7 @@ draw ee:
     script:
         - *script_draw_limit
 
-draw em:
+draw limit em:
     stage: draw limit
     tags:
         - cvmfs
@@ -1915,7 +1915,7 @@ draw em:
         - *script_draw_limit
 
 ##-- all --##
-draw all:
+draw limit all:
     stage: draw limit
     tags:
         - cvmfs
