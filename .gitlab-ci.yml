@@ -9,10 +9,10 @@ variables:
     SCRIPT_DUMP: Dump_v1  
     SCRIPT_DRAW: Draw_v1  
     DUMP: 'no'
-    DRAW: 'no'
+    DRAW: 'yes'
     EVAL: 'no'
     LIMIT: 'no'
-    DRAW_LIMIT: 'yes'
+    DRAW_LIMIT: 'no'
     INPUT_DUMP: Run2/Preselection/${DATE1}/Presel/DUMP/
     INPUT_DNN: Run2/Preselection/${DATE1}/Presel/DNN/
 #     INPUT_DIR: Run2/20221225_17/ee/
@@ -331,64 +331,64 @@ dump em18:
 
 ########## stage: draw ############
 ##-- mm --##
-draw mm16:
-    stage: draw
-    tags:
-        - cvmfs
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: mm16
-    rules:
-        - if: $DRAW == 'yes' && $DUMP == 'yes'
-          when: on_success
-        - if: $DRAW == 'yes' && $DUMP == 'no'
-          when: always
-    needs:
-        - job: dump mm16pre
-          optional: true      
-        - job: dump mm16post
-          optional: true
-    script:
-        - *script_draw16 
+# draw mm16:
+#     stage: draw
+#     tags:
+#         - cvmfs
+#     variables:
+#         DATE: ${DATE1}
+#         INPUT_DIR: ${INPUT_DUMP}
+#         ERA: mm16
+#     rules:
+#         - if: $DRAW == 'yes' && $DUMP == 'yes'
+#           when: on_success
+#         - if: $DRAW == 'yes' && $DUMP == 'no'
+#           when: always
+#     needs:
+#         - job: dump mm16pre
+#           optional: true      
+#         - job: dump mm16post
+#           optional: true
+#     script:
+#         - *script_draw16 
 
-draw mm17:
-    stage: draw
-    tags:
-        - cvmfs
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: mm17
-    rules:
-        - if: $DRAW == 'yes' && $DUMP == 'yes'
-          when: on_success
-        - if: $DRAW == 'yes' && $DUMP == 'no'
-          when: always
-    needs:
-        - job: dump mm17
-          optional: true      
-    script:
-        - *script_draw 
+# draw mm17:
+#     stage: draw
+#     tags:
+#         - cvmfs
+#     variables:
+#         DATE: ${DATE1}
+#         INPUT_DIR: ${INPUT_DUMP}
+#         ERA: mm17
+#     rules:
+#         - if: $DRAW == 'yes' && $DUMP == 'yes'
+#           when: on_success
+#         - if: $DRAW == 'yes' && $DUMP == 'no'
+#           when: always
+#     needs:
+#         - job: dump mm17
+#           optional: true      
+#     script:
+#         - *script_draw 
 
-draw mm18:
-    stage: draw
-    tags:
-        - cvmfs
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: mm18
-    rules:
-        - if: $DRAW == 'yes' && $DUMP == 'yes'
-          when: on_success
-        - if: $DRAW == 'yes' && $DUMP == 'no'
-          when: always
-    needs:
-        - job: dump mm18
-          optional: true      
-    script:
-        - *script_draw 
+# draw mm18:
+#     stage: draw
+#     tags:
+#         - cvmfs
+#     variables:
+#         DATE: ${DATE1}
+#         INPUT_DIR: ${INPUT_DUMP}
+#         ERA: mm18
+#     rules:
+#         - if: $DRAW == 'yes' && $DUMP == 'yes'
+#           when: on_success
+#         - if: $DRAW == 'yes' && $DUMP == 'no'
+#           when: always
+#     needs:
+#         - job: dump mm18
+#           optional: true      
+#     script:
+#         - *script_draw 
 
 ##-- ee --##        
 draw ee16:
@@ -412,103 +412,103 @@ draw ee16:
     script:
         - *script_draw16 
 
-draw ee17:
-    stage: draw
-    tags:
-        - cvmfs
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: ee17
-    rules:
-        - if: $DRAW == 'yes' && $DUMP == 'yes'
-          when: on_success
-        - if: $DRAW == 'yes' && $DUMP == 'no'
-          when: always
-    needs:
-        - job: dump ee17
-          optional: true      
-    script:
-        - *script_draw 
+# draw ee17:
+#     stage: draw
+#     tags:
+#         - cvmfs
+#     variables:
+#         DATE: ${DATE1}
+#         INPUT_DIR: ${INPUT_DUMP}
+#         ERA: ee17
+#     rules:
+#         - if: $DRAW == 'yes' && $DUMP == 'yes'
+#           when: on_success
+#         - if: $DRAW == 'yes' && $DUMP == 'no'
+#           when: always
+#     needs:
+#         - job: dump ee17
+#           optional: true      
+#     script:
+#         - *script_draw 
 
-draw ee18:
-    stage: draw
-    tags:
-        - cvmfs
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: ee18
-    rules:
-        - if: $DRAW == 'yes' && $DUMP == 'yes'
-          when: on_success
-        - if: $DRAW == 'yes' && $DUMP == 'no'
-          when: always
-    needs:
-        - job: dump ee18
-          optional: true      
-    script:
-        - *script_draw 
+# draw ee18:
+#     stage: draw
+#     tags:
+#         - cvmfs
+#     variables:
+#         DATE: ${DATE1}
+#         INPUT_DIR: ${INPUT_DUMP}
+#         ERA: ee18
+#     rules:
+#         - if: $DRAW == 'yes' && $DUMP == 'yes'
+#           when: on_success
+#         - if: $DRAW == 'yes' && $DUMP == 'no'
+#           when: always
+#     needs:
+#         - job: dump ee18
+#           optional: true      
+#     script:
+#         - *script_draw 
 
-##-- em --##
-draw em16:
-    stage: draw
-    tags:
-        - cvmfs
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: em16
-    rules:
-        - if: $DRAW == 'yes' && $DUMP == 'yes'
-          when: on_success
-        - if: $DRAW == 'yes' && $DUMP == 'no'
-          when: always
-    needs:
-        - job: dump em16pre
-          optional: true      
-        - job: dump em16post
-          optional: true
-    script:
-        - *script_draw16 
+# ##-- em --##
+# draw em16:
+#     stage: draw
+#     tags:
+#         - cvmfs
+#     variables:
+#         DATE: ${DATE1}
+#         INPUT_DIR: ${INPUT_DUMP}
+#         ERA: em16
+#     rules:
+#         - if: $DRAW == 'yes' && $DUMP == 'yes'
+#           when: on_success
+#         - if: $DRAW == 'yes' && $DUMP == 'no'
+#           when: always
+#     needs:
+#         - job: dump em16pre
+#           optional: true      
+#         - job: dump em16post
+#           optional: true
+#     script:
+#         - *script_draw16 
 
-draw em17:
-    stage: draw
-    tags:
-        - cvmfs
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: em17
-    rules:
-        - if: $DRAW == 'yes' && $DUMP == 'yes'
-          when: on_success
-        - if: $DRAW == 'yes' && $DUMP == 'no'
-          when: always
-    needs:
-        - job: dump em17
-          optional: true      
-    script:
-        - *script_draw 
+# draw em17:
+#     stage: draw
+#     tags:
+#         - cvmfs
+#     variables:
+#         DATE: ${DATE1}
+#         INPUT_DIR: ${INPUT_DUMP}
+#         ERA: em17
+#     rules:
+#         - if: $DRAW == 'yes' && $DUMP == 'yes'
+#           when: on_success
+#         - if: $DRAW == 'yes' && $DUMP == 'no'
+#           when: always
+#     needs:
+#         - job: dump em17
+#           optional: true      
+#     script:
+#         - *script_draw 
 
-draw em18:
-    stage: draw
-    tags:
-        - cvmfs
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: em18
-    rules:
-        - if: $DRAW == 'yes' && $DUMP == 'yes'
-          when: on_success
-        - if: $DRAW == 'yes' && $DUMP == 'no'
-          when: always
-    needs:
-        - job: dump em18
-          optional: true      
-    script:
-        - *script_draw 
+# draw em18:
+#     stage: draw
+#     tags:
+#         - cvmfs
+#     variables:
+#         DATE: ${DATE1}
+#         INPUT_DIR: ${INPUT_DUMP}
+#         ERA: em18
+#     rules:
+#         - if: $DRAW == 'yes' && $DUMP == 'yes'
+#           when: on_success
+#         - if: $DRAW == 'yes' && $DUMP == 'no'
+#           when: always
+#     needs:
+#         - job: dump em18
+#           optional: true      
+#     script:
+#         - *script_draw 
 
 ########## stage: evaluate ############
 ##-- mm --##
