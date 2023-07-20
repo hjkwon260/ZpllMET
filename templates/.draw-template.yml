@@ -27,6 +27,9 @@
     - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
     - kdestroy
 
+include:
+  - local: '/templates/.dump-template.yml'    
+
 ########## stage: draw ############
 ##-- mm --##
 draw mm16:

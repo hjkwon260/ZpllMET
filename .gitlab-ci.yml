@@ -8,7 +8,7 @@ variables:
     SCRIPT_LIMIT: limits_v4  
     SCRIPT_DUMP: Dump_v1  
     SCRIPT_DRAW: Draw_v1  
-    DUMP: 'no'
+    DUMP: 'yes'
     DRAW: 'yes'
     EVAL: 'no'
     LIMIT: 'no'
@@ -34,9 +34,9 @@ stages:
     - draw limit
 
 include:
-  - local: '/templates/.dump-template.yml'
+#   - local: '/templates/.dump-template.yml'
   - local: '/templates/.draw-template.yml'
-  - local: '/templates/.evaluate-template.yml'
-  - local: '/templates/.limit-template.yml'
-  - local: '/templates/.draw-limit-template.yml'
+#   - local: '/templates/.evaluate-template.yml'
+#   - local: '/templates/.limit-template.yml'
+#   - local: '/templates/.draw-limit-template.yml'
                                 
