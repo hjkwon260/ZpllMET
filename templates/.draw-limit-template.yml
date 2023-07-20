@@ -1,4 +1,11 @@
-########## stage: draw limit ############
+.script_draw_limit: &script_draw_limit
+    - xrdcp ${ROOT_EOS_USER}/Run2/Preselection/${DATE1}/Presel/LIMIT/${ERA}/Logs_v1/limits_v4.json .
+    - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+    - jupyter nbconvert --to python 2Dlimit.ipynb
+    - python 2Dlimit.py ${ERA}   
+    - xrdcp -r Combine/Plots ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel/
+    - kdestroy 
+    
 ##-- mm --##
 draw mm16:
     stage: draw limit
