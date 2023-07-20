@@ -5,7 +5,8 @@
     - python 2Dlimit.py ${ERA}   
     - xrdcp -r Combine/Plots ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel/
     - kdestroy 
-    
+
+########## stage: draw limit ############
 ##-- mm --##
 draw mm16:
     stage: draw limit
