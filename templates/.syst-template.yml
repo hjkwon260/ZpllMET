@@ -42,8 +42,8 @@ syst mm16:
         # - Rscript -e '.libPaths()'
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - R --version
-        - Rscript -e 'install.packages("BiocManager", repos="http://cran.rstudio.com/")'
-        - Rscript -e 'BiocManager::install("limma")'
+        - mkdir -p ~/Rpackages
+        - Rscript install.R
         - pip install rpy2
         - jupyter nbconvert --to python SystematicPlots_v1.ipynb
         - python SystematicPlots_v1.py . ${ERA} ${REGION}
