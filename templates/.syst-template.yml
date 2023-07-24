@@ -13,8 +13,8 @@ syst mm16:
     stage: syst
     tags:
         - cvmfs
-    image:
-      name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
+    # image:
+    #   name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
     variables:
         DATE: ${DATE1}
         ERA: mm16
@@ -37,11 +37,13 @@ syst mm16:
     script:
         - *load_root_files
         - ls SR    
-        - R --version
-        - Rscript -e 'library("limma")'
-        - Rscript -e '.libPaths()'
+        # - R --version
+        # - Rscript -e 'library("limma")'
+        # - Rscript -e '.libPaths()'
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - R --version
+        - Rscript -e 'install.packages("BiocManager", repos="http://cran.rstudio.com/")'
+        - Rscript -e 'BiocManager::install("limma")'
         - pip install rpy2
         - jupyter nbconvert --to python SystematicPlots_v1.ipynb
         - python SystematicPlots_v1.py . ${ERA} ${REGION}
