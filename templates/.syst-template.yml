@@ -39,6 +39,7 @@ syst mm16:
         - ls SR    
         - R --version
         - Rscript -e 'library("limma")'
+        - Rscript -e '.libPaths()'
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - pip install rpy2
         - jupyter nbconvert --to python SystematicPlots_v1.ipynb
