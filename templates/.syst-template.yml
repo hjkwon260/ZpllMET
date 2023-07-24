@@ -13,8 +13,8 @@ syst mm16:
     stage: syst
     tags:
         - cvmfs
-    # image:
-    #   name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
+    image:
+      name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
     variables:
         DATE: ${DATE1}
         ERA: mm16
