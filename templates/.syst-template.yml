@@ -34,6 +34,7 @@ syst mm16:
         - job: eval mm16 VR 2
           optional: true
     script:
-        - pip install rpy2
         - R --version
+        - pip3 install rpy2
+        - *load_root_files
         - ls SR
