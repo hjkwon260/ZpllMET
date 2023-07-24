@@ -6,7 +6,7 @@ import numpy as np
 
 
 def get_sys_list():
-	return ["puweight", "l1prefiring", "effSF", "topSF", "met", "metue", "trigSF", "hdamp", "PS", "btagSF"]
+	return ["scale", "puweight", "l1prefiring", "effSF", "topSF", "met", "metue", "trigSF", "hdamp", "PS", "btagSF"]
     
 def get_dic_sys(model_mass, ERA, dic_df_raw, dic_nested_shape_sys, sys_list, variable, r, region, threshold, file_prefix, file_str):
     """
@@ -74,7 +74,21 @@ def get_dic_sys(model_mass, ERA, dic_df_raw, dic_nested_shape_sys, sys_list, var
     dic_sys['metueDown'] = np.array(sysUp) - np.array(bkg_norm)
     if "score" in variable:
     	hist.export_hist(model_mass, file_name=file_prefix+"/root_files/shape_v1_"+file_str+model_mass)
-    
+    hist=HistStack(dic_nested_shape_sys['scale_u'], variable, 'weightscaleUp', r[0], r[1], r[2], r[3])            
+    c1=hist.draw_hist(model_mass, ERA, file_name=file_prefix+"/sys/systUp_scale"+file_str, blind_from=threshold)     
+    dic_yields = hist.get_yields_by_bin()
+    sysUp = dic_yields['bkg']
+    dic_sys['scaleUp'] = np.array(sysUp) - np.array(bkg_norm)
+    if "score" in variable:
+        hist.export_hist(model_mass, file_name=file_prefix+"/root_files/shape_v1_"+file_str+model_mass)
+    hist=HistStack(dic_nested_shape_sys['scale_d'], variable, 'weightscaleDown', r[0], r[1], r[2], r[3])            
+    c1=hist.draw_hist(model_mass, ERA, file_name=file_prefix+"/sys/systDown_scale"+file_str, blind_from=threshold)     
+    dic_yields = hist.get_yields_by_bin()
+    sysUp = dic_yields['bkg']
+    dic_sys['scaleDown'] = np.array(sysUp) - np.array(bkg_norm)
+    if "score" in variable:
+        hist.export_hist(model_mass, file_name=file_prefix+"/root_files/shape_v1_"+file_str+model_mass)
+
     # si^2
     for s in sys_list:
         # by source
