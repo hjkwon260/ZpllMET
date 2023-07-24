@@ -8,9 +8,10 @@ variables:
     SCRIPT_LIMIT: limits_v4  
     SCRIPT_DUMP: Dump_v1  
     SCRIPT_DRAW: Draw_v1  
-    DUMP: 'yes'
-    DRAW: 'yes'
-    EVAL: 'yes'
+    DUMP: 'no'
+    DRAW: 'no'
+    EVAL: 'no'
+    SYST: "yes"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
     INPUT_DUMP: Run2/Preselection/${DATE1}/Presel/DUMP/
@@ -30,13 +31,15 @@ stages:
     - dump
     - draw
     - evaluate
+    - syst
     - limit
     - draw limit
 
 include:
 #   - local: '/templates/.dump-template.yml'
 #   - local: '/templates/.draw-template.yml'
-  - local: '/templates/.evaluate-template.yml'
+  # - local: '/templates/.evaluate-template.yml'
+  - local: '/templates/.syst-template.yml'
 #   - local: '/templates/.limit-template.yml'
 #   - local: '/templates/.draw-limit-template.yml'
                                 

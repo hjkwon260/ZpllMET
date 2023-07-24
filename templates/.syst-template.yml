@@ -1,0 +1,39 @@
+.load_root_files: &load_root_files
+    - mkdir SR
+    - mkdir VR
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR 
+
+include:
+  - local: '/templates/.evaluate-template.yml'
+
+########## stage: syst ############
+##-- mm --##
+syst mm16:
+    stage: syst
+    tags:
+        - cvmfs
+    image:
+      name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
+    variables:
+        DATE: ${DATE1}
+        ERA: mm16
+        INPUT_DIR: ${INPUT_DNN}
+    rules:    
+        - if: $SYST == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $SYST == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval mm16 SR 1
+          optional: true 
+        - job: eval mm16 SR 2
+          optional: true
+        - job: eval mm16 VR 1
+          optional: true 
+        - job: eval mm16 VR 2
+          optional: true
+    script:
+        - pip install rpy2
+        - R --version
+        - ls SR
