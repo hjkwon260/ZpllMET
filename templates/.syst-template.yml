@@ -35,6 +35,7 @@ syst mm16:
           optional: true
     script:
         - R --version
-        - pip3 install rpy2
+        - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+        - pip install rpy2
         - *load_root_files
         - ls SR
