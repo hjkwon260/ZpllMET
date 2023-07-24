@@ -19,6 +19,7 @@ syst mm16:
         DATE: ${DATE1}
         ERA: mm16
         INPUT_DIR: ${INPUT_DNN}
+        REGION: SR
     rules:    
         - if: $SYST == 'yes' && $EVAL == 'yes'
           when: on_success
@@ -40,6 +41,6 @@ syst mm16:
         - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
         - pip install rpy2
         - jupyter nbconvert --to python SystematicPlots_v1.ipynb
-        - python SystematicPlots_v1.py ${PWD} ${ERA} ${REGION}
+        - python SystematicPlots_v1.py . ${ERA} ${REGION}
         - xrdcp -r Outputs/Syst ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel/
         - kdestroy
