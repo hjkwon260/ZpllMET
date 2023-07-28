@@ -21,6 +21,7 @@ class HistStack(object):
         self.str_sig = ""
         self.yeilds={}
         self.dic_sys=dic_sys       
+        self.era=None       
 
     def get_dic_hist(self):
         for k, df in self.dic_df.items():
@@ -301,6 +302,8 @@ class HistStack(object):
         l1 = self.set_legend(0.65, 0.7, 0.92, 0.89)
         rt.gStyle.SetOptStat(0)
         rt.gStyle.SetPalette(rt.kRainBow)
+
+        self.era = era
 
         # stack bkgs
         hstack=rt.THStack("","")
@@ -610,7 +613,7 @@ class HistStack(object):
             str_sys = str_sys.replace("trigSF", "trig_eff")
         if "topSF" in str_sys:
             str_sys = str_sys.replace("topSF", "toppt")
-        if "scale" in str_sys and "e" in ERA:
+        if "scale" in str_sys and "e" in self.era:
             self.hist_all["Data"].SetName("data"+str_sys)
             self.hist_all["Data"].SetTitle("data"+str_sys)
             self.hist_all["Data"].Write("data"+str_sys,rt.TObject.kWriteDelete) 
