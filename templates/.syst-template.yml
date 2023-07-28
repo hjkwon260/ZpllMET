@@ -2,7 +2,7 @@
     - mkdir SR
     - mkdir VR
     - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR 
+    # - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR 
 
 .syst_script: &syst_script
     - *load_root_files
