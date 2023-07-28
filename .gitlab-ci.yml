@@ -43,9 +43,4 @@ include:
 #   - local: '/templates/.limit-template.yml'
 #   - local: '/templates/.draw-limit-template.yml'
 
-after_script:
-    - cd ${CI_PROJECT_DIR}
-    - ls
-    - rm -rf ./*
-    - ls 
                                 

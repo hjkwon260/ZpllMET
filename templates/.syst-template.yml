@@ -13,7 +13,11 @@
     - jupyter nbconvert --to python SystematicPlots_v1.ipynb
     - python SystematicPlots_v1.py . ${ERA} ${REGION}
     - xrdcp -r Outputs/Syst ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel/
-    - kdestroy        
+    - kdestroy 
+    - cd ${CI_PROJECT_DIR}
+    - ls
+    - rm -rf ./*
+    - ls        
 
 include:
   - local: '/templates/.evaluate-template.yml'
