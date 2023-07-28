@@ -610,6 +610,10 @@ class HistStack(object):
             str_sys = str_sys.replace("trigSF", "trig_eff")
         if "topSF" in str_sys:
             str_sys = str_sys.replace("topSF", "toppt")
+        if "scale" in str_sys and "e" in ERA:
+            self.hist_all["Data"].SetName("data"+str_sys)
+            self.hist_all["Data"].SetTitle("data"+str_sys)
+            self.hist_all["Data"].Write("data"+str_sys,rt.TObject.kWriteDelete) 
         self.hist_all[sig_key].SetName("zp"+str_sys)
         self.hist_all[sig_key].SetTitle("zp"+str_sys)
         self.hist_all[sig_key].Write("zp"+str_sys,rt.TObject.kWriteDelete)            
