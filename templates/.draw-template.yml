@@ -15,16 +15,16 @@
     - *load16
     - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
     - jupyter nbconvert --to python ${SCRIPT_DRAW}.ipynb 
-    - python ${SCRIPT_DRAW}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}
-    - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+    - python ${SCRIPT_DRAW}.py ${ERA} ${DATE} ${CI_PROJECT_DIR} ${PART}
+    - xrdcp -r -F ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
     - kdestroy 
 
 .script_draw: &script_draw
     - *load
     - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
     - jupyter nbconvert --to python ${SCRIPT_DRAW}.ipynb 
-    - python ${SCRIPT_DRAW}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}
-    - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
+    - python ${SCRIPT_DRAW}.py ${ERA} ${DATE} ${CI_PROJECT_DIR} ${PART}
+    - xrdcp -r -F ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
     - kdestroy
 
 include:
@@ -40,6 +40,7 @@ draw mm16:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm16
+        PART: dummy
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
@@ -61,6 +62,7 @@ draw mm17:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm17
+        PART: dummy
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
@@ -80,6 +82,7 @@ draw mm18:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm18
+        PART: dummy
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
@@ -100,6 +103,7 @@ draw ee16:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee16
+        PART: dummy
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
@@ -121,6 +125,7 @@ draw ee17:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee17
+        PART: dummy
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
@@ -140,6 +145,7 @@ draw ee18:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee18
+        PART: dummy
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
@@ -160,6 +166,7 @@ draw em16:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: em16
+        PART: dummy
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
@@ -173,7 +180,7 @@ draw em16:
     script:
         - *script_draw16 
 
-draw em17:
+draw em17 1:
     stage: draw
     tags:
         - cvmfs
@@ -181,6 +188,7 @@ draw em17:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: em17
+        PART: one
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
@@ -192,7 +200,27 @@ draw em17:
     script:
         - *script_draw 
 
-draw em18:
+draw em17 2:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: ${INPUT_DUMP}
+        ERA: em17
+        PART: two
+    rules:
+        - if: $DRAW == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $DRAW == 'yes' && $DUMP == 'no'
+          when: always
+    needs:
+        - job: dump em17
+          optional: true      
+    script:
+        - *script_draw 
+
+draw em18 1:
     stage: draw
     tags:
         - cvmfs
@@ -200,6 +228,27 @@ draw em18:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: em18
+        PART: one
+    rules:
+        - if: $DRAW == 'yes' && $DUMP == 'yes'
+          when: on_success
+        - if: $DRAW == 'yes' && $DUMP == 'no'
+          when: always
+    needs:
+        - job: dump em18
+          optional: true      
+    script:
+        - *script_draw 
+
+draw em18 2:
+    stage: draw
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: ${INPUT_DUMP}
+        ERA: em18
+        PART: two
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
