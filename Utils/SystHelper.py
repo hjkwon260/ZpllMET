@@ -6,7 +6,7 @@ import numpy as np
 
 
 def get_sys_list():
-	return ["scale", "puweight", "l1prefiring", "effSF", "topSF", "met", "metue", "trigSF", "hdamp", "PS", "btagSF"]
+	return ["scale", "puweight", "l1prefiring", "effrecoSF", "effSF", "topSF", "met", "metue", "trigSF", "hdamp", "PS", "btagSF"]
     
 def get_dic_sys(model_mass, ERA, dic_df_raw, dic_nested_shape_sys, sys_list, variable, r, region, threshold, file_prefix, file_str):
     """

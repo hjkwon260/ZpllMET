@@ -1,5 +1,5 @@
 variables: 
-    DATE1: 20230722jer
+    DATE1: 20230727lep
     CMS_PATH: /cvmfs/cms.cern.ch
     CMSSW_RELEASE: CMSSW_10_2_13
     CMSSW_ARCH: slc7_amd64_gcc700
@@ -8,10 +8,10 @@ variables:
     SCRIPT_LIMIT: limits_v4  
     SCRIPT_DUMP: Dump_v1  
     SCRIPT_DRAW: Draw_v1  
-    DUMP: 'no'
-    DRAW: 'no'
-    EVAL: 'no'
-    SYST: "yes"
+    DUMP: 'yes'
+    DRAW: 'yes'
+    EVAL: 'yes'
+    SYST: "no"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
     INPUT_DUMP: Run2/Preselection/${DATE1}/Presel/DUMP/
