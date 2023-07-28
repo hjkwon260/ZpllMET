@@ -25,13 +25,7 @@ before_script:
     - cat /proc/meminfo
     - export PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin:$PATH"
     - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
-    - printf $PASS | base64 -d | kinit $USER@CERN.CH
-
-after_script:
-    - cd ${CI_PROJECT_DIR}
-    - ls
-    - rm -rf ./*
-    - ls    
+    - printf $PASS | base64 -d | kinit $USER@CERN.CH   
 
 stages:
     - dump
@@ -48,4 +42,10 @@ include:
   - local: '/templates/.syst-template.yml'
 #   - local: '/templates/.limit-template.yml'
 #   - local: '/templates/.draw-limit-template.yml'
+
+after_script:
+    - cd ${CI_PROJECT_DIR}
+    - ls
+    - rm -rf ./*
+    - ls 
                                 
