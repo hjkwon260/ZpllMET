@@ -68,7 +68,27 @@ def get_concat(dic_df_all, dic_df_met_u_all, dic_df_met_d_all, dic_df_met_jer_u_
 
     return dic_df_raw, dic_nested_shape_sys
 
+def get_files(files):
+    list_nestec_dic = []
+    for f in files:
+        with open(INPUTDIR+'/'+f, 'rb') as f:
+            nested_dic_df = pickle.load(f)
+            list_nestec_dic.append(nested_dic_df)
+    return list_nestec_dic
+
 def get_dic_raw_sys(ERA, INPUTDIR, region="TR"):
+    # if region == "TR":
+    #     if "16" in ERA: 
+    #         files = [ERA+'pre/nested_dic_df_SR1.pkl', ERA+'pre/nested_dic_df_TTCR.pkl', ERA+'post/nested_dic_df_SR1.pkl', ERA+'post/nested_dic_df_TTCR.pkl']   
+    #     else:
+    #         files = [ERA+'/nested_dic_df_SR1.pkl', ERA+'/nested_dic_df_TTCR.pkl']
+
+    # list_nestec_dic = get_files(files)
+
+    # list_sys_key = ['raw', 'met_u', 'met_d', 'met_ue_u', 'met_ue_d', 'met_jer_u', 'met_jer_d', 'jes_u', 'jes_d', 'jer_u', 'jer_d', 'scale_u', 'scale_d']
+
+
+
     if region == "TR":
         if "16" in ERA:
             with open(INPUTDIR+'/'+ERA+'pre/nested_dic_df_SR1.pkl', 'rb') as f:
@@ -82,6 +102,12 @@ def get_dic_raw_sys(ERA, INPUTDIR, region="TR"):
             dic_df_all = [nested_dic_df['raw'], nested_dic_df1['raw'], nested_dic_df2['raw'], nested_dic_df3['raw']]
             dic_df_met_u_all = [nested_dic_df['met_u'], nested_dic_df1['met_u'], nested_dic_df2['met_u'], nested_dic_df3['met_u']]
             dic_df_met_d_all = [nested_dic_df['met_d'], nested_dic_df1['met_d'], nested_dic_df2['met_d'], nested_dic_df3['met_d']]    
+            dic_df_met_jer_u_all = [nested_dic_df['met_jer_u'], nested_dic_df1['met_jer_u'], nested_dic_df2['met_jer_u'], nested_dic_df3['met_jer_u']]
+            dic_df_met_jer_d_all = [nested_dic_df['met_jer_d'], nested_dic_df1['met_jer_d'], nested_dic_df2['met_jer_d'], nested_dic_df3['met_jer_d']]    
+            dic_df_jes_u_all = [nested_dic_df['jes_u'], nested_dic_df1['jes_u'], nested_dic_df2['jes_u'], nested_dic_df3['jes_u']]
+            dic_df_jes_d_all = [nested_dic_df['jes_d'], nested_dic_df1['jes_d'], nested_dic_df2['jes_d'], nested_dic_df3['jes_d']]    
+            dic_df_jer_u_all = [nested_dic_df['jer_u'], nested_dic_df1['jer_u'], nested_dic_df2['jer_u'], nested_dic_df3['jer_u']]
+            dic_df_jer_d_all = [nested_dic_df['jer_d'], nested_dic_df1['jer_d'], nested_dic_df2['jer_d'], nested_dic_df3['jer_d']]    
             dic_df_met_ue_u_all = [nested_dic_df['met_ue_u'], nested_dic_df1['met_ue_u'], nested_dic_df2['met_ue_u'], nested_dic_df3['met_ue_u']]
             dic_df_met_ue_d_all = [nested_dic_df['met_ue_d'], nested_dic_df1['met_ue_d'], nested_dic_df2['met_ue_d'], nested_dic_df3['met_ue_d']]            
             dic_df_scale_u_all = [nested_dic_df['scale_u'], nested_dic_df1['scale_u'], nested_dic_df2['scale_u'], nested_dic_df3['scale_u']]
@@ -116,6 +142,12 @@ def get_dic_raw_sys(ERA, INPUTDIR, region="TR"):
             dic_df_all = [nested_dic_df['raw'], nested_dic_df1['raw']]
             dic_df_met_u_all = [nested_dic_df['met_u'], nested_dic_df1['met_u']]
             dic_df_met_d_all = [nested_dic_df['met_d'], nested_dic_df1['met_d']]    
+            dic_df_met_jer_u_all = [nested_dic_df['met_jer_u'], nested_dic_df1['met_jer_u']]
+            dic_df_met_jer_d_all = [nested_dic_df['met_jer_d'], nested_dic_df1['met_jer_d']]    
+            dic_df_jes_u_all = [nested_dic_df['jes_u'], nested_dic_df1['jes_u']]
+            dic_df_jes_d_all = [nested_dic_df['jes_d'], nested_dic_df1['jes_d']]    
+            dic_df_jer_u_all = [nested_dic_df['jer_u'], nested_dic_df1['jer_u']]
+            dic_df_jer_d_all = [nested_dic_df['jer_d'], nested_dic_df1['jer_d']]    
             dic_df_met_ue_u_all = [nested_dic_df['met_ue_u'], nested_dic_df1['met_ue_u']]
             dic_df_met_ue_d_all = [nested_dic_df['met_ue_d'], nested_dic_df1['met_ue_d']]            
             dic_df_scale_u_all = [nested_dic_df['scale_u'], nested_dic_df1['scale_u']]
