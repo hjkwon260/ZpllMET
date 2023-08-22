@@ -171,7 +171,7 @@ def get_dic_raw_sys(ERA, INPUTDIR, region="TR"):
             dic_nested_shape_sys["scale_d"]=nested_dic_df['scale_d']  
 
         if "16" in ERA:
-            dic_df_raw, dic_nested_shape_sys = get_concat(dic_df_all, dic_df_met_u_all, dic_df_met_d_all, dic_df_met_ue_u_all, dic_df_met_ue_d_all, dic_df_scale_u_all, dic_df_scale_d_all)
+            dic_df_raw, dic_nested_shape_sys = get_concat(dic_df_all, dic_df_met_u_all, dic_df_met_d_all, dic_df_met_jer_u_all, dic_df_met_jer_d_all, dic_df_jes_u_all, dic_df_jes_d_all, dic_df_jer_u_all, dic_df_jer_d_all, dic_df_met_ue_u_all, dic_df_met_ue_d_all, dic_df_scale_u_all, dic_df_scale_d_all)
 
     elif region == "VR":
         if "16" in ERA:
