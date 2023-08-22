@@ -103,6 +103,9 @@ def get_dic_sys(model_mass, ERA, dic_df_raw, dic_nested_shape_sys, sys_list, var
     dic_yields = hist.get_yields_by_bin()
     sysUp = dic_yields['bkg']
     dic_sys['metjerDown'] = np.array(sysUp) - np.array(bkg_norm)
+    if "score" in variable:
+        hist.export_hist(model_mass, file_name=file_prefix+"/root_files/shape_v1_"+file_str+model_mass)
+        
     hist=HistStack(dic_nested_shape_sys['met_ue_u'], variable, 'weightmetueUp', r[0], r[1], r[2], r[3])            
     c1=hist.draw_hist(model_mass, ERA, file_name=file_prefix+"/sys/systUp_metue"+file_str, blind_from=threshold)     
     dic_yields = hist.get_yields_by_bin()
