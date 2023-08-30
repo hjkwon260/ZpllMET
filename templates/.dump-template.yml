@@ -12,6 +12,7 @@
     # - jupyter nbconvert --to python ${SCRIPT_DUMP}.ipynb 
     - python3 --version
     - pip3 install numpy
+    - pip3 install uproot
     - python3 ${SCRIPT_DUMP}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
     - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
     - kdestroy 
