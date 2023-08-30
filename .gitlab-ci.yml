@@ -1,5 +1,5 @@
 variables: 
-    DATE1: 20230819lep
+    DATE1: 20230830lep
     CMS_PATH: /cvmfs/cms.cern.ch
     CMSSW_RELEASE: CMSSW_10_2_13
     CMSSW_ARCH: slc7_amd64_gcc700
@@ -8,9 +8,9 @@ variables:
     SCRIPT_LIMIT: limits_v4  
     SCRIPT_DUMP: Dump_v2  
     SCRIPT_DRAW: Draw_v1  
-    DUMP: 'no'
+    DUMP: 'yes'
     DRAW: 'no'
-    EVAL: 'yes'
+    EVAL: 'no'
     SYST: "no"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
