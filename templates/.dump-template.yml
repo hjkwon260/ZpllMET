@@ -11,7 +11,7 @@
     # - export PYTHONPATH="/cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/lib/python3.9/site-packages"
     # - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
     - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-    - jupyter nbconvert --to python ${SCRIPT_DUMP}.ipynb 
+    # - jupyter nbconvert --to python ${SCRIPT_DUMP}.ipynb 
     # - python3 --version
     # - which python3
     # - which root
