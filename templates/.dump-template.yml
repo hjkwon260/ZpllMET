@@ -43,6 +43,8 @@ dump mm16post:
     stage: dump
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
     variables:
         DATE: ${DATE1}
         INPUT_DIR: Run2/${DATE1}_16post/mm/
@@ -57,6 +59,8 @@ dump mm17:
     stage: dump
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
     variables:
         DATE: ${DATE1}
         INPUT_DIR: Run2/${DATE1}_17/mm/
@@ -71,6 +75,8 @@ dump mm18:
     stage: dump
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
     variables:
         DATE: ${DATE1}
         INPUT_DIR: Run2/${DATE1}_18/mm/
@@ -86,6 +92,8 @@ dump ee16pre:
     stage: dump
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
     variables:
         DATE: ${DATE1}
         INPUT_DIR: Run2/${DATE1}_16pre/ee/
@@ -100,6 +108,8 @@ dump ee16post:
     stage: dump
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
     variables:
         DATE: ${DATE1}
         INPUT_DIR: Run2/${DATE1}_16post/ee/
@@ -114,6 +124,8 @@ dump ee17:
     stage: dump
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
     variables:
         DATE: ${DATE1}
         INPUT_DIR: Run2/${DATE1}_17/ee/
@@ -128,6 +140,8 @@ dump ee18:
     stage: dump
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
     variables:
         DATE: ${DATE1}
         INPUT_DIR: Run2/${DATE1}_18/ee/
@@ -143,6 +157,8 @@ dump em16pre:
     stage: dump
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
     variables:
         DATE: ${DATE1}
         INPUT_DIR: Run2/${DATE1}_16pre/em/
@@ -157,6 +173,8 @@ dump em16post:
     stage: dump
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
     variables:
         DATE: ${DATE1}
         INPUT_DIR: Run2/${DATE1}_16post/em/
@@ -171,6 +189,8 @@ dump em17:
     stage: dump
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
     variables:
         DATE: ${DATE1}
         INPUT_DIR: Run2/${DATE1}_17/em/
@@ -185,6 +205,8 @@ dump em18:
     stage: dump
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
     variables:
         DATE: ${DATE1}
         INPUT_DIR: Run2/${DATE1}_18/em/
