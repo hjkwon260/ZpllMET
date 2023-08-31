@@ -42,7 +42,7 @@ from beeps import *
 import sys
 ERA = sys.argv[1]
 DATE = sys.argv[2]
-# INPUTDIR = sys.argv[3]
+INPUTDIR = sys.argv[3]
 
 DUMP_PKL = False
 DUMP_SIDEBAND_MET_PKL = False
@@ -57,9 +57,9 @@ DUMP_DIVIDED_BY_BTAG = True
 # EXPORT_VARIABLE = False
 
 # # for dev
-ERA = "em18"
-DATE = "20230819lep_18"
-INPUTDIR = "/eos/user/h/hkwon/Run2/"+DATE+"/em/"
+# ERA = "em18"
+# DATE = "20230819lep_18"
+# INPUTDIR = "/eos/user/h/hkwon/Run2/"+DATE+"/em/"
 
 
 # # Get input
