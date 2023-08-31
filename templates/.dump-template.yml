@@ -1,5 +1,5 @@
 .script_dump: &script_dump
-    - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  
+    - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .      
     # - ln -s /usr/lib64/libcrypt.so.2 /usr/lib64/libcrypt.so.1
     # - ln -s /usr/lib64/libtinfo.so.6 /usr/lib64/libtinfo.so.5
     # - export PATH="/usr/bin:/cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/bin:$PATH"
@@ -17,9 +17,8 @@
     # - which root
     # - ldd /cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/bin/root
     # - source setup.sh
-    - yum install -y libopenblas
-    - export LD_LIBRARY_PATH="/usr/lib64:$LD_LIBRARY_PATH"
-    - export PYTHONPATH="/usr/lib64:$PYTHONPATH"
+    - export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib64"
+    - export PYTHONPATH="$PYTHONPATH:/usr/lib64"
     - python ${SCRIPT_DUMP}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
     - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
     - kdestroy 
