@@ -1,23 +1,23 @@
 .script_dump: &script_dump
     - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .  
-    - ln -s /usr/lib64/libcrypt.so.2 /usr/lib64/libcrypt.so.1
-    - ln -s /usr/lib64/libtinfo.so.6 /usr/lib64/libtinfo.so.5
-    - export PATH="/usr/bin:/cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/bin:$PATH"
-    # - export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-    - export LD_LIBRARY_PATH="/usr/lib64:/cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/lib:/cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib"
-    - export PYTHONPATH="/cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/lib/python3.9/site-packages:/cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/lib/:/cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/python:/usr/lib64:$PYTHONPATH"    
+    # - ln -s /usr/lib64/libcrypt.so.2 /usr/lib64/libcrypt.so.1
+    # - ln -s /usr/lib64/libtinfo.so.6 /usr/lib64/libtinfo.so.5
+    # - export PATH="/usr/bin:/cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/bin:$PATH"
+    # # - export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    # - export LD_LIBRARY_PATH="/usr/lib64:/cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/lib:/cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib"
+    # - export PYTHONPATH="/cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/lib/python3.9/site-packages:/cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/lib/:/cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/python:/usr/lib64:$PYTHONPATH"    
     # - export LD_LIBRARY_PATH=""
     # - export PYTHONPATH=""
     # - export PYTHONPATH="/cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/lib/python3.9/site-packages"
     # - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-    # - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
-    # - jupyter nbconvert --to python ${SCRIPT_DUMP}.ipynb 
-    - python3 --version
-    - which python3
-    - which root
+    - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+    - jupyter nbconvert --to python ${SCRIPT_DUMP}.ipynb 
+    # - python3 --version
+    # - which python3
+    # - which root
     # - ldd /cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/bin/root
     # - source setup.sh
-    - python3 ${SCRIPT_DUMP}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
+    - python ${SCRIPT_DUMP}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
     - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
     - kdestroy 
     
@@ -27,6 +27,8 @@ dump mm16pre:
     stage: dump
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7         
     variables:
         DATE: ${DATE1}
         INPUT_DIR: Run2/${DATE1}_16pre/mm/
