@@ -39,158 +39,158 @@ dump mm16pre:
     script:
         - *script_dump 
 
-# dump mm16post:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_16post/mm/
-#         ERA: mm16post
-#         CHANNEL: mm/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump 
+dump mm16post:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_16post/mm/
+        ERA: mm16post
+        CHANNEL: mm/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
 
-# dump mm17:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_17/mm/
-#         ERA: mm17
-#         CHANNEL: mm/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump 
+dump mm17:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_17/mm/
+        ERA: mm17
+        CHANNEL: mm/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
 
-# dump mm18:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_18/mm/
-#         ERA: mm18
-#         CHANNEL: mm/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump
+dump mm18:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_18/mm/
+        ERA: mm18
+        CHANNEL: mm/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump
 
-# ##-- ee --##
-# dump ee16pre:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_16pre/ee/
-#         ERA: ee16pre
-#         CHANNEL: ee/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump 
+##-- ee --##
+dump ee16pre:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_16pre/ee/
+        ERA: ee16pre
+        CHANNEL: ee/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
 
-# dump ee16post:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_16post/ee/
-#         ERA: ee16post
-#         CHANNEL: ee/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump 
+dump ee16post:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_16post/ee/
+        ERA: ee16post
+        CHANNEL: ee/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
 
-# dump ee17:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_17/ee/
-#         ERA: ee17
-#         CHANNEL: ee/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump 
+dump ee17:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_17/ee/
+        ERA: ee17
+        CHANNEL: ee/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
 
-# dump ee18:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_18/ee/
-#         ERA: ee18
-#         CHANNEL: ee/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump
+dump ee18:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_18/ee/
+        ERA: ee18
+        CHANNEL: ee/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump
 
-# ##-- em --##        
-# dump em16pre:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_16pre/em/
-#         ERA: em16pre
-#         CHANNEL: em/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump 
+##-- em --##        
+dump em16pre:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_16pre/em/
+        ERA: em16pre
+        CHANNEL: em/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
 
-# dump em16post:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_16post/em/
-#         ERA: em16post
-#         CHANNEL: em/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump 
+dump em16post:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_16post/em/
+        ERA: em16post
+        CHANNEL: em/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
 
-# dump em17:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_17/em/
-#         ERA: em17
-#         CHANNEL: em/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump 
+dump em17:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_17/em/
+        ERA: em17
+        CHANNEL: em/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
 
-# dump em18:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_18/em/
-#         ERA: em18
-#         CHANNEL: em/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump
+dump em18:
+    stage: dump
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_18/em/
+        ERA: em18
+        CHANNEL: em/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump
