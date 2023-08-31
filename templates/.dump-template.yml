@@ -17,8 +17,8 @@
     # - which root
     # - ldd /cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/bin/root
     # - source setup.sh
-    - export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib64"
-    - export PYTHONPATH="$PYTHONPATH:/usr/lib64"
+    - export LD_LIBRARY_PATH="/cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/lib:$LD_LIBRARY_PATH"
+    # - export PYTHONPATH="$PYTHONPATH:/usr/lib64"
     - python ${SCRIPT_DUMP}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
     - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
     - kdestroy 
