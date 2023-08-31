@@ -22,11 +22,7 @@ variables:
 # include:
 #   - local: run.yml
 before_script:
-    - python3 --version # temp!
-    - yum install -y python3-pip
-    - pip3 --version
-    - pip3 install jupyter
-    - jupyter --help  
+    - yum install -y libgfortran
     - cat /proc/meminfo
     - export PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin:$PATH"
     # - export PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin:/cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/bin:$PATH"
