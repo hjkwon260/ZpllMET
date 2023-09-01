@@ -14,7 +14,7 @@
 .script_eval16: &script_eval16
     - *load16
     # - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-    - pip3 install numpy uproot pandas tqdm jupyterlab
+    - pip3 install numpy uproot pandas tqdm jupyterlab tensorflow sklearn seaborn
     - echo $PYTHONPATH
     - export LD_LIBRARY_PATH=""    
     - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
