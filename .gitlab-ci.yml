@@ -14,8 +14,8 @@ variables:
     SYST: "no"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
-    INPUT_DUMP: Run2/Preselection/${DATE1}/Presel/DUMP/
-    INPUT_DNN: Run2/Preselection/${DATE1}/Presel/DNN/
+    INPUT_DUMP: Run2/Preselection/${DATE1}/DUMP/
+    INPUT_DNN: Run2/Preselection/${DATE1}/DNN/
 #     INPUT_DIR: Run2/20221225_17/ee/
 #     DATE: 20221225
 #     ERA: ee17

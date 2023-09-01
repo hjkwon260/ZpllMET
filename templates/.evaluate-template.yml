@@ -58,7 +58,7 @@ eval mm16 SR 1:
           optional: true     
     script:
         - *script_eval16 
-        - xrdcp -r Outputs/DNN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel/
+        - xrdcp -r Outputs/DNN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/
         - kdestroy
 # eval mm16 SR 2:
 #     stage: evaluate
