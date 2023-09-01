@@ -58,7 +58,7 @@ dump mm16pre:
         - if: $DUMP == 'yes'          
     script:
         - *script_dump 
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DUMP/${ERA}
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
 
@@ -77,7 +77,7 @@ dump mm16post:
         - if: $DUMP == 'yes'          
     script:
         - *script_dump 
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DUMP/${ERA}
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
 
@@ -96,7 +96,7 @@ dump mm17:
         - if: $DUMP == 'yes'          
     script:
         - *script_dump 
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DUMP/${ERA}
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
         
@@ -115,7 +115,7 @@ dump mm18:
         - if: $DUMP == 'yes'          
     script:
         - *script_dump
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DUMP/${ERA}
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
         
@@ -135,7 +135,7 @@ dump ee16pre:
         - if: $DUMP == 'yes'          
     script:
         - *script_dump 
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DUMP/${ERA}
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
         
@@ -154,7 +154,7 @@ dump ee16post:
         - if: $DUMP == 'yes'          
     script:
         - *script_dump 
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DUMP/${ERA}
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
         
@@ -173,7 +173,7 @@ dump ee17:
         - if: $DUMP == 'yes'          
     script:
         - *script_dump 
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DUMP/${ERA}
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
         
@@ -192,7 +192,7 @@ dump ee18:
         - if: $DUMP == 'yes'          
     script:
         - *script_dump
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DUMP/${ERA}
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
         
@@ -212,7 +212,7 @@ dump em16pre:
         - if: $DUMP == 'yes'          
     script:
         - *script_dump 
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DUMP/${ERA}
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
         
@@ -231,7 +231,7 @@ dump em16post:
         - if: $DUMP == 'yes'          
     script:
         - *script_dump 
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DUMP/${ERA}
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
         
@@ -250,7 +250,7 @@ dump em17:
         - if: $DUMP == 'yes'          
     script:
         - *script_dump 
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DUMP/${ERA}
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
         
@@ -269,7 +269,7 @@ dump em18:
         - if: $DUMP == 'yes'          
     script:
         - *script_dump
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DUMP/${ERA}
         - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
         
