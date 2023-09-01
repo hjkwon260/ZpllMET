@@ -25,8 +25,9 @@ before_script:
     - ls /usr/lib64
     - yum install -y libgfortran5
     - curl -O https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/o/openblas-serial-0.3.3-2.el7.x86_64.rpm
-    - rpm -Uvh epel-release*rpm
-    - yum install -y openblas-serial
+    - yum localinstall -y openblas-serial-0.3.3-2.el7.x86_64.rpm
+    # - rpm -Uvh epel-release*rpm
+    # - yum install -y openblas-serial
     - ls /usr/lib64
     # - yum install -y root
     # - yum install -y openblas
