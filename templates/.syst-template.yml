@@ -7,7 +7,6 @@
 .syst_script: &syst_script
     - *load_root_files
     # - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-    - dnf install -y R
     - mkdir -p ~/Rpackages
     - pip3 install rpy2 jupyterlab
     - R --version
