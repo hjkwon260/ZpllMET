@@ -39,9 +39,7 @@
     - python3 ${SCRIPT_DUMP}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
     - export PATH="$PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin"
     - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
-    - xrdfs ${ROOT_EOS_USER} mkdir /eos/user/h/hkwon/Run2/Preselection/test
-    - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/test
-    - kdestroy 
+
     
 ########## stage: dump ############
 ##-- mm --##
@@ -60,181 +58,218 @@ dump mm16pre:
         - if: $DUMP == 'yes'          
     script:
         - *script_dump 
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - kdestroy 
 
-# dump mm16post:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     # image:
-#     #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_16post/mm/
-#         ERA: mm16post
-#         CHANNEL: mm/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump 
+dump mm16post:
+    stage: dump
+    tags:
+        - cvmfs
+    # image:
+    #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_16post/mm/
+        ERA: mm16post
+        CHANNEL: mm/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - kdestroy 
 
-# dump mm17:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     # image:
-#     #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_17/mm/
-#         ERA: mm17
-#         CHANNEL: mm/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump 
-
-# dump mm18:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     # image:
-#     #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_18/mm/
-#         ERA: mm18
-#         CHANNEL: mm/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump
-
-# ##-- ee --##
-# dump ee16pre:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     # image:
-#     #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_16pre/ee/
-#         ERA: ee16pre
-#         CHANNEL: ee/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump 
-
-# dump ee16post:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     # image:
-#     #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_16post/ee/
-#         ERA: ee16post
-#         CHANNEL: ee/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump 
-
-# dump ee17:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     # image:
-#     #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_17/ee/
-#         ERA: ee17
-#         CHANNEL: ee/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump 
-
-# dump ee18:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     # image:
-#     #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_18/ee/
-#         ERA: ee18
-#         CHANNEL: ee/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump
-
-# ##-- em --##        
-# dump em16pre:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     # image:
-#     #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_16pre/em/
-#         ERA: em16pre
-#         CHANNEL: em/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump 
-
-# dump em16post:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     # image:
-#     #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_16post/em/
-#         ERA: em16post
-#         CHANNEL: em/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump 
-
-# dump em17:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     # image:
-#     #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_17/em/
-#         ERA: em17
-#         CHANNEL: em/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump 
-
-# dump em18:
-#     stage: dump
-#     tags:
-#         - cvmfs
-#     # image:
-#     #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
-#     variables:
-#         DATE: ${DATE1}
-#         INPUT_DIR: Run2/${DATE1}_18/em/
-#         ERA: em18
-#         CHANNEL: em/    
-#     rules:
-#         - if: $DUMP == 'yes'          
-#     script:
-#         - *script_dump
+dump mm17:
+    stage: dump
+    tags:
+        - cvmfs
+    # image:
+    #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_17/mm/
+        ERA: mm17
+        CHANNEL: mm/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - kdestroy 
+        
+dump mm18:
+    stage: dump
+    tags:
+        - cvmfs
+    # image:
+    #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_18/mm/
+        ERA: mm18
+        CHANNEL: mm/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - kdestroy 
+        
+##-- ee --##
+dump ee16pre:
+    stage: dump
+    tags:
+        - cvmfs
+    # image:
+    #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_16pre/ee/
+        ERA: ee16pre
+        CHANNEL: ee/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - kdestroy 
+        
+dump ee16post:
+    stage: dump
+    tags:
+        - cvmfs
+    # image:
+    #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_16post/ee/
+        ERA: ee16post
+        CHANNEL: ee/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - kdestroy 
+        
+dump ee17:
+    stage: dump
+    tags:
+        - cvmfs
+    # image:
+    #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_17/ee/
+        ERA: ee17
+        CHANNEL: ee/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - kdestroy 
+        
+dump ee18:
+    stage: dump
+    tags:
+        - cvmfs
+    # image:
+    #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_18/ee/
+        ERA: ee18
+        CHANNEL: ee/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - kdestroy 
+        
+##-- em --##        
+dump em16pre:
+    stage: dump
+    tags:
+        - cvmfs
+    # image:
+    #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_16pre/em/
+        ERA: em16pre
+        CHANNEL: em/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - kdestroy 
+        
+dump em16post:
+    stage: dump
+    tags:
+        - cvmfs
+    # image:
+    #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_16post/em/
+        ERA: em16post
+        CHANNEL: em/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - kdestroy 
+        
+dump em17:
+    stage: dump
+    tags:
+        - cvmfs
+    # image:
+    #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_17/em/
+        ERA: em17
+        CHANNEL: em/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump 
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - kdestroy 
+        
+dump em18:
+    stage: dump
+    tags:
+        - cvmfs
+    # image:
+    #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7   
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: Run2/${DATE1}_18/em/
+        ERA: em18
+        CHANNEL: em/    
+    rules:
+        - if: $DUMP == 'yes'          
+    script:
+        - *script_dump
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - kdestroy 
+        
