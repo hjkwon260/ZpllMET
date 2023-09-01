@@ -23,7 +23,7 @@ variables:
 #   - local: run.yml
 before_script:
     - ls /usr/lib64
-    - yum install -y libgfortran
+    - yum install -y libgfortran5
     - ls /usr/lib64
     # - yum install -y root
     # - yum install -y openblas
