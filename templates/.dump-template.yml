@@ -45,8 +45,8 @@ dump mm16pre:
     stage: dump
     tags:
         - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7         
+    # image:
+    #     name: gitlab-registry.cern.ch/ci-tools/ci-worker:cc7         
     variables:
         DATE: ${DATE1}
         INPUT_DIR: Run2/${DATE1}_16pre/mm/
