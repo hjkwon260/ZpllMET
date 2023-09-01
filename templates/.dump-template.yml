@@ -1,6 +1,6 @@
 .script_dump: &script_dump
     - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .      
-    - ln -s /usr/lib64/libffi.so.6 /usr/lib64/libffi.so.8
+    # - ln -s /usr/lib64/libffi.so.6 /usr/lib64/libffi.so.8
     # - ln -s /usr/lib64/libgfortran.so.3 /usr/lib64/libgfortran.so.5
     # - ln -s /usr/lib64/libcrypt.so.2 /usr/lib64/libcrypt.so.1
     # - ln -s /usr/lib64/libtinfo.so.6 /usr/lib64/libtinfo.so.5
@@ -12,14 +12,15 @@
     # - export PYTHONPATH=""
     # - export PYTHONPATH="/cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/lib/python3.9/site-packages"
     # - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-    - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+    - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc9-opt/setup.sh
     # - jupyter nbconvert --to python ${SCRIPT_DUMP}.ipynb 
     # - python3 --version
     # - which python3
     # - which root
     # - ldd /cvmfs/sft.cern.ch/lcg/views/LCG_103swan/x86_64-centos7-gcc11-opt/bin/root
     # - source setup.sh
-    - export LD_LIBRARY_PATH="/cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/lib:$LD_LIBRARY_PATH:/usr/lib64"
+    - export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib64:/cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc9-opt/lib"
+    # - export LD_LIBRARY_PATH="/cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/lib:$LD_LIBRARY_PATH:/usr/lib64"
     # - export PYTHONPATH="$PYTHONPATH:/usr/lib64"
     - python ${SCRIPT_DUMP}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
     - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
