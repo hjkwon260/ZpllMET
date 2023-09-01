@@ -59,7 +59,12 @@ eval mm16 SR 1:
           optional: true     
     script:
         - *script_eval16 
-        - xrdcp -r Outputs/DNN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DNN/${ERA}/SR/sys
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DNN/${ERA}/SR/root_files
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DNN/${ERA}/SR/AN
+        - xrdcp -r Outputs/DNN/${ERA}/SR/sys ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/SR/sys
+        - xrdcp -r Outputs/DNN/${ERA}/SR/root_files ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/SR/root_files
+        - xrdcp -r Outputs/DNN/${ERA}/SR/AN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/SR/AN
         - kdestroy
 # eval mm16 SR 2:
 #     stage: evaluate
