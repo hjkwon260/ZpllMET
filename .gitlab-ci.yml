@@ -22,7 +22,9 @@ variables:
 # include:
 #   - local: run.yml
 before_script:
+    - ls /usr/lib64
     - yum install -y libgfortran
+    - ls /usr/lib64
     # - yum install -y root
     # - yum install -y openblas
     - cat /proc/meminfo
