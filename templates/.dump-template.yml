@@ -59,7 +59,7 @@ dump mm16pre:
     script:
         - *script_dump 
         - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
-        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
 
 dump mm16post:
@@ -78,7 +78,7 @@ dump mm16post:
     script:
         - *script_dump 
         - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
-        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
 
 dump mm17:
@@ -97,7 +97,7 @@ dump mm17:
     script:
         - *script_dump 
         - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
-        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
         
 dump mm18:
@@ -116,7 +116,7 @@ dump mm18:
     script:
         - *script_dump
         - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
-        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
         
 ##-- ee --##
@@ -136,7 +136,7 @@ dump ee16pre:
     script:
         - *script_dump 
         - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
-        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
         
 dump ee16post:
@@ -155,7 +155,7 @@ dump ee16post:
     script:
         - *script_dump 
         - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
-        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
         
 dump ee17:
@@ -174,7 +174,7 @@ dump ee17:
     script:
         - *script_dump 
         - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
-        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
         
 dump ee18:
@@ -193,7 +193,7 @@ dump ee18:
     script:
         - *script_dump
         - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
-        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
         
 ##-- em --##        
@@ -213,7 +213,7 @@ dump em16pre:
     script:
         - *script_dump 
         - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
-        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
         
 dump em16post:
@@ -232,7 +232,7 @@ dump em16post:
     script:
         - *script_dump 
         - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
-        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
         
 dump em17:
@@ -251,7 +251,7 @@ dump em17:
     script:
         - *script_dump 
         - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
-        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
         
 dump em18:
@@ -270,6 +270,6 @@ dump em18:
     script:
         - *script_dump
         - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/DUMP/${ERA}
-        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/DUMP/${ERA}
+        - xrdcp -r ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DUMP/${ERA}
         - kdestroy 
         
