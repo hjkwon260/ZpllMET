@@ -18,7 +18,16 @@
     - python3 SystematicPlots_v1.py . ${ERA} ${REGION}
     - export PATH="$PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin"
     - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
-        
+
+.xrdcp_script: &xrdcp_script
+    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/SYST/${ERA}/SR/root_files
+    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/SYST/${ERA}/SR/AN
+    - xrdcp Outputs/Syst/${ERA}/SR/*.pdf ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/SYST/${ERA}/SR/
+    - xrdcp -r Outputs/Syst/${ERA}/SR/root_files ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/SR/root_files
+    - xrdcp -r Outputs/Syst/${ERA}/SR/AN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/SR/AN
+    - kdestroy 
+    - cd ${CI_PROJECT_DIR}
+    - rm -rf ./*
 
 include:
   - local: '/templates/.evaluate-template.yml'
@@ -52,237 +61,239 @@ syst mm16:
           optional: true
     script:
         - *syst_script
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/SYST/${ERA}/SR/root_files
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/SYST/${ERA}/SR/AN
-        - xrdcp Outputs/Syst/${ERA}/SR/*.pdf ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/SYST/${ERA}/SR/
-        - xrdcp -r Outputs/Syst/${ERA}/SR/root_files ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/SR/root_files
-        - xrdcp -r Outputs/Syst/${ERA}/SR/AN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/SR/AN
-        - kdestroy 
-        - cd ${CI_PROJECT_DIR}
-        - rm -rf ./*
+        - *xrdcp_script
 
-# syst mm17:
-#     stage: syst
-#     tags:
-#         - cvmfs
-#     image:
-#       name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
-#     variables:
-#         DATE: ${DATE1}
-#         ERA: mm17
-#         INPUT_DIR: ${INPUT_DNN}
-#         REGION: SR
-#     rules:    
-#         - if: $SYST == 'yes' && $EVAL == 'yes'
-#           when: on_success
-#         - if: $SYST == 'yes' && $EVAL == 'no'
-#           when: always
-#     needs:
-#         - job: eval mm17 SR 1
-#           optional: true 
-#         - job: eval mm17 SR 2
-#           optional: true
-#         - job: eval mm17 VR 1
-#           optional: true 
-#         - job: eval mm17 VR 2
-#           optional: true
-#     script:
-#         - *syst_script
 
-# syst mm18:
-#     stage: syst
-#     tags:
-#         - cvmfs
-#     image:
-#       name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
-#     variables:
-#         DATE: ${DATE1}
-#         ERA: mm18
-#         INPUT_DIR: ${INPUT_DNN}
-#         REGION: SR
-#     rules:    
-#         - if: $SYST == 'yes' && $EVAL == 'yes'
-#           when: on_success
-#         - if: $SYST == 'yes' && $EVAL == 'no'
-#           when: always
-#     needs:
-#         - job: eval mm18 SR 1
-#           optional: true 
-#         - job: eval mm18 SR 2
-#           optional: true
-#         - job: eval mm18 VR 1
-#           optional: true 
-#         - job: eval mm18 VR 2
-#           optional: true
-#     script:
-#         - *syst_script
+syst mm17:
+    stage: syst
+    tags:
+        - cvmfs
+    # image:
+    #   name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
+    variables:
+        DATE: ${DATE1}
+        ERA: mm17
+        INPUT_DIR: ${INPUT_DNN}
+        REGION: SR
+    rules:    
+        - if: $SYST == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $SYST == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval mm17 SR 1
+          optional: true 
+        - job: eval mm17 SR 2
+          optional: true
+        - job: eval mm17 VR 1
+          optional: true 
+        - job: eval mm17 VR 2
+          optional: true
+    script:
+        - *syst_script
+        - *xrdcp_script
 
-# ##-- ee --##
-# syst ee16:
-#     stage: syst
-#     tags:
-#         - cvmfs
-#     image:
-#       name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
-#     variables:
-#         DATE: ${DATE1}
-#         ERA: ee16
-#         INPUT_DIR: ${INPUT_DNN}
-#         REGION: SR
-#     rules:    
-#         - if: $SYST == 'yes' && $EVAL == 'yes'
-#           when: on_success
-#         - if: $SYST == 'yes' && $EVAL == 'no'
-#           when: always
-#     needs:
-#         - job: eval ee16 SR 1
-#           optional: true 
-#         - job: eval ee16 SR 2
-#           optional: true
-#         - job: eval ee16 VR 1
-#           optional: true 
-#         - job: eval ee16 VR 2
-#           optional: true
-#     script:
-#         - *syst_script
+syst mm18:
+    stage: syst
+    tags:
+        - cvmfs
+    # image:
+    #   name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
+    variables:
+        DATE: ${DATE1}
+        ERA: mm18
+        INPUT_DIR: ${INPUT_DNN}
+        REGION: SR
+    rules:    
+        - if: $SYST == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $SYST == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval mm18 SR 1
+          optional: true 
+        - job: eval mm18 SR 2
+          optional: true
+        - job: eval mm18 VR 1
+          optional: true 
+        - job: eval mm18 VR 2
+          optional: true
+    script:
+        - *syst_script
+        - *xrdcp_script
 
-# syst ee17:
-#     stage: syst
-#     tags:
-#         - cvmfs
-#     image:
-#       name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
-#     variables:
-#         DATE: ${DATE1}
-#         ERA: ee17
-#         INPUT_DIR: ${INPUT_DNN}
-#         REGION: SR
-#     rules:    
-#         - if: $SYST == 'yes' && $EVAL == 'yes'
-#           when: on_success
-#         - if: $SYST == 'yes' && $EVAL == 'no'
-#           when: always
-#     needs:
-#         - job: eval ee17 SR 1
-#           optional: true 
-#         - job: eval ee17 SR 2
-#           optional: true
-#         - job: eval ee17 VR 1
-#           optional: true 
-#         - job: eval ee17 VR 2
-#           optional: true
-#     script:
-#         - *syst_script
+##-- ee --##
+syst ee16:
+    stage: syst
+    tags:
+        - cvmfs
+    # image:
+    #   name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
+    variables:
+        DATE: ${DATE1}
+        ERA: ee16
+        INPUT_DIR: ${INPUT_DNN}
+        REGION: SR
+    rules:    
+        - if: $SYST == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $SYST == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval ee16 SR 1
+          optional: true 
+        - job: eval ee16 SR 2
+          optional: true
+        - job: eval ee16 VR 1
+          optional: true 
+        - job: eval ee16 VR 2
+          optional: true
+    script:
+        - *syst_script
+        - *xrdcp_script
 
-# syst ee18:
-#     stage: syst
-#     tags:
-#         - cvmfs
-#     image:
-#       name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
-#     variables:
-#         DATE: ${DATE1}
-#         ERA: ee18
-#         INPUT_DIR: ${INPUT_DNN}
-#         REGION: SR
-#     rules:    
-#         - if: $SYST == 'yes' && $EVAL == 'yes'
-#           when: on_success
-#         - if: $SYST == 'yes' && $EVAL == 'no'
-#           when: always
-#     needs:
-#         - job: eval ee18 SR 1
-#           optional: true 
-#         - job: eval ee18 SR 2
-#           optional: true
-#         - job: eval ee18 VR 1
-#           optional: true 
-#         - job: eval ee18 VR 2
-#           optional: true
-#     script:
-#         - *syst_script
+syst ee17:
+    stage: syst
+    tags:
+        - cvmfs
+    # image:
+    #   name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
+    variables:
+        DATE: ${DATE1}
+        ERA: ee17
+        INPUT_DIR: ${INPUT_DNN}
+        REGION: SR
+    rules:    
+        - if: $SYST == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $SYST == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval ee17 SR 1
+          optional: true 
+        - job: eval ee17 SR 2
+          optional: true
+        - job: eval ee17 VR 1
+          optional: true 
+        - job: eval ee17 VR 2
+          optional: true
+    script:
+        - *syst_script
+        - *xrdcp_script
 
-# ##-- em --##
-# syst em16:
-#     stage: syst
-#     tags:
-#         - cvmfs
-#     image:
-#       name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
-#     variables:
-#         DATE: ${DATE1}
-#         ERA: em16
-#         INPUT_DIR: ${INPUT_DNN}
-#         REGION: SR
-#     rules:    
-#         - if: $SYST == 'yes' && $EVAL == 'yes'
-#           when: on_success
-#         - if: $SYST == 'yes' && $EVAL == 'no'
-#           when: always
-#     needs:
-#         - job: eval em16 SR 1
-#           optional: true 
-#         - job: eval em16 SR 2
-#           optional: true
-#         - job: eval em16 VR 1
-#           optional: true 
-#         - job: eval em16 VR 2
-#           optional: true
-#     script:
-#         - *syst_script
+syst ee18:
+    stage: syst
+    tags:
+        - cvmfs
+    # image:
+    #   name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
+    variables:
+        DATE: ${DATE1}
+        ERA: ee18
+        INPUT_DIR: ${INPUT_DNN}
+        REGION: SR
+    rules:    
+        - if: $SYST == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $SYST == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval ee18 SR 1
+          optional: true 
+        - job: eval ee18 SR 2
+          optional: true
+        - job: eval ee18 VR 1
+          optional: true 
+        - job: eval ee18 VR 2
+          optional: true
+    script:
+        - *syst_script
+        - *xrdcp_script
 
-# syst em17:
-#     stage: syst
-#     tags:
-#         - cvmfs
-#     image:
-#       name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
-#     variables:
-#         DATE: ${DATE1}
-#         ERA: em17
-#         INPUT_DIR: ${INPUT_DNN}
-#         REGION: SR
-#     rules:    
-#         - if: $SYST == 'yes' && $EVAL == 'yes'
-#           when: on_success
-#         - if: $SYST == 'yes' && $EVAL == 'no'
-#           when: always
-#     needs:
-#         - job: eval em17 SR 1
-#           optional: true 
-#         - job: eval em17 SR 2
-#           optional: true
-#         - job: eval em17 VR 1
-#           optional: true 
-#         - job: eval em17 VR 2
-#           optional: true
-#     script:
-#         - *syst_script
+##-- em --##
+syst em16:
+    stage: syst
+    tags:
+        - cvmfs
+    # image:
+    #   name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
+    variables:
+        DATE: ${DATE1}
+        ERA: em16
+        INPUT_DIR: ${INPUT_DNN}
+        REGION: SR
+    rules:    
+        - if: $SYST == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $SYST == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval em16 SR 1
+          optional: true 
+        - job: eval em16 SR 2
+          optional: true
+        - job: eval em16 VR 1
+          optional: true 
+        - job: eval em16 VR 2
+          optional: true
+    script:
+        - *syst_script
+        - *xrdcp_script
 
-# syst em18:
-#     stage: syst
-#     tags:
-#         - cvmfs
-#     image:
-#       name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
-#     variables:
-#         DATE: ${DATE1}
-#         ERA: em18
-#         INPUT_DIR: ${INPUT_DNN}
-#         REGION: SR
-#     rules:    
-#         - if: $SYST == 'yes' && $EVAL == 'yes'
-#           when: on_success
-#         - if: $SYST == 'yes' && $EVAL == 'no'
-#           when: always
-#     needs:
-#         - job: eval em18 SR 1
-#           optional: true 
-#         - job: eval em18 SR 2
-#           optional: true
-#         - job: eval em18 VR 1
-#           optional: true 
-#         - job: eval em18 VR 2
-#           optional: true
-#     script:
-#         - *syst_script
+syst em17:
+    stage: syst
+    tags:
+        - cvmfs
+    # image:
+    #   name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
+    variables:
+        DATE: ${DATE1}
+        ERA: em17
+        INPUT_DIR: ${INPUT_DNN}
+        REGION: SR
+    rules:    
+        - if: $SYST == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $SYST == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval em17 SR 1
+          optional: true 
+        - job: eval em17 SR 2
+          optional: true
+        - job: eval em17 VR 1
+          optional: true 
+        - job: eval em17 VR 2
+          optional: true
+    script:
+        - *syst_script
+        - *xrdcp_script
+
+syst em18:
+    stage: syst
+    tags:
+        - cvmfs
+    # image:
+    #   name: gitlab-registry.cern.ch/hkwon/myawsomeproject:R
+    variables:
+        DATE: ${DATE1}
+        ERA: em18
+        INPUT_DIR: ${INPUT_DNN}
+        REGION: SR
+    rules:    
+        - if: $SYST == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $SYST == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval em18 SR 1
+          optional: true 
+        - job: eval em18 SR 2
+          optional: true
+        - job: eval em18 VR 1
+          optional: true 
+        - job: eval em18 VR 2
+          optional: true
+    script:
+        - *syst_script
+        - *xrdcp_script
