@@ -8,7 +8,7 @@
     - *load_root_files
     # - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
     - mkdir -p ~/Rpackages
-    - pip3 install rpy2 jupyterlab
+    - pip3 install numpy rpy2 jupyterlab
     - R --version
     - Rscript -e 'install.packages("BiocManager", repos="http://cran.rstudio.com/")' && Rscript -e 'BiocManager::install("limma")'    
     - Rscript install.R
