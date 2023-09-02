@@ -52,12 +52,14 @@ syst mm16:
           optional: true
     script:
         - *syst_script
-        - xrdcp -r Outputs/Syst ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel/
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/SYST/${ERA}/SR/root_files
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/SYST/${ERA}/SR/AN
+        - xrdcp Outputs/Syst/${ERA}/SR/*.pdf ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/SYST/${ERA}/SR/
+        - xrdcp -r Outputs/Syst/${ERA}/SR/root_files ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/SR/root_files
+        - xrdcp -r Outputs/Syst/${ERA}/SR/AN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/SR/AN
         - kdestroy 
         - cd ${CI_PROJECT_DIR}
-        - ls
         - rm -rf ./*
-        - ls 
 
 # syst mm17:
 #     stage: syst
