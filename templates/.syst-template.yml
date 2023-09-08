@@ -7,11 +7,11 @@
 .syst_script: &syst_script
     - *load_root_files
     # - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
-    - mkdir -p ~/Rpackages
-    - pip3 install numpy rpy2 jupyterlab
+    # - mkdir -p ~/Rpackages
+    # - pip3 install numpy rpy2 jupyterlab
     - R --version
     # - Rscript -e 'install.packages("BiocManager", repos="http://cran.rstudio.com/")' && Rscript -e 'BiocManager::install("limma")'    
-    - Rscript install.R
+    # - Rscript install.R
     - ls ~/Rpackages
     - export LD_LIBRARY_PATH=""    
     - jupyter nbconvert --to python SystematicPlots_v1.ipynb
