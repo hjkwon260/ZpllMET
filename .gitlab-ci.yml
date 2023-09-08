@@ -11,7 +11,7 @@ variables:
     DUMP: 'no'
     DRAW: 'no'
     EVAL: 'no'
-    SYST: "no"
+    SYST: "yes"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
     ONLY_BENCHMARK: 'yes'
