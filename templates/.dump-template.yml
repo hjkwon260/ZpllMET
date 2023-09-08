@@ -48,7 +48,7 @@ dump mm16pre:
     tags:
         - cvmfs
     image:
-        name: gitlab-registry.cern.ch/hkwon/myawsomeproject:alma9        
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9       
     variables:
         DATE: ${DATE1}
         INPUT_DIR: Run2/${DATE1}_16pre/mm/

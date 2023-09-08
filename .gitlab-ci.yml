@@ -8,7 +8,7 @@ variables:
     SCRIPT_LIMIT: limits_v4  
     SCRIPT_DUMP: Dump_v2  
     SCRIPT_DRAW: Draw_v1  
-    DUMP: 'no'
+    DUMP: 'yes'
     DRAW: 'no'
     EVAL: 'no'
     SYST: "no"
@@ -64,7 +64,7 @@ build image:
      variables:
        TO: $CI_REGISTRY_IMAGE:alma9 # where to push resulting image
        CONTEXT_DIR: build
-       FROM: gitlab-registry.cern.ch/linuxsupport/rpmci/builder-al9:latest
+       FROM: gitlab-registry.cern.ch/linuxsupport/rpmci/builder-al9:latest # 08.09.23
 
 include:
 #   - local: '/templates/.dump-template.yml'
