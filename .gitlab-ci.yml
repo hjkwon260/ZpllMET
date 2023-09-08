@@ -10,8 +10,8 @@ variables:
     SCRIPT_DRAW: Draw_v1  
     DUMP: 'no'
     DRAW: 'no'
-    EVAL: 'no'
-    SYST: "yes"
+    EVAL: 'yes'
+    SYST: "no"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
     ONLY_BENCHMARK: 'yes'
