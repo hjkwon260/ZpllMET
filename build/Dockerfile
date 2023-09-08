@@ -5,4 +5,5 @@ LABEL maintainer="Hyejin Kwon <hj.kwon@cern.ch>"
 RUN dnf install -y root python3-root root-notebook python3-pip R python3-devel
 RUN pip3 install numpy uproot pandas tqdm
 RUN pip3 install uproot pandas tqdm jupyterlab tensorflow scikit-learn seaborn rpy2
-RUN mkdir -p ~/Rpackages && Rscript -e 'install.packages("BiocManager", repos="http://cran.rstudio.com/", lib = "~/Rpackages")' && Rscript -e '.libPaths(c(.libPaths(), "~/Rpackages"))' && Rscript -e 'BiocManager::install("limma", lib = "~/Rpackages")'
+# RUN mkdir -p ~/Rpackages && Rscript -e 'install.packages("BiocManager", repos="http://cran.rstudio.com/", lib = "~/Rpackages")' && Rscript -e '.libPaths(c(.libPaths(), "~/Rpackages"))' && Rscript -e 'BiocManager::install("limma", lib = "~/Rpackages")'
+RUN Rscript -e 'install.packages("BiocManager", repos="http://cran.rstudio.com/")' && Rscript -e 'BiocManager::install("limma")' 
