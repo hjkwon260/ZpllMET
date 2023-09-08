@@ -8,7 +8,7 @@ variables:
     SCRIPT_LIMIT: limits_v4  
     SCRIPT_DUMP: Dump_v2  
     SCRIPT_DRAW: Draw_v1  
-    DUMP: 'yes'
+    DUMP: 'no'
     DRAW: 'no'
     EVAL: 'no'
     SYST: "no"
@@ -46,12 +46,25 @@ before_script:
     - printf $PASS | base64 -d | kinit $USER@CERN.CH  
 
 stages:
+    - build
     - dump
     - draw
     - evaluate
     - syst
     - limit
     - draw limit
+
+build image:
+     stage: build
+     when: manual
+     tags: 
+       - docker-image-build
+     script: 
+       - echo ${CI_REGISTRY_IMAGE}
+     variables:
+       TO: $CI_REGISTRY_IMAGE:alma9 # where to push resulting image
+       CONTEXT_DIR: build
+       FROM: gitlab-registry.cern.ch/linuxsupport/rpmci/builder-al9:latest
 
 include:
 #   - local: '/templates/.dump-template.yml'
