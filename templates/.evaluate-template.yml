@@ -68,7 +68,7 @@ eval mm16 SR 1:
             PART: "benchmark"  # at the job level.          
         - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
           when: always
-            variables:           # Override PART
+          variables:           # Override PART
             PART: "benchmark"  # at the job level.  
         - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success       
@@ -174,7 +174,7 @@ eval mm17 SR 1:
             PART: "benchmark"  # at the job level.          
         - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
           when: always
-            variables:           # Override PART
+          variables:           # Override PART
             PART: "benchmark"  # at the job level.  
         - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success       
@@ -272,7 +272,7 @@ eval mm18 SR 1:
             PART: "benchmark"  # at the job level.          
         - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
           when: always
-            variables:           # Override PART
+          variables:           # Override PART
             PART: "benchmark"  # at the job level.  
         - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success       
@@ -371,7 +371,7 @@ eval ee16 SR 1:
             PART: "benchmark"  # at the job level.          
         - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
           when: always
-            variables:           # Override PART
+          variables:           # Override PART
             PART: "benchmark"  # at the job level.  
         - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success       
@@ -477,7 +477,7 @@ eval ee17 SR 1:
             PART: "benchmark"  # at the job level.          
         - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
           when: always
-            variables:           # Override PART
+          variables:           # Override PART
             PART: "benchmark"  # at the job level.  
         - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success       
@@ -575,7 +575,7 @@ eval ee18 SR 1:
             PART: "benchmark"  # at the job level.          
         - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
           when: always
-            variables:           # Override PART
+          variables:           # Override PART
             PART: "benchmark"  # at the job level.  
         - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success       
@@ -674,7 +674,7 @@ eval em16 SR 1:
             PART: "benchmark"  # at the job level.          
         - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
           when: always
-            variables:           # Override PART
+          variables:           # Override PART
             PART: "benchmark"  # at the job level.  
         - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success       
@@ -780,7 +780,7 @@ eval em17 SR 1:
             PART: "benchmark"  # at the job level.          
         - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
           when: always
-            variables:           # Override PART
+          variables:           # Override PART
             PART: "benchmark"  # at the job level.  
         - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success       
@@ -878,7 +878,7 @@ eval em18 SR 1:
             PART: "benchmark"  # at the job level.          
         - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
           when: always
-            variables:           # Override PART
+          variables:           # Override PART
             PART: "benchmark"  # at the job level.  
         - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success       
