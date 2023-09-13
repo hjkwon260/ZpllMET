@@ -292,7 +292,7 @@ syst em18:
 
 ########## VR ###########
 ##-- mm --##
-syst mm16:
+syst mm16 VR:
     stage: syst
     tags:
         - cvmfs
@@ -321,7 +321,7 @@ syst mm16:
         - *syst_script
         - *xrdcp_script
 
-syst mm17:
+syst mm17 VR:
     stage: syst
     tags:
         - cvmfs
@@ -350,7 +350,7 @@ syst mm17:
         - *syst_script
         - *xrdcp_script
 
-syst mm18:
+syst mm18 VR:
     stage: syst
     tags:
         - cvmfs
@@ -380,7 +380,7 @@ syst mm18:
         - *xrdcp_script
 
 ##-- ee --##
-syst ee16:
+syst ee16 VR:
     stage: syst
     tags:
         - cvmfs
@@ -409,7 +409,7 @@ syst ee16:
         - *syst_script
         - *xrdcp_script
 
-syst ee17:
+syst ee17 VR:
     stage: syst
     tags:
         - cvmfs
@@ -438,7 +438,7 @@ syst ee17:
         - *syst_script
         - *xrdcp_script
 
-syst ee18:
+syst ee18 VR:
     stage: syst
     tags:
         - cvmfs
@@ -468,7 +468,7 @@ syst ee18:
         - *xrdcp_script
 
 ##-- em --##
-syst em16:
+syst em16 VR:
     stage: syst
     tags:
         - cvmfs
@@ -497,7 +497,7 @@ syst em16:
         - *syst_script
         - *xrdcp_script
 
-syst em17:
+syst em17 VR:
     stage: syst
     tags:
         - cvmfs
@@ -526,7 +526,7 @@ syst em17:
         - *syst_script
         - *xrdcp_script
 
-syst em18:
+syst em18 VR:
     stage: syst
     tags:
         - cvmfs
