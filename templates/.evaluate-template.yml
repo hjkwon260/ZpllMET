@@ -13,18 +13,30 @@
 
 .script_eval16: &script_eval16
     - *load16
-    - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+    - echo $PYTHONPATH
+    - export LD_LIBRARY_PATH=""    
     - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-    - python ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART}
-    - xrdcp -r Outputs/DNN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel/
-    - kdestroy
+    - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART}
+    - export PATH="$PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin"
+    - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
+
 
 .script_eval: &script_eval
     - *load
-    - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
+    - echo $PYTHONPATH
+    - export LD_LIBRARY_PATH=""    
     - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-    - python ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART}
-    - xrdcp -r Outputs/DNN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel/
+    - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART}
+    - export PATH="$PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin"
+    - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
+
+.xrdcp_script: &xrdcp_script
+    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/sys
+    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/root_files
+    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/AN
+    - xrdcp -r Outputs/DNN/${ERA}/${REGION}/sys ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/sys
+    - xrdcp -r Outputs/DNN/${ERA}/${REGION}/root_files ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/root_files
+    - xrdcp -r Outputs/DNN/${ERA}/${REGION}/AN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/AN
     - kdestroy
 
 include:
@@ -36,6 +48,8 @@ eval mm16 SR 1:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -43,22 +57,33 @@ eval mm16 SR 1:
         REGION: SR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.          
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
           when: always
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.  
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+          when: on_success       
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+          when: always                  
     needs:
         - job: dump mm16pre
           optional: true      
         - job: dump mm16post
           optional: true     
     script:
-        - *script_eval16 
+        - *script_eval16
+        - *xrdcp_script 
 
 eval mm16 SR 2:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -66,9 +91,9 @@ eval mm16 SR 2:
         REGION: SR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: dump mm16pre
@@ -77,11 +102,14 @@ eval mm16 SR 2:
           optional: true    
     script:
         - *script_eval16 
+        - *xrdcp_script 
 
 eval mm16 VR 1:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -89,10 +117,18 @@ eval mm16 VR 1:
         REGION: VR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.          
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: always
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.  
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success       
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always  
     needs:
         - job: dump mm16pre
           optional: true      
@@ -100,11 +136,14 @@ eval mm16 VR 1:
           optional: true     
     script:
         - *script_eval16 
-
+        - *xrdcp_script 
+       
 eval mm16 VR 2:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -112,9 +151,9 @@ eval mm16 VR 2:
         REGION: VR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
         - job: dump mm16pre
@@ -123,11 +162,14 @@ eval mm16 VR 2:
           optional: true     
     script:
         - *script_eval16 
+        - *xrdcp_script 
 
 eval mm17 SR 1:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -135,20 +177,31 @@ eval mm17 SR 1:
         REGION: SR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.          
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
           when: always
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.  
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+          when: on_success       
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+          when: always  
     needs:
         - job: dump mm17
           optional: true     
     script:
         - *script_eval 
-
+        - *xrdcp_script 
+      
 eval mm17 SR 2:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -156,20 +209,23 @@ eval mm17 SR 2:
         REGION: SR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: dump mm17
           optional: true     
     script:
         - *script_eval 
+        - *xrdcp_script 
 
 eval mm17 VR 1:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -177,20 +233,31 @@ eval mm17 VR 1:
         REGION: VR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.          
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: always
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.  
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success       
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always 
     needs:
         - job: dump mm17
           optional: true     
     script:
         - *script_eval 
-
+        - *xrdcp_script 
+        
 eval mm17 VR 2:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -198,20 +265,23 @@ eval mm17 VR 2:
         REGION: VR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
         - job: dump mm17
           optional: true     
     script:
         - *script_eval 
+        - *xrdcp_script 
 
 eval mm18 SR 1:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -219,20 +289,31 @@ eval mm18 SR 1:
         REGION: SR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.          
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
           when: always
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.  
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+          when: on_success       
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+          when: always  
     needs:
         - job: dump mm18
           optional: true     
     script:
         - *script_eval 
-
+        - *xrdcp_script 
+        
 eval mm18 SR 2:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -240,20 +321,23 @@ eval mm18 SR 2:
         REGION: SR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: dump mm18
           optional: true     
     script:
         - *script_eval 
+        - *xrdcp_script 
 
 eval mm18 VR 1:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -261,20 +345,31 @@ eval mm18 VR 1:
         REGION: VR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.          
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: always
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.  
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success       
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always 
     needs:
         - job: dump mm18
           optional: true    
     script:
         - *script_eval 
-
+        - *xrdcp_script 
+        
 eval mm18 VR 2:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -282,21 +377,24 @@ eval mm18 VR 2:
         REGION: VR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
         - job: dump mm18
           optional: true     
     script:
         - *script_eval 
+        - *xrdcp_script 
 
 ##-- ee --##
 eval ee16 SR 1:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -304,10 +402,18 @@ eval ee16 SR 1:
         REGION: SR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.          
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
           when: always
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.  
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+          when: on_success       
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+          when: always  
     needs:
         - job: dump ee16pre
           optional: true      
@@ -315,11 +421,14 @@ eval ee16 SR 1:
           optional: true    
     script:
         - *script_eval16 
-
+        - *xrdcp_script 
+        
 eval ee16 SR 2:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -327,9 +436,9 @@ eval ee16 SR 2:
         REGION: SR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: dump ee16pre
@@ -338,11 +447,14 @@ eval ee16 SR 2:
           optional: true
     script:
         - *script_eval16 
+        - *xrdcp_script 
 
 eval ee16 VR 1:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -350,10 +462,18 @@ eval ee16 VR 1:
         REGION: VR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.          
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: always
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.  
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success       
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always 
     needs:
         - job: dump ee16pre
           optional: true      
@@ -361,11 +481,14 @@ eval ee16 VR 1:
           optional: true
     script:
         - *script_eval16 
-
+        - *xrdcp_script 
+        
 eval ee16 VR 2:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -373,9 +496,9 @@ eval ee16 VR 2:
         REGION: VR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
         - job: dump ee16pre
@@ -384,11 +507,14 @@ eval ee16 VR 2:
           optional: true
     script:
         - *script_eval16 
+        - *xrdcp_script 
 
 eval ee17 SR 1:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -396,20 +522,31 @@ eval ee17 SR 1:
         REGION: SR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.          
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
           when: always
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.  
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+          when: on_success       
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+          when: always  
     needs:
         - job: dump ee17
           optional: true     
     script:
         - *script_eval 
-
+        - *xrdcp_script 
+        
 eval ee17 SR 2:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -417,20 +554,23 @@ eval ee17 SR 2:
         REGION: SR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: dump ee17
           optional: true     
     script:
         - *script_eval 
+        - *xrdcp_script 
 
 eval ee17 VR 1:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -438,20 +578,31 @@ eval ee17 VR 1:
         REGION: VR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.          
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: always
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.  
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success       
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always 
     needs:
         - job: dump ee17
           optional: true    
     script:
         - *script_eval 
-
+        - *xrdcp_script 
+        
 eval ee17 VR 2:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -459,20 +610,23 @@ eval ee17 VR 2:
         REGION: VR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
         - job: dump ee17
           optional: true    
     script:
         - *script_eval 
+        - *xrdcp_script 
 
 eval ee18 SR 1:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -480,20 +634,31 @@ eval ee18 SR 1:
         REGION: SR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.          
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
           when: always
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.  
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+          when: on_success       
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+          when: always  
     needs:
         - job: dump ee18
           optional: true    
     script:
         - *script_eval
-
+        - *xrdcp_script 
+        
 eval ee18 SR 2:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -501,20 +666,23 @@ eval ee18 SR 2:
         REGION: SR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: dump ee18
           optional: true     
     script:
         - *script_eval 
+        - *xrdcp_script 
 
 eval ee18 VR 1:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -522,20 +690,31 @@ eval ee18 VR 1:
         REGION: VR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.          
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: always
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.  
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success       
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always 
     needs:
         - job: dump ee18
           optional: true    
     script:
         - *script_eval 
-
+        - *xrdcp_script 
+        
 eval ee18 VR 2:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -543,21 +722,24 @@ eval ee18 VR 2:
         REGION: VR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
         - job: dump ee18
           optional: true    
     script:
         - *script_eval 
+        - *xrdcp_script 
 
 ##-- em --##
 eval em16 SR 1:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -565,10 +747,18 @@ eval em16 SR 1:
         REGION: SR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.          
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
           when: always
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.  
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+          when: on_success       
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+          when: always  
     needs:
         - job: dump em16pre
           optional: true      
@@ -576,11 +766,14 @@ eval em16 SR 1:
           optional: true   
     script:
         - *script_eval16 
-
+        - *xrdcp_script 
+        
 eval em16 SR 2:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -588,9 +781,9 @@ eval em16 SR 2:
         REGION: SR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: dump em16pre
@@ -599,11 +792,14 @@ eval em16 SR 2:
           optional: true  
     script:
         - *script_eval16 
+        - *xrdcp_script 
 
 eval em16 VR 1:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -611,10 +807,18 @@ eval em16 VR 1:
         REGION: VR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.          
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: always
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.  
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success       
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always 
     needs:
         - job: dump em16pre
           optional: true      
@@ -622,11 +826,14 @@ eval em16 VR 1:
           optional: true  
     script:
         - *script_eval16 
-
+        - *xrdcp_script 
+        
 eval em16 VR 2:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -634,9 +841,9 @@ eval em16 VR 2:
         REGION: VR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
         - job: dump em16pre
@@ -645,11 +852,14 @@ eval em16 VR 2:
           optional: true  
     script:
         - *script_eval16 
+        - *xrdcp_script 
 
 eval em17 SR 1:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -657,20 +867,31 @@ eval em17 SR 1:
         REGION: SR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.          
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
           when: always
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.  
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+          when: on_success       
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+          when: always  
     needs:
         - job: dump em17
           optional: true     
     script:
         - *script_eval 
-
+        - *xrdcp_script 
+        
 eval em17 SR 2:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -678,20 +899,23 @@ eval em17 SR 2:
         REGION: SR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: dump em17
           optional: true    
     script:
         - *script_eval 
+        - *xrdcp_script 
 
 eval em17 VR 1:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -699,20 +923,31 @@ eval em17 VR 1:
         REGION: VR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.          
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: always
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.  
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success       
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always 
     needs:
         - job: dump em17
           optional: true     
     script:
         - *script_eval 
-
+        - *xrdcp_script 
+        
 eval em17 VR 2:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -720,20 +955,23 @@ eval em17 VR 2:
         REGION: VR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
         - job: dump em17
           optional: true     
     script:
         - *script_eval 
+        - *xrdcp_script 
 
 eval em18 SR 1:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -741,20 +979,31 @@ eval em18 SR 1:
         REGION: SR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.          
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
           when: always
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.  
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+          when: on_success       
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+          when: always  
     needs:
         - job: dump em18
           optional: true    
     script:
         - *script_eval 
-
+        - *xrdcp_script 
+        
 eval em18 SR 2:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -762,20 +1011,23 @@ eval em18 SR 2:
         REGION: SR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: dump em18
           optional: true     
     script:
         - *script_eval 
+        - *xrdcp_script 
 
 eval em18 VR 1:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -783,20 +1035,31 @@ eval em18 VR 1:
         REGION: VR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.          
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: always
+          variables:           # Override PART
+            PART: "benchmark"  # at the job level.  
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success       
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always 
     needs:
         - job: dump em18
           optional: true     
     script:
         - *script_eval 
+        - *xrdcp_script 
 
 eval em18 VR 2:
     stage: evaluate
     tags:
         - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
@@ -804,12 +1067,13 @@ eval em18 VR 2:
         REGION: VR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes'
+        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no'
+        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
         - job: dump em18
           optional: true     
     script:
         - *script_eval 
+        - *xrdcp_script 

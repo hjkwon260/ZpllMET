@@ -22,7 +22,7 @@ sys.path.append('.')
 sys.path.append('./Utils')
 from Plotter import HistStack
 
-from beeps import *
+# from beeps import *
 
 
 # # Set config
@@ -186,7 +186,7 @@ for file in tqdm(f):
         dic_tup[sample]=get_df(input_dir+file, unneccesary_columns)   
     except:
         print(sample)
-        beep()        
+        # beep()        
         if "Run" in sample: # check file corrupt
             raise    
 # dic_tup
@@ -195,7 +195,7 @@ for file in tqdm(f):
 # In[4]:
 
 
-beep_ok()
+# beep_ok()
 
 
 # In[5]:
