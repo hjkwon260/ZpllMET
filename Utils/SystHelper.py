@@ -157,7 +157,7 @@ def get_dic_sys(model_mass, ERA, dic_df_raw, dic_nested_shape_sys, sys_list, var
 
     # si^2
     sys_list_new = sys_list + btag_sys
-    sys_list_new = sys_list_new.remove('btagSF')
+    sys_list_new.remove('btagSF')
     for s in sys_list_new:
         # by source
         sqrUp = [x*x if x>0 else -x*x for x in dic_sys[s+'Up']]
