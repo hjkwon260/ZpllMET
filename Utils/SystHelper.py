@@ -6,7 +6,7 @@ import numpy as np
 
 
 def get_sys_list():
-    return ["scale", "puweight", "l1prefiring", "effrecoSF", "effSF", "topSF", "met", "metjer", "metue", "trigSF", "hdamp", "PS", "btagSF", "btagSF_cor", "jes", "jer"]
+    return ["scale", "puweight", "l1prefiring", "effrecoSF", "effSF", "topSF", "met", "metjer", "metue", "trigSF", "hdamp", "PS", "btagSF", "jes", "jer"]
 	# return ["met", "metjer", "metue", "jes", "jer"]
     
 def get_dic_sys(model_mass, ERA, dic_df_raw, dic_nested_shape_sys, sys_list, variable, r, region, threshold, file_prefix, file_str):
@@ -26,7 +26,7 @@ def get_dic_sys(model_mass, ERA, dic_df_raw, dic_nested_shape_sys, sys_list, var
 	    hist.export_hist(model_mass, file_name=file_prefix+"/root_files/shape_v1_"+file_str+model_mass)
     
     for s in sys_list:
-        if "met" in s or "scale" in s or "jes" in s or "jer" in s: # fill later
+        if "met" in s or "scale" in s or "jes" in s or "jer" in s or "btag" in s: # fill later
             continue
         # up
         hist=HistStack(dic_df_raw, variable, 'weight'+s+'Up', r[0], r[1], r[2], r[3])            
@@ -44,7 +44,27 @@ def get_dic_sys(model_mass, ERA, dic_df_raw, dic_nested_shape_sys, sys_list, var
         dic_sys[s+'Down'] = np.array(sysDown) - np.array(bkg_norm)
         if "score" in variable:
         	hist.export_hist(model_mass, file_name=file_prefix+"/root_files/shape_v1_"+file_str+model_mass)
-        
+
+    # btag
+    btag_sys = ['btagSFbc', 'btagSFbc_correlated', 'btagSFlight', 'btagSFlight_correlated']
+    for bsys in btag_sys:
+        # up
+        hist=HistStack(dic_df_raw, variable, 'weight'_bsys+'Up', r[0], r[1], r[2], r[3])            
+        c1=hist.draw_hist(model_mass, ERA, file_name=file_prefix+"/sys/systUp_"_bsys+file_str, blind_from=threshold)     
+        dic_yields = hist.get_yields_by_bin()
+        sysUp = dic_yields['bkg']
+        dic_sys[s+'Up'] = np.array(sysUp) - np.array(bkg_norm)
+        if "score" in variable:
+            hist.export_hist(model_mass, file_name=file_prefix+"/root_files/shape_v1_"+file_str+model_mass)
+        # down
+        hist=HistStack(dic_df_raw, variable, 'weight'_bsys+'Down', r[0], r[1], r[2], r[3])            
+        c1=hist.draw_hist(model_mass, ERA, file_name=file_prefix+"/sys/systDown_"_bsys+file_str, blind_from=threshold)     
+        dic_yields = hist.get_yields_by_bin()
+        sysDown = dic_yields['bkg']
+        dic_sys[s+'Down'] = np.array(sysDown) - np.array(bkg_norm)
+        if "score" in variable:
+            hist.export_hist(model_mass, file_name=file_prefix+"/root_files/shape_v1_"+file_str+model_mass)    
+
     # shape sys
     hist=HistStack(dic_nested_shape_sys['met_u'], variable, 'weightmetUp', r[0], r[1], r[2], r[3])            
     c1=hist.draw_hist(model_mass, ERA, file_name=file_prefix+"/sys/systUp_met"+file_str, blind_from=threshold)     
