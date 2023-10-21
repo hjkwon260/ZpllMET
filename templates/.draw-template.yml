@@ -15,6 +15,8 @@
     - *load16
     # - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh    
     # - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+    - echo $PYTHONPATH
+    - export LD_LIBRARY_PATH=""      
     - jupyter nbconvert --to python ${SCRIPT_DRAW}.ipynb 
     - python3 ${SCRIPT_DRAW}.py ${ERA} ${DATE} ${CI_PROJECT_DIR} ${PART}
     - xrdcp -r -F ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
@@ -24,6 +26,8 @@
     - *load
     # - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh
     # - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+    - echo $PYTHONPATH
+    - export LD_LIBRARY_PATH=""      
     - jupyter nbconvert --to python ${SCRIPT_DRAW}.ipynb 
     - python3 ${SCRIPT_DRAW}.py ${ERA} ${DATE} ${CI_PROJECT_DIR} ${PART}
     - xrdcp -r -F ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
