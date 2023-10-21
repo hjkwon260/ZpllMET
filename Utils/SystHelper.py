@@ -49,16 +49,16 @@ def get_dic_sys(model_mass, ERA, dic_df_raw, dic_nested_shape_sys, sys_list, var
     btag_sys = ['btagSFbc', 'btagSFbc_correlated', 'btagSFlight', 'btagSFlight_correlated']
     for bsys in btag_sys:
         # up
-        hist=HistStack(dic_df_raw, variable, 'weight'_bsys+'Up', r[0], r[1], r[2], r[3])            
-        c1=hist.draw_hist(model_mass, ERA, file_name=file_prefix+"/sys/systUp_"_bsys+file_str, blind_from=threshold)     
+        hist=HistStack(dic_df_raw, variable, 'weight'+bsys+'Up', r[0], r[1], r[2], r[3])            
+        c1=hist.draw_hist(model_mass, ERA, file_name=file_prefix+"/sys/systUp_"+bsys+file_str, blind_from=threshold)     
         dic_yields = hist.get_yields_by_bin()
         sysUp = dic_yields['bkg']
         dic_sys[s+'Up'] = np.array(sysUp) - np.array(bkg_norm)
         if "score" in variable:
             hist.export_hist(model_mass, file_name=file_prefix+"/root_files/shape_v1_"+file_str+model_mass)
         # down
-        hist=HistStack(dic_df_raw, variable, 'weight'_bsys+'Down', r[0], r[1], r[2], r[3])            
-        c1=hist.draw_hist(model_mass, ERA, file_name=file_prefix+"/sys/systDown_"_bsys+file_str, blind_from=threshold)     
+        hist=HistStack(dic_df_raw, variable, 'weight'+bsys+'Down', r[0], r[1], r[2], r[3])            
+        c1=hist.draw_hist(model_mass, ERA, file_name=file_prefix+"/sys/systDown_"+bsys+file_str, blind_from=threshold)     
         dic_yields = hist.get_yields_by_bin()
         sysDown = dic_yields['bkg']
         dic_sys[s+'Down'] = np.array(sysDown) - np.array(bkg_norm)
