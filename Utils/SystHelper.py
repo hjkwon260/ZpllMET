@@ -156,7 +156,9 @@ def get_dic_sys(model_mass, ERA, dic_df_raw, dic_nested_shape_sys, sys_list, var
         hist.export_hist(model_mass, file_name=file_prefix+"/root_files/shape_v1_"+file_str+model_mass)
 
     # si^2
-    for s in sys_list:
+    sys_list_new = sys_list + btag_sys
+    sys_list_new = sys_list_new.remove('btagSF')
+    for s in sys_list_new:
         # by source
         sqrUp = [x*x if x>0 else -x*x for x in dic_sys[s+'Up']]
         sqrUp_up = [x if x>0 else 0 for x in sqrUp]
@@ -174,7 +176,7 @@ def get_dic_sys(model_mass, ERA, dic_df_raw, dic_nested_shape_sys, sys_list, var
     print(dic_sys)
     print(dic_sys_sqr)
     # sqrt(sumi si^2)
-    for i, s in enumerate(sys_list):
+    for i, s in enumerate(sys_list_new):
         if i==0:
             sum_up = dic_sys_sqr[s+'Up'].copy() # be carefull not to use shallow copy
             sum_down = dic_sys_sqr[s+'Down'].copy()
