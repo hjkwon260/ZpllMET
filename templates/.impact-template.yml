@@ -19,7 +19,7 @@ impact em17:
     variables:
         DATE: ${DATE1}
         ERA: em17
-        INPUT_DIR: ${INPUT_DNN}
+        INPUT_DIR: ${INPUT_SYST}
         REGION: SR
         HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
     rules:    

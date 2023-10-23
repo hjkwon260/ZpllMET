@@ -19,6 +19,7 @@ variables:
     ONLY_SR: 'no'
     INPUT_DUMP: Run2/Preselection/${DATE1}/DUMP/
     INPUT_DNN: Run2/Preselection/${DATE1}/DNN/
+    INPUT_SYST: Run2/Preselection/${DATE1}/SYST/
 
 before_script:
     # - ls /usr/lib64
