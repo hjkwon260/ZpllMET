@@ -1,8 +1,8 @@
 .load_root_files: &load_root_files
     - mkdir SR
     - mkdir VR
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR
-    - if [ $ONLY_SR == "no" ]; then xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR; fi  
+    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files/*.root SR
+    - if [ $ONLY_SR == "no" ]; then xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files/*.root VR; fi  
 
 include:
   - local: '/templates/.syst-template.yml'
