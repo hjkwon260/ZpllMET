@@ -1,8 +1,8 @@
 .load_root_files: &load_root_files
-    - mkdir -p Combine/input/SR
-    - mkdir -p Combine/input/VR
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files Combine/input/SR
-    - if [ $ONLY_SR == "no" ]; then xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files Combine/input/VR; fi  
+    - mkdir SR
+    - mkdir VR
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR
+    - if [ $ONLY_SR == "no" ]; then xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR; fi  
 
 include:
   - local: '/templates/.syst-template.yml'
@@ -36,11 +36,8 @@ impact em17:
         - source /cvmfs/cms.cern.ch/cmsset_default.sh
         - cd $HOME_DIR
         - cmsenv || true
-        - cd $CI_PROJECT_DIR
-        - echo ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files
-        - xrdfs ls ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files
+        - cd $CI_PROJECT_DIR/Combine/input
         - *load_root_files
-        - cd Combine/input
         - combineCards.py *.txt > combined_datacard.txt 
         - text2workspace.py -m 125 -o workspace.root combined_datacard.txt
         - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --doInitialFit
