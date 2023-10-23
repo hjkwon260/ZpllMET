@@ -31,7 +31,7 @@ impact em17:
         when: on_success
         expire_in: 1 days
         paths:
-            - Combine/input/impacts.pdf
+            - $CI_PROJECT_DIR/Combine/input/impacts.pdf
     needs:
         - job: syst em17
           optional: true         
