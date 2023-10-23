@@ -52,5 +52,3 @@ impact em17:
         - pwd
         - ls
         - kdestroy 
-        - cd ${CI_PROJECT_DIR}
-        - rm -rf ./*
