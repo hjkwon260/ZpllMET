@@ -1,0 +1,42 @@
+.load_root_files: &load_root_files
+    - mkdir SR
+    - mkdir VR
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR
+    - if [ $ONLY_SR == "no" ]; then xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR; fi  
+
+########## stage: impact ############
+##-- mm --##
+syst mm16:
+    stage: impact
+    tags:
+        - cvmfs
+    image:  
+        name: gitlab-registry.cern.ch/cms-analysis/general/combine-container:CMSSW_11_3_4-combine_v9.1.0-harvester_v2.1.0
+        entrypoint: ["/bin/sh", "-c"]
+    variables:
+        DATE: ${DATE1}
+        ERA: mm16
+        INPUT_DIR: ${INPUT_DNN}
+        REGION: SR
+        HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
+    rules:    
+        - if: $SYST == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $SYST == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval mm16 SR 1
+          optional: true 
+        - job: eval mm16 SR 2
+          optional: true
+        - job: eval mm16 VR 1
+          optional: true 
+        - job: eval mm16 VR 2
+          optional: true
+    script:
+        - source /cvmfs/cms.cern.ch/cmsset_default.sh
+        - cd $HOME_DIR
+        - cmsenv || true
+        - cd $CI_PROJECT_DIR
+        - *syst_script
+        - *xrdcp_script
