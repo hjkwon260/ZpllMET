@@ -622,7 +622,8 @@ class HistStack(object):
         year = year.replace("ee", "")
         year = year.replace("em", "")
         if ("btagSFbc" in str_sys or "btagSFlight" in str_sys) and not "correlated" in str_sys:
-            str_sys = str_sys + year              
+            str_sys = str_sys.replace("Up", year+"Up")
+            str_sys = str_sys.replace("Down", year+"Down")
         self.hist_all[sig_key].SetName("zp"+str_sys)
         self.hist_all[sig_key].SetTitle("zp"+str_sys)
         self.hist_all[sig_key].Write("zp"+str_sys,rt.TObject.kWriteDelete)            
