@@ -27,6 +27,11 @@ impact em17:
           when: on_success
         - if: $IMPACT == 'yes' && $SYST == 'no'
           when: always
+    artifacts:
+        when: on_success
+        expire_in: 1 days
+        paths:
+            - Combine/input/impacts.pdf
     needs:
         - job: syst em17
           optional: true         
@@ -38,10 +43,14 @@ impact em17:
         - cmsenv || true
         - cd $CI_PROJECT_DIR/Combine/input
         - *load_root_files
-        - ls SR
         - combineCards.py *.txt > combined_datacard.txt 
         - text2workspace.py -m 125 -o workspace.root combined_datacard.txt
         - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --doInitialFit
+        - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --doFits
+        - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --output impacts.json
+        - plotImpacts.py -i impacts.json -o impacts
+        - pwd
+        - ls
         - kdestroy 
         - cd ${CI_PROJECT_DIR}
         - rm -rf ./*
