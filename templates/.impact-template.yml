@@ -37,6 +37,8 @@ impact em17:
         - cd $HOME_DIR
         - cmsenv || true
         - cd $CI_PROJECT_DIR
+        - echo ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files
+        - xrdfs ls ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files
         - *load_root_files
         - cd Combine/input
         - combineCards.py *.txt > combined_datacard.txt 
