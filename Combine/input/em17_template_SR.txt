@@ -43,7 +43,7 @@ UE_smoothed       shape  1               -               -               -      
 # PDF_singlet       lnN    -               -               0.943/1.035     -             -              -
 # PDF_ttbar         lnN    1.04            -               -               -             -              -
 # scale_zp        shape    -               -               -               -             -              1
-ww_norm              lnN    -              1.1               -             -      -       -             -  
+ww_norm              lnN    -              1.2               -             -      -       -             -  
 wz_norm              lnN    -              -               -               -     1.2     -               -  
 tw_norm              lnN    -              -               1.2             -      -       -              -
 dy_norm              lnN    -              -               -               1.2     -        -            -
