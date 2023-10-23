@@ -1,12 +1,15 @@
 .load_root_files: &load_root_files
-    - mkdir SR
-    - mkdir VR
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR
-    - if [ $ONLY_SR == "no" ]; then xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR; fi  
+    - mkdir -p Combine/input/SR
+    - mkdir -p Combine/input/VR
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files Combine/input/SR
+    - if [ $ONLY_SR == "no" ]; then xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files Combine/input/VR; fi  
+
+include:
+  - local: '/templates/.syst-template.yml'
 
 ########## stage: impact ############
-##-- mm --##
-syst mm16:
+##-- em --##
+impact em17:
     stage: impact
     tags:
         - cvmfs
@@ -15,28 +18,30 @@ syst mm16:
         entrypoint: ["/bin/sh", "-c"]
     variables:
         DATE: ${DATE1}
-        ERA: mm16
+        ERA: em17
         INPUT_DIR: ${INPUT_DNN}
         REGION: SR
         HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
     rules:    
-        - if: $SYST == 'yes' && $EVAL == 'yes'
+        - if: $IMPACT == 'yes' && $SYST == 'yes'
           when: on_success
-        - if: $SYST == 'yes' && $EVAL == 'no'
+        - if: $IMPACT == 'yes' && $SYST == 'no'
           when: always
     needs:
-        - job: eval mm16 SR 1
+        - job: syst em17
+          optional: true         
+        - job: syst em17 VR
           optional: true 
-        - job: eval mm16 SR 2
-          optional: true
-        - job: eval mm16 VR 1
-          optional: true 
-        - job: eval mm16 VR 2
-          optional: true
     script:
         - source /cvmfs/cms.cern.ch/cmsset_default.sh
         - cd $HOME_DIR
         - cmsenv || true
         - cd $CI_PROJECT_DIR
-        - *syst_script
-        - *xrdcp_script
+        - *load_root_files
+        - cd Combine/input
+        - combineCards.py *.txt > combined_datacard.txt 
+        - text2workspace.py -m 125 -o workspace.root combined_datacard.txt
+        - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --doInitialFit
+        - kdestroy 
+        - cd ${CI_PROJECT_DIR}
+        - rm -rf ./*
