@@ -1,14 +1,283 @@
 .load_root_files: &load_root_files
-    - mkdir SR
-    - mkdir VR
-    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR
-    - if [ $ONLY_SR == "no" ]; then xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR; fi  
+  - mkdir SR
+  - mkdir VR
+  - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR
+  - if [ $ONLY_SR == "no" ]; then xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR; fi  
+
+.script_impacts: &script_impacts
+  - combineCards.py *.txt > combined_datacard.txt 
+  - text2workspace.py -m 125 -o workspace.root combined_datacard.txt
+  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doInitialFit
+  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doFits
+  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --output impacts.json
+  - plotImpacts.py -i impacts.json -o impacts
 
 include:
   - local: '/templates/.syst-template.yml'
 
 ########## stage: impact ############
+##-- mm --##
+impact mm16:
+    stage: impact
+    tags:
+        - cvmfs
+    image:  
+        name: gitlab-registry.cern.ch/cms-analysis/general/combine-container:CMSSW_11_3_4-combine_v9.1.0-harvester_v2.1.0
+        entrypoint: ["/bin/sh", "-c"]
+    variables:
+        DATE: ${DATE1}
+        ERA: mm16
+        INPUT_DIR: ${INPUT_SYST}
+        REGION: SR
+        HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
+    rules:    
+        - if: $IMPACT == 'yes' && $SYST == 'yes'
+          when: on_success
+        - if: $IMPACT == 'yes' && $SYST == 'no'
+          when: always
+    artifacts:
+        when: on_success
+        expire_in: 1 days
+        paths:
+            - ./Combine/input/impacts.pdf
+    needs:
+        - job: syst mm16
+          optional: true         
+        - job: syst mm16 VR
+          optional: true 
+    script:
+        - source /cvmfs/cms.cern.ch/cmsset_default.sh
+        - cd $HOME_DIR
+        - cmsenv || true
+        - cd $CI_PROJECT_DIR/Combine/input
+        - *load_root_files
+        - *script_impacts
+        - kdestroy 
+
+impact mm17:
+    stage: impact
+    tags:
+        - cvmfs
+    image:  
+        name: gitlab-registry.cern.ch/cms-analysis/general/combine-container:CMSSW_11_3_4-combine_v9.1.0-harvester_v2.1.0
+        entrypoint: ["/bin/sh", "-c"]
+    variables:
+        DATE: ${DATE1}
+        ERA: mm17
+        INPUT_DIR: ${INPUT_SYST}
+        REGION: SR
+        HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
+    rules:    
+        - if: $IMPACT == 'yes' && $SYST == 'yes'
+          when: on_success
+        - if: $IMPACT == 'yes' && $SYST == 'no'
+          when: always
+    artifacts:
+        when: on_success
+        expire_in: 1 days
+        paths:
+            - ./Combine/input/impacts.pdf
+    needs:
+        - job: syst mm17
+          optional: true         
+        - job: syst mm17 VR
+          optional: true 
+    script:
+        - source /cvmfs/cms.cern.ch/cmsset_default.sh
+        - cd $HOME_DIR
+        - cmsenv || true
+        - cd $CI_PROJECT_DIR/Combine/input
+        - *load_root_files
+        - *script_impacts
+        - kdestroy 
+
+impact mm18:
+    stage: impact
+    tags:
+        - cvmfs
+    image:  
+        name: gitlab-registry.cern.ch/cms-analysis/general/combine-container:CMSSW_11_3_4-combine_v9.1.0-harvester_v2.1.0
+        entrypoint: ["/bin/sh", "-c"]
+    variables:
+        DATE: ${DATE1}
+        ERA: mm18
+        INPUT_DIR: ${INPUT_SYST}
+        REGION: SR
+        HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
+    rules:    
+        - if: $IMPACT == 'yes' && $SYST == 'yes'
+          when: on_success
+        - if: $IMPACT == 'yes' && $SYST == 'no'
+          when: always
+    artifacts:
+        when: on_success
+        expire_in: 1 days
+        paths:
+            - ./Combine/input/impacts.pdf
+    needs:
+        - job: syst mm18
+          optional: true         
+        - job: syst mm18 VR
+          optional: true 
+    script:
+        - source /cvmfs/cms.cern.ch/cmsset_default.sh
+        - cd $HOME_DIR
+        - cmsenv || true
+        - cd $CI_PROJECT_DIR/Combine/input
+        - *load_root_files
+        - *script_impacts
+        - kdestroy  
+
+##-- ee --##
+impact ee16:
+    stage: impact
+    tags:
+        - cvmfs
+    image:  
+        name: gitlab-registry.cern.ch/cms-analysis/general/combine-container:CMSSW_11_3_4-combine_v9.1.0-harvester_v2.1.0
+        entrypoint: ["/bin/sh", "-c"]
+    variables:
+        DATE: ${DATE1}
+        ERA: ee16
+        INPUT_DIR: ${INPUT_SYST}
+        REGION: SR
+        HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
+    rules:    
+        - if: $IMPACT == 'yes' && $SYST == 'yes'
+          when: on_success
+        - if: $IMPACT == 'yes' && $SYST == 'no'
+          when: always
+    artifacts:
+        when: on_success
+        expire_in: 1 days
+        paths:
+            - ./Combine/input/impacts.pdf
+    needs:
+        - job: syst ee16
+          optional: true         
+        - job: syst ee16 VR
+          optional: true 
+    script:
+        - source /cvmfs/cms.cern.ch/cmsset_default.sh
+        - cd $HOME_DIR
+        - cmsenv || true
+        - cd $CI_PROJECT_DIR/Combine/input
+        - *load_root_files
+        - *script_impacts
+        - kdestroy 
+
+impact ee17:
+    stage: impact
+    tags:
+        - cvmfs
+    image:  
+        name: gitlab-registry.cern.ch/cms-analysis/general/combine-container:CMSSW_11_3_4-combine_v9.1.0-harvester_v2.1.0
+        entrypoint: ["/bin/sh", "-c"]
+    variables:
+        DATE: ${DATE1}
+        ERA: ee17
+        INPUT_DIR: ${INPUT_SYST}
+        REGION: SR
+        HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
+    rules:    
+        - if: $IMPACT == 'yes' && $SYST == 'yes'
+          when: on_success
+        - if: $IMPACT == 'yes' && $SYST == 'no'
+          when: always
+    artifacts:
+        when: on_success
+        expire_in: 1 days
+        paths:
+            - ./Combine/input/impacts.pdf
+    needs:
+        - job: syst ee17
+          optional: true         
+        - job: syst ee17 VR
+          optional: true 
+    script:
+        - source /cvmfs/cms.cern.ch/cmsset_default.sh
+        - cd $HOME_DIR
+        - cmsenv || true
+        - cd $CI_PROJECT_DIR/Combine/input
+        - *load_root_files
+        - *script_impacts
+        - kdestroy 
+
+impact ee18:
+    stage: impact
+    tags:
+        - cvmfs
+    image:  
+        name: gitlab-registry.cern.ch/cms-analysis/general/combine-container:CMSSW_11_3_4-combine_v9.1.0-harvester_v2.1.0
+        entrypoint: ["/bin/sh", "-c"]
+    variables:
+        DATE: ${DATE1}
+        ERA: ee18
+        INPUT_DIR: ${INPUT_SYST}
+        REGION: SR
+        HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
+    rules:    
+        - if: $IMPACT == 'yes' && $SYST == 'yes'
+          when: on_success
+        - if: $IMPACT == 'yes' && $SYST == 'no'
+          when: always
+    artifacts:
+        when: on_success
+        expire_in: 1 days
+        paths:
+            - ./Combine/input/impacts.pdf
+    needs:
+        - job: syst ee18
+          optional: true         
+        - job: syst ee18 VR
+          optional: true 
+    script:
+        - source /cvmfs/cms.cern.ch/cmsset_default.sh
+        - cd $HOME_DIR
+        - cmsenv || true
+        - cd $CI_PROJECT_DIR/Combine/input
+        - *load_root_files
+        - *script_impacts
+        - kdestroy  
+
 ##-- em --##
+impact em16:
+    stage: impact
+    tags:
+        - cvmfs
+    image:  
+        name: gitlab-registry.cern.ch/cms-analysis/general/combine-container:CMSSW_11_3_4-combine_v9.1.0-harvester_v2.1.0
+        entrypoint: ["/bin/sh", "-c"]
+    variables:
+        DATE: ${DATE1}
+        ERA: em16
+        INPUT_DIR: ${INPUT_SYST}
+        REGION: SR
+        HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
+    rules:    
+        - if: $IMPACT == 'yes' && $SYST == 'yes'
+          when: on_success
+        - if: $IMPACT == 'yes' && $SYST == 'no'
+          when: always
+    artifacts:
+        when: on_success
+        expire_in: 1 days
+        paths:
+            - ./Combine/input/impacts.pdf
+    needs:
+        - job: syst em16
+          optional: true         
+        - job: syst em16 VR
+          optional: true 
+    script:
+        - source /cvmfs/cms.cern.ch/cmsset_default.sh
+        - cd $HOME_DIR
+        - cmsenv || true
+        - cd $CI_PROJECT_DIR/Combine/input
+        - *load_root_files
+        - *script_impacts
+        - kdestroy 
+
 impact em17:
     stage: impact
     tags:
@@ -43,12 +312,42 @@ impact em17:
         - cmsenv || true
         - cd $CI_PROJECT_DIR/Combine/input
         - *load_root_files
-        - combineCards.py *.txt > combined_datacard.txt 
-        - text2workspace.py -m 125 -o workspace.root combined_datacard.txt
-        - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doInitialFit
-        - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doFits
-        - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --output impacts.json
-        - plotImpacts.py -i impacts.json -o impacts
-        - pwd
-        - ls
+        - *script_impacts
         - kdestroy 
+
+impact em18:
+    stage: impact
+    tags:
+        - cvmfs
+    image:  
+        name: gitlab-registry.cern.ch/cms-analysis/general/combine-container:CMSSW_11_3_4-combine_v9.1.0-harvester_v2.1.0
+        entrypoint: ["/bin/sh", "-c"]
+    variables:
+        DATE: ${DATE1}
+        ERA: em18
+        INPUT_DIR: ${INPUT_SYST}
+        REGION: SR
+        HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
+    rules:    
+        - if: $IMPACT == 'yes' && $SYST == 'yes'
+          when: on_success
+        - if: $IMPACT == 'yes' && $SYST == 'no'
+          when: always
+    artifacts:
+        when: on_success
+        expire_in: 1 days
+        paths:
+            - ./Combine/input/impacts.pdf
+    needs:
+        - job: syst em18
+          optional: true         
+        - job: syst em18 VR
+          optional: true 
+    script:
+        - source /cvmfs/cms.cern.ch/cmsset_default.sh
+        - cd $HOME_DIR
+        - cmsenv || true
+        - cd $CI_PROJECT_DIR/Combine/input
+        - *load_root_files
+        - *script_impacts
+        - kdestroy         
