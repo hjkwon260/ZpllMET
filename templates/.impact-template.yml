@@ -5,7 +5,8 @@
   - if [ $ONLY_SR == "no" ]; then xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR; fi  
 
 .script_impacts: &script_impacts
-  - combineCards.py SR=em17_template_SR.txt TTCR=em17_template_VR.txt > combined_datacard.txt 
+  - combineCards.py SR=em17_template_SR.txt TTCR=em17_template_VR.txt > combined_datacard.txt
+  - ValidateDatacards.py combined_datacard.txt 
   - text2workspace.py -m 125 -o workspace.root combined_datacard.txt
   - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doInitialFit
   - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doFits
@@ -301,7 +302,7 @@ impact em17:
         expire_in: 1 days
         paths:
             - ./Combine/input/impacts.pdf
-            - ./Combine/input/impacts.json
+            - ./Combine/input/*.json
     needs:
         - job: syst em17
           optional: true         
