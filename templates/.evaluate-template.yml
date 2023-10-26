@@ -1,3 +1,44 @@
+.load16: &load16
+    - mkdir ${ERA}pre
+    - mkdir ${ERA}post
+    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}pre/nested_dic_df_SR1.pkl ${ERA}pre  
+    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}pre/nested_dic_df_TTCR.pkl ${ERA}pre  
+    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}post/nested_dic_df_SR1.pkl ${ERA}post  
+    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}post/nested_dic_df_TTCR.pkl ${ERA}post
+
+.load: &load
+    - mkdir ${ERA}
+    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/nested_dic_df_SR1.pkl ${ERA}  
+    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/nested_dic_df_TTCR.pkl ${ERA} 
+
+.script_eval16: &script_eval16
+    - *load16
+    - echo $PYTHONPATH
+    - export LD_LIBRARY_PATH=""    
+    - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+    - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART}
+    - export PATH="$PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin"
+    - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
+
+
+.script_eval: &script_eval
+    - *load
+    - echo $PYTHONPATH
+    - export LD_LIBRARY_PATH=""    
+    - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+    - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART}
+    - export PATH="$PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin"
+    - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
+
+.xrdcp_script: &xrdcp_script
+    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/sys
+    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/root_files
+    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/AN
+    - xrdcp -r Outputs/DNN/${ERA}/${REGION}/sys ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/sys
+    - xrdcp -r Outputs/DNN/${ERA}/${REGION}/root_files ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/root_files
+    - xrdcp -r Outputs/DNN/${ERA}/${REGION}/AN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/AN
+    - kdestroy
+
 include:
   - local: '/templates/.evaluate-template-sr.yml'
 
