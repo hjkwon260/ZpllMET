@@ -46,7 +46,7 @@ include:
 #####-- SR --#####
 ##-- mm --##
 eval mm16 SR 1:
-    stage: evaluate-sr
+    stage: evaluate-sr-1
     tags:
         - cvmfs
     image:
@@ -80,7 +80,7 @@ eval mm16 SR 1:
         - *xrdcp_script 
 
 eval mm16 SR 2:
-    stage: evaluate-sr
+    stage: evaluate-sr-1
     tags:
         - cvmfs
     image:
@@ -105,60 +105,8 @@ eval mm16 SR 2:
         - *script_eval16 
         - *xrdcp_script 
 
-eval mm16 SR 3:
-    stage: evaluate-sr
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: mm16
-        REGION: SR
-        PART: three
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump mm16pre
-          optional: true      
-        - job: dump mm16post
-          optional: true    
-    script:
-        - *script_eval16 
-        - *xrdcp_script 
-
-eval mm16 SR 4:
-    stage: evaluate-sr
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: mm16
-        REGION: SR
-        PART: four
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump mm16pre
-          optional: true      
-        - job: dump mm16post
-          optional: true    
-    script:
-        - *script_eval16 
-        - *xrdcp_script 
-
 eval mm17 SR 1:
-    stage: evaluate-sr
+    stage: evaluate-sr-1
     tags:
         - cvmfs
     image:
@@ -190,7 +138,7 @@ eval mm17 SR 1:
         - *xrdcp_script 
       
 eval mm17 SR 2:
-    stage: evaluate-sr
+    stage: evaluate-sr-1
     tags:
         - cvmfs
     image:
@@ -213,56 +161,8 @@ eval mm17 SR 2:
         - *script_eval 
         - *xrdcp_script 
 
-eval mm17 SR 3:
-    stage: evaluate-sr
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: mm17
-        REGION: SR
-        PART: three
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump mm17
-          optional: true     
-    script:
-        - *script_eval 
-        - *xrdcp_script 
-
-eval mm17 SR 4:
-    stage: evaluate-sr
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: mm17
-        REGION: SR
-        PART: four
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump mm17
-          optional: true     
-    script:
-        - *script_eval 
-        - *xrdcp_script 
-
 eval mm18 SR 1:
-    stage: evaluate-sr
+    stage: evaluate-sr-1
     tags:
         - cvmfs
     image:
@@ -294,7 +194,7 @@ eval mm18 SR 1:
         - *xrdcp_script 
         
 eval mm18 SR 2:
-    stage: evaluate-sr
+    stage: evaluate-sr-1
     tags:
         - cvmfs
     image:
@@ -317,57 +217,9 @@ eval mm18 SR 2:
         - *script_eval 
         - *xrdcp_script 
 
-eval mm18 SR 3:
-    stage: evaluate-sr
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: mm18
-        REGION: SR
-        PART: three
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump mm18
-          optional: true     
-    script:
-        - *script_eval 
-        - *xrdcp_script 
-
-eval mm18 SR 4:
-    stage: evaluate-sr
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: mm18
-        REGION: SR
-        PART: four
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump mm18
-          optional: true     
-    script:
-        - *script_eval 
-        - *xrdcp_script 
-
 ##-- ee --##
 eval ee16 SR 1:
-    stage: evaluate-sr
+    stage: evaluate-sr-1
     tags:
         - cvmfs
     image:
@@ -401,7 +253,7 @@ eval ee16 SR 1:
         - *xrdcp_script 
         
 eval ee16 SR 2:
-    stage: evaluate-sr
+    stage: evaluate-sr-1
     tags:
         - cvmfs
     image:
@@ -426,60 +278,8 @@ eval ee16 SR 2:
         - *script_eval16 
         - *xrdcp_script 
 
-eval ee16 SR 3:
-    stage: evaluate-sr
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: ee16
-        REGION: SR
-        PART: three
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump ee16pre
-          optional: true      
-        - job: dump ee16post
-          optional: true
-    script:
-        - *script_eval16 
-        - *xrdcp_script 
-
-eval ee16 SR 4:
-    stage: evaluate-sr
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: ee16
-        REGION: SR
-        PART: four
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump ee16pre
-          optional: true      
-        - job: dump ee16post
-          optional: true
-    script:
-        - *script_eval16 
-        - *xrdcp_script 
-
 eval ee17 SR 1:
-    stage: evaluate-sr
+    stage: evaluate-sr-1
     tags:
         - cvmfs
     image:
@@ -511,7 +311,7 @@ eval ee17 SR 1:
         - *xrdcp_script 
         
 eval ee17 SR 2:
-    stage: evaluate-sr
+    stage: evaluate-sr-1
     tags:
         - cvmfs
     image:
@@ -534,56 +334,8 @@ eval ee17 SR 2:
         - *script_eval 
         - *xrdcp_script 
 
-eval ee17 SR 3:
-    stage: evaluate-sr
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: ee17
-        REGION: SR
-        PART: three
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump ee17
-          optional: true     
-    script:
-        - *script_eval 
-        - *xrdcp_script 
-
-eval ee17 SR 4:
-    stage: evaluate-sr
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: ee17
-        REGION: SR
-        PART: four
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump ee17
-          optional: true     
-    script:
-        - *script_eval 
-        - *xrdcp_script
-
 eval ee18 SR 1:
-    stage: evaluate-sr
+    stage: evaluate-sr-1
     tags:
         - cvmfs
     image:
@@ -615,7 +367,7 @@ eval ee18 SR 1:
         - *xrdcp_script 
         
 eval ee18 SR 2:
-    stage: evaluate-sr
+    stage: evaluate-sr-1
     tags:
         - cvmfs
     image:
@@ -638,57 +390,9 @@ eval ee18 SR 2:
         - *script_eval 
         - *xrdcp_script 
 
-eval ee18 SR 3:
-    stage: evaluate-sr
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: ee18
-        REGION: SR
-        PART: three
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump ee18
-          optional: true     
-    script:
-        - *script_eval 
-        - *xrdcp_script 
-
-eval ee18 SR 4:
-    stage: evaluate-sr
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: ee18
-        REGION: SR
-        PART: four
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump ee18
-          optional: true     
-    script:
-        - *script_eval 
-        - *xrdcp_script 
-
 ##-- em --##
 eval em16 SR 1:
-    stage: evaluate-sr
+    stage: evaluate-sr-1
     tags:
         - cvmfs
     image:
@@ -722,7 +426,7 @@ eval em16 SR 1:
         - *xrdcp_script 
         
 eval em16 SR 2:
-    stage: evaluate-sr
+    stage: evaluate-sr-1
     tags:
         - cvmfs
     image:
@@ -747,60 +451,8 @@ eval em16 SR 2:
         - *script_eval16 
         - *xrdcp_script 
 
-eval em16 SR 3:
-    stage: evaluate-sr
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: em16
-        REGION: SR
-        PART: three
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump em16pre
-          optional: true      
-        - job: dump em16post
-          optional: true  
-    script:
-        - *script_eval16 
-        - *xrdcp_script 
-
-eval em16 SR 4:
-    stage: evaluate-sr
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: em16
-        REGION: SR
-        PART: four
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump em16pre
-          optional: true      
-        - job: dump em16post
-          optional: true  
-    script:
-        - *script_eval16 
-        - *xrdcp_script 
-
 eval em17 SR 1:
-    stage: evaluate-sr
+    stage: evaluate-sr-1
     tags:
         - cvmfs
     image:
@@ -832,7 +484,7 @@ eval em17 SR 1:
         - *xrdcp_script 
         
 eval em17 SR 2:
-    stage: evaluate-sr
+    stage: evaluate-sr-1
     tags:
         - cvmfs
     image:
@@ -855,56 +507,8 @@ eval em17 SR 2:
         - *script_eval 
         - *xrdcp_script 
 
-eval em17 SR 3:
-    stage: evaluate-sr
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: em17
-        REGION: SR
-        PART: three
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump em17
-          optional: true    
-    script:
-        - *script_eval 
-        - *xrdcp_script 
-
-eval em17 SR 4:
-    stage: evaluate-sr
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: em17
-        REGION: SR
-        PART: four
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump em17
-          optional: true    
-    script:
-        - *script_eval 
-        - *xrdcp_script 
-
 eval em18 SR 1:
-    stage: evaluate-sr
+    stage: evaluate-sr-1
     tags:
         - cvmfs
     image:
@@ -936,7 +540,7 @@ eval em18 SR 1:
         - *xrdcp_script 
         
 eval em18 SR 2:
-    stage: evaluate-sr
+    stage: evaluate-sr-1
     tags:
         - cvmfs
     image:
@@ -947,54 +551,6 @@ eval em18 SR 2:
         ERA: em18
         REGION: SR
         PART: two
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump em18
-          optional: true     
-    script:
-        - *script_eval 
-        - *xrdcp_script 
-
-eval em18 SR 3:
-    stage: evaluate-sr
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: em18
-        REGION: SR
-        PART: three
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump em18
-          optional: true     
-    script:
-        - *script_eval 
-        - *xrdcp_script 
-
-eval em18 SR 4:
-    stage: evaluate-sr
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: em18
-        REGION: SR
-        PART: four
     rules:    
         - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success

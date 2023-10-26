@@ -11,13 +11,13 @@ variables:
     DUMP: 'no'
     DRAW: 'no'
     EVAL: 'yes'
-    EVAL_VR: 'yes'
+    EVAL_VR: 'no'
     SYST: "no"
     IMPACT: "no"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
     ONLY_BENCHMARK: 'no'
-    ONLY_SR: 'no'
+    ONLY_SR: 'yes'
     INPUT_DUMP: Run2/Preselection/${DATE1}/DUMP/
     INPUT_DNN: Run2/Preselection/${DATE1}/DNN/
     INPUT_SYST: Run2/Preselection/${DATE1}/SYST/
@@ -33,7 +33,8 @@ stages:
     - build
     - dump
     - draw
-    - evaluate-sr
+    - evaluate-sr-1
+    - evaluate-sr-2
     - evaluate-vr
     - syst
     - impact
