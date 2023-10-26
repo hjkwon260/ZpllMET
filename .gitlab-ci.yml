@@ -4,13 +4,14 @@ variables:
     CMSSW_RELEASE: CMSSW_10_2_13
     CMSSW_ARCH: slc7_amd64_gcc700
     SCRIPT_PRESEL: Preselection_v6  
-    SCRIPT_EVAL: EvaluatePNN-v4  
+    SCRIPT_EVAL: EvaluatePNN-v5  
     SCRIPT_LIMIT: limits_v4  
     SCRIPT_DUMP: Dump_v2  
     SCRIPT_DRAW: Draw_v1  
     DUMP: 'no'
     DRAW: 'no'
     EVAL: 'yes'
+    EVAL_VR: 'yes'
     SYST: "no"
     IMPACT: "no"
     LIMIT: 'no'
@@ -32,7 +33,8 @@ stages:
     - build
     - dump
     - draw
-    - evaluate
+    - evaluate-sr
+    - evaluate-vr
     - syst
     - impact
     - limit

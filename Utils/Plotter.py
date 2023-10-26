@@ -21,7 +21,9 @@ class HistStack(object):
         self.str_sig = ""
         self.yeilds={}
         self.dic_sys=dic_sys       
-        self.era=None       
+        self.era=None   
+        self.sig_key=None
+        self.stat_unc=None
 
     def get_dic_hist(self):
         for k, df in self.dic_df.items():
@@ -228,6 +230,7 @@ class HistStack(object):
         gberr.SetFillColor(14)
         gberr.SetFillStyle(3001) 
         
+        self.stat_unc = stat_unc
         stat_unc2 = np.array(stat_unc)*np.array(stat_unc)       
  
         n = np.array(y_cen)
@@ -304,6 +307,7 @@ class HistStack(object):
         rt.gStyle.SetPalette(rt.kRainBow)
 
         self.era = era
+        self.sig_key = sig_key
 
         # stack bkgs
         hstack=rt.THStack("","")
@@ -569,7 +573,60 @@ class HistStack(object):
         l.Draw()    
         cpie.SaveAs(file_name+"yeilds"+self.variable+"_"+self.option+'.pdf')
         cpie.SaveAs(file_name+"yeilds"+self.variable+"_"+self.option+'.png')    
+
+    def draw_pie_lastbin(self, file_name):
+        """
+            depandancy: get_yields_by_bin()
+        """
+        list_yeild=[]
+        list_keys=[]
+        yields = self.get_yields_by_bin()
+        for key in yields:
+            if key!="Data" and not "Up" in key and not "Down" in key and not "Zp" in key and not "bkg" in key:
+                list_yeild.append(yields[key][19])
+                list_keys.append(key)
+        
+        
+        arr_yeilds = array('f', list_yeild)
+        arr_colors = array('i', [1,207,208,209,225,226,227,2,3])
+        nvals=len(arr_yeilds)
+        print(arr_yeilds)
+        cpie=rt.TCanvas("cpie","et",700,700)
+        cpie.cd()
+        p1=rt.TPad("pad","",0,0.3,0.5,1)
+        p1.Draw()
+        p1.cd()        
+        pie=rt.TPie("pie","Yeilds",nvals,arr_yeilds,arr_colors)
+        pie.Draw()
+        print("test")
+        
+        i=0
+        for key in list_keys:
+            if key!="Data":
+                pie.SetEntryLabel(i, key)
+                i+=1
+        pie.SetRadius(.2)
+
+        latex=rt.TLatex()
+        latex.DrawLatexNDC( 0.2,0.82, "# Data: "+str(yields["Data"]))
+        latex.DrawLatexNDC( 0.2,0.77, "# Total bkg: "+str(yields["bkg"][-1]))
+#         soverb=float("{:.5f}".format(list_yeild[-1]/math.sqrt(sum(list_yeild))))
+#         latex.DrawLatexNDC( 0.2,0.2, "s/#sqrt{b}: "+str(soverb))
+        cpie.Draw()
     
+        cpie.cd()
+        p2=rt.TPad("pad","",0.5,0,1,1)
+        p2.Draw()
+        p2.cd()    
+        #customize legend
+        l=rt.TLegend(0.1,0.1,0.9,0.89)
+        for j in range(len(list_yeild)):
+            l.AddEntry(pie.GetSlice(j), pie.GetSlice(j).GetTitle()+" ("+str(round(list_yeild[j],2))+"), "+str(round( 100*(list_yeild[j]/sum(list_yeild)),2 ))+"%", "f")
+        l.Draw()    
+        cpie.SaveAs(file_name+"lastbin_yeilds"+self.variable+"_"+self.option+'.pdf')
+        cpie.SaveAs(file_name+"lastbin_yeilds"+self.variable+"_"+self.option+'.png')         
+        
+        
     def export_yields_table(self, file_name):
         """
             depandancy: get_yields_by_bin()
@@ -577,7 +634,30 @@ class HistStack(object):
         with open(file_name+'.txt', 'w') as yf:
             yields = self.get_yields_by_bin()
             
-            yf.write(str(yields["bkg"]))
+            yf.write(r"\begin{table}[htbp]"+"\n")
+            yf.write(r"\centering"+"\n")
+            yf.write(r"\caption{caption}"+"\n")
+            yf.write(r"\label{tab:label}"+"\n")
+            yf.write(r"\begin{tabular}{|c|c|c|c|c|} \hline"+"\n")
+            yf.write(r"DNN score bin & bin 16 & bin 17 & bin18 & bin 19 \\ \hline"+"\n")
+#             print(yields)
+# TT & $0\pm0^{+0}_{-0}$ & $20\pm4^{+14}_{-22}$ & $703\pm26^{+325}_{-257}$ & $1274\pm35^{+588}_{-463}$ \\ DY & $0\pm0^{+0}_{-0}$ & $0\pm0^{+0}_{-0}$ & $112\pm10^{+39}_{-39}$ & $338\pm18^{+42}_{-42}$ \\ TW & $0\pm0^{+0}_{-0}$ & $0\pm0^{+0}_{-0}$ & $203\pm14^{+57}_{-66}$ & $480\pm21^{+133}_{-156}$ \\ VV & $0\pm0^{+0}_{-0}$ & $10\pm3^{+4}_{-7}$ & $533\pm23^{+31}_{-56}$ & $943\pm30^{+39}_{-43}$ \\ \hline            
+            nbin = 4
+            processes = ['TT', 'TW', 'WW', 'DY', 'bkg', self.sig_key]
+            yields_str = ''
+            for p in processes: # yields for last 4 bins
+#                 yields_str += p+' & $'+str(round(yields[p][16],2))+'\pm'+str(round(self.stat_unc[16],2))+'^{+'+str(round(self.dic_sys['sum_up'][16],2))+'}_{-'+str(round(self.dic_sys['sum_down'][16],2))+'}$'+' & '+str(round(yields[p][17],2))+' & '+str(round(yields[p][18],2))+' & '+str(round(yields[p][19],2))+' \\\\ \n'
+                yields_str += p
+                for i in range(nbin):
+                    yields_str += ' & $'+str(round(yields[p][i+16],2))+'\pm'+str(round(self.stat_unc[i+16],2))+'^{+'+str(round(self.dic_sys['sum_up'][i+16],2))+'}_{-'+str(round(self.dic_sys['sum_down'][i+16],2))+'}$'
+                yields_str += ' \\\\ \n'
+                
+            yf.write(yields_str)
+            yf.write(r"\hline"+"\n")
+            yf.write(r"\end{tabular}"+"\n")
+            yf.write(r"\end{table}"+"\n")
+        
+
     def create_root_file(self, file_name):
         f = rt.TFile(file_name+"_v1.root","RECREATE")
         subdir = f.mkdir("signal_region");

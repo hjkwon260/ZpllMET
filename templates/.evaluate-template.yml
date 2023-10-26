@@ -1,111 +1,11 @@
-.load16: &load16
-    - mkdir ${ERA}pre
-    - mkdir ${ERA}post
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}pre/nested_dic_df_SR1.pkl ${ERA}pre  
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}pre/nested_dic_df_TTCR.pkl ${ERA}pre  
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}post/nested_dic_df_SR1.pkl ${ERA}post  
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}post/nested_dic_df_TTCR.pkl ${ERA}post
-
-.load: &load
-    - mkdir ${ERA}
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/nested_dic_df_SR1.pkl ${ERA}  
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/nested_dic_df_TTCR.pkl ${ERA} 
-
-.script_eval16: &script_eval16
-    - *load16
-    - echo $PYTHONPATH
-    - export LD_LIBRARY_PATH=""    
-    - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-    - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART}
-    - export PATH="$PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin"
-    - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
-
-
-.script_eval: &script_eval
-    - *load
-    - echo $PYTHONPATH
-    - export LD_LIBRARY_PATH=""    
-    - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-    - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART}
-    - export PATH="$PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin"
-    - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
-
-.xrdcp_script: &xrdcp_script
-    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/sys
-    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/root_files
-    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/AN
-    - xrdcp -r Outputs/DNN/${ERA}/${REGION}/sys ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/sys
-    - xrdcp -r Outputs/DNN/${ERA}/${REGION}/root_files ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/root_files
-    - xrdcp -r Outputs/DNN/${ERA}/${REGION}/AN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/AN
-    - kdestroy
-
 include:
-  - local: '/templates/.draw-template.yml'
+  - local: '/templates/.evaluate-template-sr.yml'
 
 ########## stage: evaluate ############
+#####-- VR --#####
 ##-- mm --##
-eval mm16 SR 1:
-    stage: evaluate
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: mm16
-        REGION: SR
-        PART: one
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
-          when: on_success
-          variables:           # Override PART
-            PART: "benchmark"  # at the job level.          
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
-          when: always
-          variables:           # Override PART
-            PART: "benchmark"  # at the job level.  
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success       
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always                  
-    needs:
-        - job: dump mm16pre
-          optional: true      
-        - job: dump mm16post
-          optional: true     
-    script:
-        - *script_eval16
-        - *xrdcp_script 
-
-eval mm16 SR 2:
-    stage: evaluate
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: mm16
-        REGION: SR
-        PART: two
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump mm16pre
-          optional: true      
-        - job: dump mm16post
-          optional: true    
-    script:
-        - *script_eval16 
-        - *xrdcp_script 
-
 eval mm16 VR 1:
-    stage: evaluate
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -117,29 +17,27 @@ eval mm16 VR 1:
         REGION: VR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
           variables:           # Override PART
             PART: "benchmark"  # at the job level.          
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: always
           variables:           # Override PART
             PART: "benchmark"  # at the job level.  
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success       
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always  
     needs:
-        - job: dump mm16pre
-          optional: true      
-        - job: dump mm16post
-          optional: true     
+        - job: eval mm16 SR 1
+          optional: true        
     script:
         - *script_eval16 
         - *xrdcp_script 
        
 eval mm16 VR 2:
-    stage: evaluate
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -151,21 +49,19 @@ eval mm16 VR 2:
         REGION: VR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
-        - job: dump mm16pre
-          optional: true      
-        - job: dump mm16post
-          optional: true     
+        - job: eval mm16 SR 2
+          optional: true          
     script:
         - *script_eval16 
         - *xrdcp_script 
 
-eval mm17 SR 1:
-    stage: evaluate
+eval mm16 VR 3:
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -173,31 +69,23 @@ eval mm17 SR 1:
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
-        ERA: mm17
-        REGION: SR
-        PART: one
+        ERA: mm16
+        REGION: VR
+        PART: three
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-          variables:           # Override PART
-            PART: "benchmark"  # at the job level.          
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
-          variables:           # Override PART
-            PART: "benchmark"  # at the job level.  
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success       
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always  
     needs:
-        - job: dump mm17
-          optional: true     
+        - job: eval mm16 SR 3
+          optional: true          
     script:
-        - *script_eval 
+        - *script_eval16 
         - *xrdcp_script 
-      
-eval mm17 SR 2:
-    stage: evaluate
+
+eval mm16 VR 4:
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -205,23 +93,23 @@ eval mm17 SR 2:
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
-        ERA: mm17
-        REGION: SR
-        PART: two
+        ERA: mm16
+        REGION: VR
+        PART: four
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
-        - job: dump mm17
-          optional: true     
+        - job: eval mm16 SR 4
+          optional: true          
     script:
-        - *script_eval 
+        - *script_eval16 
         - *xrdcp_script 
 
 eval mm17 VR 1:
-    stage: evaluate
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -233,27 +121,27 @@ eval mm17 VR 1:
         REGION: VR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
           variables:           # Override PART
             PART: "benchmark"  # at the job level.          
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: always
           variables:           # Override PART
             PART: "benchmark"  # at the job level.  
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success       
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always 
     needs:
-        - job: dump mm17
+        - job: eval mm17 SR 1
           optional: true     
     script:
         - *script_eval 
         - *xrdcp_script 
         
 eval mm17 VR 2:
-    stage: evaluate
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -265,19 +153,19 @@ eval mm17 VR 2:
         REGION: VR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
-        - job: dump mm17
+        - job: eval mm17 SR 2
           optional: true     
     script:
         - *script_eval 
         - *xrdcp_script 
 
-eval mm18 SR 1:
-    stage: evaluate
+eval mm17 VR 3:
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -285,31 +173,23 @@ eval mm18 SR 1:
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
-        ERA: mm18
-        REGION: SR
-        PART: one
+        ERA: mm17
+        REGION: VR
+        PART: three
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-          variables:           # Override PART
-            PART: "benchmark"  # at the job level.          
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
-          variables:           # Override PART
-            PART: "benchmark"  # at the job level.  
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success       
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always  
     needs:
-        - job: dump mm18
+        - job: eval mm17 SR 3
           optional: true     
     script:
         - *script_eval 
-        - *xrdcp_script 
-        
-eval mm18 SR 2:
-    stage: evaluate
+        - *xrdcp_script
+
+eval mm17 VR 4:
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -317,23 +197,23 @@ eval mm18 SR 2:
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
-        ERA: mm18
-        REGION: SR
-        PART: two
+        ERA: mm17
+        REGION: VR
+        PART: four
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
-        - job: dump mm18
+        - job: eval mm17 SR 4
           optional: true     
     script:
         - *script_eval 
-        - *xrdcp_script 
+        - *xrdcp_script
 
 eval mm18 VR 1:
-    stage: evaluate
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -345,27 +225,27 @@ eval mm18 VR 1:
         REGION: VR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
           variables:           # Override PART
             PART: "benchmark"  # at the job level.          
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: always
           variables:           # Override PART
             PART: "benchmark"  # at the job level.  
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success       
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always 
     needs:
-        - job: dump mm18
+        - job: eval mm18 SR 1
           optional: true    
     script:
         - *script_eval 
         - *xrdcp_script 
         
 eval mm18 VR 2:
-    stage: evaluate
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -377,80 +257,68 @@ eval mm18 VR 2:
         REGION: VR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
-        - job: dump mm18
+        - job: eval mm18 SR 2
           optional: true     
     script:
         - *script_eval 
-        - *xrdcp_script 
+        - *xrdcp_script   
+
+eval mm18 VR 3:
+    stage: evaluate-vr
+    tags:
+        - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: ${INPUT_DUMP}
+        ERA: mm18
+        REGION: VR
+        PART: three
+    rules:    
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always
+    needs:
+        - job: eval mm18 SR 3
+          optional: true     
+    script:
+        - *script_eval 
+        - *xrdcp_script  
+
+eval mm18 VR 4:
+    stage: evaluate-vr
+    tags:
+        - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: ${INPUT_DUMP}
+        ERA: mm18
+        REGION: VR
+        PART: four
+    rules:    
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always
+    needs:
+        - job: eval mm18 SR 4
+          optional: true     
+    script:
+        - *script_eval 
+        - *xrdcp_script  
 
 ##-- ee --##
-eval ee16 SR 1:
-    stage: evaluate
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: ee16
-        REGION: SR
-        PART: one
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
-          when: on_success
-          variables:           # Override PART
-            PART: "benchmark"  # at the job level.          
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
-          when: always
-          variables:           # Override PART
-            PART: "benchmark"  # at the job level.  
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success       
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always  
-    needs:
-        - job: dump ee16pre
-          optional: true      
-        - job: dump ee16post
-          optional: true    
-    script:
-        - *script_eval16 
-        - *xrdcp_script 
-        
-eval ee16 SR 2:
-    stage: evaluate
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: ee16
-        REGION: SR
-        PART: two
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump ee16pre
-          optional: true      
-        - job: dump ee16post
-          optional: true
-    script:
-        - *script_eval16 
-        - *xrdcp_script 
-
 eval ee16 VR 1:
-    stage: evaluate
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -462,29 +330,27 @@ eval ee16 VR 1:
         REGION: VR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
           variables:           # Override PART
             PART: "benchmark"  # at the job level.          
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: always
           variables:           # Override PART
             PART: "benchmark"  # at the job level.  
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success       
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always 
     needs:
-        - job: dump ee16pre
+        - job: eval ee16 SR 1
           optional: true      
-        - job: dump ee16post
-          optional: true
     script:
         - *script_eval16 
         - *xrdcp_script 
         
 eval ee16 VR 2:
-    stage: evaluate
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -496,21 +362,19 @@ eval ee16 VR 2:
         REGION: VR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
-        - job: dump ee16pre
+        - job: eval ee16 SR 2
           optional: true      
-        - job: dump ee16post
-          optional: true
     script:
         - *script_eval16 
         - *xrdcp_script 
 
-eval ee17 SR 1:
-    stage: evaluate
+eval ee16 VR 3:
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -518,31 +382,23 @@ eval ee17 SR 1:
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
-        ERA: ee17
-        REGION: SR
-        PART: one
+        ERA: ee16
+        REGION: VR
+        PART: three
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-          variables:           # Override PART
-            PART: "benchmark"  # at the job level.          
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
-          variables:           # Override PART
-            PART: "benchmark"  # at the job level.  
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success       
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always  
     needs:
-        - job: dump ee17
-          optional: true     
+        - job: eval ee16 SR 3
+          optional: true      
     script:
-        - *script_eval 
+        - *script_eval16 
         - *xrdcp_script 
-        
-eval ee17 SR 2:
-    stage: evaluate
+
+eval ee16 VR 4:
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -550,23 +406,23 @@ eval ee17 SR 2:
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
-        ERA: ee17
-        REGION: SR
-        PART: two
+        ERA: ee16
+        REGION: VR
+        PART: four
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
-        - job: dump ee17
-          optional: true     
+        - job: eval ee16 SR 4
+          optional: true      
     script:
-        - *script_eval 
+        - *script_eval16 
         - *xrdcp_script 
 
 eval ee17 VR 1:
-    stage: evaluate
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -578,27 +434,27 @@ eval ee17 VR 1:
         REGION: VR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
           variables:           # Override PART
             PART: "benchmark"  # at the job level.          
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: always
           variables:           # Override PART
             PART: "benchmark"  # at the job level.  
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success       
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always 
     needs:
-        - job: dump ee17
+        - job: eval ee17 SR 1
           optional: true    
     script:
         - *script_eval 
         - *xrdcp_script 
         
 eval ee17 VR 2:
-    stage: evaluate
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -610,19 +466,19 @@ eval ee17 VR 2:
         REGION: VR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
-        - job: dump ee17
+        - job: eval ee17 SR 2
           optional: true    
     script:
         - *script_eval 
         - *xrdcp_script 
-
-eval ee18 SR 1:
-    stage: evaluate
+        
+eval ee17 VR 3:
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -630,31 +486,23 @@ eval ee18 SR 1:
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
-        ERA: ee18
-        REGION: SR
-        PART: one
+        ERA: ee17
+        REGION: VR
+        PART: three
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-          variables:           # Override PART
-            PART: "benchmark"  # at the job level.          
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
-          variables:           # Override PART
-            PART: "benchmark"  # at the job level.  
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success       
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always  
     needs:
-        - job: dump ee18
+        - job: eval ee17 SR 3
           optional: true    
     script:
-        - *script_eval
+        - *script_eval 
         - *xrdcp_script 
         
-eval ee18 SR 2:
-    stage: evaluate
+eval ee17 VR 4:
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -662,23 +510,23 @@ eval ee18 SR 2:
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
-        ERA: ee18
-        REGION: SR
-        PART: two
+        ERA: ee17
+        REGION: VR
+        PART: four
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
-        - job: dump ee18
-          optional: true     
+        - job: eval ee17 SR 4
+          optional: true    
     script:
         - *script_eval 
         - *xrdcp_script 
 
 eval ee18 VR 1:
-    stage: evaluate
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -690,27 +538,27 @@ eval ee18 VR 1:
         REGION: VR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
           variables:           # Override PART
             PART: "benchmark"  # at the job level.          
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: always
           variables:           # Override PART
             PART: "benchmark"  # at the job level.  
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success       
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always 
     needs:
-        - job: dump ee18
+        - job: eval ee18 SR 1
           optional: true    
     script:
         - *script_eval 
         - *xrdcp_script 
         
 eval ee18 VR 2:
-    stage: evaluate
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -722,80 +570,68 @@ eval ee18 VR 2:
         REGION: VR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
-        - job: dump ee18
+        - job: eval ee18 SR 2
+          optional: true    
+    script:
+        - *script_eval 
+        - *xrdcp_script 
+
+eval ee18 VR 3:
+    stage: evaluate-vr
+    tags:
+        - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: ${INPUT_DUMP}
+        ERA: ee18
+        REGION: VR
+        PART: three
+    rules:    
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always
+    needs:
+        - job: eval ee18 SR 3
+          optional: true    
+    script:
+        - *script_eval 
+        - *xrdcp_script 
+
+eval ee18 VR 4:
+    stage: evaluate-vr
+    tags:
+        - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: ${INPUT_DUMP}
+        ERA: ee18
+        REGION: VR
+        PART: four
+    rules:    
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always
+    needs:
+        - job: eval ee18 SR 4
           optional: true    
     script:
         - *script_eval 
         - *xrdcp_script 
 
 ##-- em --##
-eval em16 SR 1:
-    stage: evaluate
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: em16
-        REGION: SR
-        PART: one
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
-          when: on_success
-          variables:           # Override PART
-            PART: "benchmark"  # at the job level.          
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
-          when: always
-          variables:           # Override PART
-            PART: "benchmark"  # at the job level.  
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success       
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always  
-    needs:
-        - job: dump em16pre
-          optional: true      
-        - job: dump em16post
-          optional: true   
-    script:
-        - *script_eval16 
-        - *xrdcp_script 
-        
-eval em16 SR 2:
-    stage: evaluate
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: em16
-        REGION: SR
-        PART: two
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump em16pre
-          optional: true      
-        - job: dump em16post
-          optional: true  
-    script:
-        - *script_eval16 
-        - *xrdcp_script 
-
 eval em16 VR 1:
-    stage: evaluate
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -807,29 +643,27 @@ eval em16 VR 1:
         REGION: VR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
           variables:           # Override PART
             PART: "benchmark"  # at the job level.          
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: always
           variables:           # Override PART
             PART: "benchmark"  # at the job level.  
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success       
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always 
     needs:
-        - job: dump em16pre
+        - job: eval em16 SR 1
           optional: true      
-        - job: dump em16post
-          optional: true  
     script:
         - *script_eval16 
         - *xrdcp_script 
         
 eval em16 VR 2:
-    stage: evaluate
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -841,21 +675,19 @@ eval em16 VR 2:
         REGION: VR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
-        - job: dump em16pre
-          optional: true      
-        - job: dump em16post
-          optional: true  
+        - job: eval em16 SR 2
+          optional: true       
     script:
         - *script_eval16 
         - *xrdcp_script 
 
-eval em17 SR 1:
-    stage: evaluate
+eval em16 VR 3:
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -863,31 +695,23 @@ eval em17 SR 1:
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
-        ERA: em17
-        REGION: SR
-        PART: one
+        ERA: em16
+        REGION: VR
+        PART: three
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-          variables:           # Override PART
-            PART: "benchmark"  # at the job level.          
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
-          variables:           # Override PART
-            PART: "benchmark"  # at the job level.  
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success       
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always  
     needs:
-        - job: dump em17
-          optional: true     
+        - job: eval em16 SR 3
+          optional: true       
     script:
-        - *script_eval 
+        - *script_eval16 
         - *xrdcp_script 
-        
-eval em17 SR 2:
-    stage: evaluate
+
+eval em16 VR 4:
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -895,23 +719,23 @@ eval em17 SR 2:
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
-        ERA: em17
-        REGION: SR
-        PART: two
+        ERA: em16
+        REGION: VR
+        PART: four
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
-        - job: dump em17
-          optional: true    
+        - job: eval em16 SR 4
+          optional: true       
     script:
-        - *script_eval 
+        - *script_eval16 
         - *xrdcp_script 
 
 eval em17 VR 1:
-    stage: evaluate
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -923,27 +747,27 @@ eval em17 VR 1:
         REGION: VR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
           variables:           # Override PART
             PART: "benchmark"  # at the job level.          
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: always
           variables:           # Override PART
             PART: "benchmark"  # at the job level.  
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success       
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always 
     needs:
-        - job: dump em17
+        - job: eval em17 SR 1
           optional: true     
     script:
         - *script_eval 
         - *xrdcp_script 
         
 eval em17 VR 2:
-    stage: evaluate
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -955,19 +779,19 @@ eval em17 VR 2:
         REGION: VR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
-        - job: dump em17
+        - job: eval em17 SR 2
           optional: true     
     script:
         - *script_eval 
         - *xrdcp_script 
 
-eval em18 SR 1:
-    stage: evaluate
+eval em17 VR 3:
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -975,55 +799,47 @@ eval em18 SR 1:
     variables:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
-        ERA: em18
-        REGION: SR
-        PART: one
+        ERA: em17
+        REGION: VR
+        PART: three
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-          variables:           # Override PART
-            PART: "benchmark"  # at the job level.          
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes'
-          when: always
-          variables:           # Override PART
-            PART: "benchmark"  # at the job level.  
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success       
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always  
-    needs:
-        - job: dump em18
-          optional: true    
-    script:
-        - *script_eval 
-        - *xrdcp_script 
-        
-eval em18 SR 2:
-    stage: evaluate
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: em18
-        REGION: SR
-        PART: two
-    rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
-        - job: dump em18
+        - job: eval em17 SR 3
           optional: true     
     script:
         - *script_eval 
-        - *xrdcp_script 
+        - *xrdcp_script
+
+eval em17 VR 4:
+    stage: evaluate-vr
+    tags:
+        - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: ${INPUT_DUMP}
+        ERA: em17
+        REGION: VR
+        PART: four
+    rules:    
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always
+    needs:
+        - job: eval em17 SR 4
+          optional: true     
+    script:
+        - *script_eval 
+        - *xrdcp_script
 
 eval em18 VR 1:
-    stage: evaluate
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -1035,27 +851,27 @@ eval em18 VR 1:
         REGION: VR
         PART: one
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
           variables:           # Override PART
             PART: "benchmark"  # at the job level.          
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: always
           variables:           # Override PART
             PART: "benchmark"  # at the job level.  
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success       
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always 
     needs:
-        - job: dump em18
+        - job: eval em18 SR 1
           optional: true     
     script:
         - *script_eval 
         - *xrdcp_script 
 
 eval em18 VR 2:
-    stage: evaluate
+    stage: evaluate-vr
     tags:
         - cvmfs
     image:
@@ -1067,12 +883,60 @@ eval em18 VR 2:
         REGION: VR
         PART: two
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: always
     needs:
-        - job: dump em18
+        - job: eval em18 SR 2
+          optional: true     
+    script:
+        - *script_eval 
+        - *xrdcp_script 
+
+eval em18 VR 3:
+    stage: evaluate-vr
+    tags:
+        - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: ${INPUT_DUMP}
+        ERA: em18
+        REGION: VR
+        PART: three
+    rules:    
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always
+    needs:
+        - job: eval em18 SR 3
+          optional: true     
+    script:
+        - *script_eval 
+        - *xrdcp_script 
+
+eval em18 VR 4:
+    stage: evaluate-vr
+    tags:
+        - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: ${INPUT_DUMP}
+        ERA: em18
+        REGION: VR
+        PART: four
+    rules:    
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always
+    needs:
+        - job: eval em18 SR 4
           optional: true     
     script:
         - *script_eval 
