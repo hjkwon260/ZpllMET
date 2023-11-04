@@ -34,11 +34,11 @@
     - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
 
 .xrdcp_script: &xrdcp_script
-    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DRAW/${ERA}/SR/sys
-    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DRAW/${ERA}/SR/AN
-    - xrdcp -r ${DATE}/Presel/DRAW/${ERA}/SR/sys ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DRAW/${ERA}/SR/sys
-    - xrdcp -r ${DATE}/Presel/DRAW/${ERA}/SR/AN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DRAW/${ERA}/SR/AN
-    - xrdcp  ${DATE}/Presel/DRAW/${ERA}/SR/*.pdf ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DRAW/${ERA}/SR/
+    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DRAW/${ERA}/${REGION_DRAW}/sys
+    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DRAW/${ERA}/${REGION_DRAW}/AN
+    - xrdcp -r ${DATE}/Presel/DRAW/${ERA}/${REGION_DRAW}/sys ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DRAW/${ERA}/${REGION_DRAW}/sys
+    - xrdcp -r ${DATE}/Presel/DRAW/${ERA}/${REGION_DRAW}/AN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DRAW/${ERA}/${REGION_DRAW}/AN
+    - xrdcp  ${DATE}/Presel/DRAW/${ERA}/${REGION_DRAW}/*.pdf ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DRAW/${ERA}/${REGION_DRAW}/
     - kdestroy
 
 include:
@@ -57,6 +57,7 @@ draw mm16:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm16
         PART: dummy
+        REGION: ${REGION_DRAW}
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
@@ -82,6 +83,7 @@ draw mm17:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm17
         PART: dummy
+        REGION: ${REGION_DRAW}
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
@@ -105,6 +107,7 @@ draw mm18:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm18
         PART: dummy
+        REGION: ${REGION_DRAW}
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
@@ -129,6 +132,7 @@ draw ee16:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee16
         PART: dummy
+        REGION: ${REGION_DRAW}
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
@@ -154,6 +158,7 @@ draw ee17:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee17
         PART: dummy
+        REGION: ${REGION_DRAW}
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
@@ -177,7 +182,8 @@ draw ee18:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee18
         PART: dummy
-    rules:
+        REGION: ${REGION_DRAW}
+   rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
         - if: $DRAW == 'yes' && $DUMP == 'no'
@@ -201,6 +207,7 @@ draw em16:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: em16
         PART: dummy
+        REGION: ${REGION_DRAW}
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
@@ -226,6 +233,7 @@ draw em17 1:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: em17
         PART: one
+        REGION: ${REGION_DRAW}
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
@@ -249,6 +257,7 @@ draw em17 2:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: em17
         PART: two
+        REGION: ${REGION_DRAW}
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
@@ -272,6 +281,7 @@ draw em18 1:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: em18
         PART: one
+        REGION: ${REGION_DRAW}
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
@@ -295,6 +305,7 @@ draw em18 2:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: em18
         PART: two
+        REGION: ${REGION_DRAW}
     rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success

@@ -18,6 +18,7 @@ variables:
     DRAW_LIMIT: 'no'
     ONLY_BENCHMARK: 'no'
     ONLY_SR: 'yes'
+    REGION_DRAW: 'VR'
     INPUT_DUMP: Run2/Preselection/${DATE1}/DUMP/
     INPUT_DNN: Run2/Preselection/${DATE1}/DNN/
     INPUT_SYST: Run2/Preselection/${DATE1}/SYST/
