@@ -183,7 +183,7 @@ draw ee18:
         ERA: ee18
         PART: dummy
         REGION: ${REGION_DRAW}
-   rules:
+    rules:
         - if: $DRAW == 'yes' && $DUMP == 'yes'
           when: on_success
         - if: $DRAW == 'yes' && $DUMP == 'no'
