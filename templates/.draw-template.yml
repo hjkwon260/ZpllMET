@@ -29,7 +29,7 @@
     - echo $PYTHONPATH
     - export LD_LIBRARY_PATH=""      
     - jupyter nbconvert --to python ${SCRIPT_DRAW}.ipynb 
-    - python3 ${SCRIPT_DRAW}.py ${ERA} ${DATE} ${CI_PROJECT_DIR} ${PART}
+    - python3 ${SCRIPT_DRAW}.py ${ERA} ${DATE} ${CI_PROJECT_DIR} ${PART} ${REGION_DRAW}
     - export PATH="$PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin"
     - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
 
