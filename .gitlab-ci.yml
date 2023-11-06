@@ -9,15 +9,15 @@ variables:
     SCRIPT_DUMP: Dump_v2  
     SCRIPT_DRAW: Draw_v1  
     DUMP: 'no'
-    DRAW: 'yes'
+    DRAW: 'no'
     EVAL: 'no'
-    EVAL_VR: 'no'
+    EVAL_VR: 'yes'
     SYST: "no"
     IMPACT: "no"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
     ONLY_BENCHMARK: 'no'
-    ONLY_SR: 'yes'
+    ONLY_SR: 'no'
     REGION_DRAW: 'VR'
     INPUT_DUMP: Run2/Preselection/${DATE1}/DUMP/
     INPUT_DNN: Run2/Preselection/${DATE1}/DNN/
