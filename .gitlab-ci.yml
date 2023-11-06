@@ -36,7 +36,8 @@ stages:
     - draw
     - evaluate-sr-1
     - evaluate-sr-2
-    - evaluate-vr
+    - evaluate-vr-1
+    - evaluate-vr-2
     - syst
     - impact
     - limit

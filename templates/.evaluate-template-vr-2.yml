@@ -47,7 +47,7 @@ include:
 #####-- VR --#####
 ##-- mm --##
 eval mm16 VR 3:
-    stage: evaluate-vr
+    stage: evaluate-vr-2
     tags:
         - cvmfs
     image:
@@ -71,7 +71,7 @@ eval mm16 VR 3:
         - *xrdcp_script 
 
 eval mm16 VR 4:
-    stage: evaluate-vr
+    stage: evaluate-vr-2
     tags:
         - cvmfs
     image:
@@ -95,7 +95,7 @@ eval mm16 VR 4:
         - *xrdcp_script 
 
 eval mm17 VR 3:
-    stage: evaluate-vr
+    stage: evaluate-vr-2
     tags:
         - cvmfs
     image:
@@ -119,7 +119,7 @@ eval mm17 VR 3:
         - *xrdcp_script
 
 eval mm17 VR 4:
-    stage: evaluate-vr
+    stage: evaluate-vr-2
     tags:
         - cvmfs
     image:
@@ -143,7 +143,7 @@ eval mm17 VR 4:
         - *xrdcp_script
 
 eval mm18 VR 3:
-    stage: evaluate-vr
+    stage: evaluate-vr-2
     tags:
         - cvmfs
     image:
@@ -167,7 +167,7 @@ eval mm18 VR 3:
         - *xrdcp_script  
 
 eval mm18 VR 4:
-    stage: evaluate-vr
+    stage: evaluate-vr-2
     tags:
         - cvmfs
     image:
@@ -192,7 +192,7 @@ eval mm18 VR 4:
 
 ##-- ee --##        
 eval ee16 VR 3:
-    stage: evaluate-vr
+    stage: evaluate-vr-2
     tags:
         - cvmfs
     image:
@@ -216,7 +216,7 @@ eval ee16 VR 3:
         - *xrdcp_script 
 
 eval ee16 VR 4:
-    stage: evaluate-vr
+    stage: evaluate-vr-2
     tags:
         - cvmfs
     image:
@@ -240,7 +240,7 @@ eval ee16 VR 4:
         - *xrdcp_script 
 
 eval ee17 VR 3:
-    stage: evaluate-vr
+    stage: evaluate-vr-2
     tags:
         - cvmfs
     image:
@@ -264,7 +264,7 @@ eval ee17 VR 3:
         - *xrdcp_script 
         
 eval ee17 VR 4:
-    stage: evaluate-vr
+    stage: evaluate-vr-2
     tags:
         - cvmfs
     image:
@@ -288,7 +288,7 @@ eval ee17 VR 4:
         - *xrdcp_script 
 
 eval ee18 VR 3:
-    stage: evaluate-vr
+    stage: evaluate-vr-2
     tags:
         - cvmfs
     image:
@@ -312,7 +312,7 @@ eval ee18 VR 3:
         - *xrdcp_script 
 
 eval ee18 VR 4:
-    stage: evaluate-vr
+    stage: evaluate-vr-2
     tags:
         - cvmfs
     image:
@@ -337,7 +337,7 @@ eval ee18 VR 4:
 
 ##-- em --##
 eval em16 VR 3:
-    stage: evaluate-vr
+    stage: evaluate-vr-2
     tags:
         - cvmfs
     image:
@@ -361,7 +361,7 @@ eval em16 VR 3:
         - *xrdcp_script 
 
 eval em16 VR 4:
-    stage: evaluate-vr
+    stage: evaluate-vr-2
     tags:
         - cvmfs
     image:
@@ -385,7 +385,7 @@ eval em16 VR 4:
         - *xrdcp_script 
 
 eval em17 VR 3:
-    stage: evaluate-vr
+    stage: evaluate-vr-2
     tags:
         - cvmfs
     image:
@@ -409,7 +409,7 @@ eval em17 VR 3:
         - *xrdcp_script
 
 eval em17 VR 4:
-    stage: evaluate-vr
+    stage: evaluate-vr-2
     tags:
         - cvmfs
     image:
@@ -433,7 +433,7 @@ eval em17 VR 4:
         - *xrdcp_script
 
 eval em18 VR 3:
-    stage: evaluate-vr
+    stage: evaluate-vr-2
     tags:
         - cvmfs
     image:
@@ -457,7 +457,7 @@ eval em18 VR 3:
         - *xrdcp_script 
 
 eval em18 VR 4:
-    stage: evaluate-vr
+    stage: evaluate-vr-2
     tags:
         - cvmfs
     image:
