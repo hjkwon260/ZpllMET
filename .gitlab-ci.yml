@@ -11,8 +11,8 @@ variables:
     DUMP: 'no'
     DRAW: 'no'
     EVAL: 'no'
-    EVAL_VR: 'yes'
-    SYST: "no"
+    EVAL_VR: 'no'
+    SYST: "yes"
     IMPACT: "no"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
