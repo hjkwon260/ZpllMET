@@ -135,7 +135,7 @@ class HistStack(object):
         h.Divide(self.h_bkg)
         if num=="Data":
             h.SetMarkerStyle(8)
-            h.GetYaxis().SetRangeUser(0.6, 1.4)
+            h.GetYaxis().SetRangeUser(0.4, 1.8)
             h.GetYaxis().SetTitle("Data/MC")
         else:
             h.SetLineColor(2)
@@ -313,6 +313,7 @@ class HistStack(object):
         hstack=rt.THStack("","")
         h_bkg=rt.TH1D("", "",  self.nbin, self.xl, self.xh)
         dic_merged=self.get_merged_hist()
+        # draw in order of bkg_keys
         if "hdampUp" in self.weight:
             bkg_keys = ['Others', 'ZZ', 'WZ', 'WW', 'TW', 'TThdampUp', 'DY']
         elif "hdampDown" in self.weight:
@@ -322,7 +323,8 @@ class HistStack(object):
         elif "PSDown" in self.weight:
             bkg_keys = ['Others', 'ZZ', 'WZ', 'WW', 'TW', 'TTDown', 'DY'] 
         else:
-            bkg_keys = ['Others', 'ZZ', 'WZ', 'WW', 'TW', 'TT', 'DY']
+            bkg_keys = ['Others', 'ZZ', 'WZ', 'DY', 'WW', 'TW', 'TT']
+#             bkg_keys = ['Others', 'ZZ', 'WZ', 'WW', 'TW', 'TT', 'DY']
             # bkg_keys = ['WWW', 'WWZ', 'H', 'HWW', 'TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TT', 'DY']
             # bkg_keys = ['TTZ', 'ZZ', 'WZ', 'WW', 'TW', 'TTSemi', 'TT', 'DY'] #temp
         for key in bkg_keys:
