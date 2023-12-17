@@ -8,9 +8,9 @@ variables:
     SCRIPT_LIMIT: limits_v4  
     SCRIPT_DUMP: Dump_v2  
     SCRIPT_DRAW: Draw_v1  
-    DUMP: 'no'
+    DUMP: 'yes'
     DRAW: 'no'
-    EVAL: 'yes'
+    EVAL: 'no'
     EVAL_VR: 'no'
     SYST: "no"
     IMPACT: "no"
