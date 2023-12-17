@@ -13,7 +13,7 @@ variables:
     DRAW: 'no'
     EVAL: 'no'
     EVAL_VR: 'yes'
-    SYST: "yes"
+    SYST: "no"
     IMPACT: "no"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
