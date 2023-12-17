@@ -8,11 +8,12 @@ variables:
     SCRIPT_LIMIT: limits_v4  
     SCRIPT_DUMP: Dump_v2  
     SCRIPT_DRAW: Draw_v1  
-    DUMP: 'yes'
+    SCRIPT_SYST: SystematicPlots_v2
+    DUMP: 'no'
     DRAW: 'no'
     EVAL: 'no'
     EVAL_VR: 'no'
-    SYST: "no"
+    SYST: "yes"
     IMPACT: "no"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
