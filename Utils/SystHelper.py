@@ -6,7 +6,8 @@ import numpy as np
 
 
 def get_sys_list():
-    return ["scale", "puweight", "l1prefiring", "effrecoSF", "effSF", "topSF", "met", "metjer", "metue", "trigSF", "hdamp", "PS", "btagSF", "jes", "jer"]
+    return ["scale", "puweight", "effrecoSF", "effSF", "topSF", "met", "metjer", "metue", "hdamp", "PS", "btagSF", "jes", "jer"]
+    # return ["scale", "puweight", "l1prefiring", "effrecoSF", "effSF", "topSF", "met", "metjer", "metue", "trigSF", "hdamp", "PS", "btagSF", "jes", "jer"]
 	# return ["met", "metjer", "metue", "jes", "jer"]
     
 def get_dic_sys(model_mass, ERA, dic_df_raw, dic_nested_shape_sys, sys_list, variable, r, region, threshold, file_prefix, file_str):
