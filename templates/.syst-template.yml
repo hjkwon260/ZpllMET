@@ -23,7 +23,8 @@
     - rm -rf ./*
 
 include:
-  - local: '/templates/.evaluate-template-vr-2.yml'
+  # - local: '/templates/.evaluate-template-vr-2.yml'
+  - local: '/templates/.evaluate-template-vr.yml'
 
 ########## stage: syst ############
 ##-- mm --##
