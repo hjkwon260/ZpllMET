@@ -37,6 +37,7 @@
     - xrdcp -r Outputs/DNN/${ERA}/${REGION}/sys ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/sys
     - xrdcp -r Outputs/DNN/${ERA}/${REGION}/root_files ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/root_files
     - xrdcp -r Outputs/DNN/${ERA}/${REGION}/AN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/AN
+    - xrdcp Outputs/DNN/${ERA}/${REGION}/*.pdf ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/
     - kdestroy
 
 include:
