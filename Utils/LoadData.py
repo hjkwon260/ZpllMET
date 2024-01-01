@@ -76,6 +76,36 @@ def get_files(files):
             list_nestec_dic.append(nested_dic_df)
     return list_nestec_dic
 
+def get_list_dic(ERA, region):
+    if region == "TR":
+        region_list = ["SR1", "TTCR"]
+    elif region == "SR":
+        region_list = ["SR1"]
+    elif region == "VR":
+        region_list = ["TTCR"]
+    elif region == "PTSB":
+        region_list = ["PTSB"]
+    elif region == "MASSSB":
+        region_list = ["MASSSB"]
+    elif region == "METSB":
+        region_list = ["METSB"]
+    else:
+        print("WARNING: check if REGION valid")
+    list_nested_dic_df = []
+    for region in region_list:
+        if not "16" in ERA:
+            with open(INPUTDIR+'/'+ERA+'/nested_dic_df_'+region+'.pkl', 'rb') as f:
+                nested_dic_df = pickle.load(f)
+                list_nested_dic_df.append(nested_dic_df)           
+        else:
+            with open(INPUTDIR+'/'+ERA+'pre/nested_dic_df_'+region+'.pkl', 'rb') as f:
+                nested_dic_df = pickle.load(f)
+                list_nested_dic_df.append(nested_dic_df) 
+            with open(INPUTDIR+'/'+ERA+'post/nested_dic_df_'+region+'.pkl', 'rb') as f:
+                nested_dic_df = pickle.load(f)
+                list_nested_dic_df.append(nested_dic_df) 
+    return list_nested_dic_df
+
 def get_dic_raw_sys(ERA, INPUTDIR, region="TR"):
     # if region == "TR":
     #     if "16" in ERA: 
@@ -87,133 +117,22 @@ def get_dic_raw_sys(ERA, INPUTDIR, region="TR"):
 
     # list_sys_key = ['raw', 'met_u', 'met_d', 'met_ue_u', 'met_ue_d', 'met_jer_u', 'met_jer_d', 'jes_u', 'jes_d', 'jer_u', 'jer_d', 'scale_u', 'scale_d']
 
+    list_nested_dic_df = get_list_dic(ERA, region)
+    # unroll
+    dic_df_all = [nested_dic['raw'] for nested_dic in list_nested_dic_df]
+    dic_df_met_u_all = [nested_dic['met_u'] for nested_dic in list_nested_dic_df]
+    dic_df_met_d_all = [nested_dic['met_d'] for nested_dic in list_nested_dic_df]
+    dic_df_met_jer_u_all = [nested_dic['met_jer_u'] for nested_dic in list_nested_dic_df]
+    dic_df_met_jer_d_all = [nested_dic['met_jer_d'] for nested_dic in list_nested_dic_df]
+    dic_df_jes_u_all = [nested_dic['jes_u'] for nested_dic in list_nested_dic_df]
+    dic_df_jes_d_all = [nested_dic['jes_d'] for nested_dic in list_nested_dic_df]
+    dic_df_jer_u_all = [nested_dic['jer_u'] for nested_dic in list_nested_dic_df]
+    dic_df_jer_d_all = [nested_dic['jer_d'] for nested_dic in list_nested_dic_df]
+    dic_df_met_ue_u_all = [nested_dic['met_ue_u'] for nested_dic in list_nested_dic_df]
+    dic_df_met_ue_d_all = [nested_dic['met_ue_d'] for nested_dic in list_nested_dic_df]
+    dic_df_scale_u_all = [nested_dic['scale_u'] for nested_dic in list_nested_dic_df]
+    dic_df_scale_d_all = [nested_dic['scale_d'] for nested_dic in list_nested_dic_df]
 
-
-    if region == "TR":
-        if "16" in ERA:
-            with open(INPUTDIR+'/'+ERA+'pre/nested_dic_df_SR1.pkl', 'rb') as f:
-                nested_dic_df = pickle.load(f)
-            with open(INPUTDIR+'/'+ERA+'pre/nested_dic_df_TTCR.pkl', 'rb') as f:
-                nested_dic_df1 = pickle.load(f)
-            with open(INPUTDIR+'/'+ERA+'post/nested_dic_df_SR1.pkl', 'rb') as f:
-                nested_dic_df2 = pickle.load(f)
-            with open(INPUTDIR+'/'+ERA+'post/nested_dic_df_TTCR.pkl', 'rb') as f:
-                nested_dic_df3 = pickle.load(f)
-            dic_df_all = [nested_dic_df['raw'], nested_dic_df1['raw'], nested_dic_df2['raw'], nested_dic_df3['raw']]
-            dic_df_met_u_all = [nested_dic_df['met_u'], nested_dic_df1['met_u'], nested_dic_df2['met_u'], nested_dic_df3['met_u']]
-            dic_df_met_d_all = [nested_dic_df['met_d'], nested_dic_df1['met_d'], nested_dic_df2['met_d'], nested_dic_df3['met_d']]    
-            dic_df_met_jer_u_all = [nested_dic_df['met_jer_u'], nested_dic_df1['met_jer_u'], nested_dic_df2['met_jer_u'], nested_dic_df3['met_jer_u']]
-            dic_df_met_jer_d_all = [nested_dic_df['met_jer_d'], nested_dic_df1['met_jer_d'], nested_dic_df2['met_jer_d'], nested_dic_df3['met_jer_d']]    
-            dic_df_jes_u_all = [nested_dic_df['jes_u'], nested_dic_df1['jes_u'], nested_dic_df2['jes_u'], nested_dic_df3['jes_u']]
-            dic_df_jes_d_all = [nested_dic_df['jes_d'], nested_dic_df1['jes_d'], nested_dic_df2['jes_d'], nested_dic_df3['jes_d']]    
-            dic_df_jer_u_all = [nested_dic_df['jer_u'], nested_dic_df1['jer_u'], nested_dic_df2['jer_u'], nested_dic_df3['jer_u']]
-            dic_df_jer_d_all = [nested_dic_df['jer_d'], nested_dic_df1['jer_d'], nested_dic_df2['jer_d'], nested_dic_df3['jer_d']]    
-            dic_df_met_ue_u_all = [nested_dic_df['met_ue_u'], nested_dic_df1['met_ue_u'], nested_dic_df2['met_ue_u'], nested_dic_df3['met_ue_u']]
-            dic_df_met_ue_d_all = [nested_dic_df['met_ue_d'], nested_dic_df1['met_ue_d'], nested_dic_df2['met_ue_d'], nested_dic_df3['met_ue_d']]            
-            dic_df_scale_u_all = [nested_dic_df['scale_u'], nested_dic_df1['scale_u'], nested_dic_df2['scale_u'], nested_dic_df3['scale_u']]
-            dic_df_scale_d_all = [nested_dic_df['scale_d'], nested_dic_df1['scale_d'], nested_dic_df2['scale_d'], nested_dic_df3['scale_d']]
-        else:
-            with open(INPUTDIR+'/'+ERA+'/nested_dic_df_SR1.pkl', 'rb') as f:
-                nested_dic_df = pickle.load(f)
-            with open(INPUTDIR+'/'+ERA+'/nested_dic_df_TTCR.pkl', 'rb') as f:
-                nested_dic_df1 = pickle.load(f)
-            dic_df_all = [nested_dic_df['raw'], nested_dic_df1['raw']]
-            dic_df_met_u_all = [nested_dic_df['met_u'], nested_dic_df1['met_u']]
-            dic_df_met_d_all = [nested_dic_df['met_d'], nested_dic_df1['met_d']]             
-            dic_df_met_jer_u_all = [nested_dic_df['met_jer_u'], nested_dic_df1['met_jer_u']]
-            dic_df_met_jer_d_all = [nested_dic_df['met_jer_d'], nested_dic_df1['met_jer_d']]           
-            dic_df_jes_u_all = [nested_dic_df['jes_u'], nested_dic_df1['jes_u']]
-            dic_df_jes_d_all = [nested_dic_df['jes_d'], nested_dic_df1['jes_d']]            
-            dic_df_jer_u_all = [nested_dic_df['jer_u'], nested_dic_df1['jer_u']]
-            dic_df_jer_d_all = [nested_dic_df['jer_d'], nested_dic_df1['jer_d']]
-            dic_df_met_ue_u_all = [nested_dic_df['met_ue_u'], nested_dic_df1['met_ue_u']]
-            dic_df_met_ue_d_all = [nested_dic_df['met_ue_d'], nested_dic_df1['met_ue_d']]
-            dic_df_scale_u_all = [nested_dic_df['scale_u'], nested_dic_df1['scale_u']]
-            dic_df_scale_d_all = [nested_dic_df['scale_d'], nested_dic_df1['scale_d']]
-
-        dic_df_raw, dic_nested_shape_sys = get_concat(dic_df_all, dic_df_met_u_all, dic_df_met_d_all, dic_df_met_jer_u_all, dic_df_met_jer_d_all, dic_df_jes_u_all, dic_df_jes_d_all, dic_df_jer_u_all, dic_df_jer_d_all, dic_df_met_ue_u_all, dic_df_met_ue_d_all, dic_df_scale_u_all, dic_df_scale_d_all)
-
-    elif region == "SR":
-        if "16" in ERA:
-            with open(INPUTDIR+'/'+ERA+'pre/nested_dic_df_SR1.pkl', 'rb') as f:
-                nested_dic_df = pickle.load(f)
-            with open(INPUTDIR+'/'+ERA+'post/nested_dic_df_SR1.pkl', 'rb') as f:
-                nested_dic_df1 = pickle.load(f)
-            dic_df_all = [nested_dic_df['raw'], nested_dic_df1['raw']]
-            dic_df_met_u_all = [nested_dic_df['met_u'], nested_dic_df1['met_u']]
-            dic_df_met_d_all = [nested_dic_df['met_d'], nested_dic_df1['met_d']]    
-            dic_df_met_jer_u_all = [nested_dic_df['met_jer_u'], nested_dic_df1['met_jer_u']]
-            dic_df_met_jer_d_all = [nested_dic_df['met_jer_d'], nested_dic_df1['met_jer_d']]    
-            dic_df_jes_u_all = [nested_dic_df['jes_u'], nested_dic_df1['jes_u']]
-            dic_df_jes_d_all = [nested_dic_df['jes_d'], nested_dic_df1['jes_d']]    
-            dic_df_jer_u_all = [nested_dic_df['jer_u'], nested_dic_df1['jer_u']]
-            dic_df_jer_d_all = [nested_dic_df['jer_d'], nested_dic_df1['jer_d']]    
-            dic_df_met_ue_u_all = [nested_dic_df['met_ue_u'], nested_dic_df1['met_ue_u']]
-            dic_df_met_ue_d_all = [nested_dic_df['met_ue_d'], nested_dic_df1['met_ue_d']]            
-            dic_df_scale_u_all = [nested_dic_df['scale_u'], nested_dic_df1['scale_u']]
-            dic_df_scale_d_all = [nested_dic_df['scale_d'], nested_dic_df1['scale_d']]
-        else:
-            with open(INPUTDIR+'/'+ERA+'/nested_dic_df_SR1.pkl', 'rb') as f:
-                nested_dic_df = pickle.load(f)   
-            dic_df_raw=nested_dic_df['raw']
-            dic_nested_shape_sys={}            
-            dic_nested_shape_sys["met_u"]=nested_dic_df['met_u']
-            dic_nested_shape_sys["met_d"]=nested_dic_df['met_d']             
-            dic_nested_shape_sys["met_jer_u"]=nested_dic_df['met_jer_u']
-            dic_nested_shape_sys["met_jer_d"]=nested_dic_df['met_jer_d']             
-            dic_nested_shape_sys["jes_u"]=nested_dic_df['jes_u']
-            dic_nested_shape_sys["jes_d"]=nested_dic_df['jes_d']             
-            dic_nested_shape_sys["jer_u"]=nested_dic_df['jer_u']
-            dic_nested_shape_sys["jer_d"]=nested_dic_df['jer_d'] 
-            dic_nested_shape_sys["met_ue_u"]=nested_dic_df['met_ue_u']
-            dic_nested_shape_sys["met_ue_d"]=nested_dic_df['met_ue_d']  
-            dic_nested_shape_sys["scale_u"]=nested_dic_df['scale_u']
-            dic_nested_shape_sys["scale_d"]=nested_dic_df['scale_d']  
-
-        if "16" in ERA:
-            dic_df_raw, dic_nested_shape_sys = get_concat(dic_df_all, dic_df_met_u_all, dic_df_met_d_all, dic_df_met_jer_u_all, dic_df_met_jer_d_all, dic_df_jes_u_all, dic_df_jes_d_all, dic_df_jer_u_all, dic_df_jer_d_all, dic_df_met_ue_u_all, dic_df_met_ue_d_all, dic_df_scale_u_all, dic_df_scale_d_all)
-
-    elif region == "VR":
-        if "16" in ERA:
-            with open(INPUTDIR+'/'+ERA+'pre/nested_dic_df_TTCR.pkl', 'rb') as f:
-                nested_dic_df = pickle.load(f)
-            with open(INPUTDIR+'/'+ERA+'post/nested_dic_df_TTCR.pkl', 'rb') as f:
-                nested_dic_df1 = pickle.load(f)
-            dic_df_all = [nested_dic_df['raw'], nested_dic_df1['raw']]
-            dic_df_met_u_all = [nested_dic_df['met_u'], nested_dic_df1['met_u']]
-            dic_df_met_d_all = [nested_dic_df['met_d'], nested_dic_df1['met_d']]    
-            dic_df_met_jer_u_all = [nested_dic_df['met_jer_u'], nested_dic_df1['met_jer_u']]
-            dic_df_met_jer_d_all = [nested_dic_df['met_jer_d'], nested_dic_df1['met_jer_d']]    
-            dic_df_jes_u_all = [nested_dic_df['jes_u'], nested_dic_df1['jes_u']]
-            dic_df_jes_d_all = [nested_dic_df['jes_d'], nested_dic_df1['jes_d']]    
-            dic_df_jer_u_all = [nested_dic_df['jer_u'], nested_dic_df1['jer_u']]
-            dic_df_jer_d_all = [nested_dic_df['jer_d'], nested_dic_df1['jer_d']]    
-            dic_df_met_ue_u_all = [nested_dic_df['met_ue_u'], nested_dic_df1['met_ue_u']]
-            dic_df_met_ue_d_all = [nested_dic_df['met_ue_d'], nested_dic_df1['met_ue_d']]            
-            dic_df_scale_u_all = [nested_dic_df['scale_u'], nested_dic_df1['scale_u']]
-            dic_df_scale_d_all = [nested_dic_df['scale_d'], nested_dic_df1['scale_d']]
-        else:
-            with open(INPUTDIR+'/'+ERA+'/nested_dic_df_TTCR.pkl', 'rb') as f:
-                nested_dic_df = pickle.load(f)   
-            dic_df_raw=nested_dic_df['raw']
-            dic_nested_shape_sys={}            
-            dic_nested_shape_sys["met_u"]=nested_dic_df['met_u']
-            dic_nested_shape_sys["met_d"]=nested_dic_df['met_d'] 
-            dic_nested_shape_sys["met_jer_u"]=nested_dic_df['met_jer_u']
-            dic_nested_shape_sys["met_jer_d"]=nested_dic_df['met_jer_d']             
-            dic_nested_shape_sys["jes_u"]=nested_dic_df['jes_u']
-            dic_nested_shape_sys["jes_d"]=nested_dic_df['jes_d']             
-            dic_nested_shape_sys["jer_u"]=nested_dic_df['jer_u']
-            dic_nested_shape_sys["jer_d"]=nested_dic_df['jer_d'] 
-            dic_nested_shape_sys["met_ue_u"]=nested_dic_df['met_ue_u']
-            dic_nested_shape_sys["met_ue_d"]=nested_dic_df['met_ue_d']  
-            dic_nested_shape_sys["scale_u"]=nested_dic_df['scale_u']
-            dic_nested_shape_sys["scale_d"]=nested_dic_df['scale_d'] 
-
-        if "16" in ERA:
-            dic_df_raw, dic_nested_shape_sys = get_concat(dic_df_all, dic_df_met_u_all, dic_df_met_d_all, dic_df_met_jer_u_all, dic_df_met_jer_d_all, dic_df_jes_u_all, dic_df_jes_d_all, dic_df_jer_u_all, dic_df_jer_d_all, dic_df_met_ue_u_all, dic_df_met_ue_d_all, dic_df_scale_u_all, dic_df_scale_d_all)
-
-    else:
-        print("WARNING: check if REGION valid")
+    dic_df_raw, dic_nested_shape_sys = get_concat(dic_df_all, dic_df_met_u_all, dic_df_met_d_all, dic_df_met_jer_u_all, dic_df_met_jer_d_all, dic_df_jes_u_all, dic_df_jes_d_all, dic_df_jer_u_all, dic_df_jer_d_all, dic_df_met_ue_u_all, dic_df_met_ue_d_all, dic_df_scale_u_all, dic_df_scale_d_all)
 
     return dic_df_raw, dic_nested_shape_sys
