@@ -6,8 +6,8 @@
     - ls ${ERA}pre 
 
 .load: &load
-    - mkdir ${ERA}
-    - xrdcp -v -r ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/ ${ERA} 
+    # - mkdir ${ERA}
+    - xrdcp -v -r ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/ . 
     - ls 
     - ls ${ERA}
 
