@@ -1,7 +1,7 @@
 .load16: &load16
     - mkdir ${ERA}pre
     - mkdir ${ERA}post
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}pre/nested_dic_df_*.pkl ${ERA}pre  
+    - xrdcp -v -r ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}pre/ ${ERA}pre  
     - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}post/nested_dic_df_*.pkl ${ERA}post  
 
 .load: &load
