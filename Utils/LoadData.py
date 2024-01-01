@@ -76,7 +76,7 @@ def get_files(files):
             list_nestec_dic.append(nested_dic_df)
     return list_nestec_dic
 
-def get_list_dic(ERA, region):
+def get_list_dic(INPUTDIR, ERA, region):
     if region == "TR":
         region_list = ["SR1", "TTCR"]
     elif region == "SR":
@@ -117,7 +117,7 @@ def get_dic_raw_sys(ERA, INPUTDIR, region="TR"):
 
     # list_sys_key = ['raw', 'met_u', 'met_d', 'met_ue_u', 'met_ue_d', 'met_jer_u', 'met_jer_d', 'jes_u', 'jes_d', 'jer_u', 'jer_d', 'scale_u', 'scale_d']
 
-    list_nested_dic_df = get_list_dic(ERA, region)
+    list_nested_dic_df = get_list_dic(INPUTDIR, ERA, region)
     # unroll
     dic_df_all = [nested_dic['raw'] for nested_dic in list_nested_dic_df]
     dic_df_met_u_all = [nested_dic['met_u'] for nested_dic in list_nested_dic_df]
