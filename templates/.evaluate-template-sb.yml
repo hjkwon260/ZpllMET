@@ -2,12 +2,13 @@
     - mkdir ${ERA}pre
     - mkdir ${ERA}post
     - xrdcp -v -r ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}pre/ ${ERA}pre  
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}post/nested_dic_df_*.pkl ${ERA}post  
+    - xrdcp -v -r ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}post/ ${ERA}post 
+    - ls ${ERA}pre 
 
 .load: &load
     - mkdir ${ERA}
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/nested_dic_df_*.pkl ${ERA}  
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/nested_dic_df_*.pkl ${ERA} 
+    - xrdcp -v -r ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/ ${ERA}  
+    - xrdcp -v -r ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/ ${ERA} 
 
 .script_eval16: &script_eval16
     - *load16
