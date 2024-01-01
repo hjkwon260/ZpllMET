@@ -78,9 +78,9 @@ eval mm16 SR 1:
         - *load16
         - *script_eval16
         - *xrdcp_script 
-        - export REGION="MASSSB"
-        - *script_eval16
-        - *xrdcp_script 
+        # - export REGION="MASSSB"
+        # - *script_eval16
+        # - *xrdcp_script 
         - kdestroy
 
 eval mm17 SR 1:
@@ -115,9 +115,9 @@ eval mm17 SR 1:
         - *load 
         - *script_eval 
         - *xrdcp_script 
-        - export REGION="MASSSB"
-        - *script_eval 
-        - *xrdcp_script 
+        # - export REGION="MASSSB"
+        # - *script_eval 
+        # - *xrdcp_script 
         - kdestroy
 
 eval mm18 SR 1:
@@ -152,9 +152,9 @@ eval mm18 SR 1:
         - *load 
         - *script_eval 
         - *xrdcp_script 
-        - export REGION="MASSSB"
-        - *script_eval 
-        - *xrdcp_script 
+        # - export REGION="MASSSB"
+        # - *script_eval 
+        # - *xrdcp_script 
         - kdestroy        
 
 ##-- ee --##
@@ -168,7 +168,7 @@ eval ee16 SR 1:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee16
-        REGION: SR
+        REGION: METSB
         PART: one
     rules:    
         - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
@@ -189,34 +189,10 @@ eval ee16 SR 1:
         - job: dump ee16post
           optional: true    
     script:
+        - *load16 
         - *script_eval16 
         - *xrdcp_script 
-        
-eval ee16 SR 2:
-    stage: evaluate-sr-1
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: ee16
-        REGION: SR
-        PART: two
-    rules:    
-        - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL_SB == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump ee16pre
-          optional: true      
-        - job: dump ee16post
-          optional: true
-    script:
-        - *script_eval16 
-        - *xrdcp_script 
+        - kdestroy        
 
 eval ee17 SR 1:
     stage: evaluate-sr-1
@@ -228,7 +204,7 @@ eval ee17 SR 1:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee17
-        REGION: SR
+        REGION: METSB
         PART: one
     rules:    
         - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
@@ -247,32 +223,10 @@ eval ee17 SR 1:
         - job: dump ee17
           optional: true     
     script:
+        - *load 
         - *script_eval 
         - *xrdcp_script 
-        
-eval ee17 SR 2:
-    stage: evaluate-sr-1
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: ee17
-        REGION: SR
-        PART: two
-    rules:    
-        - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL_SB == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump ee17
-          optional: true     
-    script:
-        - *script_eval 
-        - *xrdcp_script 
+        - kdestroy        
 
 eval ee18 SR 1:
     stage: evaluate-sr-1
@@ -284,7 +238,7 @@ eval ee18 SR 1:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee18
-        REGION: SR
+        REGION: METSB
         PART: one
     rules:    
         - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
@@ -303,32 +257,10 @@ eval ee18 SR 1:
         - job: dump ee18
           optional: true    
     script:
+        - *load 
         - *script_eval
         - *xrdcp_script 
-        
-eval ee18 SR 2:
-    stage: evaluate-sr-1
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: ee18
-        REGION: SR
-        PART: two
-    rules:    
-        - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL_SB == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump ee18
-          optional: true     
-    script:
-        - *script_eval 
-        - *xrdcp_script 
+        - kdestroy        
 
 ##-- em --##
 eval em16 SR 1:
@@ -341,7 +273,7 @@ eval em16 SR 1:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: em16
-        REGION: SR
+        REGION: PTSB
         PART: one
     rules:    
         - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
@@ -362,34 +294,13 @@ eval em16 SR 1:
         - job: dump em16post
           optional: true   
     script:
+        - *load16
         - *script_eval16 
         - *xrdcp_script 
-        
-eval em16 SR 2:
-    stage: evaluate-sr-1
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: em16
-        REGION: SR
-        PART: two
-    rules:    
-        - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL_SB == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump em16pre
-          optional: true      
-        - job: dump em16post
-          optional: true  
-    script:
-        - *script_eval16 
+        - export REGION="MASSSB"
+        - *script_eval 
         - *xrdcp_script 
+        - kdestroy 
 
 eval em17 SR 1:
     stage: evaluate-sr-1
@@ -401,7 +312,7 @@ eval em17 SR 1:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: em17
-        REGION: SR
+        REGION: PTSB
         PART: one
     rules:    
         - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
@@ -420,32 +331,13 @@ eval em17 SR 1:
         - job: dump em17
           optional: true     
     script:
+        - *load 
         - *script_eval 
         - *xrdcp_script 
-        
-eval em17 SR 2:
-    stage: evaluate-sr-1
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: em17
-        REGION: SR
-        PART: two
-    rules:    
-        - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL_SB == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump em17
-          optional: true    
-    script:
+        - export REGION="MASSSB"
         - *script_eval 
         - *xrdcp_script 
+        - kdestroy
 
 eval em18 SR 1:
     stage: evaluate-sr-1
@@ -457,7 +349,7 @@ eval em18 SR 1:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: em18
-        REGION: SR
+        REGION: PTSB
         PART: one
     rules:    
         - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes'
@@ -476,29 +368,10 @@ eval em18 SR 1:
         - job: dump em18
           optional: true    
     script:
+        - *load 
         - *script_eval 
         - *xrdcp_script 
-        
-eval em18 SR 2:
-    stage: evaluate-sr-1
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: em18
-        REGION: SR
-        PART: two
-    rules:    
-        - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
-          when: on_success
-        - if: $EVAL_SB == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
-          when: always
-    needs:
-        - job: dump em18
-          optional: true     
-    script:
+        - export REGION="MASSSB"
         - *script_eval 
         - *xrdcp_script 
+        - kdestroy
