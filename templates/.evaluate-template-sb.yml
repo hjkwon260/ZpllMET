@@ -1,8 +1,8 @@
 .load16: &load16
-    - mkdir ${ERA}pre
-    - mkdir ${ERA}post
-    - xrdcp -v -r ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}pre/ ${ERA}pre  
-    - xrdcp -v -r ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}post/ ${ERA}post 
+    # - mkdir ${ERA}pre
+    # - mkdir ${ERA}post
+    - xrdcp -v -r ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}pre/ .  
+    - xrdcp -v -r ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}post/ .
     - ls ${ERA}pre 
 
 .load: &load
