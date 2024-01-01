@@ -12,7 +12,6 @@
     - ls ${ERA}
 
 .script_eval16: &script_eval16
-    - *load16
     - echo $PYTHONPATH
     - export LD_LIBRARY_PATH=""    
     - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
@@ -22,7 +21,6 @@
 
 
 .script_eval: &script_eval
-    - *load
     - echo $PYTHONPATH
     - export LD_LIBRARY_PATH=""    
     - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
@@ -77,6 +75,7 @@ eval mm16 SR 1:
         - job: dump mm16post
           optional: true     
     script:
+        - *load16
         - *script_eval16
         - *xrdcp_script 
         - export REGION="MASSSB"
@@ -113,6 +112,7 @@ eval mm17 SR 1:
         - job: dump mm17
           optional: true     
     script:
+        - *load 
         - *script_eval 
         - *xrdcp_script 
         - export REGION="MASSSB"
@@ -149,6 +149,7 @@ eval mm18 SR 1:
         - job: dump mm18
           optional: true     
     script:
+        - *load 
         - *script_eval 
         - *xrdcp_script 
         - export REGION="MASSSB"
