@@ -8,7 +8,6 @@
 .load: &load
     - mkdir ${ERA}
     - xrdcp -v -r ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/ ${ERA}  
-    - xrdcp -v -r ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/ ${ERA} 
 
 .script_eval16: &script_eval16
     - *load16
