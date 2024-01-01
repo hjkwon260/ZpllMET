@@ -2,7 +2,7 @@
     - xrdcp -r -v -F ${ROOT_EOS_USER}/${INPUT_DIR} .         
     - export LD_LIBRARY_PATH=""
     - jupyter nbconvert --to python ${SCRIPT_DUMP}.ipynb
-    - python3 ${SCRIPT_DUMP}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL}
+    - python3 ${SCRIPT_DUMP}.py ${ERA} ${DATE} ${CI_PROJECT_DIR}/${CHANNEL} ${REGION}
     - export PATH="$PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin"
     - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
     
@@ -19,6 +19,7 @@ dump mm16pre:
         INPUT_DIR: Run2/${DATE1}_16pre/mm/
         ERA: mm16pre
         CHANNEL: mm/    
+        REGION: ${REGION_DUMP}    
     rules:
         - if: $DUMP == 'yes'          
     script:
@@ -38,6 +39,7 @@ dump mm16post:
         INPUT_DIR: Run2/${DATE1}_16post/mm/
         ERA: mm16post
         CHANNEL: mm/    
+        REGION: ${REGION_DUMP}    
     rules:
         - if: $DUMP == 'yes'          
     script:
@@ -57,6 +59,7 @@ dump mm17:
         INPUT_DIR: Run2/${DATE1}_17/mm/
         ERA: mm17
         CHANNEL: mm/    
+        REGION: ${REGION_DUMP}    
     rules:
         - if: $DUMP == 'yes'          
     script:
@@ -76,6 +79,7 @@ dump mm18:
         INPUT_DIR: Run2/${DATE1}_18/mm/
         ERA: mm18
         CHANNEL: mm/    
+        REGION: ${REGION_DUMP}    
     rules:
         - if: $DUMP == 'yes'          
     script:
@@ -96,6 +100,7 @@ dump ee16pre:
         INPUT_DIR: Run2/${DATE1}_16pre/ee/
         ERA: ee16pre
         CHANNEL: ee/    
+        REGION: ${REGION_DUMP}    
     rules:
         - if: $DUMP == 'yes'          
     script:
@@ -115,6 +120,7 @@ dump ee16post:
         INPUT_DIR: Run2/${DATE1}_16post/ee/
         ERA: ee16post
         CHANNEL: ee/    
+        REGION: ${REGION_DUMP}    
     rules:
         - if: $DUMP == 'yes'          
     script:
@@ -134,6 +140,7 @@ dump ee17:
         INPUT_DIR: Run2/${DATE1}_17/ee/
         ERA: ee17
         CHANNEL: ee/    
+        REGION: ${REGION_DUMP}    
     rules:
         - if: $DUMP == 'yes'          
     script:
@@ -153,6 +160,7 @@ dump ee18:
         INPUT_DIR: Run2/${DATE1}_18/ee/
         ERA: ee18
         CHANNEL: ee/    
+        REGION: ${REGION_DUMP}    
     rules:
         - if: $DUMP == 'yes'          
     script:
@@ -173,6 +181,7 @@ dump em16pre:
         INPUT_DIR: Run2/${DATE1}_16pre/em/
         ERA: em16pre
         CHANNEL: em/    
+        REGION: ${REGION_DUMP}    
     rules:
         - if: $DUMP == 'yes'          
     script:
@@ -192,6 +201,7 @@ dump em16post:
         INPUT_DIR: Run2/${DATE1}_16post/em/
         ERA: em16post
         CHANNEL: em/    
+        REGION: ${REGION_DUMP}    
     rules:
         - if: $DUMP == 'yes'          
     script:
@@ -211,6 +221,7 @@ dump em17:
         INPUT_DIR: Run2/${DATE1}_17/em/
         ERA: em17
         CHANNEL: em/    
+        REGION: ${REGION_DUMP}    
     rules:
         - if: $DUMP == 'yes'          
     script:
@@ -230,6 +241,7 @@ dump em18:
         INPUT_DIR: Run2/${DATE1}_18/em/
         ERA: em18
         CHANNEL: em/    
+        REGION: ${REGION_DUMP}    
     rules:
         - if: $DUMP == 'yes'          
     script:
