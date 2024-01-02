@@ -40,7 +40,7 @@
     - kdestroy
 
 include:
-  - local: '/templates/.evaluate-template-sr-2.yml'
+  - local: '/templates/.evaluate-template-sb.yml'
 
 ########## stage: evaluate ############
 #####-- VR --#####
