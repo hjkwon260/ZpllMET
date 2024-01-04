@@ -17,6 +17,8 @@
     - export LD_LIBRARY_PATH=""    
     - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
     - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART}
+    - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART2}
+    - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART3}
     - export PATH="$PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin"
     - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
 
@@ -27,6 +29,8 @@
     - export LD_LIBRARY_PATH=""    
     - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
     - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART}
+    - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART2}
+    - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART3}
     - export PATH="$PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin"
     - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
 
@@ -57,6 +61,8 @@ eval mm16 VR 1:
         ERA: mm16
         REGION: VR
         PART: one
+        PART2: two
+        PART3: three
     rules:    
         - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
@@ -89,6 +95,8 @@ eval mm17 VR 1:
         ERA: mm17
         REGION: VR
         PART: one
+        PART2: two
+        PART3: three
     rules:    
         - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
@@ -121,6 +129,8 @@ eval mm18 VR 1:
         ERA: mm18
         REGION: VR
         PART: one
+        PART2: two
+        PART3: three
     rules:    
         - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
@@ -154,6 +164,8 @@ eval ee16 VR 1:
         ERA: ee16
         REGION: VR
         PART: one
+        PART2: two
+        PART3: three
     rules:    
         - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
@@ -186,6 +198,8 @@ eval ee17 VR 1:
         ERA: ee17
         REGION: VR
         PART: one
+        PART2: two
+        PART3: three
     rules:    
         - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
@@ -218,6 +232,8 @@ eval ee18 VR 1:
         ERA: ee18
         REGION: VR
         PART: one
+        PART2: two
+        PART3: three
     rules:    
         - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
@@ -251,6 +267,8 @@ eval em16 VR 1:
         ERA: em16
         REGION: VR
         PART: one
+        PART2: two
+        PART3: three
     rules:    
         - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
@@ -283,6 +301,8 @@ eval em17 VR 1:
         ERA: em17
         REGION: VR
         PART: one
+        PART2: two
+        PART3: three
     rules:    
         - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
@@ -315,6 +335,8 @@ eval em18 VR 1:
         ERA: em18
         REGION: VR
         PART: one
+        PART2: two
+        PART3: three
     rules:    
         - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'yes' && $ONLY_SR == 'no'
           when: on_success
@@ -347,7 +369,9 @@ eval mm16 VR 3:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm16
         REGION: VR
-        PART: three
+        PART: four
+        PART2: five
+        PART3: six
     rules:    
         - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
@@ -371,7 +395,9 @@ eval mm17 VR 3:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm17
         REGION: VR
-        PART: three
+        PART: one
+        PART2: two
+        PART3: three
     rules:    
         - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
@@ -395,7 +421,9 @@ eval mm18 VR 3:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm18
         REGION: VR
-        PART: three
+        PART: four
+        PART2: five
+        PART3: six
     rules:    
         - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
@@ -420,7 +448,9 @@ eval ee16 VR 3:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee16
         REGION: VR
-        PART: three
+        PART: four
+        PART2: five
+        PART3: six
     rules:    
         - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
@@ -444,7 +474,9 @@ eval ee17 VR 3:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee17
         REGION: VR
-        PART: three
+        PART: four
+        PART2: five
+        PART3: six
     rules:    
         - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
@@ -468,7 +500,9 @@ eval ee18 VR 3:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee18
         REGION: VR
-        PART: three
+        PART: four
+        PART2: five
+        PART3: six
     rules:    
         - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
@@ -493,7 +527,9 @@ eval em16 VR 3:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: em16
         REGION: VR
-        PART: three
+        PART: four
+        PART2: five
+        PART3: six
     rules:    
         - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
@@ -517,7 +553,9 @@ eval em17 VR 3:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: em17
         REGION: VR
-        PART: three
+        PART: four
+        PART2: five
+        PART3: six
     rules:    
         - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
@@ -541,7 +579,246 @@ eval em18 VR 3:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: em18
         REGION: VR
-        PART: three
+        PART: four
+        PART2: five
+        PART3: six
+    rules:    
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always
+    needs:
+        - job: eval em18 VR 1
+          optional: true     
+    script:
+        - *script_eval 
+        - *xrdcp_script 
+
+##-- mm --##
+eval mm16 VR 4:
+    stage: evaluate-vr-2
+    tags:
+        - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: ${INPUT_DUMP}
+        ERA: mm16
+        REGION: VR
+        PART: seven
+        PART2: eight
+        PART3: nine
+    rules:    
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always
+    needs:
+        - job: eval mm16 VR 1
+          optional: true          
+    script:
+        - *script_eval16 
+        - *xrdcp_script 
+
+eval mm17 VR 4:
+    stage: evaluate-vr-2
+    tags:
+        - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: ${INPUT_DUMP}
+        ERA: mm17
+        REGION: VR
+        PART: seven
+        PART2: eight
+        PART3: nine
+    rules:    
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always
+    needs:
+        - job: eval mm17 VR 1
+          optional: true     
+    script:
+        - *script_eval 
+        - *xrdcp_script
+
+eval mm18 VR 4:
+    stage: evaluate-vr-2
+    tags:
+        - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: ${INPUT_DUMP}
+        ERA: mm18
+        REGION: VR
+        PART: seven
+        PART2: eight
+        PART3: nine
+    rules:    
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always
+    needs:
+        - job: eval mm18 VR 1
+          optional: true     
+    script:
+        - *script_eval 
+        - *xrdcp_script   
+
+##-- ee --##        
+eval ee16 VR 4:
+    stage: evaluate-vr-2
+    tags:
+        - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: ${INPUT_DUMP}
+        ERA: ee16
+        REGION: VR
+        PART: seven
+        PART2: eight
+        PART3: nine
+    rules:    
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always
+    needs:
+        - job: eval ee16 VR 1
+          optional: true      
+    script:
+        - *script_eval16 
+        - *xrdcp_script 
+
+eval ee17 VR 4:
+    stage: evaluate-vr-2
+    tags:
+        - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: ${INPUT_DUMP}
+        ERA: ee17
+        REGION: VR
+        PART: seven
+        PART2: eight
+        PART3: nine
+    rules:    
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always
+    needs:
+        - job: eval ee17 VR 1
+          optional: true    
+    script:
+        - *script_eval 
+        - *xrdcp_script 
+
+eval ee18 VR 4:
+    stage: evaluate-vr-2
+    tags:
+        - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: ${INPUT_DUMP}
+        ERA: ee18
+        REGION: VR
+        PART: seven
+        PART2: eight
+        PART3: nine
+    rules:    
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always
+    needs:
+        - job: eval ee18 VR 1
+          optional: true    
+    script:
+        - *script_eval 
+        - *xrdcp_script 
+
+##-- em --##
+eval em16 VR 4:
+    stage: evaluate-vr-2
+    tags:
+        - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: ${INPUT_DUMP}
+        ERA: em16
+        REGION: VR
+        PART: seven
+        PART2: eight
+        PART3: nine
+    rules:    
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always
+    needs:
+        - job: eval em16 VR 1
+          optional: true       
+    script:
+        - *script_eval16 
+        - *xrdcp_script 
+
+eval em17 VR 4:
+    stage: evaluate-vr-2
+    tags:
+        - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: ${INPUT_DUMP}
+        ERA: em17
+        REGION: VR
+        PART: seven
+        PART2: eight
+        PART3: nine
+    rules:    
+        - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: on_success
+        - if: $EVAL_VR == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
+          when: always
+    needs:
+        - job: eval em17 VR 1
+          optional: true     
+    script:
+        - *script_eval 
+        - *xrdcp_script
+
+eval em18 VR 4:
+    stage: evaluate-vr-2
+    tags:
+        - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
+    variables:
+        DATE: ${DATE1}
+        INPUT_DIR: ${INPUT_DUMP}
+        ERA: em18
+        REGION: VR
+        PART: seven
+        PART2: eight
+        PART3: nine
     rules:    
         - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
