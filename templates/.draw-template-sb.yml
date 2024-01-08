@@ -11,31 +11,28 @@
     - ls 
     - ls ${ERA}
 
-.script_eval16: &script_eval16
+.script_draw16: &script_draw16
     - echo $PYTHONPATH
-    - export LD_LIBRARY_PATH=""    
-    - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-    - python3 ${SCRIPT_EVAL}.py ./ ${ERA} ${REGION} ${PART}
+    - export LD_LIBRARY_PATH=""      
+    - jupyter nbconvert --to python ${SCRIPT_DRAW}.ipynb 
+    - python3 ${SCRIPT_DRAW}.py ${ERA} ${DATE} ${CI_PROJECT_DIR} ${PART} ${REGION_DRAW}
     - export PATH="$PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin"
     - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
 
-
-.script_eval: &script_eval
+.script_draw: &script_draw
     - echo $PYTHONPATH
-    - export LD_LIBRARY_PATH=""    
-    - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-    - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART}
+    - export LD_LIBRARY_PATH=""      
+    - jupyter nbconvert --to python ${SCRIPT_DRAW}.ipynb 
+    - python3 ${SCRIPT_DRAW}.py ${ERA} ${DATE} ${CI_PROJECT_DIR} ${PART} ${REGION_DRAW}
     - export PATH="$PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin"
     - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
 
 .xrdcp_script: &xrdcp_script
-    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/sys
-    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/root_files
-    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/AN
-    - xrdcp -r Outputs/DNN/${ERA}/${REGION}/sys ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/sys
-    - xrdcp -r Outputs/DNN/${ERA}/${REGION}/root_files ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/root_files
-    - xrdcp -r Outputs/DNN/${ERA}/${REGION}/AN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/AN
-    - xrdcp Outputs/DNN/${ERA}/${REGION}/*.pdf ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/
+    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DRAW/${ERA}/${REGION_DRAW}/sys
+    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DRAW/${ERA}/${REGION_DRAW}/AN
+    - xrdcp -r ${DATE}/Presel/DRAW/${ERA}/${REGION_DRAW}/sys ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DRAW/${ERA}/${REGION_DRAW}/sys
+    - xrdcp -r ${DATE}/Presel/DRAW/${ERA}/${REGION_DRAW}/AN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DRAW/${ERA}/${REGION_DRAW}/AN
+    - xrdcp  ${DATE}/Presel/DRAW/${ERA}/${REGION_DRAW}/*.pdf ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DRAW/${ERA}/${REGION_DRAW}/
     # - kdestroy
 
 include:
@@ -66,8 +63,10 @@ draw mm16:
         - job: dump mm16post
           optional: true
     script:
+        - *load16
         - *script_draw16 
         - *xrdcp_script
+        - kdestroy
 
 draw mm17:
     stage: draw
@@ -90,8 +89,10 @@ draw mm17:
         - job: dump mm17
           optional: true      
     script:
+        - *load
         - *script_draw 
         - *xrdcp_script
+        - kdestroy
 
 draw mm18:
     stage: draw
@@ -114,8 +115,10 @@ draw mm18:
         - job: dump mm18
           optional: true      
     script:
+        - *load
         - *script_draw 
         - *xrdcp_script
+        - kdestroy
 
 ##-- ee --##        
 draw ee16:
@@ -141,8 +144,10 @@ draw ee16:
         - job: dump ee16post
           optional: true
     script:
+        - *load16
         - *script_draw16 
         - *xrdcp_script
+        - kdestroy
 
 draw ee17:
     stage: draw
@@ -165,8 +170,10 @@ draw ee17:
         - job: dump ee17
           optional: true      
     script:
+        - *load
         - *script_draw 
         - *xrdcp_script
+        - kdestroy
 
 draw ee18:
     stage: draw
@@ -189,8 +196,10 @@ draw ee18:
         - job: dump ee18
           optional: true      
     script:
+        - *load
         - *script_draw 
         - *xrdcp_script
+        - kdestroy
 
 # ##-- em --##
 # draw em16:
