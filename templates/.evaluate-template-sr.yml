@@ -45,7 +45,7 @@
     - kdestroy
 
 include:
-  - local: '/templates/.draw-template.yml'
+  - local: '/templates/.draw-template-sb.yml'
 
 ########## stage: evaluate ############
 #####-- SR --#####

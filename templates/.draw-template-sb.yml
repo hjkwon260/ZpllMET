@@ -1,45 +1,42 @@
 .load16: &load16
-    - mkdir ${ERA}pre
-    - mkdir ${ERA}post
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}pre/nested_dic_df_*.pkl ${ERA}pre  
-    # - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}pre/nested_dic_df_TTCR.pkl ${ERA}pre  
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}post/nested_dic_df_*.pkl ${ERA}post  
-    # - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}post/nested_dic_df_TTCR.pkl ${ERA}post
+    # - mkdir ${ERA}pre
+    # - mkdir ${ERA}post
+    - xrdcp -v -r ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}pre/ .  
+    - xrdcp -v -r ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}post/ .
+    - ls ${ERA}pre 
 
 .load: &load
-    - mkdir ${ERA}
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/nested_dic_df_*.pkl ${ERA}  
-    - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/nested_dic_df_*.pkl ${ERA} 
+    # - mkdir ${ERA}
+    - xrdcp -v -r ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/ . 
+    - ls 
+    - ls ${ERA}
 
-.script_draw16: &script_draw16
-    - *load16
-    # - source /cvmfs/sft.cern.ch/lcg/views/LCG_102b_swan/x86_64-centos7-gcc11-opt/setup.sh    
-    # - source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc8-opt/setup.sh
+.script_eval16: &script_eval16
     - echo $PYTHONPATH
-    - export LD_LIBRARY_PATH=""      
-    - jupyter nbconvert --to python ${SCRIPT_DRAW}.ipynb 
-    - python3 ${SCRIPT_DRAW}.py ${ERA} ${DATE} ${CI_PROJECT_DIR} ${PART} ${REGION_DRAW}
+    - export LD_LIBRARY_PATH=""    
+    - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+    - python3 ${SCRIPT_EVAL}.py ./ ${ERA} ${REGION} ${PART}
     - export PATH="$PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin"
     - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
-    # - xrdcp -r -F ${DATE}/ ${ROOT_EOS_USER}/Run2/Preselection
-    # - kdestroy 
 
-.script_draw: &script_draw
-    - *load
+
+.script_eval: &script_eval
     - echo $PYTHONPATH
-    - export LD_LIBRARY_PATH=""      
-    - jupyter nbconvert --to python ${SCRIPT_DRAW}.ipynb 
-    - python3 ${SCRIPT_DRAW}.py ${ERA} ${DATE} ${CI_PROJECT_DIR} ${PART} ${REGION_DRAW}
+    - export LD_LIBRARY_PATH=""    
+    - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
+    - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART}
     - export PATH="$PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin"
     - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
 
 .xrdcp_script: &xrdcp_script
-    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DRAW/${ERA}/${REGION_DRAW}/sys
-    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DRAW/${ERA}/${REGION_DRAW}/AN
-    - xrdcp -r ${DATE}/Presel/DRAW/${ERA}/${REGION_DRAW}/sys ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DRAW/${ERA}/${REGION_DRAW}/sys
-    - xrdcp -r ${DATE}/Presel/DRAW/${ERA}/${REGION_DRAW}/AN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DRAW/${ERA}/${REGION_DRAW}/AN
-    - xrdcp  ${DATE}/Presel/DRAW/${ERA}/${REGION_DRAW}/*.pdf ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DRAW/${ERA}/${REGION_DRAW}/
-    - kdestroy
+    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/sys
+    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/root_files
+    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/AN
+    - xrdcp -r Outputs/DNN/${ERA}/${REGION}/sys ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/sys
+    - xrdcp -r Outputs/DNN/${ERA}/${REGION}/root_files ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/root_files
+    - xrdcp -r Outputs/DNN/${ERA}/${REGION}/AN ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/AN
+    - xrdcp Outputs/DNN/${ERA}/${REGION}/*.pdf ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/DNN/${ERA}/${REGION}/
+    # - kdestroy
 
 include:
   - local: '/templates/.draw-template.yml'    
@@ -56,12 +53,12 @@ draw mm16:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm16
-        PART: dummy
+        PART: DYMET
         REGION: ${REGION_DRAW}
     rules:
-        - if: $DRAW == 'yes' && $DUMP == 'yes'
+        - if: $DRAW_SB == 'yes' && $DUMP == 'yes'
           when: on_success
-        - if: $DRAW == 'yes' && $DUMP == 'no'
+        - if: $DRAW_SB == 'yes' && $DUMP == 'no'
           when: always
     needs:
         - job: dump mm16pre
@@ -82,12 +79,12 @@ draw mm17:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm17
-        PART: dummy
+        PART: DYMET
         REGION: ${REGION_DRAW}
     rules:
-        - if: $DRAW == 'yes' && $DUMP == 'yes'
+        - if: $DRAW_SB == 'yes' && $DUMP == 'yes'
           when: on_success
-        - if: $DRAW == 'yes' && $DUMP == 'no'
+        - if: $DRAW_SB == 'yes' && $DUMP == 'no'
           when: always
     needs:
         - job: dump mm17
@@ -106,12 +103,12 @@ draw mm18:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm18
-        PART: dummy
+        PART: DYMET
         REGION: ${REGION_DRAW}
     rules:
-        - if: $DRAW == 'yes' && $DUMP == 'yes'
+        - if: $DRAW_SB == 'yes' && $DUMP == 'yes'
           when: on_success
-        - if: $DRAW == 'yes' && $DUMP == 'no'
+        - if: $DRAW_SB == 'yes' && $DUMP == 'no'
           when: always
     needs:
         - job: dump mm18
@@ -131,12 +128,12 @@ draw ee16:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee16
-        PART: dummy
+        PART: DYMET
         REGION: ${REGION_DRAW}
     rules:
-        - if: $DRAW == 'yes' && $DUMP == 'yes'
+        - if: $DRAW_SB == 'yes' && $DUMP == 'yes'
           when: on_success
-        - if: $DRAW == 'yes' && $DUMP == 'no'
+        - if: $DRAW_SB == 'yes' && $DUMP == 'no'
           when: always
     needs:
         - job: dump ee16pre
@@ -157,12 +154,12 @@ draw ee17:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee17
-        PART: dummy
+        PART: DYMET
         REGION: ${REGION_DRAW}
     rules:
-        - if: $DRAW == 'yes' && $DUMP == 'yes'
+        - if: $DRAW_SB == 'yes' && $DUMP == 'yes'
           when: on_success
-        - if: $DRAW == 'yes' && $DUMP == 'no'
+        - if: $DRAW_SB == 'yes' && $DUMP == 'no'
           when: always
     needs:
         - job: dump ee17
@@ -181,12 +178,12 @@ draw ee18:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee18
-        PART: dummy
+        PART: DYMET
         REGION: ${REGION_DRAW}
     rules:
-        - if: $DRAW == 'yes' && $DUMP == 'yes'
+        - if: $DRAW_SB == 'yes' && $DUMP == 'yes'
           when: on_success
-        - if: $DRAW == 'yes' && $DUMP == 'no'
+        - if: $DRAW_SB == 'yes' && $DUMP == 'no'
           when: always
     needs:
         - job: dump ee18
@@ -195,125 +192,125 @@ draw ee18:
         - *script_draw 
         - *xrdcp_script
 
-##-- em --##
-draw em16:
-    stage: draw
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9 
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: em16
-        PART: dummy
-        REGION: ${REGION_DRAW}
-    rules:
-        - if: $DRAW == 'yes' && $DUMP == 'yes'
-          when: on_success
-        - if: $DRAW == 'yes' && $DUMP == 'no'
-          when: always
-    needs:
-        - job: dump em16pre
-          optional: true      
-        - job: dump em16post
-          optional: true
-    script:
-        - *script_draw16 
-        - *xrdcp_script
+# ##-- em --##
+# draw em16:
+#     stage: draw
+#     tags:
+#         - cvmfs
+#     image:
+#         name: gitlab-registry.cern.ch/hkwon/notebooks:alma9 
+#     variables:
+#         DATE: ${DATE1}
+#         INPUT_DIR: ${INPUT_DUMP}
+#         ERA: em16
+#         PART: dummy
+#         REGION: ${REGION_DRAW}
+#     rules:
+#         - if: $DRAW == 'yes' && $DUMP == 'yes'
+#           when: on_success
+#         - if: $DRAW == 'yes' && $DUMP == 'no'
+#           when: always
+#     needs:
+#         - job: dump em16pre
+#           optional: true      
+#         - job: dump em16post
+#           optional: true
+#     script:
+#         - *script_draw16 
+#         - *xrdcp_script
 
-draw em17 1:
-    stage: draw
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9 
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: em17
-        PART: one
-        REGION: ${REGION_DRAW}
-    rules:
-        - if: $DRAW == 'yes' && $DUMP == 'yes'
-          when: on_success
-        - if: $DRAW == 'yes' && $DUMP == 'no'
-          when: always
-    needs:
-        - job: dump em17
-          optional: true      
-    script:
-        - *script_draw 
-        - *xrdcp_script
+# draw em17 1:
+#     stage: draw
+#     tags:
+#         - cvmfs
+#     image:
+#         name: gitlab-registry.cern.ch/hkwon/notebooks:alma9 
+#     variables:
+#         DATE: ${DATE1}
+#         INPUT_DIR: ${INPUT_DUMP}
+#         ERA: em17
+#         PART: one
+#         REGION: ${REGION_DRAW}
+#     rules:
+#         - if: $DRAW == 'yes' && $DUMP == 'yes'
+#           when: on_success
+#         - if: $DRAW == 'yes' && $DUMP == 'no'
+#           when: always
+#     needs:
+#         - job: dump em17
+#           optional: true      
+#     script:
+#         - *script_draw 
+#         - *xrdcp_script
 
-draw em17 2:
-    stage: draw
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9 
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: em17
-        PART: two
-        REGION: ${REGION_DRAW}
-    rules:
-        - if: $DRAW == 'yes' && $DUMP == 'yes'
-          when: on_success
-        - if: $DRAW == 'yes' && $DUMP == 'no'
-          when: always
-    needs:
-        - job: dump em17
-          optional: true      
-    script:
-        - *script_draw 
-        - *xrdcp_script
+# draw em17 2:
+#     stage: draw
+#     tags:
+#         - cvmfs
+#     image:
+#         name: gitlab-registry.cern.ch/hkwon/notebooks:alma9 
+#     variables:
+#         DATE: ${DATE1}
+#         INPUT_DIR: ${INPUT_DUMP}
+#         ERA: em17
+#         PART: two
+#         REGION: ${REGION_DRAW}
+#     rules:
+#         - if: $DRAW == 'yes' && $DUMP == 'yes'
+#           when: on_success
+#         - if: $DRAW == 'yes' && $DUMP == 'no'
+#           when: always
+#     needs:
+#         - job: dump em17
+#           optional: true      
+#     script:
+#         - *script_draw 
+#         - *xrdcp_script
 
-draw em18 1:
-    stage: draw
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9 
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: em18
-        PART: one
-        REGION: ${REGION_DRAW}
-    rules:
-        - if: $DRAW == 'yes' && $DUMP == 'yes'
-          when: on_success
-        - if: $DRAW == 'yes' && $DUMP == 'no'
-          when: always
-    needs:
-        - job: dump em18
-          optional: true      
-    script:
-        - *script_draw 
-        - *xrdcp_script
+# draw em18 1:
+#     stage: draw
+#     tags:
+#         - cvmfs
+#     image:
+#         name: gitlab-registry.cern.ch/hkwon/notebooks:alma9 
+#     variables:
+#         DATE: ${DATE1}
+#         INPUT_DIR: ${INPUT_DUMP}
+#         ERA: em18
+#         PART: one
+#         REGION: ${REGION_DRAW}
+#     rules:
+#         - if: $DRAW == 'yes' && $DUMP == 'yes'
+#           when: on_success
+#         - if: $DRAW == 'yes' && $DUMP == 'no'
+#           when: always
+#     needs:
+#         - job: dump em18
+#           optional: true      
+#     script:
+#         - *script_draw 
+#         - *xrdcp_script
 
-draw em18 2:
-    stage: draw
-    tags:
-        - cvmfs
-    image:
-        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9 
-    variables:
-        DATE: ${DATE1}
-        INPUT_DIR: ${INPUT_DUMP}
-        ERA: em18
-        PART: two
-        REGION: ${REGION_DRAW}
-    rules:
-        - if: $DRAW == 'yes' && $DUMP == 'yes'
-          when: on_success
-        - if: $DRAW == 'yes' && $DUMP == 'no'
-          when: always
-    needs:
-        - job: dump em18
-          optional: true      
-    script:
-        - *script_draw 
-        - *xrdcp_script
+# draw em18 2:
+#     stage: draw
+#     tags:
+#         - cvmfs
+#     image:
+#         name: gitlab-registry.cern.ch/hkwon/notebooks:alma9 
+#     variables:
+#         DATE: ${DATE1}
+#         INPUT_DIR: ${INPUT_DUMP}
+#         ERA: em18
+#         PART: two
+#         REGION: ${REGION_DRAW}
+#     rules:
+#         - if: $DRAW == 'yes' && $DUMP == 'yes'
+#           when: on_success
+#         - if: $DRAW == 'yes' && $DUMP == 'no'
+#           when: always
+#     needs:
+#         - job: dump em18
+#           optional: true      
+#     script:
+#         - *script_draw 
+#         - *xrdcp_script

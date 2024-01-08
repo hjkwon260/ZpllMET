@@ -90,7 +90,7 @@ def get_list_dic(INPUTDIR, ERA, region):
     elif region == "METSB":
         region_list = ["METSB"]    
     elif region == "MASSnoMETSB":
-        region_list = ["METSB"]
+        region_list = ["MASSnoMETSB"]
     else:
         print("WARNING: check if REGION valid")
     list_nested_dic_df = []
