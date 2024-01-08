@@ -88,6 +88,8 @@ def get_list_dic(INPUTDIR, ERA, region):
     elif region == "MASSSB":
         region_list = ["MASSSB"]
     elif region == "METSB":
+        region_list = ["METSB"]    
+    elif region == "MASSnoMETSB":
         region_list = ["METSB"]
     else:
         print("WARNING: check if REGION valid")
