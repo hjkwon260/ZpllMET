@@ -1,6 +1,6 @@
 variables: 
-    DATE1: 20231219GEv1SBv3
-    # DATE1: 20231214GEv1
+    # DATE1: 20231219GEv1SBv3
+    DATE1: 20231214GEv1
     CMS_PATH: /cvmfs/cms.cern.ch
     CMSSW_RELEASE: CMSSW_10_2_13
     CMSSW_ARCH: slc7_amd64_gcc700
@@ -11,8 +11,8 @@ variables:
     SCRIPT_DRAW: Draw_v1  
     SCRIPT_SYST: SystematicPlots_v2
     DUMP: 'no'
-    DRAW: 'no'
-    DRAW_SB: 'yes'
+    DRAW: 'yes'
+    DRAW_SB: 'no'
     EVAL: 'no'
     EVAL_VR: 'no'
     EVAL_SB: 'no'
@@ -23,7 +23,7 @@ variables:
     ONLY_BENCHMARK: 'no'
     ONLY_SR: 'no' # syst
     REGION_DUMP: 'SB'
-    REGION_DRAW: 'MASSnoMETSB'
+    REGION_DRAW: 'SR'
     INPUT_DUMP: Run2/Preselection/${DATE1}/DUMP/
     INPUT_DNN: Run2/Preselection/${DATE1}/DNN/
     INPUT_SYST: Run2/Preselection/${DATE1}/SYST/
