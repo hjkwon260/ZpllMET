@@ -40,7 +40,7 @@ include:
 
 ########## stage: draw ############
 ##-- mm --##
-draw mm16:
+draw mm16 SB:
     stage: draw
     tags:
         - cvmfs
@@ -68,7 +68,7 @@ draw mm16:
         - *xrdcp_script
         - kdestroy
 
-draw mm17:
+draw mm17 SB:
     stage: draw
     tags:
         - cvmfs
@@ -94,7 +94,7 @@ draw mm17:
         - *xrdcp_script
         - kdestroy
 
-draw mm18:
+draw mm18 SB:
     stage: draw
     tags:
         - cvmfs
@@ -121,7 +121,7 @@ draw mm18:
         - kdestroy
 
 ##-- ee --##        
-draw ee16:
+draw ee16 SB:
     stage: draw
     tags:
         - cvmfs
@@ -149,7 +149,7 @@ draw ee16:
         - *xrdcp_script
         - kdestroy
 
-draw ee17:
+draw ee17 SB:
     stage: draw
     tags:
         - cvmfs
@@ -175,7 +175,7 @@ draw ee17:
         - *xrdcp_script
         - kdestroy
 
-draw ee18:
+draw ee18 SB:
     stage: draw
     tags:
         - cvmfs
