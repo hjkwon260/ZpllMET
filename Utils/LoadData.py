@@ -88,7 +88,7 @@ def get_list_dic(INPUTDIR, ERA, region):
     elif region == "MASSSB":
         region_list = ["MASSSB"]
     elif region == "METSB":
-        region_list = ["METSB"]    
+        region_list = ["METSB", "SR1"] #temp    
     elif region == "MASSnoMETSB":
         region_list = ["MASSnoMETSB"]
     else:
