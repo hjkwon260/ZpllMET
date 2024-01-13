@@ -44,7 +44,7 @@ include:
 ########## stage: evaluate ############
 #####-- SR --#####
 ##-- mm --##
-eval mm16 SR 1:
+eval mm16 SB 1:
     stage: evaluate-sr-1
     tags:
         - cvmfs
@@ -83,7 +83,7 @@ eval mm16 SR 1:
         # - *xrdcp_script 
         - kdestroy
 
-eval mm17 SR 1:
+eval mm17 SB 1:
     stage: evaluate-sr-1
     tags:
         - cvmfs
@@ -120,7 +120,7 @@ eval mm17 SR 1:
         # - *xrdcp_script 
         - kdestroy
 
-eval mm18 SR 1:
+eval mm18 SB 1:
     stage: evaluate-sr-1
     tags:
         - cvmfs
@@ -158,7 +158,7 @@ eval mm18 SR 1:
         - kdestroy        
 
 ##-- ee --##
-eval ee16 SR 1:
+eval ee16 SB 1:
     stage: evaluate-sr-1
     tags:
         - cvmfs
@@ -194,7 +194,7 @@ eval ee16 SR 1:
         - *xrdcp_script 
         - kdestroy        
 
-eval ee17 SR 1:
+eval ee17 SB 1:
     stage: evaluate-sr-1
     tags:
         - cvmfs
@@ -228,7 +228,7 @@ eval ee17 SR 1:
         - *xrdcp_script 
         - kdestroy        
 
-eval ee18 SR 1:
+eval ee18 SB 1:
     stage: evaluate-sr-1
     tags:
         - cvmfs
@@ -263,7 +263,7 @@ eval ee18 SR 1:
         - kdestroy        
 
 ##-- em --##
-eval em16 SR 1:
+eval em16 SB 1:
     stage: evaluate-sr-1
     tags:
         - cvmfs
@@ -302,7 +302,7 @@ eval em16 SR 1:
         - *xrdcp_script 
         - kdestroy 
 
-eval em17 SR 1:
+eval em17 SB 1:
     stage: evaluate-sr-1
     tags:
         - cvmfs
@@ -339,7 +339,7 @@ eval em17 SR 1:
         - *xrdcp_script 
         - kdestroy
 
-eval em18 SR 1:
+eval em18 SB 1:
     stage: evaluate-sr-1
     tags:
         - cvmfs
