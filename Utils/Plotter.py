@@ -275,7 +275,8 @@ class HistStack(object):
                 sys_comb_down += b
                 sys_down = np.divide(sys_comb_down, totsys_down, out=np.zeros(totsys_down.shape, dtype=float), where=totsys_down!=0)
                 
-                gerr = rt.TGraphAsymmErrors(self.nbin, np.array(x_cen), np.ones(self.nbin), xl, xh, sys_up, sys_down) # flipped since MC is denominator
+                # gerr = rt.TGraphAsymmErrors(self.nbin, np.array(x_cen), np.ones(self.nbin), xl, xh, sys_up, sys_down) # flipped since MC is denominator
+                gerr = rt.TGraphAsymmErrors(self.nbin, np.array(x_cen), np.ones(self.nbin), xl, xh, sys_down, sys_up) # changed 1301
                 gerr.SetLineWidth(0)
                 gerr.SetLineColor(0)        
                 gerr.SetFillColor(i+2)
