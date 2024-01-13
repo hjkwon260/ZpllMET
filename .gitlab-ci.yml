@@ -12,15 +12,15 @@ variables:
     SCRIPT_SYST: SystematicPlots_v2
     DUMP: 'no'
     DRAW: 'no'
-    DRAW_SB: 'yes'
+    DRAW_SB: 'no'
     EVAL: 'no'
     EVAL_VR: 'no'
-    EVAL_SB: 'no'
+    EVAL_SB: 'yes'
     SYST: "no"
     IMPACT: "no"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
-    ONLY_BENCHMARK: 'no'
+    ONLY_BENCHMARK: 'yes'
     ONLY_SR: 'no' # syst
     REGION_DUMP: 'SB'
     REGION_DRAW: 'METSB'
