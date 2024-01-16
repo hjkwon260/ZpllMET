@@ -10,10 +10,10 @@ variables:
     SCRIPT_DUMP: Dump_v2  
     SCRIPT_DRAW: Draw_v1  
     SCRIPT_SYST: SystematicPlots_v2
-    DUMP: 'yes'
+    DUMP: 'no'
     DRAW: 'no'
     DRAW_SB: 'no'
-    EVAL: 'no'
+    EVAL: 'yes'
     EVAL_VR: 'no'
     EVAL_SB: 'no'
     SYST: "no"
