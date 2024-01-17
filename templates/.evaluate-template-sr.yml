@@ -16,7 +16,7 @@
     - echo $PYTHONPATH
     - export LD_LIBRARY_PATH=""    
     - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-    - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART1}
+    - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART}
     - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART2}
     - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART3}
     - export PATH="$PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin"
@@ -28,7 +28,7 @@
     - echo $PYTHONPATH
     - export LD_LIBRARY_PATH=""    
     - jupyter nbconvert --to python ${SCRIPT_EVAL}.ipynb
-    - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART1}
+    - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART}
     - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART2}
     - python3 ${SCRIPT_EVAL}.py . ${ERA} ${REGION} ${PART3}
     - export PATH="$PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin"
@@ -62,7 +62,6 @@ eval mm16 SR 1:
         ERA: mm16
         REGION: SR
         PART: one
-        PART1: one
         PART2: two
         PART3: three
     rules:    
@@ -99,7 +98,6 @@ eval mm17 SR 1:
         ERA: mm17
         REGION: SR
         PART: one
-        PART1: one
         PART2: two
         PART3: three
     rules:    
@@ -134,7 +132,6 @@ eval mm18 SR 1:
         ERA: mm18
         REGION: SR
         PART: one
-        PART1: one
         PART2: two
         PART3: three
     rules:    
@@ -170,7 +167,6 @@ eval ee16 SR 1:
         ERA: ee16
         REGION: SR
         PART: one
-        PART1: one
         PART2: two
         PART3: three
     rules:    
@@ -207,7 +203,6 @@ eval ee17 SR 1:
         ERA: ee17
         REGION: SR
         PART: one
-        PART1: one
         PART2: two
         PART3: three
     rules:    
@@ -242,7 +237,6 @@ eval ee18 SR 1:
         ERA: ee18
         REGION: SR
         PART: one
-        PART1: one
         PART2: two
         PART3: three
     rules:    
@@ -278,7 +272,6 @@ eval em16 SR 1:
         ERA: em16
         REGION: SR
         PART: one
-        PART1: one
         PART2: two
         PART3: three
     rules:    
@@ -315,7 +308,6 @@ eval em17 SR 1:
         ERA: em17
         REGION: SR
         PART: one
-        PART1: one
         PART2: two
         PART3: three
     rules:    
@@ -350,7 +342,6 @@ eval em18 SR 1:
         ERA: em18
         REGION: SR
         PART: one
-        PART1: one
         PART2: two
         PART3: three
     rules:    
@@ -385,8 +376,7 @@ eval mm16 SR 3:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm16
         REGION: SR
-        PART: one
-        PART1: four
+        PART: four
         PART2: five
         PART3: six
     rules:    
@@ -412,8 +402,7 @@ eval mm17 SR 3:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm17
         REGION: SR
-        PART: one
-        PART1: four
+        PART: four
         PART2: five
         PART3: six
     rules:    
@@ -439,8 +428,7 @@ eval mm18 SR 3:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm18
         REGION: SR
-        PART: one
-        PART1: four
+        PART: four
         PART2: five
         PART3: six
     rules:    
@@ -467,8 +455,7 @@ eval ee16 SR 3:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee16
         REGION: SR
-        PART: one
-        PART1: four
+        PART: four
         PART2: five
         PART3: six
     rules:    
@@ -494,8 +481,7 @@ eval ee17 SR 3:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee17
         REGION: SR
-        PART: one
-        PART1: four
+        PART: four
         PART2: five
         PART3: six
     rules:    
@@ -521,8 +507,7 @@ eval ee18 SR 3:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee18
         REGION: SR
-        PART: one
-        PART1: four
+        PART: four
         PART2: five
         PART3: six
     rules:    
@@ -549,8 +534,7 @@ eval em16 SR 3:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: em16
         REGION: SR
-        PART: one
-        PART1: four
+        PART: four
         PART2: five
         PART3: six
     rules:    
@@ -576,8 +560,7 @@ eval em17 SR 3:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: em17
         REGION: SR
-        PART: one
-        PART1: four
+        PART: four
         PART2: five
         PART3: six
     rules:    
@@ -603,8 +586,7 @@ eval em18 SR 3:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: em18
         REGION: SR
-        PART: one
-        PART1: four
+        PART: four
         PART2: five
         PART3: six
     rules:    
@@ -631,8 +613,7 @@ eval mm16 SR 4:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm16
         REGION: SR
-        PART: one
-        PART1: seven
+        PART: seven
         PART2: eight
         PART3: nine
     rules:    
@@ -658,8 +639,7 @@ eval mm17 SR 4:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm17
         REGION: SR
-        PART: one
-        PART1: seven
+        PART: seven
         PART2: eight
         PART3: nine
     rules:    
@@ -685,8 +665,7 @@ eval mm18 SR 4:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm18
         REGION: SR
-        PART: one
-        PART1: seven
+        PART: seven
         PART2: eight
         PART3: nine
     rules:    
@@ -713,8 +692,7 @@ eval ee16 SR 4:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee16
         REGION: SR
-        PART: one
-        PART1: seven
+        PART: seven
         PART2: eight
         PART3: nine
     rules:    
@@ -740,8 +718,7 @@ eval ee17 SR 4:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee17
         REGION: SR
-        PART: one
-        PART1: seven
+        PART: seven
         PART2: eight
         PART3: nine
     rules:    
@@ -767,8 +744,7 @@ eval ee18 SR 4:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee18
         REGION: SR
-        PART: one
-        PART1: seven
+        PART: seven
         PART2: eight
         PART3: nine
     rules:    
@@ -795,8 +771,7 @@ eval em16 SR 4:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: em16
         REGION: SR
-        PART: one
-        PART1: seven
+        PART: seven
         PART2: eight
         PART3: nine
     rules:    
@@ -822,8 +797,7 @@ eval em17 SR 4:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: em17
         REGION: SR
-        PART: one
-        PART1: seven
+        PART: seven
         PART2: eight
         PART3: nine
     rules:    
@@ -849,8 +823,7 @@ eval em18 SR 4:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: em18
         REGION: SR
-        PART: one
-        PART1: seven
+        PART: seven
         PART2: eight
         PART3: nine
     rules:    
