@@ -11,9 +11,9 @@ variables:
     SCRIPT_DRAW: Draw_v1  
     SCRIPT_SYST: SystematicPlots_v2
     DUMP: 'no'
-    DRAW: 'no'
+    DRAW: 'yes'
     DRAW_SB: 'no'
-    EVAL: 'yes'
+    EVAL: 'no'
     EVAL_VR: 'no'
     EVAL_SB: 'no'
     SYST: "no"
@@ -23,7 +23,7 @@ variables:
     ONLY_BENCHMARK: 'no'
     ONLY_SR: 'no' # syst
     REGION_DUMP: 'SR'
-    REGION_DRAW: 'METSB'
+    REGION_DRAW: 'TR'
     INPUT_DUMP: Run2/Preselection/${DATE1}/DUMP/
     INPUT_DNN: Run2/Preselection/${DATE1}/DNN/
     INPUT_SYST: Run2/Preselection/${DATE1}/SYST/
