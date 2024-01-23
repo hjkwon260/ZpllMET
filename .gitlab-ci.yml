@@ -16,7 +16,7 @@ variables:
     EVAL: 'no'
     EVAL_VR: 'no'
     EVAL_SB: 'no'
-    SYST: "no"
+    SYST: "yes"
     IMPACT: "no"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
