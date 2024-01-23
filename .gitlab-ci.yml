@@ -1,6 +1,6 @@
 variables: 
-    DATE1: 20231219GEv1SBv3
-    # DATE1: 20231214GEv1
+    # DATE1: 20231219GEv1SBv3
+    DATE1: 20231214GEv1
     CMS_PATH: /cvmfs/cms.cern.ch
     CMSSW_RELEASE: CMSSW_10_2_13
     CMSSW_ARCH: slc7_amd64_gcc700
@@ -14,8 +14,8 @@ variables:
     DRAW: 'no'
     DRAW_SB: 'no'
     EVAL: 'no'
-    EVAL_VR: 'no'
-    EVAL_SB: 'yes'
+    EVAL_VR: 'yes'
+    EVAL_SB: 'no'
     SYST: "no"
     IMPACT: "no"
     LIMIT: 'no'

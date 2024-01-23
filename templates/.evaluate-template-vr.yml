@@ -395,9 +395,9 @@ eval mm17 VR 3:
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm17
         REGION: VR
-        PART: one
-        PART2: two
-        PART3: three
+        PART: four
+        PART2: five
+        PART3: six
     rules:    
         - if: $EVAL_VR == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no' && $ONLY_SR == 'no'
           when: on_success
