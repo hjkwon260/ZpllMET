@@ -294,9 +294,9 @@ eval mm16 SB 3:
         PART2: five
         PART3: six
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: eval mm16 SB 1
@@ -322,9 +322,9 @@ eval mm17 SB 3:
         PART2: five
         PART3: six
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: eval mm17 SB 1
@@ -350,9 +350,9 @@ eval mm18 SB 3:
         PART2: five
         PART3: six
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: eval mm18 SB 1
@@ -379,9 +379,9 @@ eval ee16 SB 3:
         PART2: five
         PART3: six
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: eval ee16 SB 1
@@ -407,9 +407,9 @@ eval ee17 SB 3:
         PART2: five
         PART3: six
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: eval ee17 SB 1
@@ -435,9 +435,9 @@ eval ee18 SB 3:
         PART2: five
         PART3: six
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: eval ee18 SB 1
@@ -464,9 +464,9 @@ eval mm16 SB 4:
         PART2: eight
         PART3: nine
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: eval mm16 SB 1
@@ -492,9 +492,9 @@ eval mm17 SB 4:
         PART2: eight
         PART3: nine
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: eval mm17 SB 1
@@ -520,9 +520,9 @@ eval mm18 SB 4:
         PART2: eight
         PART3: nine
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: eval mm18 SB 1
@@ -549,9 +549,9 @@ eval ee16 SB 4:
         PART2: eight
         PART3: nine
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: eval ee16 SB 1
@@ -577,9 +577,9 @@ eval ee17 SB 4:
         PART2: eight
         PART3: nine
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: eval ee17 SB 1
@@ -605,9 +605,9 @@ eval ee18 SB 4:
         PART2: eight
         PART3: nine
     rules:    
-        - if: $EVAL == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'yes' && $ONLY_BENCHMARK == 'no'
           when: on_success
-        - if: $EVAL == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
+        - if: $EVAL_SB == 'yes' && $DUMP == 'no' && $ONLY_BENCHMARK == 'no'
           when: always
     needs:
         - job: eval ee18 SB 1
