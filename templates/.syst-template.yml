@@ -54,6 +54,7 @@ syst mm16:
         - job: eval mm16 VR 2
           optional: true
     script:
+        - ls /usr/share/R/library 
         - *syst_script
         - *xrdcp_script
 
