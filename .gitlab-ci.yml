@@ -16,7 +16,7 @@ variables:
     EVAL: 'no'
     EVAL_VR: 'no'
     EVAL_SB: 'no'
-    SYST: "yes"
+    SYST: "no"
     IMPACT: "no"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
@@ -56,7 +56,7 @@ build image:
      script: 
        - echo ${CI_REGISTRY_IMAGE}
      variables:
-       TO: $CI_REGISTRY_IMAGE:alma9 # where to push resulting image
+       TO: $CI_REGISTRY_IMAGE:alma9_test # where to push resulting image
        CONTEXT_DIR: build
        FROM: gitlab-registry.cern.ch/linuxsupport/rpmci/builder-al9:latest # 08.09.23
 
