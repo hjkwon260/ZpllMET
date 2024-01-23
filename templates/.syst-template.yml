@@ -55,6 +55,8 @@ syst mm16:
           optional: true
     script:
         - ls /usr/share/R/library 
+        - ls /usr/local/lib/R/
+        - ls /usr/lib/R/library
         - *syst_script
         - *xrdcp_script
 
