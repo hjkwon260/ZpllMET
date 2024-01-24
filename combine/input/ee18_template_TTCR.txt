@@ -1,0 +1,75 @@
+imax    * number of bins
+jmax    * number of processes minus 1
+kmax    * number of nuisance parameters
+-------------------------------------------------------------------------------------------------------------------------
+shapes  * ttcr    SR/shape_v1_20230430wp80_ANv3Zp-2500_CH-345_smoothed_v1.root  signal_region/$PROCESS signal_region/$PROCESS_$SYSTEMATIC
+# shapes  * ttcr    /eos/user/h/hkwon/Run2/Preselection/20231214GEv1/SYST/em18/SR/root_files/shape_v1_20230430wp80_ANv3Zp-2500_CH-345_smoothed_v1.root  signal_region/$PROCESS signal_region/$PROCESS_$SYSTEMATIC
+
+-------------------------------------------------------------------------------------------------------------------------
+bin          ttcr  
+observation  -1            
+-------------------------------------------------------------------------------------------------------------------------
+bin                               ttcr         ttcr         ttcr         ttcr         ttcr         ttcr        ttcr    
+process                           ttbar        ww           singletop    wz           zz           dy          zp      
+process                           1            2            3            4            5            6           0               
+rate                              -1           -1           -1           -1           -1           -1          -1       
+-------------------------------------------------------------------------------------------------------------------------
+##-- Theory unc. --##
+pdf_ttbar                  shape  1            -            -            -            -            -            - 
+pdf_ww                     shape  -            1            -            -            -            -            - 
+pdf_singletop              shape  -            -            1            -            -            -            - 
+pdf_wz                     shape  -            -            -            1            -            -            - 
+pdf_zz                     shape  -            -            -            -            1            -            - 
+pdf_dy                     shape  -            -            -            -            -            1            - 
+#-- tt specific --#
+hdamp                      shape  1            -            -            -            -            -            - 
+UE                         shape  1            -            -            -            -            -            - 
+toppt                      shape  1            -            -            -            -            -            - 
+#-- norm uncertainty --#
+wz_norm                    lnN    -            -            -            1.2          -            -            -  
+ww_norm                    lnN    -            1.1          -            -            -            -            -  
+tw_norm                    lnN    -            -            1.2          -            -            -            -
+##-- Experimental unc. --##
+lumi_13TeV_correlated      lnN    1.02         1.02         1.02         1.02         1.02         1.02         1.02         
+#-- lepton --#
+# effrecoSF                shape  1            1            1            1            1            1            1
+eff_e                      shape  1            1            1            1            1            1            1 
+trig_eff                   shape  1            1            1            1            1            1            1 
+scale                      shape  1            1            1            1            1            1            1
+l1prefiring                shape  1            1            1            1            1            1            1 
+pu                         shape  1            1            1            1            1            1            1 
+#-- jet --#
+JES                        shape  1            1            1            1            1            1            1 
+JER                        shape  1            1            1            1            1            1            1 
+#-- met --#
+met                        shape  1            1            1            1            1            1            1 
+metjer                     shape  1            1            1            1            1            1            1 
+metue                      shape  1            1            1            1            1            1            1 
+#-- b tag --#
+btagSFbc18                 shape  1            1            1            1            1            1            1 
+btagSFbc_correlated        shape  1            1            1            1            1            1            1 
+btagSFlight18              shape  1            1            1            1            1            1            1 
+btagSFlight_correlated     shape  1            1            1            1            1            1            1 
+
+
+tt_norm rateParam * ttbar 1 [-5,5]
+
+# [channel] autoMCStats [gauss/poisson threshold] [include-signal = 0] [hist-mode = 1]
+* autoMCStats 100 0 1
+
+##-- place holder --##
+# dy_norm              lnN    -              -               -               1.2     -        -            -
+# gen                lnN    -              -               -               -       -        -            1
+# pdf                  lnN    -              -               -               -       -        -            1.15
+# scale                shape    -            -               -               -       -        -            1
+# QCDscale_VV       lnN    -               1.015           -               -             -              -
+# QCDscale_V        lnN    -               -               -               1.01          -              -
+# QCDscale_singlet  lnN    -               -               1.023           -             -              -
+# QCDscale_ttbar    lnN    0.965/1.023     -               -               -             -              -
+# PDF_singlet       lnN    -               -               0.943/1.035     -             -              -
+# PDF_ttbar         lnN    1.04            -               -               -             -              -
+# scale_zp          shape    -               -               -               -             -              1
+
+# tw_norm rateParam * singletop 1 [-5,5]
+# dy_normrateParam * dy 1 [-5,5]
+# ww_norm rateParam * ww 1 [-5,5]

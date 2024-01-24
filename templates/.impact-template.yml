@@ -5,7 +5,7 @@
   - if [ $ONLY_SR == "no" ]; then xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR; fi  
 
 .script_impacts: &script_impacts
-  - combineCards.py SR=em17_template_SR.txt TTCR=em17_template_VR.txt > combined_datacard.txt
+  - combineCards.py SR=${ERA}_template_SR.txt TTCR=${ERA}_template_TTCR.txt > combined_datacard.txt
   - ValidateDatacards.py combined_datacard.txt 
   - text2workspace.py -m 125 -o workspace.root combined_datacard.txt
   - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doInitialFit
@@ -40,7 +40,7 @@ include:
 #         when: on_success
 #         expire_in: 1 days
 #         paths:
-#             - ./Combine/input/impacts.pdf
+#             - ./combine/input/impacts.pdf
 #     needs:
 #         - job: syst mm16
 #           optional: true         
@@ -50,7 +50,7 @@ include:
 #         - source /cvmfs/cms.cern.ch/cmsset_default.sh
 #         - cd $HOME_DIR
 #         - cmsenv || true
-#         - cd $CI_PROJECT_DIR/Combine/input
+#         - cd $CI_PROJECT_DIR/combine/input
 #         - *load_root_files
 #         - *script_impacts
 #         - kdestroy 
@@ -77,7 +77,7 @@ include:
 #         when: on_success
 #         expire_in: 1 days
 #         paths:
-#             - ./Combine/input/impacts.pdf
+#             - ./combine/input/impacts.pdf
 #     needs:
 #         - job: syst mm17
 #           optional: true         
@@ -87,7 +87,7 @@ include:
 #         - source /cvmfs/cms.cern.ch/cmsset_default.sh
 #         - cd $HOME_DIR
 #         - cmsenv || true
-#         - cd $CI_PROJECT_DIR/Combine/input
+#         - cd $CI_PROJECT_DIR/combine/input
 #         - *load_root_files
 #         - *script_impacts
 #         - kdestroy 
@@ -114,7 +114,7 @@ include:
 #         when: on_success
 #         expire_in: 1 days
 #         paths:
-#             - ./Combine/input/impacts.pdf
+#             - ./combine/input/impacts.pdf
 #     needs:
 #         - job: syst mm18
 #           optional: true         
@@ -124,7 +124,7 @@ include:
 #         - source /cvmfs/cms.cern.ch/cmsset_default.sh
 #         - cd $HOME_DIR
 #         - cmsenv || true
-#         - cd $CI_PROJECT_DIR/Combine/input
+#         - cd $CI_PROJECT_DIR/combine/input
 #         - *load_root_files
 #         - *script_impacts
 #         - kdestroy  
@@ -152,7 +152,7 @@ include:
 #         when: on_success
 #         expire_in: 1 days
 #         paths:
-#             - ./Combine/input/impacts.pdf
+#             - ./combine/input/impacts.pdf
 #     needs:
 #         - job: syst ee16
 #           optional: true         
@@ -162,7 +162,7 @@ include:
 #         - source /cvmfs/cms.cern.ch/cmsset_default.sh
 #         - cd $HOME_DIR
 #         - cmsenv || true
-#         - cd $CI_PROJECT_DIR/Combine/input
+#         - cd $CI_PROJECT_DIR/combine/input
 #         - *load_root_files
 #         - *script_impacts
 #         - kdestroy 
@@ -189,7 +189,7 @@ include:
 #         when: on_success
 #         expire_in: 1 days
 #         paths:
-#             - ./Combine/input/impacts.pdf
+#             - ./combine/input/impacts.pdf
 #     needs:
 #         - job: syst ee17
 #           optional: true         
@@ -199,7 +199,7 @@ include:
 #         - source /cvmfs/cms.cern.ch/cmsset_default.sh
 #         - cd $HOME_DIR
 #         - cmsenv || true
-#         - cd $CI_PROJECT_DIR/Combine/input
+#         - cd $CI_PROJECT_DIR/combine/input
 #         - *load_root_files
 #         - *script_impacts
 #         - kdestroy 
@@ -226,7 +226,7 @@ include:
 #         when: on_success
 #         expire_in: 1 days
 #         paths:
-#             - ./Combine/input/impacts.pdf
+#             - ./combine/input/impacts.pdf
 #     needs:
 #         - job: syst ee18
 #           optional: true         
@@ -236,7 +236,7 @@ include:
 #         - source /cvmfs/cms.cern.ch/cmsset_default.sh
 #         - cd $HOME_DIR
 #         - cmsenv || true
-#         - cd $CI_PROJECT_DIR/Combine/input
+#         - cd $CI_PROJECT_DIR/combine/input
 #         - *load_root_files
 #         - *script_impacts
 #         - kdestroy  
@@ -264,7 +264,7 @@ include:
 #         when: on_success
 #         expire_in: 1 days
 #         paths:
-#             - ./Combine/input/impacts.pdf
+#             - ./combine/input/impacts.pdf
 #     needs:
 #         - job: syst em16
 #           optional: true         
@@ -274,7 +274,7 @@ include:
 #         - source /cvmfs/cms.cern.ch/cmsset_default.sh
 #         - cd $HOME_DIR
 #         - cmsenv || true
-#         - cd $CI_PROJECT_DIR/Combine/input
+#         - cd $CI_PROJECT_DIR/combine/input
 #         - *load_root_files
 #         - *script_impacts
 #         - kdestroy 
@@ -301,8 +301,8 @@ impact em17:
         when: on_success
         expire_in: 1 days
         paths:
-            - ./Combine/input/impacts.pdf
-            - ./Combine/input/*.json
+            - ./combine/input/impacts.pdf
+            - ./combine/input/*.json
     needs:
         - job: syst em17
           optional: true         
@@ -312,7 +312,7 @@ impact em17:
         - source /cvmfs/cms.cern.ch/cmsset_default.sh
         - cd $HOME_DIR
         - cmsenv || true
-        - cd $CI_PROJECT_DIR/Combine/input
+        - cd $CI_PROJECT_DIR/combine/input
         - *load_root_files
         - *script_impacts
         - kdestroy 
@@ -339,7 +339,7 @@ impact em17:
 #         when: on_success
 #         expire_in: 1 days
 #         paths:
-#             - ./Combine/input/impacts.pdf
+#             - ./combine/input/impacts.pdf
 #     needs:
 #         - job: syst em18
 #           optional: true         
@@ -349,7 +349,7 @@ impact em17:
 #         - source /cvmfs/cms.cern.ch/cmsset_default.sh
 #         - cd $HOME_DIR
 #         - cmsenv || true
-#         - cd $CI_PROJECT_DIR/Combine/input
+#         - cd $CI_PROJECT_DIR/combine/input
 #         - *load_root_files
 #         - *script_impacts
 #         - kdestroy         
