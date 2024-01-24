@@ -14,6 +14,11 @@
   - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --output impacts.json
   - plotImpacts.py -i impacts.json -o impacts
 
+.xrdcp_script: &xrdcp_script
+  - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/IMPACT/${ERA}/
+  - xrdcp impacts.pdf ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
+  - xrdcp *.json ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
+
 include:
   - local: '/templates/.syst-template-sb.yml'
 
@@ -54,9 +59,7 @@ impact mm16:
         - cd $CI_PROJECT_DIR/combine/input
         - *load_root_files
         - *script_impacts
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/IMPACT/${ERA}/
-        - xrdcp impacts.pdf ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
-        - xrdcp *.json ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
+        - *xrdcp_script
         - kdestroy 
 
 impact mm17:
@@ -94,6 +97,7 @@ impact mm17:
         - cd $CI_PROJECT_DIR/combine/input
         - *load_root_files
         - *script_impacts
+        - *xrdcp_script
         - kdestroy 
 
 impact mm18:
@@ -131,6 +135,7 @@ impact mm18:
         - cd $CI_PROJECT_DIR/combine/input
         - *load_root_files
         - *script_impacts
+        - *xrdcp_script
         - kdestroy  
 
 ##-- ee --##
@@ -169,6 +174,7 @@ impact ee16:
         - cd $CI_PROJECT_DIR/combine/input
         - *load_root_files
         - *script_impacts
+        - *xrdcp_script
         - kdestroy 
 
 impact ee17:
@@ -206,6 +212,7 @@ impact ee17:
         - cd $CI_PROJECT_DIR/combine/input
         - *load_root_files
         - *script_impacts
+        - *xrdcp_script
         - kdestroy 
 
 impact ee18:
@@ -243,6 +250,7 @@ impact ee18:
         - cd $CI_PROJECT_DIR/combine/input
         - *load_root_files
         - *script_impacts
+        - *xrdcp_script
         - kdestroy  
 
 ##-- em --##
@@ -281,6 +289,7 @@ impact em16:
         - cd $CI_PROJECT_DIR/combine/input
         - *load_root_files
         - *script_impacts
+        - *xrdcp_script
         - kdestroy 
 
 impact em17:
@@ -319,6 +328,7 @@ impact em17:
         - cd $CI_PROJECT_DIR/combine/input
         - *load_root_files
         - *script_impacts
+        - *xrdcp_script
         - kdestroy 
 
 impact em18:
@@ -356,4 +366,5 @@ impact em18:
         - cd $CI_PROJECT_DIR/combine/input
         - *load_root_files
         - *script_impacts
+        - *xrdcp_script
         - kdestroy         
