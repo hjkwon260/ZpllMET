@@ -18,8 +18,8 @@ variables:
     EVAL_SB: 'no'
     SYST: "no"
     SYST_SB: "no"
-    IMPACT: "no"
-    LIMIT: 'yes'
+    IMPACT: "yes"
+    LIMIT: 'no'
     DRAW_LIMIT: 'no'
     ONLY_BENCHMARK: 'no'
     ONLY_SR: 'no' # syst
