@@ -26,7 +26,7 @@ for mass in SIGNAL_MASSES:
 		filedata = file.read()
 
 	# Replace the target string
-    filedata = filedata.replace('Zp-2500_CH-345', mass)
+	filedata = filedata.replace('Zp-2500_CH-345', mass)
 
 	# Write the file out again
 	new_datacard = input_datacard.replace('.txt', '_new.txt')
