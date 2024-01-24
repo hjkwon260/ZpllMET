@@ -27,7 +27,7 @@
   - combineCards.py SRee16=ee16_template_SR.txt TTCRee16=ee16_template_TTCR.txt SRee17=ee17_template_SR.txt TTCRee17=ee17_template_TTCR.txt SRee18=ee18_template_SR.txt TTCRee18=ee18_template_TTCR.txt  SRmm16=mm16_template_SR.txt TTCRmm16=mm16_template_TTCR.txt SRmm17=mm17_template_SR.txt TTCRmm17=mm17_template_TTCR.txt SRmm18=mm18_template_SR.txt TTCRmm18=mm18_template_TTCR.txt  SRem16=em16_template_SR.txt TTCRem16=em16_template_TTCR.txt SRem17=em17_template_SR.txt TTCRem17=em17_template_TTCR.txt SRem18=em18_template_SR.txt TTCRem18=em18_template_TTCR.txt > combined_datacard.txt
 
 .script_limits: &script_limits
-    - python ${SCRIPT_LIMIT}.py
+    - python ${SCRIPT_LIMIT}.py ${ERA}
 
 .xrdcp_script: &xrdcp_script
     - xrdcp -r -v Combine/LIMIT ${ROOT_EOS_USER}/Run2/Preselection/${DATE}
