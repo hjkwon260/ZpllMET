@@ -55,7 +55,7 @@ impact mm16:
         - *load_root_files
         - *script_impacts
         - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/IMPACT/${ERA}/
-        - ./combine/input/impacts.pdf ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
+        - impacts.pdf ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
         - kdestroy 
 
 impact mm17:
