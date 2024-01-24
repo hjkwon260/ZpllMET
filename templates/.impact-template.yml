@@ -1,4 +1,5 @@
 .load_root_files: &load_root_files
+  - cd $CI_PROJECT_DIR/combine/input
   - mkdir SR
   - mkdir VR
   - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR
