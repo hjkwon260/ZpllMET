@@ -6,7 +6,7 @@ variables:
     CMSSW_ARCH: slc7_amd64_gcc700
     SCRIPT_PRESEL: Preselection_v6  
     SCRIPT_EVAL: EvaluatePNN-v5  
-    SCRIPT_LIMIT: limits_v4  
+    SCRIPT_LIMIT: limits_v1  
     SCRIPT_DUMP: Dump_v2  
     SCRIPT_DRAW: Draw_v1  
     SCRIPT_SYST: SystematicPlots_v3
