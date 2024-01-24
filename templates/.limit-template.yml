@@ -207,11 +207,11 @@ limit ee17:
         INPUT_DIR: ${INPUT_SYST}
         REGION: SR
         HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
-    # rules:    
-    #     - if: $LIMIT == 'yes' && $IMPACT == 'yes'
-    #       when: on_success
-    #     - if: $LIMIT == 'yes' && $IMPACT == 'no'
-    #       when: always
+    rules:    
+        - if: $LIMIT == 'yes' && $IMPACT == 'yes'
+          when: on_success
+        - if: $LIMIT == 'yes' && $IMPACT == 'no'
+          when: always
     artifacts:
         when: on_success
         expire_in: 1 days
