@@ -7,6 +7,8 @@
 
 .script_impacts: &script_impacts
   - combineCards.py SR=${ERA}_template_SR.txt TTCR=${ERA}_template_TTCR.txt > combined_datacard.txt
+  - ls
+  - ls SR
   # - ValidateDatacards.py combined_datacard.txt 
   - text2workspace.py -m 125 -o workspace.root combined_datacard.txt
   - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doInitialFit
