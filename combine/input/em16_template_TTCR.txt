@@ -2,7 +2,7 @@ imax    * number of bins
 jmax    * number of processes minus 1
 kmax    * number of nuisance parameters
 -------------------------------------------------------------------------------------------------------------------------
-shapes  * tt_cr VR/shape_v1_20230430wp80_ANv3Zp-2500_CH-345_smoothed_v1.root  signal_region/$PROCESS signal_region/$PROCESS_$SYSTEMATIC
+shapes  * tt_cr VR/root_files/shape_v1_20230430wp80_ANv3Zp-2500_CH-345_smoothed_v1.root  signal_region/$PROCESS signal_region/$PROCESS_$SYSTEMATIC
 # shapes  * tt_cr /eos/user/h/hkwon/Run2/Preselection/20231214GEv1/SYST/em18/VR/root_files/shape_v1_20230430wp80_ANv3Zp-2500_CH-345_smoothed_v1.root  signal_region/$PROCESS signal_region/$PROCESS_$SYSTEMATIC
 
 -------------------------------------------------------------------------------------------------------------------------
