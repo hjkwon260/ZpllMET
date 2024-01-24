@@ -22,7 +22,7 @@
 
 include:
   # - local: '/templates/.evaluate-template-vr-2.yml'
-  - local: '/templates/.sys-template.yml'
+  - local: '/templates/.syst-template.yml'
 
 ########## stage: syst ############
 ##-- mm --##
