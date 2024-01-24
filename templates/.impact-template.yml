@@ -2,8 +2,8 @@
   - cd $CI_PROJECT_DIR/combine/input
   - mkdir SR
   - mkdir VR
-  - xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files/*.root SR
-  - if [ $ONLY_SR == "no" ]; then xrdcp -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files/*.root VR; fi  
+  - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR
+  - if [ $ONLY_SR == "no" ]; then xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR; fi  
 
 .script_impacts: &script_impacts
   - combineCards.py SR=${ERA}_template_SR.txt TTCR=${ERA}_template_TTCR.txt > combined_datacard.txt
