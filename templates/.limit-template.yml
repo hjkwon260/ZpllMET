@@ -30,7 +30,7 @@
     - python ${SCRIPT_LIMIT}.py ${ERA}
 
 .xrdcp_script: &xrdcp_script
-    - xrdcp -r -v Combine/LIMIT ${ROOT_EOS_USER}/Run2/Preselection/${DATE}
+    - xrdcp -r -v LIMIT ${ROOT_EOS_USER}/Run2/Preselection/${DATE}
 
 include:
   - local: '/templates/.impact-template.yml'
