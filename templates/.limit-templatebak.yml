@@ -1,0 +1,444 @@
+.load_root_files: &load_root_files
+    - mkdir SR
+    - mkdir VR
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR  
+
+.load_root_files_channel: &load_root_files_channel
+    - mkdir -p SR/16 && mkdir -p SR/17 && mkdir -p SR/18
+    - mkdir -p VR/16 && mkdir -p VR/17 && mkdir -p VR/18
+    - export CHANNEL=${ERA}
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}16/SR/root_files SR/16
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}16/VR/root_files VR/16
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}17/SR/root_files SR/17
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}17/VR/root_files VR/17
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}18/SR/root_files SR/18
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${CHANNEL}18/VR/root_files VR/18
+
+.load_root_files_all: &load_root_files_all
+    - mkdir -p SR/mm16 && mkdir -p SR/mm17 && mkdir -p SR/mm18 && mkdir -p SR/ee16 && mkdir -p SR/ee17 && mkdir -p SR/ee18 && mkdir -p SR/em16 && mkdir -p SR/em17 && mkdir -p SR/em18
+    - mkdir -p VR/mm16 && mkdir -p VR/mm17 && mkdir -p VR/mm18 && mkdir -p VR/ee16 && mkdir -p VR/ee17 && mkdir -p VR/ee18 && mkdir -p VR/em16 && mkdir -p VR/em17 && mkdir -p VR/em18  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm16/SR/root_files SR/mm16
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm16/VR/root_files VR/mm16  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm17/SR/root_files SR/mm17
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm17/VR/root_files VR/mm17  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm18/SR/root_files SR/mm18
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm18/VR/root_files VR/mm18 
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee16/SR/root_files SR/ee16
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee16/VR/root_files VR/ee16  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee17/SR/root_files SR/ee17
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee17/VR/root_files VR/ee17  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee18/SR/root_files SR/ee18
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee18/VR/root_files VR/ee18 
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em16/SR/root_files SR/em16
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em16/VR/root_files VR/em16  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em17/SR/root_files SR/em17
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em17/VR/root_files VR/em17  
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em18/SR/root_files SR/em18
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em18/VR/root_files VR/em18 
+
+.script_limit: &script_limit
+    - cd ${CI_PROJECT_DIR}/Combine
+    - python ${SCRIPT_LIMIT}.py ${ERA}
+    - cd ..
+    - xrdcp -r Combine/LIMIT ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/Presel/
+    - kdestroy
+
+########## stage: limit ############
+##-- mm --##
+limit mm16:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: mm16
+        INPUT_DIR: ${INPUT_DNN}
+    rules:    
+        - if: $LIMIT == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $LIMIT == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval mm16 SR 1
+          optional: true 
+        - job: eval mm16 SR 2
+          optional: true
+        - job: eval mm16 VR 1
+          optional: true 
+        - job: eval mm16 VR 2
+          optional: true
+    script:
+        - *load_root_files
+        - *set_combine
+        - *script_limit 
+
+limit mm17:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: mm17
+        INPUT_DIR: ${INPUT_DNN}
+    rules:    
+        - if: $LIMIT == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $LIMIT == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval mm17 SR 1
+          optional: true 
+        - job: eval mm17 SR 2
+          optional: true
+        - job: eval mm17 VR 1
+          optional: true 
+        - job: eval mm17 VR 2
+          optional: true
+    script:
+        - *load_root_files
+        - *set_combine
+        - *script_limit 
+
+limit mm18:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: mm18
+        INPUT_DIR: ${INPUT_DNN}
+    rules:    
+        - if: $LIMIT == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $LIMIT == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval mm18 SR 1
+          optional: true 
+        - job: eval mm18 SR 2
+          optional: true
+        - job: eval mm18 VR 1
+          optional: true 
+        - job: eval mm18 VR 2
+          optional: true
+    script:
+        - *load_root_files
+        - *set_combine
+        - *script_limit 
+
+##-- ee --##
+limit ee16:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: ee16
+        INPUT_DIR: ${INPUT_DNN}
+    rules:    
+        - if: $LIMIT == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $LIMIT == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval ee16 SR 1
+          optional: true 
+        - job: eval ee16 SR 2
+          optional: true
+        - job: eval ee16 VR 1
+          optional: true 
+        - job: eval ee16 VR 2
+          optional: true
+    script:
+        - *load_root_files
+        - *set_combine
+        - *script_limit 
+
+limit ee17:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: ee17
+        INPUT_DIR: ${INPUT_DNN}
+    rules:    
+        - if: $LIMIT == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $LIMIT == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval ee17 SR 1
+          optional: true 
+        - job: eval ee17 SR 2
+          optional: true
+        - job: eval ee17 VR 1
+          optional: true 
+        - job: eval ee17 VR 2
+          optional: true
+    script:
+        - *load_root_files
+        - *set_combine
+        - *script_limit 
+
+limit ee18:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: ee18
+        INPUT_DIR: ${INPUT_DNN}
+    rules:    
+        - if: $LIMIT == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $LIMIT == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval ee18 SR 1
+          optional: true 
+        - job: eval ee18 SR 2
+          optional: true
+        - job: eval ee18 VR 1
+          optional: true 
+        - job: eval ee18 VR 2
+          optional: true
+    script:
+        - *load_root_files
+        - *set_combine
+        - *script_limit
+
+##-- em --##
+limit em16:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: em16
+        INPUT_DIR: ${INPUT_DNN}
+    rules:    
+        - if: $LIMIT == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $LIMIT == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval em16 SR 1
+          optional: true 
+        - job: eval em16 SR 2
+          optional: true
+        - job: eval em16 VR 1
+          optional: true 
+        - job: eval em16 VR 2
+          optional: true
+    script:
+        - *load_root_files
+        - *set_combine
+        - *script_limit 
+
+limit em17:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: em17
+        INPUT_DIR: ${INPUT_DNN}
+    rules:    
+        - if: $LIMIT == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $LIMIT == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval em17 SR 1
+          optional: true 
+        - job: eval em17 SR 2
+          optional: true
+        - job: eval em17 VR 1
+          optional: true 
+        - job: eval em17 VR 2
+          optional: true
+    script:
+        - *load_root_files
+        - *set_combine
+        - *script_limit 
+
+limit em18:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: em18
+        INPUT_DIR: ${INPUT_DNN}
+    rules:    
+        - if: $LIMIT == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $LIMIT == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval em18 SR 1
+          optional: true 
+        - job: eval em18 SR 2
+          optional: true
+        - job: eval em18 VR 1
+          optional: true 
+        - job: eval em18 VR 2
+          optional: true
+    script:
+        - *load_root_files
+        - *set_combine
+        - *script_limit
+
+##-- channel --##
+limit mm:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: mm
+        INPUT_DIR: ${INPUT_DNN}
+    rules:    
+        - if: $LIMIT == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $LIMIT == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval mm16 SR 1
+          optional: true 
+        - job: eval mm16 SR 2
+          optional: true
+        - job: eval mm16 VR 1
+          optional: true 
+        - job: eval mm16 VR 2
+          optional: true
+        - job: eval mm17 SR 1
+          optional: true 
+        - job: eval mm17 SR 2
+          optional: true
+        - job: eval mm17 VR 1
+          optional: true 
+        - job: eval mm17 VR 2
+          optional: true
+        - job: eval mm18 SR 1
+          optional: true 
+        - job: eval mm18 SR 2
+          optional: true
+        - job: eval mm18 VR 1
+          optional: true 
+        - job: eval mm18 VR 2
+          optional: true          
+    script:
+        - *load_root_files_channel
+        - *set_combine
+        - *script_limit 
+
+limit ee:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: ee
+        INPUT_DIR: ${INPUT_DNN}
+    rules:    
+        - if: $LIMIT == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $LIMIT == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval ee16 SR 1
+          optional: true 
+        - job: eval ee16 SR 2
+          optional: true
+        - job: eval ee16 VR 1
+          optional: true 
+        - job: eval ee16 VR 2
+          optional: true
+        - job: eval ee17 SR 1
+          optional: true 
+        - job: eval ee17 SR 2
+          optional: true
+        - job: eval ee17 VR 1
+          optional: true 
+        - job: eval ee17 VR 2
+          optional: true
+        - job: eval ee18 SR 1
+          optional: true 
+        - job: eval ee18 SR 2
+          optional: true
+        - job: eval ee18 VR 1
+          optional: true 
+        - job: eval ee18 VR 2
+          optional: true          
+    script:
+        - *load_root_files_channel
+        - *set_combine
+        - *script_limit 
+
+limit em:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: em
+        INPUT_DIR: ${INPUT_DNN}
+    rules:    
+        - if: $LIMIT == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $LIMIT == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval em16 SR 1
+          optional: true 
+        - job: eval em16 SR 2
+          optional: true
+        - job: eval em16 VR 1
+          optional: true 
+        - job: eval em16 VR 2
+          optional: true
+        - job: eval em17 SR 1
+          optional: true 
+        - job: eval em17 SR 2
+          optional: true
+        - job: eval em17 VR 1
+          optional: true 
+        - job: eval em17 VR 2
+          optional: true
+        - job: eval em18 SR 1
+          optional: true 
+        - job: eval em18 SR 2
+          optional: true
+        - job: eval em18 VR 1
+          optional: true 
+        - job: eval em18 VR 2
+          optional: true          
+    script:
+        - *load_root_files_channel
+        - *set_combine
+        - *script_limit  
+
+##-- all --##               
+limit all:
+    stage: limit
+    tags:
+        - cvmfs
+    variables:
+        DATE: ${DATE1}
+        ERA: all
+        INPUT_DIR: ${INPUT_DNN}
+    rules:    
+        - if: $LIMIT == 'yes' && $EVAL == 'yes'
+          when: on_success
+        - if: $LIMIT == 'yes' && $EVAL == 'no'
+          when: always
+    needs:
+        - job: eval mm16 SR 1 # dummy
+          optional: true          
+    script:
+        - *load_root_files_all
+        - *set_combine
+        - *script_limit 
