@@ -1,9 +1,21 @@
 .load_root_files: &load_root_files
   - cd $CI_PROJECT_DIR/combine/input
-  - mkdir SR
-  - mkdir VR
-  - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR
-  - if [ $ONLY_SR == "no" ]; then xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR; fi  
+  - mkdir -p SR/${ERA}
+  - mkdir -p VR/${ERA}
+  - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR/${ERA}
+  - if [ $ONLY_SR == "no" ]; then xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR/${ERA}; fi  
+
+.load_root_files_all: &load_root_files_all
+  - cd $CI_PROJECT_DIR/combine/input
+  - mkdir -p SR/ee16 && SR/ee17 && SR/ee18 && SR/mm16 && SR/mm17 && SR/mm18 && SR/em16 && SR/em17 && SR/em18 
+  - mkdir -p VR/ee16 && VR/ee17 && VR/ee18 && VR/mm16 && VR/mm17 && VR/mm18 && VR/em16 && VR/em17 && VR/em18
+  - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee16/SR/root_files SR/ee16 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee17/SR/root_files SR/ee17 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee18/SR/root_files SR/ee18
+  - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm16/SR/root_files SR/mm16 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm17/SR/root_files SR/mm17 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm18/SR/root_files SR/mm18
+  - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em16/SR/root_files SR/em16 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em17/SR/root_files SR/em17 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em18/SR/root_files SR/em18
+  # - if [ $ONLY_SR == "no" ]; then xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR/${ERA}; fi 
+  - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee16/VR/root_files VR/ee16 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee17/VR/root_files VR/ee17 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee18/VR/root_files VR/ee18
+  - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm16/VR/root_files VR/mm16 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm17/VR/root_files VR/mm17 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm18/VR/root_files VR/mm18
+  - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em16/VR/root_files VR/em16 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em17/VR/root_files VR/em17 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em18/VR/root_files VR/em18
 
 .combine_card_single: &combine_card_single
   - combineCards.py SR=${ERA}_template_SR.txt TTCR=${ERA}_template_TTCR.txt > combined_datacard.txt
@@ -421,7 +433,7 @@ impact ee combine:
         - cmsenv || true
         - cd $CI_PROJECT_DIR/combine/input
         - *combine_card_channel
-        - *load_root_files
+        - *load_root_files_all
         - *script_impacts
         - *xrdcp_script
         - kdestroy        
@@ -460,7 +472,7 @@ impact mm combine:
         - cmsenv || true
         - cd $CI_PROJECT_DIR/combine/input
         - *combine_card_channel
-        - *load_root_files
+        - *load_root_files_all
         - *script_impacts
         - *xrdcp_script
         - kdestroy 
@@ -499,7 +511,7 @@ impact em combine:
         - cmsenv || true
         - cd $CI_PROJECT_DIR/combine/input
         - *combine_card_channel
-        - *load_root_files
+        - *load_root_files_all
         - *script_impacts
         - *xrdcp_script
         - kdestroy 
@@ -538,7 +550,7 @@ impact combine:
         - cmsenv || true
         - cd $CI_PROJECT_DIR/combine/input
         - *combine_card_all
-        - *load_root_files
+        - *load_root_files_all
         - *script_impacts
         - *xrdcp_script
         - kdestroy 
