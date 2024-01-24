@@ -18,13 +18,13 @@
   - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em16/VR/root_files VR/em16 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em17/VR/root_files VR/em17 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em18/VR/root_files VR/em18
 
 .combine_card_single: &combine_card_single
-  - combineCards.py SR=${ERA}_template_SR.txt TTCR=${ERA}_template_TTCR.txt > combined_datacard.txt
+  - combineCards.py SR${ERA}=${ERA}_template_SR.txt TTCR${ERA}=${ERA}_template_TTCR.txt > combined_datacard.txt
 
 .combine_card_channel: &combine_card_channel
-  - combineCards.py SR16=${ERA}16_template_SR.txt TTCR16=${ERA}16_template_TTCR.txt SR17=${ERA}17_template_SR.txt TTCR17=${ERA}17_template_TTCR.txt SR18=${ERA}18_template_SR.txt TTCR18=${ERA}18_template_TTCR.txt > combined_datacard.txt
+  - combineCards.py SR${ERA}16=${ERA}16_template_SR.txt TTCR${ERA}16=${ERA}16_template_TTCR.txt SR${ERA}17=${ERA}17_template_SR.txt TTCR${ERA}17=${ERA}17_template_TTCR.txt SR${ERA}18=${ERA}18_template_SR.txt TTCR${ERA}18=${ERA}18_template_TTCR.txt > combined_datacard.txt
 
 .combine_card_all: &combine_card_all
-  - combineCards.py SR16=ee16_template_SR.txt TTCR16=ee16_template_TTCR.txt SR17=ee17_template_SR.txt TTCR17=ee17_template_TTCR.txt SR18=ee18_template_SR.txt TTCR18=ee18_template_TTCR.txt  SR16=mm16_template_SR.txt TTCR16=mm16_template_TTCR.txt SR17=mm17_template_SR.txt TTCR17=mm17_template_TTCR.txt SR18=mm18_template_SR.txt TTCR18=mm18_template_TTCR.txt  SR16=em16_template_SR.txt TTCR16=em16_template_TTCR.txt SR17=em17_template_SR.txt TTCR17=em17_template_TTCR.txt SR18=em18_template_SR.txt TTCR18=em18_template_TTCR.txt > combined_datacard.txt
+  - combineCards.py SRee16=ee16_template_SR.txt TTCRee16=ee16_template_TTCR.txt SRee17=ee17_template_SR.txt TTCRee17=ee17_template_TTCR.txt SRee18=ee18_template_SR.txt TTCRee18=ee18_template_TTCR.txt  SRmm16=mm16_template_SR.txt TTCRmm16=mm16_template_TTCR.txt SRmm17=mm17_template_SR.txt TTCRmm17=mm17_template_TTCR.txt SRmm18=mm18_template_SR.txt TTCRmm18=mm18_template_TTCR.txt  SRem16=em16_template_SR.txt TTCRem16=em16_template_TTCR.txt SRem17=em17_template_SR.txt TTCRem17=em17_template_TTCR.txt SRem18=em18_template_SR.txt TTCRem18=em18_template_TTCR.txt > combined_datacard.txt
 
 .script_impacts: &script_impacts
   - ValidateDatacards.py combined_datacard.txt 
@@ -550,9 +550,9 @@ impact combine:
         - cmsenv || true
         - cd $CI_PROJECT_DIR/combine/input
         - *combine_card_all
-        # - *load_root_files_all
-        # - *script_impacts
-        # - *xrdcp_script
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/IMPACT/${ERA}/
-        - xrdcp combined_datacard.txt ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
+        - *load_root_files_all
+        - *script_impacts
+        - *xrdcp_script
+        # - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/IMPACT/${ERA}/
+        # - xrdcp combined_datacard.txt ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
         - kdestroy 
