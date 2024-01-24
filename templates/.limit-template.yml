@@ -30,7 +30,9 @@
     - python ${SCRIPT_LIMIT}.py ${ERA}
 
 .xrdcp_script: &xrdcp_script
-    - xrdcp -r -v LIMIT ${ROOT_EOS_USER}/Run2/Preselection/${DATE}
+    - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/LIMIT/${ERA}/
+    - xrdcp -r -v LIMIT ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/
+    - xrdcp -r -v Plots ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/
 
 include:
   - local: '/templates/.impact-template.yml'
