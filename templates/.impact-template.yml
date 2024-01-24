@@ -29,14 +29,20 @@
 .script_impacts: &script_impacts
   - ValidateDatacards.py combined_datacard.txt 
   - text2workspace.py -m 125 -o workspace.root combined_datacard.txt
+  # b-only
   - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doInitialFit
   - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --doFits
   - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 0 --output impacts.json
   - plotImpacts.py -i impacts.json -o impacts
+  # s+b
+  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 1 --doInitialFit
+  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 1 --doFits
+  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 -t -1 --expectSignal 1 --output impactsS.json
+  - plotImpacts.py -i impactsS.json -o impactsS
 
 .xrdcp_script: &xrdcp_script
   - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/IMPACT/${ERA}/
-  - xrdcp impacts.pdf ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
+  - xrdcp *.pdf ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
   - xrdcp *.json ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
   - xrdcp combined_datacard.txt ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
 

@@ -28,7 +28,7 @@ hdamp                      shape  1            -            -            -      
 UE                         shape  1            -            -            -            -            -            - 
 toppt                      shape  1            -            -            -            -            -            - 
 #-- norm uncertainty --#
-wz_norm                    lnN    -            -            -            1.2          -            -            -  
+wz_norm                    lnN    -            -            -            1.1          -            -            -  
 ww_norm                    lnN    -            1.1          -            -            -            -            -  
 tw_norm                    lnN    -            -            1.2          -            -            -            -
 ##-- Experimental unc. --##
