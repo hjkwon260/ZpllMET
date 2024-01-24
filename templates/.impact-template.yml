@@ -17,7 +17,7 @@
   - plotImpacts.py -i impacts.json -o impacts
 
 include:
-  - local: '/templates/.syst-template.yml'
+  - local: '/templates/.syst-template-sb.yml'
 
 ########## stage: impact ############
 ##-- mm --##
