@@ -587,7 +587,7 @@ class HistStack(object):
         yields = self.get_yields_by_bin()
         for key in yields:
             if key!="Data" and not "Up" in key and not "Down" in key and not "Zp" in key and not "bkg" in key:
-                list_yeild.append(yields[key][19])
+                list_yeild.append(yields[key][-1])
                 list_keys.append(key)
         
         
