@@ -7,8 +7,8 @@
 
 .load_root_files_all: &load_root_files_all
   - cd $CI_PROJECT_DIR/combine/input
-  - mkdir -p SR/ee16 && SR/ee17 && SR/ee18 && SR/mm16 && SR/mm17 && SR/mm18 && SR/em16 && SR/em17 && SR/em18 
-  - mkdir -p VR/ee16 && VR/ee17 && VR/ee18 && VR/mm16 && VR/mm17 && VR/mm18 && VR/em16 && VR/em17 && VR/em18
+  - mkdir -p SR/ee16 && mkdir -p SR/ee17 && mkdir -p SR/ee18 && mkdir -p SR/mm16 && mkdir -p SR/mm17 && mkdir -p SR/mm18 && mkdir -p SR/em16 && mkdir -p SR/em17 && mkdir -p SR/em18 
+  - mkdir -p VR/ee16 && mkdir -p VR/ee17 && mkdir -p VR/ee18 && mkdir -p VR/mm16 && mkdir -p VR/mm17 && mkdir -p VR/mm18 && mkdir -p VR/em16 && mkdir -p VR/em17 && mkdir -p VR/em18
   - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee16/SR/root_files SR/ee16 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee17/SR/root_files SR/ee17 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee18/SR/root_files SR/ee18
   - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm16/SR/root_files SR/mm16 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm17/SR/root_files SR/mm17 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm18/SR/root_files SR/mm18
   - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em16/SR/root_files SR/em16 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em17/SR/root_files SR/em17 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em18/SR/root_files SR/em18
