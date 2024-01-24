@@ -50,7 +50,7 @@ for mass in SIGNAL_MASSES:
 			if "Expected 97.5%: r <" in line:
 				lst_limits.append(line.split(" ")[4].rstrip("\n"))
 		print(lst_limits)
-		dic_limits[m]=lst_limits
+		dic_limits[mass]=lst_limits
 
 import json
 with open('LIMIT/'+ERA+'/Logs_v1/limits_'+ERA+'.json', 'w') as fp:
