@@ -28,6 +28,7 @@
 
 .script_limits: &script_limits
     - python ${SCRIPT_LIMIT}.py ${ERA}
+    - cp $CI_PROJECT_DIR/${SCRIPT_SYST}.ipynb .
     - jupyter nbconvert --to python ${SCRIPT_SYST}.ipynb
 
 .xrdcp_script: &xrdcp_script
