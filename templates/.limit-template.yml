@@ -74,6 +74,9 @@ limit mm16:
         - cd $HOME_DIR
         - cmsenv || true
         - cd $CI_PROJECT_DIR/combine/input
+        - cp $CI_PROJECT_DIR/${SCRIPT_DRAWLIMIT}.ipynb .
+        - jupyter nbconvert --to python ${SCRIPT_DRAWLIMIT}.ipynb
+        - python ${SCRIPT_DRAWLIMIT}.py ${ERA}
         - *combine_card_single
         - *load_root_files
         - *script_limits
