@@ -28,11 +28,12 @@
 
 .script_limits: &script_limits
     - python ${SCRIPT_LIMIT}.py ${ERA}
+    - jupyter nbconvert --to python ${SCRIPT_SYST}.ipynb
 
 .xrdcp_script: &xrdcp_script
     - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/LIMIT/${ERA}/
     - xrdcp -r -v LIMIT ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/
-    - xrdcp -r -v Plots ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/
+    # - xrdcp -r -v Plots ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/
 
 include:
   - local: '/templates/.impact-template.yml'
