@@ -5,10 +5,20 @@
   - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR/${ERA}
   - if [ $ONLY_SR == "no" ]; then xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR/${ERA}; fi  
 
+.load_root_files_SF: &load_root_files_SF
+  - cd $CI_PROJECT_DIR/combine/input
+  - mkdir -p SR/${ERA}
+  - mkdir -p VR/${ERA}
+  - mkdir -p METSB/${ERA}
+  - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR/${ERA}
+  - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR/${ERA}
+  - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/METSB/root_files METSB/${ERA}
+
 .load_root_files_all: &load_root_files_all
   - cd $CI_PROJECT_DIR/combine/input
   - mkdir -p SR/ee16 && mkdir -p SR/ee17 && mkdir -p SR/ee18 && mkdir -p SR/mm16 && mkdir -p SR/mm17 && mkdir -p SR/mm18 && mkdir -p SR/em16 && mkdir -p SR/em17 && mkdir -p SR/em18 
   - mkdir -p VR/ee16 && mkdir -p VR/ee17 && mkdir -p VR/ee18 && mkdir -p VR/mm16 && mkdir -p VR/mm17 && mkdir -p VR/mm18 && mkdir -p VR/em16 && mkdir -p VR/em17 && mkdir -p VR/em18
+  - mkdir -p METSB/ee16 && mkdir -p METSB/ee17 && mkdir -p METSB/ee18 && mkdir -p METSB/mm16 && mkdir -p METSB/mm17 && mkdir -p METSB/mm18
   - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee16/SR/root_files SR/ee16 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee17/SR/root_files SR/ee17 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee18/SR/root_files SR/ee18
   - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm16/SR/root_files SR/mm16 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm17/SR/root_files SR/mm17 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm18/SR/root_files SR/mm18
   - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em16/SR/root_files SR/em16 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em17/SR/root_files SR/em17 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em18/SR/root_files SR/em18
@@ -16,15 +26,23 @@
   - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee16/VR/root_files VR/ee16 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee17/VR/root_files VR/ee17 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee18/VR/root_files VR/ee18
   - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm16/VR/root_files VR/mm16 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm17/VR/root_files VR/mm17 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm18/VR/root_files VR/mm18
   - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em16/VR/root_files VR/em16 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em17/VR/root_files VR/em17 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em18/VR/root_files VR/em18
+  - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee16/METSB/root_files METSB/ee16 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee17/METSB/root_files METSB/ee17 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/ee18/METSB/root_files METSB/ee18
+  - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm16/METSB/root_files METSB/mm16 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm17/METSB/root_files METSB/mm17 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/mm18/METSB/root_files METSB/mm18
 
 .combine_card_single: &combine_card_single
   - combineCards.py SR${ERA}=${ERA}_template_SR.txt TTCR${ERA}=${ERA}_template_TTCR.txt > combined_datacard.txt
 
+.combine_card_single_SF: &combine_card_single_SF
+  - combineCards.py SR${ERA}=${ERA}_template_SR.txt TTCR${ERA}=${ERA}_template_TTCR.txt DYCR${ERA}=${ERA}_template_DYCR.txt > combined_datacard.txt
+
 .combine_card_channel: &combine_card_channel
   - combineCards.py SR${ERA}16=${ERA}16_template_SR.txt TTCR${ERA}16=${ERA}16_template_TTCR.txt SR${ERA}17=${ERA}17_template_SR.txt TTCR${ERA}17=${ERA}17_template_TTCR.txt SR${ERA}18=${ERA}18_template_SR.txt TTCR${ERA}18=${ERA}18_template_TTCR.txt > combined_datacard.txt
 
+.combine_card_channel_SF: &combine_card_channel_SF
+  - combineCards.py SR${ERA}16=${ERA}16_template_SR.txt TTCR${ERA}16=${ERA}16_template_TTCR.txt DYCR${ERA}16=${ERA}16_template_DYCR.txt SR${ERA}17=${ERA}17_template_SR.txt TTCR${ERA}17=${ERA}17_template_TTCR.txt DYCR${ERA}17=${ERA}17_template_DYCR.txt SR${ERA}18=${ERA}18_template_SR.txt TTCR${ERA}18=${ERA}18_template_TTCR.txt DYCR${ERA}18=${ERA}18_template_DYCR.txt > combined_datacard.txt
+
 .combine_card_all: &combine_card_all
-  - combineCards.py SRee16=ee16_template_SR.txt TTCRee16=ee16_template_TTCR.txt SRee17=ee17_template_SR.txt TTCRee17=ee17_template_TTCR.txt SRee18=ee18_template_SR.txt TTCRee18=ee18_template_TTCR.txt  SRmm16=mm16_template_SR.txt TTCRmm16=mm16_template_TTCR.txt SRmm17=mm17_template_SR.txt TTCRmm17=mm17_template_TTCR.txt SRmm18=mm18_template_SR.txt TTCRmm18=mm18_template_TTCR.txt  SRem16=em16_template_SR.txt TTCRem16=em16_template_TTCR.txt SRem17=em17_template_SR.txt TTCRem17=em17_template_TTCR.txt SRem18=em18_template_SR.txt TTCRem18=em18_template_TTCR.txt > combined_datacard.txt
+  - combineCards.py SRee16=ee16_template_SR.txt TTCRee16=ee16_template_TTCR.txt DYCRee16=ee16_template_DYCR.txt SRee17=ee17_template_SR.txt TTCRee17=ee17_template_TTCR.txt DYCRee17=ee17_template_DYCR.txt SRee18=ee18_template_SR.txt TTCRee18=ee18_template_TTCR.txt DYCRee18=ee18_template_DYCR.txt SRmm16=mm16_template_SR.txt TTCRmm16=mm16_template_TTCR.txt DYCRmm16=mm16_template_DYCR.txt SRmm17=mm17_template_SR.txt TTCRmm17=mm17_template_TTCR.txt DYCRmm17=mm17_template_DYCR.txt SRmm18=mm18_template_SR.txt TTCRmm18=mm18_template_TTCR.txt DYCRmm18=mm18_template_DYCR.txt SRem16=em16_template_SR.txt TTCRem16=em16_template_TTCR.txt SRem17=em17_template_SR.txt TTCRem17=em17_template_TTCR.txt SRem18=em18_template_SR.txt TTCRem18=em18_template_TTCR.txt > combined_datacard.txt
 
 .script_limits: &script_limits
     - python ${SCRIPT_LIMIT}.py ${ERA}
@@ -75,8 +93,8 @@ limit mm16:
         - cd $HOME_DIR
         - cmsenv || true
         - cd $CI_PROJECT_DIR/combine/input
-        - *combine_card_single
-        - *load_root_files
+        - *combine_card_single_SF
+        - *load_root_files_SF
         - *script_limits
         - *xrdcp_script
         - kdestroy 
@@ -114,8 +132,8 @@ limit mm17:
         - cd $HOME_DIR
         - cmsenv || true
         - cd $CI_PROJECT_DIR/combine/input
-        - *combine_card_single
-        - *load_root_files
+        - *combine_card_single_SF
+        - *load_root_files_SF
         - *script_limits
         - *xrdcp_script
         - kdestroy 
@@ -153,8 +171,8 @@ limit mm18:
         - cd $HOME_DIR
         - cmsenv || true
         - cd $CI_PROJECT_DIR/combine/input
-        - *combine_card_single
-        - *load_root_files
+        - *combine_card_single_SF
+        - *load_root_files_SF
         - *script_limits
         - *xrdcp_script
         - kdestroy  
@@ -193,8 +211,8 @@ limit ee16:
         - cd $HOME_DIR
         - cmsenv || true
         - cd $CI_PROJECT_DIR/combine/input
-        - *combine_card_single
-        - *load_root_files
+        - *combine_card_single_SF
+        - *load_root_files_SF
         - *script_limits
         - *xrdcp_script
         - kdestroy 
@@ -232,8 +250,8 @@ limit ee17:
         - cd $HOME_DIR
         - cmsenv || true
         - cd $CI_PROJECT_DIR/combine/input
-        - *combine_card_single
-        - *load_root_files
+        - *combine_card_single_SF
+        - *load_root_files_SF
         - *script_limits
         - *xrdcp_script
         - kdestroy 
@@ -271,8 +289,8 @@ limit ee18:
         - cd $HOME_DIR
         - cmsenv || true
         - cd $CI_PROJECT_DIR/combine/input
-        - *combine_card_single
-        - *load_root_files
+        - *combine_card_single_SF
+        - *load_root_files_SF
         - *script_limits
         - *xrdcp_script
         - kdestroy  
