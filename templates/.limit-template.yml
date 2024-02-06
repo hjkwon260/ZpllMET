@@ -447,7 +447,7 @@ limit ee combine:
         - cd $HOME_DIR
         - cmsenv || true
         - cd $CI_PROJECT_DIR/combine/input
-        - *combine_card_channel
+        - *combine_card_channel_SF
         - *load_root_files_all
         - *script_limits
         - *xrdcp_script
@@ -486,7 +486,7 @@ limit mm combine:
         - cd $HOME_DIR
         - cmsenv || true
         - cd $CI_PROJECT_DIR/combine/input
-        - *combine_card_channel
+        - *combine_card_channel_SF
         - *load_root_files_all
         - *script_limits
         - *xrdcp_script
