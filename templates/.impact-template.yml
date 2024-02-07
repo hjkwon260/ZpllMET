@@ -458,7 +458,14 @@ impact ee combine:
         - cd $CI_PROJECT_DIR/combine/input
         - *combine_card_channel_SF
         - *load_root_files_all
-        - *script_impacts
+        # - *script_impacts
+        - ValidateDatacards.py combined_datacard.txt 
+        - text2workspace.py -m 125 -o workspace.root combined_datacard.txt
+        # b-only
+        - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 0 --doInitialFit
+        - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 0 --doFits
+        - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 0 --output impacts.json
+        - plotImpacts.py -i impacts.json -o impacts        
         - *xrdcp_script
         - kdestroy        
 
