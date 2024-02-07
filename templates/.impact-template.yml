@@ -458,14 +458,7 @@ impact ee combine:
         - cd $CI_PROJECT_DIR/combine/input
         - *combine_card_channel_SF
         - *load_root_files_all
-        # - *script_impacts
-        - ValidateDatacards.py combined_datacard.txt 
-        - text2workspace.py -m 125 -o workspace.root combined_datacard.txt
-        # b-only
-        - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 0 --doInitialFit
-        - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 0 --doFits
-        - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 0 --output impacts.json
-        - plotImpacts.py -i impacts.json -o impacts        
+        - *script_impacts       
         - *xrdcp_script
         - kdestroy        
 
@@ -547,7 +540,7 @@ impact em combine:
         - *xrdcp_script
         - kdestroy 
 
-impact combine:
+impact combine 1:
     stage: impact
     tags:
         - cvmfs
@@ -588,6 +581,51 @@ impact combine:
         - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 0 --doInitialFit
         - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 0 --doFits
         - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 0 --output impacts.json
+        - plotImpacts.py -i impacts.json -o impacts        
+        - *xrdcp_script
+        - kdestroy 
+
+impact combine 2:
+    stage: impact
+    tags:
+        - cvmfs
+    image:  
+        name: gitlab-registry.cern.ch/cms-analysis/general/combine-container:CMSSW_11_3_4-combine_v9.1.0-harvester_v2.1.0
+        entrypoint: ["/bin/sh", "-c"]
+    variables:
+        DATE: ${DATE1}
+        ERA: combine
+        INPUT_DIR: ${INPUT_SYST}
+        REGION: SR
+        HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
+    rules:    
+        - if: $IMPACT == 'yes' && $SYST == 'yes'
+          when: on_success
+        - if: $IMPACT == 'yes' && $SYST == 'no'
+          when: always
+    # artifacts:
+    #     when: on_success
+    #     expire_in: 1 days
+    #     paths:
+    #         - ./combine/input/impacts.pdf
+    needs:
+        - job: syst em18
+          optional: true         
+        - job: syst em18 VR
+          optional: true 
+    script:
+        - source /cvmfs/cms.cern.ch/cmsset_default.sh
+        - cd $HOME_DIR
+        - cmsenv || true
+        - cd $CI_PROJECT_DIR/combine/input
+        - *combine_card_all
+        - *load_root_files_all
+        # - *script_impacts
+        - text2workspace.py -m 125 -o workspace.root combined_datacard.txt
+        # s+b
+        - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 1 --doInitialFit
+        - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 1 --doFits
+        - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 1 --output impacts.json
         - plotImpacts.py -i impacts.json -o impacts        
         - *xrdcp_script
         - kdestroy 
