@@ -55,7 +55,7 @@ tt_norm rateParam * ttbar 1 [-5,5]
 # dy_norm rateParam * dy 1 [-5,5]
 
 # [channel] autoMCStats [gauss/poisson threshold] [include-signal = 0] [hist-mode = 1]
-* autoMCStats 100 0 1
+* autoMCStats 50 0 1
 
 ##-- place holder --##
 # dy_norm              lnN    -              -               -               1.2     -        -            -
