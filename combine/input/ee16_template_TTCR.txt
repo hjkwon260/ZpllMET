@@ -34,7 +34,7 @@ lumi_13TeV_correlated      lnN    1.02         1.02         1.02         1.02   
 #-- lepton --#
 # effrecoSF                shape  1            1            1            1            1            1            1
 eff_e                      shape  1            1            1            1            1            1            1 
-trig_eff                   shape  1            1            1            1            1            1            1 
+# trig_eff                   shape  1            1            1            1            1            1            1 
 scale                      shape  1            1            1            1            1            1            1
 # l1prefiring                shape  1            1            1            1            1            1            1 
 pu                         shape  1            1            1            1            1            1            1 

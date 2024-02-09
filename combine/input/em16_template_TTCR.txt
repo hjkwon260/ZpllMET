@@ -32,8 +32,9 @@ tw_norm                    lnN    -            -            1.2          -      
 lumi_13TeV_correlated      lnN    1.02         1.02         1.02         1.02         1.02         1.02         
 #-- lepton --#
 # effrecoSF                shape  1            1            1            1            1            1
-eff_e                      shape  1            1            1            1            1            1 
-eff_m                      shape  1            1            1            1            1            1 
+# eff_e                      shape  1            1            1            1            1            1 
+# eff_m                      shape  1            1            1            1            1            1 
+ll_eff                     shape  1            1            1            1            1            1 
 # trig_eff                 shape  1            1            1            1            1            1 
 mu_scale                   shape  1            1            1            1            1            1
 mu_res                     shape  1            1            1            1            1            1
