@@ -9,52 +9,54 @@ shapes  * sr     SR/em16/root_files/shape_v1_20230430wp80_ANv3Zp-2500_CH-345_smo
 bin          sr   
 observation  -1            
 -------------------------------------------------------------------------------------------------------------------------
-bin                               sr           sr           sr           sr           sr           sr     
-process                           ttbar        ww           singletop    wz           zz           zp      
-process                           1            2            3            4            5            0               
-rate                              -1           -1           -1           -1           -1           -1       
+bin                               sr           sr           sr           sr           sr           sr          sr     
+process                           ttbar        ww           singletop    wz           zz           dy          zp      
+process                           1            2            3            4            5            6           0               
+rate                              -1           -1           -1           -1           -1           -1          -1       
 -------------------------------------------------------------------------------------------------------------------------
 ##-- Theory unc. --##
-pdf_ttbar                  shape  1            -            -            -            -            - 
-pdf_ww                     shape  -            1            -            -            -            - 
-pdf_singletop              shape  -            -            1            -            -            - 
-pdf_wz                     shape  -            -            -            1            -            - 
-pdf_zz                     shape  -            -            -            -            1            - 
-isr                        shape  1            1            -            -            -            1 
-fsr                        shape  1            1            -            -            -            1 
+pdf_ttbar                  shape  1            -            -            -            -            -           -
+pdf_ww                     shape  -            1            -            -            -            -           -
+pdf_singletop              shape  -            -            1            -            -            -           -
+pdf_wz                     shape  -            -            -            1            -            -           -
+pdf_zz                     shape  -            -            -            -            1            -           -
+pdf_dy                     shape  -            -            -            -            -            1           - 
+isr                        shape  1            1            -            -            -            -           1           
+fsr                        shape  1            1            -            -            -            -           1 
 #-- tt specific --#
-hdamp                      shape  1            -            -            -            -            - 
-UE                         shape  1            -            -            -            -            - 
-toppt                      shape  1            -            -            -            -            - 
+hdamp                      shape  1            -            -            -            -            -           -
+UE                         shape  1            -            -            -            -            -           - 
+toppt                      shape  1            -            -            -            -            -           -
 #-- norm uncertainty --#
-wz_norm                    lnN    -            -            -            1.2          -            -  
-ww_norm                    lnN    -            1.1          -            -            -            -  
-tw_norm                    lnN    -            -            1.2          -            -            -
+wz_norm                    lnN    -            -            -            1.2          -            -           -
+ww_norm                    lnN    -            1.1          -            -            -            -           -
+tw_norm                    lnN    -            -            1.2          -            -            -           -
 ##-- Experimental unc. --##
-lumi_13TeV_correlated      lnN    1.02         1.02         1.02         1.02         1.02         1.02         
+lumi_13TeV_16              lnN    1.01         1.01         1.01         1.01         1.01         1.01         1.01         
+lumi_13TeV_correlated      lnN    1.006        1.006        1.006        1.006        1.006        1.006        1.006         
 #-- lepton --#
 # effrecoSF                shape  1            1            1            1            1            1
-# eff_e                      shape  1            1            1            1            1            1 
-# eff_m                      shape  1            1            1            1            1            1 
-ll_eff                      shape  1            1            1            1            1            1 
-trig_eff                   shape  1            1            1            1            1            1 
-mu_scale                   shape  1            1            1            1            1            1
-mu_res                     shape  1            1            1            1            1            1
-scale                      shape  1            1            1            1            1            1
-l1prefiring                shape  1            1            1            1            1            1 
-pu                         shape  1            1            1            1            1            1 
+# eff_e                    shape  1            1            1            1            1            1 
+# eff_m                    shape  1            1            1            1            1            1 
+ll_eff                     shape  1            1            1            1            1            1           1 
+trig_eff                   shape  1            1            1            1            1            1           1 
+mu_scale                   shape  1            1            1            1            1            1           1
+mu_res                     shape  1            1            1            1            1            1           1
+scale                      shape  1            1            1            1            1            1           1
+l1prefiring                shape  1            1            1            1            1            1           1 
+pu                         shape  1            1            1            1            1            1           1 
 #-- jet --#
-JES                        shape  1            1            1            1            1            1 
-JER                        shape  1            1            1            1            1            1 
+JES                        shape  1            1            1            1            1            1           1 
+JER                        shape  1            1            1            1            1            1           1 
 #-- met --#
-met                        shape  1            1            1            1            1            1 
-metjer                     shape  1            1            1            1            1            1 
-metue                      shape  1            1            1            1            1            1 
+met                        shape  1            1            1            1            1            1           1 
+metjer                     shape  1            1            1            1            1            1           1 
+metue                      shape  1            1            1            1            1            1           1 
 #-- b tag --#
-btagSFbc16                 shape  1            1            1            1            1            1 
-btagSFbc_correlated        shape  1            1            1            1            1            1 
-btagSFlight16              shape  1            1            1            1            1            1 
-btagSFlight_correlated     shape  1            1            1            1            1            1 
+btagSFbc16                 shape  1            1            1            1            1            1           1 
+btagSFbc_correlated        shape  1            1            1            1            1            1           1 
+btagSFlight16              shape  1            1            1            1            1            1           1 
+btagSFlight_correlated     shape  1            1            1            1            1            1           1 
 
 
 tt_norm rateParam * ttbar 1 [-5,5]

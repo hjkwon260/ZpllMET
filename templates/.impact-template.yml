@@ -625,7 +625,7 @@ impact combine 2:
         # s+b
         - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 1 --doInitialFit
         - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 1 --doFits
-        - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 1 --output impacts.json
-        - plotImpacts.py -i impacts.json -o impacts        
+        - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 1 --output impactsS.json
+        - plotImpacts.py -i impactsS.json -o impactsS        
         - *xrdcp_script
         - kdestroy 

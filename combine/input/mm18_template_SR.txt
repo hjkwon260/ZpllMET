@@ -32,7 +32,9 @@ wz_norm                    lnN    -            -            -            1.1    
 ww_norm                    lnN    -            1.1          -            -            -            -            -  
 tw_norm                    lnN    -            -            1.2          -            -            -            -
 ##-- Experimental unc. --##
-lumi_13TeV_correlated      lnN    1.02         1.02         1.02         1.02         1.02         1.02         1.02         
+lumi_13TeV_18              lnN    1.015        1.015        1.015        1.015        1.015        1.015        1.015       
+lumi_13TeV_correlated      lnN    1.02         1.02         1.02         1.02         1.02         1.02         1.02        
+lumi_13TeV_1718            lnN    1.002        1.002        1.002        1.002        1.002        1.002        1.002
 #-- lepton --#
 # effrecoSF                shape  1            1            1            1            1            1            1
 eff_m                      shape  1            1            1            1            1            1            1 
