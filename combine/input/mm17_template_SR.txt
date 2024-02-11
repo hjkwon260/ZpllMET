@@ -61,7 +61,7 @@ tt_norm rateParam * ttbar 1 [-5,5]
 dy_norm rateParam * dy 1 [-5,5]
 ww_norm rateParam * ww 1 [-5,5]
 wz_norm rateParam * wz 1 [-5,5]
-tw_norm rateParam * tw 1 [-5,5]
+tw_norm rateParam * singletop 1 [-5,5]
 
 # [channel] autoMCStats [gauss/poisson threshold] [include-signal = 0] [hist-mode = 1]
 * autoMCStats 100 0 1
