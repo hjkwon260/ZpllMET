@@ -25,9 +25,9 @@ hdamp                      shape  1            -            -            -      
 UE                         shape  1            -            -            -            -            - 
 toppt                      shape  1            -            -            -            -            - 
 #-- norm uncertainty --#
-#wz_norm                    lnN    -            -            -            1.2          -            -  
-#ww_norm                    lnN    -            1.1          -            -            -            -  
-#tw_norm                    lnN    -            -            1.2          -            -            -
+wz_norm                    lnN    -            -            -            1.1          -            -  
+ww_norm                    lnN    -            1.1          -            -            -            -  
+tw_norm                    lnN    -            -            1.1          -            -            -
 ##-- Experimental unc. --##
 lumi_13TeV_1718            lnN    1.002        1.002        1.002        1.002        1.002        1.002
 lumi_13TeV_2018            lnN    1.015        1.015        1.015        1.015        1.015        1.015
@@ -57,7 +57,7 @@ btagSFlight18              shape  1            1            1            1      
 btagSFlight_correlated     shape  1            1            1            1            1            1 
 
 tt_norm rateParam * ttbar 1 [-5,5]
-tw_norm rateParam * singletop 1 [-5,5]
+#tw_norm rateParam * singletop 1 [-5,5]
 
 # [channel] autoMCStats [gauss/poisson threshold] [include-signal = 0] [hist-mode = 1]
 * autoMCStats 50 0 1
