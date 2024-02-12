@@ -45,7 +45,7 @@
   - combineCards.py SRee16=ee16_template_SR.txt TTCRee16=ee16_template_TTCR.txt DYCRee16=ee16_template_DYCR.txt SRee17=ee17_template_SR.txt TTCRee17=ee17_template_TTCR.txt DYCRee17=ee17_template_DYCR.txt SRee18=ee18_template_SR.txt TTCRee18=ee18_template_TTCR.txt DYCRee18=ee18_template_DYCR.txt SRmm16=mm16_template_SR.txt TTCRmm16=mm16_template_TTCR.txt DYCRmm16=mm16_template_DYCR.txt SRmm17=mm17_template_SR.txt TTCRmm17=mm17_template_TTCR.txt DYCRmm17=mm17_template_DYCR.txt SRmm18=mm18_template_SR.txt TTCRmm18=mm18_template_TTCR.txt DYCRmm18=mm18_template_DYCR.txt SRem16=em16_template_SR.txt TTCRem16=em16_template_TTCR.txt SRem17=em17_template_SR.txt TTCRem17=em17_template_TTCR.txt SRem18=em18_template_SR.txt TTCRem18=em18_template_TTCR.txt > combined_datacard.txt
 
 .script_limits: &script_limits
-    - python ${SCRIPT_LIMIT}.py ${ERA}
+    - python ${SCRIPT_LIMIT}.py ${ERA} ${PART}
     - cp $CI_PROJECT_DIR/${SCRIPT_DRAWLIMIT}.ipynb .
     - jupyter nbconvert --to python ${SCRIPT_DRAWLIMIT}.ipynb
     - python ${SCRIPT_DRAWLIMIT}.py ${ERA}
@@ -70,6 +70,7 @@ limit mm16:
     variables:
         DATE: ${DATE1}
         ERA: mm16
+        PART: dummy
         INPUT_DIR: ${INPUT_SYST}
         REGION: SR
         HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
@@ -109,6 +110,7 @@ limit mm17:
     variables:
         DATE: ${DATE1}
         ERA: mm17
+        PART: dummy
         INPUT_DIR: ${INPUT_SYST}
         REGION: SR
         HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
@@ -148,6 +150,7 @@ limit mm18:
     variables:
         DATE: ${DATE1}
         ERA: mm18
+        PART: dummy
         INPUT_DIR: ${INPUT_SYST}
         REGION: SR
         HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
@@ -188,6 +191,7 @@ limit ee16:
     variables:
         DATE: ${DATE1}
         ERA: ee16
+        PART: dummy
         INPUT_DIR: ${INPUT_SYST}
         REGION: SR
         HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
@@ -227,6 +231,7 @@ limit ee17:
     variables:
         DATE: ${DATE1}
         ERA: ee17
+        PART: dummy
         INPUT_DIR: ${INPUT_SYST}
         REGION: SR
         HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
@@ -266,6 +271,7 @@ limit ee18:
     variables:
         DATE: ${DATE1}
         ERA: ee18
+        PART: dummy
         INPUT_DIR: ${INPUT_SYST}
         REGION: SR
         HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
@@ -306,6 +312,7 @@ limit em16:
     variables:
         DATE: ${DATE1}
         ERA: em16
+        PART: dummy
         INPUT_DIR: ${INPUT_SYST}
         REGION: SR
         HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
@@ -345,6 +352,7 @@ limit em17:
     variables:
         DATE: ${DATE1}
         ERA: em17
+        PART: dummy
         INPUT_DIR: ${INPUT_SYST}
         REGION: SR
         HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
@@ -385,6 +393,7 @@ limit em18:
     variables:
         DATE: ${DATE1}
         ERA: em18
+        PART: dummy
         INPUT_DIR: ${INPUT_SYST}
         REGION: SR
         HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
@@ -424,6 +433,7 @@ limit ee combine:
     variables:
         DATE: ${DATE1}
         ERA: ee
+        PART: dummy
         INPUT_DIR: ${INPUT_SYST}
         REGION: SR
         HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
@@ -463,6 +473,7 @@ limit mm combine:
     variables:
         DATE: ${DATE1}
         ERA: mm
+        PART: dummy
         INPUT_DIR: ${INPUT_SYST}
         REGION: SR
         HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
@@ -502,6 +513,7 @@ limit em combine:
     variables:
         DATE: ${DATE1}
         ERA: em
+        PART: dummy
         INPUT_DIR: ${INPUT_SYST}
         REGION: SR
         HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
@@ -531,7 +543,7 @@ limit em combine:
         - *xrdcp_script
         - kdestroy 
 
-limit combine:
+limit combine 1:
     stage: limit
     tags:
         - cvmfs
@@ -541,6 +553,49 @@ limit combine:
     variables:
         DATE: ${DATE1}
         ERA: combine
+        PART: one
+        INPUT_DIR: ${INPUT_SYST}
+        REGION: SR
+        HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
+    rules:    
+        - if: $LIMIT == 'yes' && $IMPACT == 'yes'
+          when: on_success
+        - if: $LIMIT == 'yes' && $IMPACT == 'no'
+          when: always
+    # artifacts:
+    #     when: on_success
+    #     expire_in: 1 days
+    #     paths:
+    #         - ./combine/input/limits.pdf
+    needs:
+        - job: syst em18
+          optional: true         
+        - job: syst em18 VR
+          optional: true 
+    script:
+        - source /cvmfs/cms.cern.ch/cmsset_default.sh
+        - cd $HOME_DIR
+        - cmsenv || true
+        - cd $CI_PROJECT_DIR/combine/input
+        - *combine_card_all
+        - *load_root_files_all
+        - *script_limits
+        - *xrdcp_script
+        # - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/IMPACT/${ERA}/
+        # - xrdcp combined_datacard.txt ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
+        - kdestroy 
+
+limit combine 2:
+    stage: limit
+    tags:
+        - cvmfs
+    image:  
+        name: gitlab-registry.cern.ch/cms-analysis/general/combine-container:CMSSW_11_3_4-combine_v9.1.0-harvester_v2.1.0
+        entrypoint: ["/bin/sh", "-c"]
+    variables:
+        DATE: ${DATE1}
+        ERA: combine
+        PART: two
         INPUT_DIR: ${INPUT_SYST}
         REGION: SR
         HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        

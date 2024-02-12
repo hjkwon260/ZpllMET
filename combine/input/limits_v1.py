@@ -2,6 +2,7 @@ import os, sys
 import json
 
 ERA = sys.argv[1]
+PART = sys.argv[2]
 
 os.system("mkdir -p LIMIT/"+ERA+"/Logs_v1") # temp solution... xrdcp works differently
 os.system("mkdir LIMIT/"+ERA+"/Plots")
@@ -19,6 +20,10 @@ with open('../../config/Settrain.json') as json_file:
 INPUTDIR = setting["INPUTDIR"]
 VERSION = setting["VERSION"]
 SIGNAL_MASSES = setting["ALL_MASSES"]
+if PART == "one":
+	SIGNAL_MASSES = ["Zp-1700_CH-345", "Zp-1700_CH-595", "Zp-1700_CH-845", "Zp-2100_CH-345", "Zp-2100_CH-595", "Zp-2100_CH-845", "Zp-2500_CH-345", "Zp-2500_CH-595", "Zp-2500_CH-845", "Zp-2900_CH-345", "Zp-2900_CH-595", "Zp-2900_CH-845", "Zp-2900_CH-1095", "Zp-2900_CH-1345", "Zp-3300_CH-345", "Zp-3300_CH-595", "Zp-3300_CH-845"]
+if PART == "two":
+	SIGNAL_MASSES = ["Zp-3300_CH-1095", "Zp-3300_CH-1345", "Zp-3300_CH-1595",  "Zp-3700_CH-345", "Zp-3700_CH-595", "Zp-3700_CH-845", "Zp-3700_CH-1095", "Zp-3700_CH-1345", "Zp-3700_CH-1595", "Zp-3700_CH-1845", "Zp-4100_CH-345", "Zp-4100_CH-595", "Zp-4100_CH-845", "Zp-4100_CH-1095", "Zp-4100_CH-1345", "Zp-4100_CH-1595", "Zp-4100_CH-1845"]
 
 for mass in SIGNAL_MASSES:
 	# Read in the file
@@ -53,5 +58,5 @@ for mass in SIGNAL_MASSES:
 		dic_limits[mass]=lst_limits
 
 import json
-with open('LIMIT/'+ERA+'/Logs_v1/limits_'+ERA+'.json', 'w') as fp:
+with open('LIMIT/'+ERA+'/Logs_v1/limits_'+ERA+'.json', 'a') as fp:
     json.dump(dic_limits, fp)	
