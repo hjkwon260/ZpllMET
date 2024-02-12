@@ -641,9 +641,9 @@ draw limit combine:
         INPUT_DIR: ${INPUT_SYST}
         REGION: SR
         HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
-    needs:
-        - job: limit combine 1
-        - job: limit combine 2
+    # needs:
+    #     - job: limit combine 1
+    #     - job: limit combine 2
     script:
         - source /cvmfs/cms.cern.ch/cmsset_default.sh
         - cd $HOME_DIR
@@ -651,6 +651,11 @@ draw limit combine:
         - cd $CI_PROJECT_DIR/combine/input
         - mkdir one
         - mkdir two
-        - xrdcp -r -v ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/one/ .
-        - xrdcp -r -v ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/two/ .
+        # - xrdcp -r -v ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/one/ .
+        # - xrdcp -r -v ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/two/ .
+        - xrdcp -v ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/limits_combine.json .
+        - cp $CI_PROJECT_DIR/${SCRIPT_DRAWLIMIT}.ipynb .
+        - jupyter nbconvert --to python ${SCRIPT_DRAWLIMIT}.ipynb
+        - python ${SCRIPT_DRAWLIMIT}.py ${ERA}  
+        - xrdcp -r -v LIMIT ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/    
         - kdestroy 
