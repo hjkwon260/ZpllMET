@@ -579,10 +579,10 @@ limit combine 1:
         - cd $CI_PROJECT_DIR/combine/input
         - *combine_card_all
         - *load_root_files_all
-        - *script_limits
-        - *xrdcp_script
-        # - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/IMPACT/${ERA}/
-        # - xrdcp combined_datacard.txt ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
+        - python ${SCRIPT_LIMIT}.py ${ERA} ${PART}
+        - cp $CI_PROJECT_DIR/${SCRIPT_DRAWLIMIT}.ipynb .
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/LIMIT/${ERA}/one/
+        - xrdcp -r -v LIMIT ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/one/
         - kdestroy 
 
 limit combine 2:
@@ -621,8 +621,36 @@ limit combine 2:
         - cd $CI_PROJECT_DIR/combine/input
         - *combine_card_all
         - *load_root_files_all
-        - *script_limits
-        - *xrdcp_script
-        # - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/IMPACT/${ERA}/
-        # - xrdcp combined_datacard.txt ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
+        - python ${SCRIPT_LIMIT}.py ${ERA} ${PART}
+        - cp $CI_PROJECT_DIR/${SCRIPT_DRAWLIMIT}.ipynb .
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/LIMIT/${ERA}/two/
+        - xrdcp -r -v LIMIT ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/two/
+        - kdestroy 
+
+draw limit combine:
+    stage: limit
+    tags:
+        - cvmfs
+    image:  
+        name: gitlab-registry.cern.ch/cms-analysis/general/combine-container:CMSSW_11_3_4-combine_v9.1.0-harvester_v2.1.0
+        entrypoint: ["/bin/sh", "-c"]
+    variables:
+        DATE: ${DATE1}
+        ERA: combine
+        PART: two
+        INPUT_DIR: ${INPUT_SYST}
+        REGION: SR
+        HOME_DIR: "/home/cmsusr/CMSSW_11_3_4/"        
+    needs:
+        - job: limit combine 1
+        - job: limit combine 2
+    script:
+        - source /cvmfs/cms.cern.ch/cmsset_default.sh
+        - cd $HOME_DIR
+        - cmsenv || true
+        - cd $CI_PROJECT_DIR/combine/input
+        - mkdir one
+        - mkdir two
+        - xrdcp -r -v ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/one/ .
+        - xrdcp -r -v ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/two/ .
         - kdestroy 
