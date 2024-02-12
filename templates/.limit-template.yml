@@ -92,6 +92,7 @@ limit mm16:
         - job: syst mm16 VR
           optional: true 
     script:
+        - export LD_LIBRARY_PATH=""    
         - jupyter nbconvert --to python ${SCRIPT_DRAWLIMIT}.ipynb
         - python ${SCRIPT_DRAWLIMIT}.py ${ERA}      
         # - source /cvmfs/cms.cern.ch/cmsset_default.sh
