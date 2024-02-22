@@ -29,7 +29,7 @@ UE                         shape  1            -            -            -      
 toppt                      shape  1            -            -            -            -            -            - 
 #-- norm uncertainty --#
 wz_norm                    lnN    -            -            -            1.1          -            -            -  
-ww_norm                    lnN    -            1.1          -            -            -            -            -  
+#ww_norm                    lnN    -            1.1          -            -            -            -            -  
 tw_norm                    lnN    -            -            1.1          -            -            -            -
 ##-- Experimental unc. --##
 lumi_13TeV_17              lnN    1.02         1.02         1.02         1.02         1.02         1.02         1.02       
@@ -59,7 +59,7 @@ btagSFlight_correlated     shape  1            1            1            1      
 
 tt_norm rateParam * ttbar 1 [-5,5]
 dy_norm rateParam * dy 1 [-5,5]
-#ww_norm rateParam * ww 1 [-5,5]
+ww_norm rateParam * ww 1 [-5,5]
 #wz_norm rateParam * wz 1 [-5,5]
 #tw_norm rateParam * singletop 1 [-5,5]
 
