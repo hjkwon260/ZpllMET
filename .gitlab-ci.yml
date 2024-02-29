@@ -17,7 +17,7 @@ variables:
     DRAW_SB: 'no'
     EVAL: 'no'
     EVAL_VR: 'no'
-    EVAL_SB: 'yes'
+    EVAL_SB: 'no'
     SYST: "no"
     SYST_SB: "yes"
     IMPACT: "no"
