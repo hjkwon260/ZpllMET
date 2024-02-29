@@ -14,7 +14,7 @@ variables:
     DUMP: 'no'
     DRAW: 'no'
     DRAW_SB: 'no'
-    EVAL: 'yes'
+    EVAL: 'no'
     EVAL_VR: 'no'
     EVAL_SB: 'no'
     SYST: "yes"
