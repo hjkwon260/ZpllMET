@@ -25,7 +25,7 @@ CMS_scale_j_2016           shape  1            1            1            1      
 CMS_res_j_2016             shape  1            1            1            1            1            1            1 
 CMS_scale_met_2016         shape  1            1            1            1            1            1            1 
 CMS_res_met_2016           shape  1            1            1            1            1            1            1 
-CMS_scale_met_UE_2016      shape  1            -            1            1            1            1            1 
+CMS_scale_met_UE_2016      shape  1            -            1            1            1            -            1 
 btagSFbc16                 shape  1            1            1            1            1            1            1 
 btagSFbc_correlated        shape  1            1            1            1            1            1            1 
 btagSFlight16              shape  1            1            1            1            1            1            1 
