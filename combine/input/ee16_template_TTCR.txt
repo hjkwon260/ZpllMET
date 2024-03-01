@@ -8,10 +8,10 @@ shapes  * ttcr    VR/ee16/root_files/shape_v1_20230430wp80_ANv3Zp-2500_CH-345_sm
 bin          ttcr  
 observation  -1            
 -------------------------------------------------------------------------------------------------------------------------
-bin                               ttcr         ttcr         ttcr         ttcr         ttcr         ttcr        ttcr          ttcr
-process                           ttbar        ww           singletop    wz           zz           dy          others        zp     
-process                           1            2            3            4            5            6           7             0               
-rate                              -1           -1           -1           -1           -1           -1          -1            -1       
+bin                               ttcr         ttcr         ttcr         ttcr         ttcr         ttcr         ttcr         ttcr
+process                           ttbar        ww           singletop    wz           zz           dy           others       zp     
+process                           1            2            3            4            5            6            7            0               
+rate                              -1           -1           -1           -1           -1           -1           -1           -1       
 -------------------------------------------------------------------------------------------------------------------------
 lumi_13TeV_2016            lnN    1.01         1.01         1.01         1.01         1.01         1.01         1.01         1.01         
 lumi_13TeV_correlated      lnN    1.006        1.006        1.006        1.006        1.006        1.006        1.006        1.006         
@@ -25,7 +25,7 @@ CMS_scale_j_2016           shape  1            1            1            1      
 CMS_res_j_2016             shape  1            1            1            1            1            1            1            1 
 CMS_scale_met_2016         shape  1            1            1            1            1            1            1            1 
 CMS_res_met_2016           shape  1            1            1            1            1            1            1            1 
-CMS_scale_met_UE_2016      shape  1            -            1            1            1            -            1            1 
+CMS_scale_met_UE_2016      shape  1            -            1            1            1            -            -            1 
 CMS_btagSFbc_2016          shape  1            1            1            1            1            1            1            1 
 CMS_btagSFbc_correlated    shape  1            1            1            1            1            1            1            1 
 CMS_btagSFlight_2016       shape  1            1            1            1            1            1            1            1 

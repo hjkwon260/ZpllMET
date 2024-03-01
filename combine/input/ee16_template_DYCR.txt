@@ -8,10 +8,10 @@ shapes  * dycr    METSB/ee16/root_files/shape_v1_20230430wp80_ANv3Zp-2500_CH-345
 bin          dycr  
 observation  -1            
 -------------------------------------------------------------------------------------------------------------------------
-bin                               dycr         dycr         dycr         dycr         dycr         dycr        dycr          dycr    
-process                           ttbar        ww           singletop    wz           zz           dy          others        zp     
-process                           1            2            3            4            5            6           7             0               
-rate                              -1           -1           -1           -1           -1           -1          -1            -1       
+bin                               dycr         dycr         dycr         dycr         dycr         dycr         dycr         dycr    
+process                           ttbar        ww           singletop    wz           zz           dy           others       zp     
+process                           1            2            3            4            5            6            7            0               
+rate                              -1           -1           -1           -1           -1           -1           -1           -1       
 ------------------------------------------------------------------------------------------------------------------------- 
 lumi_13TeV_2016            lnN    1.01         1.01         1.01         1.01         1.01         1.01         1.01         1.01         
 lumi_13TeV_correlated      lnN    1.006        1.006        1.006        1.006        1.006        1.006        1.006        1.006 
