@@ -49,9 +49,9 @@
   - text2workspace.py -m 125 -o workspace.root combined_datacard.txt
   # b-only
   - combine -M FitDiagnostics workspace.root -m 125 --rMin -2 --rMax 2 --saveShapes --saveWithUncertainties
-  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 --doInitialFit
-  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 --doFits
-  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 --output impacts.json
+  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 0 --doInitialFit
+  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 0 --doFits
+  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 0 --output impacts.json
   - plotImpacts.py -i impacts.json -o impacts
   # s+b
   - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 1 --doInitialFit
