@@ -61,7 +61,7 @@
 
 .xrdcp_script: &xrdcp_script
   - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/IMPACT/${ERA}/
-  - xrdcp *.root ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
+  - xrdcp fitDiagnosticsTest.root ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
   - xrdcp *.pdf ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
   - xrdcp *.json ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
   - xrdcp combined_datacard.txt ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
