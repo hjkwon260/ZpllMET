@@ -30,7 +30,12 @@ CMS_btagSFbc_2016          shape  1            1            1            1      
 CMS_btagSFbc_correlated    shape  1            1            1            1            1            1            1 
 CMS_btagSFlight_2016       shape  1            1            1            1            1            1            1 
 CMS_btagSFlight_correlated shape  1            1            1            1            1            1            1 
+QCDscale_ttbar             shape  1            -            -            -            -            -            - 
+QCDscale_ww                shape  -            1            -            -            -            -            - 
+QCDscale_zp                shape  -            -            -            -            -            -            1 
 pdf                        shape  1            1            1            1            1            1            1 
+isr                        shape  1            1            -            -            -            -            1 
+fsr                        shape  1            1            -            -            -            -            1 
 hdamp                      shape  1            -            -            -            -            -            - 
 UE                         shape  1            -            -            -            -            -            - 
 toppt                      shape  1            -            -            -            -            -            - 
