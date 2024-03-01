@@ -13,23 +13,23 @@ process                           ttbar        ww           singletop    wz     
 process                           1            2            3            4            5            6           0               
 rate                              -1           -1           -1           -1           -1           -1          -1       
 -------------------------------------------------------------------------------------------------------------------------
-lumi_13TeV_16              lnN    1.01         1.01         1.01         1.01         1.01         1.01         1.01         
-lumi_13TeV_correlated      lnN    1.006        1.006        1.006        1.006        1.006        1.006        1.006         
+lumi_13TeV_2016            lnN    1.01         1.01         1.01         1.01         1.01         1.01         1.01         
+lumi_13TeV_correlated      lnN    1.006        1.006        1.006        1.006        1.006        1.006        1.006      
 CMS_eff_e_reco             shape  1            1            1            1            1            1            1
 CMS_eff_e                  shape  1            1            1            1            1            1            1 
-trig_eff                   shape  1            1            1            1            1            1            1 
+CMS_eff_trig               shape  1            1            1            1            1            1            1 
 CMS_scale_e                shape  1            1            1            1            1            1            1
-l1prefiring                shape  1            1            1            1            1            1            1 
+l1prefiring_2016           shape  1            1            1            1            1            1            1 
 pileup                     shape  1            1            1            1            1            1            1 
 CMS_scale_j_2016           shape  1            1            1            1            1            1            1 
 CMS_res_j_2016             shape  1            1            1            1            1            1            1 
 CMS_scale_met_2016         shape  1            1            1            1            1            1            1 
 CMS_res_met_2016           shape  1            1            1            1            1            1            1 
 CMS_scale_met_UE_2016      shape  1            1            1            1            1            1            1 
-btagSFbc16                 shape  1            1            1            1            1            1            1 
-btagSFbc_correlated        shape  1            1            1            1            1            1            1 
-btagSFlight16              shape  1            1            1            1            1            1            1 
-btagSFlight_correlated     shape  1            1            1            1            1            1            1 
+CMS_btagSFbc_2016          shape  1            1            1            1            1            1            1 
+CMS_btagSFbc_correlated    shape  1            1            1            1            1            1            1 
+CMS_btagSFlight_2016       shape  1            1            1            1            1            1            1 
+CMS_btagSFlight_correlated shape  1            1            1            1            1            1            1 
 pdf                        shape  1            -            -            -            -            -            - 
 hdamp                      shape  1            -            -            -            -            -            - 
 UE                         shape  1            -            -            -            -            -            - 
