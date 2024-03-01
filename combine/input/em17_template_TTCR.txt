@@ -13,8 +13,9 @@ process                           ttbar        ww           singletop    wz     
 process                           1            2            3            4            5            7            0               
 rate                              -1           -1           -1           -1           -1           -1           -1      
 -------------------------------------------------------------------------------------------------------------------------
-lumi_13TeV_2017            lnN    1.01         1.01         1.01         1.01         1.01         1.01         1.01         
-lumi_13TeV_correlated      lnN    1.006        1.006        1.006        1.006        1.006        1.006        1.006       
+lumi_13TeV_2017            lnN    1.02         1.02         1.02         1.02         1.02         1.02         1.02  
+lumi_13TeV_correlated      lnN    1.009        1.009        1.009        1.009        1.009        1.009        1.009  
+lumi_13TeV_1718            lnN    1.006        1.006        1.006        1.006        1.006        1.006        1.006     
 CMS_eff_e_reco             shape  1            1            1            1            1            1            1
 CMS_eff_em                 shape  1            1            1            1            1            1            1 
 CMS_eff_trig               shape  1            1            1            1            1            1            1 
@@ -44,10 +45,9 @@ wz_norm                    lnN    -            -            -            1.2    
 zz_norm                    lnN    -            -            -            -            1.2          -            - 
 
 tt_norm rateParam * ttbar 1 [-5,5]
-#tw_norm rateParam * singletop 1 [-5,5]
 
 # [channel] autoMCStats [gauss/poisson threshold] [include-signal = 0] [hist-mode = 1]
-* autoMCStats 50 0 1
+* autoMCStats 100 0 1
 
 
 
