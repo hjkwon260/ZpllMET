@@ -1,6 +1,6 @@
 variables: 
-    # DATE1: 20231219GEv1SBv3
-    DATE1: 20231214GEv1
+    DATE1: 20231219GEv1SBv3
+    # DATE1: 20231214GEv1
     DATE2: 20231214GEv1 # don't change it
     CMS_PATH: /cvmfs/cms.cern.ch
     CMSSW_RELEASE: CMSSW_10_2_13
@@ -16,8 +16,8 @@ variables:
     DRAW: 'no'
     DRAW_SB: 'no'
     EVAL: 'no'
-    EVAL_VR: 'yes'
-    EVAL_SB: 'no'
+    EVAL_VR: 'no'
+    EVAL_SB: 'yes'
     SYST: "no"
     SYST_SB: "no"
     IMPACT: "no"
