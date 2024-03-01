@@ -29,7 +29,7 @@ variables:
     REGION_DRAW: 'TR'
     INPUT_DUMP: Run2/Preselection/${DATE1}/DUMP/
     INPUT_DNN: Run2/Preselection/${DATE1}/DNNlatest/
-    INPUT_SYST: Run2/Preselection/${DATE1}/SYST/
+    INPUT_SYST: Run2/Preselection/${DATE1}/SYSTlatest/
 
 before_script:
     # - ls /usr/lib64
