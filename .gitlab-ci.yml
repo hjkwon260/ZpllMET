@@ -19,8 +19,8 @@ variables:
     EVAL_VR: 'no'
     EVAL_SB: 'no'
     SYST: "no"
-    SYST_SB: "no"
-    IMPACT: "yes"
+    SYST_SB: "yes"
+    IMPACT: "no"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
     ONLY_BENCHMARK: 'yes'
