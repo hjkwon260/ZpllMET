@@ -16,11 +16,11 @@ variables:
     DRAW: 'no'
     DRAW_SB: 'no'
     EVAL: 'no'
-    EVAL_VR: 'no'
+    EVAL_VR: 'yes'
     EVAL_SB: 'no'
     SYST: "no"
     SYST_SB: "no"
-    IMPACT: "yes"
+    IMPACT: "no"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
     ONLY_BENCHMARK: 'no'
