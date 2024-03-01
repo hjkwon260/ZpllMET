@@ -2,8 +2,20 @@
     - mkdir METSB
     - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/METSB/root_files METSB
 
+.load_root_files_em: &load_root_files_em
+    - mkdir MASSSB
+    - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/MASSSB/root_files MASSSB
+
 .syst_script: &syst_script
     - *load_root_files
+    - export LD_LIBRARY_PATH=""    
+    - jupyter nbconvert --to python ${SCRIPT_SYST}.ipynb
+    - python3 ${SCRIPT_SYST}.py . ${ERA} ${REGION} ${ONLY_BENCHMARK}
+    - export PATH="$PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/bin"
+    - export LD_LIBRARY_PATH="/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/biglib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/lib/slc7_amd64_gcc900:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_11_3_2/external/slc7_amd64_gcc900/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/llvm/11.1.0-llifpc/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/gcc/9.3.0/lib"
+
+.syst_script_em: &syst_script_em
+    - *load_root_files_em
     - export LD_LIBRARY_PATH=""    
     - jupyter nbconvert --to python ${SCRIPT_SYST}.ipynb
     - python3 ${SCRIPT_SYST}.py . ${ERA} ${REGION} ${ONLY_BENCHMARK}
@@ -201,6 +213,25 @@ syst ee18 sb:
         - *syst_script
         - *xrdcp_script
 
-
+##-- em --##
+syst em16 sb:
+    stage: syst
+    tags:
+        - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
+    variables:
+        DATE: ${DATE1}
+        ERA: em16
+        INPUT_DIR: ${INPUT_DNN}
+        REGION: MASSSB
+    rules:    
+        - if: $SYST_SB== 'yes' && $EVAL_SB == 'yes'
+          when: on_success
+        - if: $SYST_SB== 'yes' && $EVAL_SB == 'no'
+          when: always
+    script:
+        - *syst_script_em
+        - *xrdcp_script
 
      

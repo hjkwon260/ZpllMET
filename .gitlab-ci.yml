@@ -19,11 +19,11 @@ variables:
     EVAL_VR: 'no'
     EVAL_SB: 'no'
     SYST: "no"
-    SYST_SB: "no"
-    IMPACT: "yes"
+    SYST_SB: "yes"
+    IMPACT: "no"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
-    ONLY_BENCHMARK: 'no'
+    ONLY_BENCHMARK: 'yes'
     ONLY_SR: 'no' # syst # eval
     REGION_DUMP: 'SR'
     REGION_DRAW: 'TR'
