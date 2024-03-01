@@ -234,4 +234,43 @@ syst em16 sb:
         - *syst_script_em
         - *xrdcp_script
 
+syst em17 sb:
+    stage: syst
+    tags:
+        - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
+    variables:
+        DATE: ${DATE1}
+        ERA: em17
+        INPUT_DIR: ${INPUT_DNN}
+        REGION: MASSSB
+    rules:    
+        - if: $SYST_SB== 'yes' && $EVAL_SB == 'yes'
+          when: on_success
+        - if: $SYST_SB== 'yes' && $EVAL_SB == 'no'
+          when: always
+    script:
+        - *syst_script_em
+        - *xrdcp_script
+
+syst em18 sb:
+    stage: syst
+    tags:
+        - cvmfs
+    image:
+        name: gitlab-registry.cern.ch/hkwon/notebooks:alma9  
+    variables:
+        DATE: ${DATE1}
+        ERA: em18
+        INPUT_DIR: ${INPUT_DNN}
+        REGION: MASSSB
+    rules:    
+        - if: $SYST_SB== 'yes' && $EVAL_SB == 'yes'
+          when: on_success
+        - if: $SYST_SB== 'yes' && $EVAL_SB == 'no'
+          when: always
+    script:
+        - *syst_script_em
+        - *xrdcp_script
      
