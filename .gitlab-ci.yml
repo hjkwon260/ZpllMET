@@ -18,7 +18,7 @@ variables:
     EVAL: 'no'
     EVAL_VR: 'no'
     EVAL_SB: 'no'
-    SYST: "no"
+    SYST: "yes"
     SYST_SB: "yes"
     IMPACT: "no"
     LIMIT: 'no'
