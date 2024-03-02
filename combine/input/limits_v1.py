@@ -65,6 +65,8 @@ for mass in SIGNAL_MASSES:
 		print(lst_limits)
 		dic_limits[mass]=lst_limits
 
+		print(mass, lst_limits)
+
 import json
 with open('LIMIT/'+ERA+'/Logs_v1/limits_'+ERA+'.json', 'a') as fp:
     json.dump(dic_limits, fp)	
