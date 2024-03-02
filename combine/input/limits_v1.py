@@ -28,7 +28,10 @@ if PART == "three":
 	SIGNAL_MASSES = ["Zp-3700_CH-845", "Zp-3700_CH-1095", "Zp-3700_CH-1345", "Zp-3700_CH-1595", "Zp-3700_CH-1845", "Zp-4100_CH-345"]
 if PART == "four":
 	SIGNAL_MASSES = ["Zp-4100_CH-595", "Zp-4100_CH-845", "Zp-4100_CH-1095", "Zp-4100_CH-1345", "Zp-4100_CH-1595", "Zp-4100_CH-1845"]
-
+if PART == "five":
+	SIGNAL_MASSES = ["Zp-3700_CH-1345", "Zp-3700_CH-1595"]
+if PART == "six":
+	SIGNAL_MASSES = ["Zp-3700_CH-1845", "Zp-4100_CH-345"]
 for mass in SIGNAL_MASSES:
 	# Read in the file
 	with open(input_datacard, 'r') as file :
