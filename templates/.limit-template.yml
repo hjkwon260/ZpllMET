@@ -581,8 +581,8 @@ limit combine 1:
         - *load_root_files_all
         - python ${SCRIPT_LIMIT}.py ${ERA} ${PART}
         - cp $CI_PROJECT_DIR/${SCRIPT_DRAWLIMIT}.ipynb .
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/LIMIT/${ERA}/one/
-        - xrdcp -r -v LIMIT ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/one/
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/LIMIT/${ERA}/${PART}/
+        - xrdcp -r -v LIMIT ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/${PART}/
         - kdestroy 
 
 limit combine 2:
@@ -623,8 +623,8 @@ limit combine 2:
         - *load_root_files_all
         - python ${SCRIPT_LIMIT}.py ${ERA} ${PART}
         - cp $CI_PROJECT_DIR/${SCRIPT_DRAWLIMIT}.ipynb .
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/LIMIT/${ERA}/two/
-        - xrdcp -r -v LIMIT ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/two/
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/LIMIT/${ERA}/${PART}/
+        - xrdcp -r -v LIMIT ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/${PART}/
         - kdestroy 
 
 limit combine 3:
@@ -665,8 +665,8 @@ limit combine 3:
         - *load_root_files_all
         - python ${SCRIPT_LIMIT}.py ${ERA} ${PART}
         - cp $CI_PROJECT_DIR/${SCRIPT_DRAWLIMIT}.ipynb .
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/LIMIT/${ERA}/two/
-        - xrdcp -r -v LIMIT ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/two/
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/LIMIT/${ERA}/${PART}/
+        - xrdcp -r -v LIMIT ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/${PART}/
         - kdestroy 
 
 limit combine 4:
@@ -707,8 +707,8 @@ limit combine 4:
         - *load_root_files_all
         - python ${SCRIPT_LIMIT}.py ${ERA} ${PART}
         - cp $CI_PROJECT_DIR/${SCRIPT_DRAWLIMIT}.ipynb .
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/LIMIT/${ERA}/two/
-        - xrdcp -r -v LIMIT ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/two/
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/LIMIT/${ERA}/${PART}/
+        - xrdcp -r -v LIMIT ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/LIMIT/${ERA}/${PART}/
         - kdestroy 
 
 draw limit combine:
