@@ -21,7 +21,7 @@ variables:
     SYST: "no"
     SYST_SB: "no"
     IMPACT: "yes"
-    MASS: "Zp-2500_CH-345"
+    MASS: "Zp-4100_CH-1345"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
     ONLY_BENCHMARK: 'no'
