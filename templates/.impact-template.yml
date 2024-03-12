@@ -31,23 +31,23 @@
 
 .combine_card_single: &combine_card_single
   - combineCards.py SR${ERA}=${ERA}_template_SR.txt TTCR${ERA}=${ERA}_template_TTCR.txt > combined_datacard.txt
-  - sed -i 's/Zp-2500_CH-345/Zp-2500_CH-345/g' combined_datacard.txt
+  - sed -i 's/Zp-2500_CH-345/${MASS}/g' combined_datacard.txt
 
 .combine_card_single_SF: &combine_card_single_SF
   - combineCards.py SR${ERA}=${ERA}_template_SR.txt TTCR${ERA}=${ERA}_template_TTCR.txt DYCR${ERA}=${ERA}_template_DYCR.txt > combined_datacard.txt
-  - sed -i 's/Zp-2500_CH-345/Zp-2500_CH-345/g' combined_datacard.txt
+  - sed -i 's/Zp-2500_CH-345/${MASS}/g' combined_datacard.txt
 
 .combine_card_channel: &combine_card_channel
   - combineCards.py SR${ERA}16=${ERA}16_template_SR.txt TTCR${ERA}16=${ERA}16_template_TTCR.txt SR${ERA}17=${ERA}17_template_SR.txt TTCR${ERA}17=${ERA}17_template_TTCR.txt SR${ERA}18=${ERA}18_template_SR.txt TTCR${ERA}18=${ERA}18_template_TTCR.txt > combined_datacard.txt
-  - sed -i 's/Zp-2500_CH-345/Zp-2500_CH-345/g' combined_datacard.txt
+  - sed -i 's/Zp-2500_CH-345/${MASS}/g' combined_datacard.txt
 
 .combine_card_channel_SF: &combine_card_channel_SF
   - combineCards.py SR${ERA}16=${ERA}16_template_SR.txt TTCR${ERA}16=${ERA}16_template_TTCR.txt DYCR${ERA}16=${ERA}16_template_DYCR.txt SR${ERA}17=${ERA}17_template_SR.txt TTCR${ERA}17=${ERA}17_template_TTCR.txt DYCR${ERA}17=${ERA}17_template_DYCR.txt SR${ERA}18=${ERA}18_template_SR.txt TTCR${ERA}18=${ERA}18_template_TTCR.txt DYCR${ERA}18=${ERA}18_template_DYCR.txt > combined_datacard.txt
-  - sed -i 's/Zp-2500_CH-345/Zp-2500_CH-345/g' combined_datacard.txt
+  - sed -i 's/Zp-2500_CH-345/${MASS}/g' combined_datacard.txt
 
 .combine_card_all: &combine_card_all
   - combineCards.py SRee16=ee16_template_SR.txt TTCRee16=ee16_template_TTCR.txt DYCRee16=ee16_template_DYCR.txt SRee17=ee17_template_SR.txt TTCRee17=ee17_template_TTCR.txt DYCRee17=ee17_template_DYCR.txt SRee18=ee18_template_SR.txt TTCRee18=ee18_template_TTCR.txt DYCRee18=ee18_template_DYCR.txt SRmm16=mm16_template_SR.txt TTCRmm16=mm16_template_TTCR.txt DYCRmm16=mm16_template_DYCR.txt SRmm17=mm17_template_SR.txt TTCRmm17=mm17_template_TTCR.txt DYCRmm17=mm17_template_DYCR.txt SRmm18=mm18_template_SR.txt TTCRmm18=mm18_template_TTCR.txt DYCRmm18=mm18_template_DYCR.txt SRem16=em16_template_SR.txt TTCRem16=em16_template_TTCR.txt SRem17=em17_template_SR.txt TTCRem17=em17_template_TTCR.txt SRem18=em18_template_SR.txt TTCRem18=em18_template_TTCR.txt > combined_datacard.txt
-  - sed -i 's/Zp-2500_CH-345/Zp-2500_CH-345/g' combined_datacard.txt
+  - sed -i 's/Zp-2500_CH-345/${MASS}/g' combined_datacard.txt
 
 .script_impacts: &script_impacts
   - ValidateDatacards.py combined_datacard.txt 
@@ -65,7 +65,6 @@
   - plotImpacts.py -i impactsS.json -o impactsS
 
 .xrdcp_script: &xrdcp_script
-  - export MASS=Zp-2500_CH-345
   - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/IMPACT${MASS}/${ERA}/
   - xrdcp fitDiagnosticsTest.root ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT${MASS}/${ERA}/
   - xrdcp *.pdf ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT${MASS}/${ERA}/
@@ -630,13 +629,14 @@ impact combine 2:
         - *combine_card_all
         - *load_root_files_all
         # - *script_impacts
+        - ValidateDatacards.py combined_datacard.txt 
         - text2workspace.py -m 125 -o workspace.root combined_datacard.txt
         # s+b
         - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 1 --doInitialFit
         - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 1 --doFits
         - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 1 --output impactsS.json
         - plotImpacts.py -i impactsS.json -o impactsS        
-        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/IMPACT/${ERA}/
-        - xrdcp *.pdf ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
-        - xrdcp *.json ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT/${ERA}/
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/IMPACT${MASS}/${ERA}/
+        - xrdcp *.pdf ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT${MASS}/${ERA}/
+        - xrdcp *.json ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT${MASS}/${ERA}/
         - kdestroy 

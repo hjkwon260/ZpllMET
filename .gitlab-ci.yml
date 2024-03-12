@@ -21,6 +21,7 @@ variables:
     SYST: "no"
     SYST_SB: "no"
     IMPACT: "yes"
+    MASS: "Zp-3300_CH-845"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
     ONLY_BENCHMARK: 'no'
