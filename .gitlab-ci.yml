@@ -1,6 +1,6 @@
 variables: 
-    DATE1: 20231219GEv1SBv3
-    # DATE1: 20231214GEv1
+    # DATE1: 20231219GEv1SBv3
+    DATE1: 20231214GEv1
     DATE2: 20231214GEv1 # don't change it
     CMS_PATH: /cvmfs/cms.cern.ch
     CMSSW_RELEASE: CMSSW_10_2_13
@@ -15,16 +15,16 @@ variables:
     DUMP: 'no'
     DRAW: 'no'
     DRAW_SB: 'no'
-    EVAL: 'no'
+    EVAL: 'yes'
     EVAL_VR: 'no'
-    EVAL_SB: 'yes'
+    EVAL_SB: 'no'
     SYST: "no"
     SYST_SB: "no"
     IMPACT: "no"
     MASS: "Zp-4100_CH-1345"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
-    ONLY_BENCHMARK: 'no'
+    ONLY_BENCHMARK: 'yes'
     ONLY_SR: 'no' # syst # eval
     REGION_DUMP: 'SR'
     REGION_DRAW: 'TR'
