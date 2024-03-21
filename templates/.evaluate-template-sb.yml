@@ -653,8 +653,8 @@ eval em16 SB 1:
           optional: true   
     script:
         - *load16
-        - *script_eval16 
-        - *xrdcp_script 
+        # - *script_eval16 
+        # - *xrdcp_script 
         - export REGION="MASSSB"
         - *script_eval 
         - *xrdcp_script 
@@ -692,8 +692,8 @@ eval em17 SB 1:
           optional: true     
     script:
         - *load 
-        - *script_eval 
-        - *xrdcp_script 
+        # - *script_eval 
+        # - *xrdcp_script 
         - export REGION="MASSSB"
         - *script_eval 
         - *xrdcp_script 
@@ -731,8 +731,8 @@ eval em18 SB 1:
           optional: true    
     script:
         - *load 
-        - *script_eval 
-        - *xrdcp_script 
+        # - *script_eval 
+        # - *xrdcp_script 
         - export REGION="MASSSB"
         - *script_eval 
         - *xrdcp_script 
@@ -772,8 +772,8 @@ eval em16 SB 2:
           optional: true   
     script:
         - *load16
-        - *script_eval16 
-        - *xrdcp_script 
+        # - *script_eval16 
+        # - *xrdcp_script 
         - export REGION="MASSSB"
         - *script_eval 
         - *xrdcp_script 
@@ -811,8 +811,8 @@ eval em17 SB 2:
           optional: true     
     script:
         - *load 
-        - *script_eval 
-        - *xrdcp_script 
+        # - *script_eval 
+        # - *xrdcp_script 
         - export REGION="MASSSB"
         - *script_eval 
         - *xrdcp_script 
@@ -850,8 +850,8 @@ eval em18 SB 2:
           optional: true    
     script:
         - *load 
-        - *script_eval 
-        - *xrdcp_script 
+        # - *script_eval 
+        # - *xrdcp_script 
         - export REGION="MASSSB"
         - *script_eval 
         - *xrdcp_script 
@@ -891,8 +891,8 @@ eval em16 SB 3:
           optional: true   
     script:
         - *load16
-        - *script_eval16 
-        - *xrdcp_script 
+        # - *script_eval16 
+        # - *xrdcp_script 
         - export REGION="MASSSB"
         - *script_eval 
         - *xrdcp_script 
@@ -930,8 +930,8 @@ eval em17 SB 3:
           optional: true     
     script:
         - *load 
-        - *script_eval 
-        - *xrdcp_script 
+        # - *script_eval 
+        # - *xrdcp_script 
         - export REGION="MASSSB"
         - *script_eval 
         - *xrdcp_script 
@@ -969,8 +969,8 @@ eval em18 SB 3:
           optional: true    
     script:
         - *load 
-        - *script_eval 
-        - *xrdcp_script 
+        # - *script_eval 
+        # - *xrdcp_script 
         - export REGION="MASSSB"
         - *script_eval 
         - *xrdcp_script 
