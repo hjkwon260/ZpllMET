@@ -18,8 +18,8 @@ variables:
     EVAL: 'no'
     EVAL_VR: 'no'
     EVAL_SB: 'no'
-    SYST: "yes"
-    SYST_SB: "no"
+    SYST: "no"
+    SYST_SB: "yes"
     IMPACT: "no"
     MASS: "Zp-4100_CH-1345"
     LIMIT: 'no'
