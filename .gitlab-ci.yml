@@ -17,9 +17,9 @@ variables:
     DRAW_SB: 'no'
     EVAL: 'no'
     EVAL_VR: 'no'
-    EVAL_SB: 'no'
+    EVAL_SB: 'yes'
     SYST: "no"
-    SYST_SB: "yes"
+    SYST_SB: "no"
     IMPACT: "no"
     MASS: "Zp-4100_CH-1345"
     LIMIT: 'no'
