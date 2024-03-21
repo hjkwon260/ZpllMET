@@ -13,7 +13,7 @@ variables:
     SCRIPT_SYST: SystematicPlots_v3
     SCRIPT_DRAWLIMIT: 2Dlimit_v1
     DUMP: 'no'
-    DRAW: 'yes'
+    DRAW: 'no'
     DRAW_SB: 'no'
     EVAL: 'no'
     EVAL_VR: 'no'
