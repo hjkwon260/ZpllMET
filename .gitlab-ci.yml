@@ -11,7 +11,7 @@ variables:
     SCRIPT_DUMP: Dump_v2  
     SCRIPT_DRAW: Draw_v1  
     SCRIPT_SYST: SystematicPlots_v3
-    SCRIPT_DRAWLIMIT: 2Dlimit_v1
+    SCRIPT_DRAWLIMIT: 2Dlimit_v2
     DUMP: 'no'
     DRAW: 'no'
     DRAW_SB: 'no'
