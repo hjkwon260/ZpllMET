@@ -1,0 +1,51 @@
+imax    * number of bins
+jmax    * number of processes minus 1
+kmax    * number of nuisance parameters
+-------------------------------------------------------------------------------------------------------------------------
+shapes  * dycr    METSB/ee18/root_files/shape_v1_20230430wp80_ANv3Zp-2500_CH-345_smoothed_v1.root  signal_region/$PROCESS signal_region/$PROCESS_$SYSTEMATIC
+
+-------------------------------------------------------------------------------------------------------------------------
+bin          dycr  
+observation  -1            
+-------------------------------------------------------------------------------------------------------------------------
+bin                               dycr         dycr         dycr         dycr         dycr         dycr         dycr         dycr    
+process                           ttbar        ww           singletop    wz           zz           dy           others       zp     
+process                           1            2            3            4            5            6            7            0               
+rate                              -1           -1           -1           -1           -1           -1           -1           -1         
+-------------------------------------------------------------------------------------------------------------------------
+lumi_13TeV_2018            lnN    1.015        1.015        1.015        1.015        1.015        1.015        1.015        1.015
+lumi_13TeV_correlated      lnN    1.02         1.02         1.02         1.02         1.02         1.02         1.02         1.02
+lumi_13TeV_1718            lnN    1.002        1.002        1.002        1.002        1.002        1.002        1.002        1.002
+CMS_eff_e_reco             shape  1            1            1            1            1            1            1            1
+CMS_eff_e                  shape  1            1            1            1            1            1            1            1 
+CMS_eff_trig               shape  1            1            1            1            1            1            1            1 
+CMS_scres_e                shape  1            1            1            1            1            1            1            1
+l1prefiring_2018           shape  1            1            1            1            1            1            1            1 
+pileup                     shape  1            1            1            1            1            1            1            1 
+CMS_scale_j_2018           shape  1            1            1            1            1            1            1            1 
+CMS_res_j_2018             shape  1            1            1            1            1            1            1            1 
+CMS_scale_met_2018         shape  1            1            1            1            1            1            1            1 
+CMS_res_met_2018           shape  1            1            1            1            1            1            1            1 
+CMS_scale_met_UE_2018      shape  1            1            1            1            1            1            1            1 
+CMS_btagSFbc_2018          shape  1            1            1            1            1            1            1            1 
+CMS_btagSFbc_correlated    shape  1            1            1            1            1            1            1            1 
+CMS_btagSFlight_2018       shape  1            1            1            1            1            1            1            1 
+CMS_btagSFlight_correlated shape  1            1            1            1            1            1            1            1 
+#QCDscale                   shape  1            1            -            -            -            -            -            1 
+pdf                        shape  1            1            1            1            1            1            1            1 
+isr                        shape  1            1            -            -            -            -            -            1 
+fsr                        shape  1            1            -            -            -            -            -            1 
+hdamp                      shape  1            -            -            -            -            -            -            - 
+UE                         shape  1            -            -            -            -            -            -            - 
+toppt                      shape  1            -            -            -            -            -            -            - 
+ww_norm                    lnN    -            1.2          -            -            -            -            -            -
+tw_norm                    lnN    -            -            1.2          -            -            -            -            -
+wz_norm                    lnN    -            -            -            1.2          -            -            -            -  
+zz_norm                    lnN    -            -            -            -            1.2          -            -            -  
+others_norm                lnN    -            -            -            -            -            -            1.2          -  
+
+tt_norm rateParam * ttbar 1 [-5,5]
+dy_norm rateParam * dy 1 [-5,5]
+
+# [channel] autoMCStats [gauss/poisson threshold] [include-signal = 0] [hist-mode = 1]
+* autoMCStats 10 0 1

@@ -1,12 +1,21 @@
+variables: 
+    COMBINE_INPUT: $CI_PROJECT_DIR/combine/inputalt
+
+.set_combine: &set_combine
+  - source /cvmfs/cms.cern.ch/cmsset_default.sh
+  - cd $HOME_DIR
+  - cmsenv || true
+  - cd ${COMBINE_INPUT}
+
 .load_root_files: &load_root_files
-  - cd $CI_PROJECT_DIR/combine/input
+  - cd ${COMBINE_INPUT}
   - mkdir -p SR/${ERA}
   - mkdir -p VR/${ERA}
   - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/SR/root_files SR/${ERA}
   - if [ $ONLY_SR == "no" ]; then xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/VR/root_files VR/${ERA}; fi  
 
 .load_root_files_SF: &load_root_files_SF
-  - cd $CI_PROJECT_DIR/combine/input
+  - cd ${COMBINE_INPUT}
   - mkdir -p SR/${ERA}
   - mkdir -p VR/${ERA}
   - mkdir -p METSB/${ERA}
@@ -15,7 +24,7 @@
   - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/${ERA}/METSB/root_files METSB/${ERA}
 
 .load_root_files_all: &load_root_files_all
-  - cd $CI_PROJECT_DIR/combine/input
+  - cd ${COMBINE_INPUT}
   - mkdir -p SR/ee16 && mkdir -p SR/ee17 && mkdir -p SR/ee18 && mkdir -p SR/mm16 && mkdir -p SR/mm17 && mkdir -p SR/mm18 && mkdir -p SR/em16 && mkdir -p SR/em17 && mkdir -p SR/em18 
   - mkdir -p VR/ee16 && mkdir -p VR/ee17 && mkdir -p VR/ee18 && mkdir -p VR/mm16 && mkdir -p VR/mm17 && mkdir -p VR/mm18 && mkdir -p VR/em16 && mkdir -p VR/em17 && mkdir -p VR/em18
   - mkdir -p METSB/ee16 && mkdir -p METSB/ee17 && mkdir -p METSB/ee18 && mkdir -p METSB/mm16 && mkdir -p METSB/mm17 && mkdir -p METSB/mm18
@@ -105,10 +114,7 @@ impact mm16:
         - job: syst mm16 VR
           optional: true 
     script:
-        - source /cvmfs/cms.cern.ch/cmsset_default.sh
-        - cd $HOME_DIR
-        - cmsenv || true
-        - cd $CI_PROJECT_DIR/combine/input
+        - *set_combine
         - *combine_card_single_SF
         - *load_root_files_SF
         - *script_impacts
@@ -144,10 +150,7 @@ impact mm17:
         - job: syst mm17 VR
           optional: true 
     script:
-        - source /cvmfs/cms.cern.ch/cmsset_default.sh
-        - cd $HOME_DIR
-        - cmsenv || true
-        - cd $CI_PROJECT_DIR/combine/input
+        - *set_combine
         - *combine_card_single_SF
         - *load_root_files_SF
         - *script_impacts
@@ -183,10 +186,7 @@ impact mm18:
         - job: syst mm18 VR
           optional: true 
     script:
-        - source /cvmfs/cms.cern.ch/cmsset_default.sh
-        - cd $HOME_DIR
-        - cmsenv || true
-        - cd $CI_PROJECT_DIR/combine/input
+        - *set_combine
         - *combine_card_single_SF
         - *load_root_files_SF
         - *script_impacts
@@ -223,10 +223,7 @@ impact ee16:
         - job: syst ee16 VR
           optional: true 
     script:
-        - source /cvmfs/cms.cern.ch/cmsset_default.sh
-        - cd $HOME_DIR
-        - cmsenv || true
-        - cd $CI_PROJECT_DIR/combine/input
+        - *set_combine
         - *combine_card_single_SF
         - *load_root_files_SF
         - *script_impacts
@@ -262,10 +259,7 @@ impact ee17:
         - job: syst ee17 VR
           optional: true 
     script:
-        - source /cvmfs/cms.cern.ch/cmsset_default.sh
-        - cd $HOME_DIR
-        - cmsenv || true
-        - cd $CI_PROJECT_DIR/combine/input
+        - *set_combine
         - *combine_card_single_SF
         - *load_root_files_SF
         - *script_impacts
@@ -301,10 +295,7 @@ impact ee18:
         - job: syst ee18 VR
           optional: true 
     script:
-        - source /cvmfs/cms.cern.ch/cmsset_default.sh
-        - cd $HOME_DIR
-        - cmsenv || true
-        - cd $CI_PROJECT_DIR/combine/input
+        - *set_combine
         - *combine_card_single_SF
         - *load_root_files_SF
         - *script_impacts
@@ -341,10 +332,7 @@ impact em16:
         - job: syst em16 VR
           optional: true 
     script:
-        - source /cvmfs/cms.cern.ch/cmsset_default.sh
-        - cd $HOME_DIR
-        - cmsenv || true
-        - cd $CI_PROJECT_DIR/combine/input
+        - *set_combine
         - *combine_card_single
         - *load_root_files
         - *script_impacts
@@ -381,10 +369,7 @@ impact em17:
         - job: syst em17 VR
           optional: true 
     script:
-        - source /cvmfs/cms.cern.ch/cmsset_default.sh
-        - cd $HOME_DIR
-        - cmsenv || true
-        - cd $CI_PROJECT_DIR/combine/input
+        - *set_combine
         - *combine_card_single
         - *load_root_files
         - *script_impacts
@@ -420,10 +405,7 @@ impact em18:
         - job: syst em18 VR
           optional: true 
     script:
-        - source /cvmfs/cms.cern.ch/cmsset_default.sh
-        - cd $HOME_DIR
-        - cmsenv || true
-        - cd $CI_PROJECT_DIR/combine/input
+        - *set_combine
         - *combine_card_single
         - *load_root_files
         - *script_impacts
@@ -459,10 +441,7 @@ impact ee combine:
         - job: syst em18 VR
           optional: true 
     script:
-        - source /cvmfs/cms.cern.ch/cmsset_default.sh
-        - cd $HOME_DIR
-        - cmsenv || true
-        - cd $CI_PROJECT_DIR/combine/input
+        - *set_combine
         - *combine_card_channel_SF
         - *load_root_files_all
         - *script_impacts       
@@ -498,10 +477,7 @@ impact mm combine:
         - job: syst em18 VR
           optional: true 
     script:
-        - source /cvmfs/cms.cern.ch/cmsset_default.sh
-        - cd $HOME_DIR
-        - cmsenv || true
-        - cd $CI_PROJECT_DIR/combine/input
+        - *set_combine
         - *combine_card_channel_SF
         - *load_root_files_all
         - *script_impacts
@@ -537,10 +513,7 @@ impact em combine:
         - job: syst em18 VR
           optional: true 
     script:
-        - source /cvmfs/cms.cern.ch/cmsset_default.sh
-        - cd $HOME_DIR
-        - cmsenv || true
-        - cd $CI_PROJECT_DIR/combine/input
+        - *set_combine
         - *combine_card_channel
         - *load_root_files_all
         - *script_impacts
@@ -576,10 +549,7 @@ impact combine 1:
         - job: syst em18 VR
           optional: true 
     script:
-        - source /cvmfs/cms.cern.ch/cmsset_default.sh
-        - cd $HOME_DIR
-        - cmsenv || true
-        - cd $CI_PROJECT_DIR/combine/input
+        - *set_combine
         - *combine_card_all
         - *load_root_files_all
         # - *script_impacts
@@ -622,10 +592,7 @@ impact combine 2:
         - job: syst em18 VR
           optional: true 
     script:
-        - source /cvmfs/cms.cern.ch/cmsset_default.sh
-        - cd $HOME_DIR
-        - cmsenv || true
-        - cd $CI_PROJECT_DIR/combine/input
+        - *set_combine
         - *combine_card_all
         - *load_root_files_all
         # - *script_impacts
