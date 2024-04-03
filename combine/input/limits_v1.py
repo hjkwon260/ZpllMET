@@ -46,8 +46,8 @@ for mass in SIGNAL_MASSES:
 		file.write(filedata)
 	os.system("sleep 10s") # give some time file written completely
 
-	# os.system("combine -M AsymptoticLimits --run blind -t -1 "+new_datacard+" > LIMIT/"+ERA+"/Logs_v1/"+str(mass)+".log")
-	os.system("combine -M AsymptoticLimits "+new_datacard+" > LIMIT/"+ERA+"/Logs_v1/"+str(mass)+".log")
+	os.system("combine -M AsymptoticLimits --run blind -t -1 "+new_datacard+" > LIMIT/"+ERA+"/Logs_v1/"+str(mass)+".log")
+	# os.system("combine -M AsymptoticLimits "+new_datacard+" > LIMIT/"+ERA+"/Logs_v1/"+str(mass)+".log")
 
 	with open("LIMIT/"+ERA+"/Logs_v1/"+str(mass)+".log", 'r') as file:
 		lst_limits=[]
@@ -62,8 +62,8 @@ for mass in SIGNAL_MASSES:
 				lst_limits.append(line.split(" ")[4].rstrip("\n"))
 			if "Expected 97.5%: r <" in line:
 				lst_limits.append(line.split(" ")[4].rstrip("\n"))
-			if "Observed Limit: r <" in line:
-				lst_limits.append(line.split(" ")[4].rstrip("\n"))
+			# if "Observed Limit: r <" in line:
+			# 	lst_limits.append(line.split(" ")[4].rstrip("\n"))
 
 		print(lst_limits)
 		dic_limits[mass]=lst_limits
