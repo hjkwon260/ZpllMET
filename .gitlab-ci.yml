@@ -22,7 +22,7 @@ variables:
     SYST_SB: "no"
     IMPACT: "no"
     MASS: "Zp-2500_CH-345"
-    LIMIT: 'no'
+    LIMIT: 'yes'
     DRAW_LIMIT: 'yes'
     ONLY_BENCHMARK: 'no'
     ONLY_SR: 'no' # syst # eval
