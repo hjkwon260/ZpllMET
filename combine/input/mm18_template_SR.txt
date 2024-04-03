@@ -38,9 +38,9 @@ fsr                        shape  1            1            -            -      
 hdamp                      shape  1            -            -            -            -            -            -            - 
 UE                         shape  1            -            -            -            -            -            -            - 
 toppt                      shape  1            -            -            -            -            -            -            - 
-tw_norm                    lnN    -            -            1.2          -            -            -            -            -
-wz_norm                    lnN    -            -            -            1.2          -            -            -            -  
-zz_norm                    lnN    -            -            -            -            1.2          -            -            -  
+tw_norm                    lnN    -            -            1.072        -            -            -            -            -
+wz_norm                    lnN    -            -            -            1.12         -            -            -            -  
+zz_norm                    lnN    -            -            -            -            1.13         -            -            -  
 others_norm                lnN    -            -            -            -            -            -            1.2          -  
 
 tt_norm rateParam * ttbar 1 [-5,5]
