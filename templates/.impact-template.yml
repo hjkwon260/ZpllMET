@@ -78,15 +78,15 @@ variables:
   # - plotImpacts.py -i impactsS.json -o impactsS
   # GoF
   - combineTool.py -M GoodnessOfFit --algorithm saturated -d workspace.root --parallel 15
-  - combineTool.py -M GoodnessOfFit --algorithm saturated -d workspace.root -t 1000 --parallel 15
+  - combineTool.py -M GoodnessOfFit --algorithm saturated -d workspace.root -t 700 --parallel 15
   - combineTool.py -M CollectGoodnessOfFit --input higgsCombine*GoodnessOfFit*.root
   - plotGof.py gof.json --statistic saturated --mass 120.0 -o gof_plot
   # signal strength blind impact
-  - combine -M FitDiagnostics workspace.root -m 125 --rMin -4 --rMax 4 --saveShapes --saveWithUncertainties
-  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -4 --rMax 4 --robustFit 1 --parallel 10 --doInitialFit
-  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -4 --rMax 4 --robustFit 1 --parallel 10 --doFits
-  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -4 --rMax 4 --robustFit 1 --parallel 10 --output impacts.json
-  - plotImpacts.py -i impacts.json -o impacts --blind
+  # - combine -M FitDiagnostics workspace.root -m 125 --rMin -4 --rMax 4 --saveShapes --saveWithUncertainties
+  # - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -4 --rMax 4 --robustFit 1 --parallel 10 --doInitialFit
+  # - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -4 --rMax 4 --robustFit 1 --parallel 10 --doFits
+  # - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -4 --rMax 4 --robustFit 1 --parallel 10 --output impacts.json
+  # - plotImpacts.py -i impacts.json -o impacts --blind
 
 .xrdcp_script: &xrdcp_script
   - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/IMPACT${MASS}/${ERA}/
