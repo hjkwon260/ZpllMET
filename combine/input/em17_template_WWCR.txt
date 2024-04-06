@@ -16,10 +16,10 @@ rate                              -1           -1           -1           -1     
 lumi_13TeV_2017            lnN    1.02         1.02         1.02         1.02         1.02         1.02         1.02         1.02
 lumi_13TeV_correlated      lnN    1.009        1.009        1.009        1.009        1.009        1.009        1.009        1.009
 lumi_13TeV_1718            lnN    1.006        1.006        1.006        1.006        1.006        1.006        1.006        1.006    
-CMS_eff_em                 shape  1            1            1            1            1            1            1            1 
-pileup                     shape  1            1            1            1            1            1            1            1 
-CMS_btagSFbc_2017          shape  1            1            1            1            1            1            1            1 
-CMS_btagSFbc_correlated    shape  1            1            1            1            1            1            1            1 
+#CMS_eff_em                 shape  1            1            1            1            1            1            1            1 
+#pileup                     shape  1            1            1            1            1            1            1            1 
+#CMS_btagSFbc_2017          shape  1            1            1            1            1            1            1            1 
+#CMS_btagSFbc_correlated    shape  1            1            1            1            1            1            1            1 
 QCDscale                   shape  1            1            -            -            -            -            -            1 
 pdf                        shape  1            1            1            1            1            1            1            1 
 # isr                        shape  1            1            -            -            -            -            -            1 
