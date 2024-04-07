@@ -43,7 +43,8 @@ variables:
   - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em16/MASSSB/root_files MASSSB/em16 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em17/MASSSB/root_files MASSSB/em17 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em18/MASSSB/root_files MASSSB/em18
 
 .combine_card_single: &combine_card_single
-  - combineCards.py SR${ERA}=${ERA}_template_SR.txt TTCR${ERA}=${ERA}_template_TTCR.txt WWCR${ERA}=${ERA}_template_WWCR.txt > combined_datacard.txt
+  # - combineCards.py SR${ERA}=${ERA}_template_SR.txt TTCR${ERA}=${ERA}_template_TTCR.txt WWCR${ERA}=${ERA}_template_WWCR.txt > combined_datacard.txt
+  - combineCards.py SR${ERA}=${ERA}_template_SR.txt SR${ERA}dup=${ERA}_template_SRdup.txt TTCR${ERA}=${ERA}_template_TTCR.txt WWCR${ERA}=${ERA}_template_WWCR.txt > combined_datacard.txt
   - sed -i 's/Zp-2500_CH-345/'"${MASS}"'/g' combined_datacard.txt
 
 .combine_card_single_SF: &combine_card_single_SF
