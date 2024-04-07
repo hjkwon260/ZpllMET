@@ -570,7 +570,7 @@ impact combine 1:
         - *load_root_files_all
         # - *script_impacts
         - text2workspace.py -m 125 -o workspace.root combined_datacard.txt
-        - combine -M FitDiagnostics workspace.root -m 125 --rMin -2 --rMax 2 --saveShapes --saveWithUncertainties        
+        # - combine -M FitDiagnostics workspace.root -m 125 --rMin -2 --rMax 2 --saveShapes --saveWithUncertainties        
         # b-only
         - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 15 -t -1 --expectSignal 0 --doInitialFit
         - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 15 -t -1 --expectSignal 0 --doFits
