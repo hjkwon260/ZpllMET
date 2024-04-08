@@ -574,11 +574,14 @@ impact combine 1:
         - text2workspace.py -m 125 -o workspace.root combined_datacard.txt
         # - combine -M FitDiagnostics workspace.root -m 125 --rMin -2 --rMax 2 --saveShapes --saveWithUncertainties        
         # b-only
-        - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 15 -t -1 --expectSignal 0 --doInitialFit
-        - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 15 -t -1 --expectSignal 0 --doFits
-        - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 15 -t -1 --expectSignal 0 --output impacts.json
-        - plotImpacts.py -i impacts.json -o impacts        
-        - *xrdcp_script
+        # - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 15 -t -1 --expectSignal 0 --doInitialFit
+        # - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 15 -t -1 --expectSignal 0 --doFits
+        # - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 15 -t -1 --expectSignal 0 --output impacts.json
+        # - plotImpacts.py -i impacts.json -o impacts 
+        - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/IMPACT${MASS}/${ERA}/
+        - xrdcp workspace.root ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT${MASS}/${ERA}/
+        - xrdcp combined_datacard.txt ${ROOT_EOS_USER}/Run2/Preselection/${DATE}/IMPACT${MASS}/${ERA}/               
+        # - *xrdcp_script
         - kdestroy 
 
 impact combine 2:
