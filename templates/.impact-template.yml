@@ -43,8 +43,8 @@ variables:
   - xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em16/MASSSB/root_files MASSSB/em16 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em17/MASSSB/root_files MASSSB/em17 && xrdcp -r -v ${ROOT_EOS_USER}/${INPUT_DIR}/em18/MASSSB/root_files MASSSB/em18
 
 .combine_card_single: &combine_card_single
-  # - combineCards.py SR${ERA}=${ERA}_template_SR.txt TTCR${ERA}=${ERA}_template_TTCR.txt WWCR${ERA}=${ERA}_template_WWCR.txt > combined_datacard.txt
-  - combineCards.py SR${ERA}=${ERA}_template_SR.txt SR${ERA}dup=${ERA}_template_SRdup.txt TTCR${ERA}=${ERA}_template_TTCR.txt WWCR${ERA}=${ERA}_template_WWCR.txt > combined_datacard.txt
+  - combineCards.py SR${ERA}=${ERA}_template_SR.txt TTCR${ERA}=${ERA}_template_TTCR.txt WWCR${ERA}=${ERA}_template_WWCR.txt > combined_datacard.txt
+  # - combineCards.py SR${ERA}=${ERA}_template_SR.txt SR${ERA}dup=${ERA}_template_SRdup.txt TTCR${ERA}=${ERA}_template_TTCR.txt WWCR${ERA}=${ERA}_template_WWCR.txt > combined_datacard.txt
   - sed -i 's/Zp-2500_CH-345/'"${MASS}"'/g' combined_datacard.txt
 
 .combine_card_single_SF: &combine_card_single_SF
@@ -67,11 +67,11 @@ variables:
   - ValidateDatacards.py combined_datacard.txt 
   - text2workspace.py -m 125 -o workspace.root combined_datacard.txt
   # b-only
-  - combine -M FitDiagnostics workspace.root -m 125 --rMin -2 --rMax 2 --saveShapes --saveWithUncertainties
-  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 0 --doInitialFit
-  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 0 --doFits
-  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 0 --output impacts.json
-  - plotImpacts.py -i impacts.json -o impacts
+  # - combine -M FitDiagnostics workspace.root -m 125 --rMin -2 --rMax 2 --saveShapes --saveWithUncertainties
+  # - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 0 --doInitialFit
+  # - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 0 --doFits
+  # - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 0 --output impacts.json
+  # - plotImpacts.py -i impacts.json -o impacts
   # # s+b
   # - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 1 --doInitialFit
   # - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -2 --rMax 2 --robustFit 1 --parallel 10 -t -1 --expectSignal 1 --doFits
@@ -83,11 +83,12 @@ variables:
   # - combineTool.py -M CollectGoodnessOfFit --input higgsCombine*GoodnessOfFit*.root
   # - plotGof.py gof.json --statistic saturated --mass 120.0 -o gof_plot
   # signal strength blind impact
-  # - combine -M FitDiagnostics workspace.root -m 125 --rMin -4 --rMax 4 --saveShapes --saveWithUncertainties
-  # - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -4 --rMax 4 --robustFit 1 --parallel 10 --doInitialFit
-  # - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -4 --rMax 4 --robustFit 1 --parallel 10 --doFits
-  # - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -4 --rMax 4 --robustFit 1 --parallel 10 --output impacts.json
-  # - plotImpacts.py -i impacts.json -o impacts --blind
+  - combine -M FitDiagnostics workspace.root -m 125 --rMin -4 --rMax 4 --saveShapes --saveWithUncertainties
+  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -4 --rMax 4 --robustFit 1 --parallel 10 --doInitialFit
+  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -4 --rMax 4 --robustFit 1 --parallel 10 --doFits
+  - combineTool.py -M Impacts -m 125 -d workspace.root --rMin -4 --rMax 4 --robustFit 1 --parallel 10 --output impacts.json
+  - plotImpacts.py -i impacts.json -o impactsraw 
+  - plotImpacts.py -i impacts.json -o impacts --blind
 
 .xrdcp_script: &xrdcp_script
   - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/IMPACT${MASS}/${ERA}/
