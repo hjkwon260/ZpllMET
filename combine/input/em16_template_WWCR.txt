@@ -17,7 +17,7 @@ lumi_13TeV_2016            lnN    1.01         1.01         1.01         1.01   
 lumi_13TeV_correlated      lnN    1.006        1.006        1.006        1.006        1.006        1.006        1.006        1.006       
 CMS_eff_e_reco             shape  1            1            1            1            1            1            1            1
 CMS_eff_em                 shape  1            1            1            1            1            1            1            1 
-CMS_eff_trig               shape  1            1            1            1            1            1            1            1 
+#CMS_eff_trig               shape  1            1            1            1            1            1            1            1 
 CMS_scres_e                shape  1            1            1            1            1            1            1            1
 CMS_scale_m                shape  1            1            1            1            1            1            1            1
 CMS_res_m                  shape  1            1            1            1            1            1            1            1
@@ -48,4 +48,4 @@ ww_norm rateParam * ww 1 [-5,5]
 # dy_norm rateParam * dy 1 [-5,5]
 
 # [channel] autoMCStats [gauss/poisson threshold] [include-signal = 0] [hist-mode = 1]
-* autoMCStats 1 0 1
+* autoMCStats 100 0 1
