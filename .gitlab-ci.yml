@@ -20,9 +20,9 @@ variables:
     EVAL_SB: 'no'
     SYST: "no"
     SYST_SB: "no"
-    IMPACT: "yes"
+    IMPACT: "no"
     MASS: "Zp-3300_CH-345"
-    LIMIT: 'no'
+    LIMIT: 'yes'
     DRAW_LIMIT: 'no'
     ONLY_BENCHMARK: 'no'
     ONLY_SR: 'no' # syst # eval
