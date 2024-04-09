@@ -136,7 +136,7 @@ class HistStack(object):
         if num=="Data":
             h.SetMarkerStyle(8)
             # h.GetYaxis().SetRangeUser(0.4, 1.8)
-            h.GetYaxis().SetRangeUser(0.4, 2.0) # temp
+            h.GetYaxis().SetRangeUser(0.4, 3.5) # temp
             h.GetYaxis().SetTitle("Data/MC")
         else:
             h.SetLineColor(2)
