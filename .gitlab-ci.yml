@@ -11,7 +11,7 @@ variables:
     SCRIPT_DUMP: Dump_v2  
     SCRIPT_DRAW: Draw_v1  
     SCRIPT_SYST: SystematicPlots_v3
-    SCRIPT_DRAWLIMIT: 2Dlimit_v1
+    SCRIPT_DRAWLIMIT: 2Dlimit_v2
     DUMP: 'no'
     DRAW: 'no'
     DRAW_SB: 'no'
@@ -20,9 +20,9 @@ variables:
     EVAL_SB: 'no'
     SYST: "no"
     SYST_SB: "no"
-    IMPACT: "yes"
+    IMPACT: "no"
     MASS: "Zp-3300_CH-845"
-    LIMIT: 'no'
+    LIMIT: 'yes'
     DRAW_LIMIT: 'no'
     ONLY_BENCHMARK: 'no'
     ONLY_SR: 'no' # syst # eval

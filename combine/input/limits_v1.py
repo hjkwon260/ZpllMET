@@ -62,8 +62,8 @@ for mass in SIGNAL_MASSES:
 				lst_limits.append(line.split(" ")[4].rstrip("\n"))
 			if "Expected 97.5%: r <" in line:
 				lst_limits.append(line.split(" ")[4].rstrip("\n"))
-			# if "Observed Limit: r <" in line:
-			# 	lst_limits.append(line.split(" ")[4].rstrip("\n"))
+			if "Observed Limit: r <" in line:
+				lst_limits.append(line.split(" ")[4].rstrip("\n"))
 
 		print(lst_limits)
 		dic_limits[mass]=lst_limits
