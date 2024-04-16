@@ -55,7 +55,7 @@ variables:
     - python ${SCRIPT_LIMIT}.py ${ERA} ${PART}
     - cp $CI_PROJECT_DIR/${SCRIPT_DRAWLIMIT}.ipynb .
     - jupyter nbconvert --to python ${SCRIPT_DRAWLIMIT}.ipynb
-    - python ${SCRIPT_DRAWLIMIT}.py ${ERA}
+    # - python ${SCRIPT_DRAWLIMIT}.py ${ERA}
 
 .xrdcp_script: &xrdcp_script
     - xrdfs ${ROOT_EOS_USER} mkdir -p /eos/user/h/hkwon/Run2/Preselection/${DATE}/LIMIT/${ERA}/
