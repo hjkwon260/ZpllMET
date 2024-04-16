@@ -72,5 +72,5 @@ for mass in SIGNAL_MASSES:
 		print(mass, lst_limits, lst_limits_obs)
 
 import json
-with open('LIMIT/'+ERA+'/Logs_v1/limits_'+ERA+'.json', 'a') as fp:
+with open('LIMIT/'+ERA+'/Logs_v1/limits_'+ERA+PART+'.json', 'a') as fp:
     json.dump(dic_limits, fp)	
