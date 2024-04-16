@@ -34,6 +34,8 @@ for mass in SIGNAL_MASSES:
 
 	# Replace the target string
 	filedata = filedata.replace('Zp-2500_CH-345', mass)
+	# resolve segfault...
+	filedata = filedata.replace('CMS_eff_trig', '#CMS_eff_trig')
 
 	# Write the file out again
 	new_datacard = input_datacard.replace('.txt', '_new.txt')
@@ -43,6 +45,7 @@ for mass in SIGNAL_MASSES:
 
 	# os.system("combine -M AsymptoticLimits --run blind -t -1 "+new_datacard+" > LIMIT/"+ERA+"/Logs_v1/"+str(mass)+".log")
 	os.system("combine -M AsymptoticLimits "+new_datacard+" > LIMIT/"+ERA+"/Logs_v1/"+str(mass)+".log")
+	os.system("cp "+new_datacard+" > LIMIT/"+ERA+"/Logs_v1/combined_datacard"+str(mass)+".txt)
 
 	with open("LIMIT/"+ERA+"/Logs_v1/"+str(mass)+".log", 'r') as file:
 		lst_limits=[]
