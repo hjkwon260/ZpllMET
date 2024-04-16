@@ -36,6 +36,7 @@ for mass in SIGNAL_MASSES:
 	filedata = filedata.replace('Zp-2500_CH-345', mass)
 	# resolve segfault...
 	filedata = filedata.replace('CMS_eff_trig', '#CMS_eff_trig')
+	filedata = filedata.replace('kmax', 'kmax * ')
 
 	# Write the file out again
 	new_datacard = input_datacard.replace('.txt', '_new.txt')
