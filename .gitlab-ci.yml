@@ -20,10 +20,10 @@ variables:
     EVAL_SB: 'no'
     SYST: "no"
     SYST_SB: "no"
-    IMPACT: "yes"
+    IMPACT: "no"
     MASS: "Zp-4100_CH-845"
-    LIMIT: 'no'
-    DRAW_LIMIT: 'no'
+    LIMIT: 'yes'
+    DRAW_LIMIT: 'yes'
     ONLY_BENCHMARK: 'no'
     ONLY_SR: 'no' # syst # eval
     REGION_DUMP: 'SR'

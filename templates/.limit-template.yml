@@ -1,3 +1,6 @@
+variables: 
+    COMBINE_INPUT: $CI_PROJECT_DIR/combine/input
+
 .load_root_files: &load_root_files
   - cd ${COMBINE_INPUT}
   - mkdir -p SR/${ERA}
