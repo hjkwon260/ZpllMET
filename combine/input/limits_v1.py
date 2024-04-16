@@ -50,6 +50,8 @@ for mass in SIGNAL_MASSES:
 
 	with open("LIMIT/"+ERA+"/Logs_v1/"+str(mass)+".log", 'r') as file:
 		lst_limits=[]
+		lst_limits_obs=[]
+		dic_limits_permass = {}
 		for line in file:
 			if "Expected  2.5%: r <" in line:
 				lst_limits.append(line.split(" ")[5].rstrip("\n"))
@@ -62,12 +64,12 @@ for mass in SIGNAL_MASSES:
 			if "Expected 97.5%: r <" in line:
 				lst_limits.append(line.split(" ")[4].rstrip("\n"))
 			if "Observed Limit: r <" in line:
-				lst_limits.append(line.split(" ")[4].rstrip("\n"))
+				lst_limits_obs.append(line.split(" ")[4].rstrip("\n"))
 
-		print(lst_limits)
-		dic_limits[mass]=lst_limits
-
-		print(mass, lst_limits)
+		dic_limits_permass['obs'] = lst_limits_obs
+		dic_limits_permass['exp'] = lst_limits
+		dic_limits[mass]=dic_limits_permass
+		print(mass, lst_limits, lst_limits_obs)
 
 import json
 with open('LIMIT/'+ERA+'/Logs_v1/limits_'+ERA+'.json', 'a') as fp:
