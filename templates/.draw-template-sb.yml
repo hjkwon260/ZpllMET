@@ -50,7 +50,7 @@ draw mm16 SB:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm16
-        PART: DYMET
+        PART: one
         REGION: ${REGION_DRAW}
     rules:
         - if: $DRAW_SB == 'yes' && $DUMP == 'yes'
@@ -78,7 +78,7 @@ draw mm17 SB:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm17
-        PART: DYMET
+        PART: one
         REGION: ${REGION_DRAW}
     rules:
         - if: $DRAW_SB == 'yes' && $DUMP == 'yes'
@@ -104,7 +104,7 @@ draw mm18 SB:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: mm18
-        PART: DYMET
+        PART: one
         REGION: ${REGION_DRAW}
     rules:
         - if: $DRAW_SB == 'yes' && $DUMP == 'yes'
@@ -131,7 +131,7 @@ draw ee16 SB:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee16
-        PART: DYMET
+        PART: one
         REGION: ${REGION_DRAW}
     rules:
         - if: $DRAW_SB == 'yes' && $DUMP == 'yes'
@@ -159,7 +159,7 @@ draw ee17 SB:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee17
-        PART: DYMET
+        PART: one
         REGION: ${REGION_DRAW}
     rules:
         - if: $DRAW_SB == 'yes' && $DUMP == 'yes'
@@ -185,7 +185,7 @@ draw ee18 SB:
         DATE: ${DATE1}
         INPUT_DIR: ${INPUT_DUMP}
         ERA: ee18
-        PART: DYMET
+        PART: one
         REGION: ${REGION_DRAW}
     rules:
         - if: $DRAW_SB == 'yes' && $DUMP == 'yes'
