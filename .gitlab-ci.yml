@@ -1,10 +1,12 @@
 variables: 
-    DATE1: 20231219GEv1SBv3
+    # DATE1: 20231219GEv1SBv3 # latest
+    DATE1: 20250103GEv1
     # DATE1: 20231214GEv1
     # DATE1: 20240414GEv1
     # DATE2: 20231214GEv1 # don't change it
     # DATE2: 20240414GEv1 # don't change it
-    DATE2: 20231219GEv1SBv3 # don't change it
+    # DATE2: 20231219GEv1SBv3 # don't change it # latest
+    DATE2: 20250103GEv1
     CMS_PATH: /cvmfs/cms.cern.ch
     CMSSW_RELEASE: CMSSW_10_2_13
     CMSSW_ARCH: slc7_amd64_gcc700
@@ -15,9 +17,9 @@ variables:
     SCRIPT_DRAW: Draw_v1  
     SCRIPT_SYST: SystematicPlots_v3
     SCRIPT_DRAWLIMIT: 2Dlimit_v2
-    DUMP: 'no'
+    DUMP: 'yes'
     DRAW: 'no'
-    DRAW_SB: 'yes'
+    DRAW_SB: 'no'
     EVAL: 'no'
     EVAL_VR: 'no'
     EVAL_SB: 'no'
