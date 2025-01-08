@@ -24,10 +24,19 @@ class HistStack(object):
         self.era=None   
         self.sig_key=None
         self.stat_unc=None
+        self.num_bin=None
 
     def get_dic_hist(self):
         for k, df in self.dic_df.items():
-            h = rt.TH1D("", "",  self.nbin, self.xl, self.xh)
+            if isinstance(self.nbin, int):
+                h = rt.TH1D("", "",  self.nbin, self.xl, self.xh)
+#                 self.num_bin = self.nbin
+            else:
+                # Use self.nbin as array
+                h = rt.TH1D("", "", len(self.nbin) - 1, self.nbin)
+                # [in]nbins number of bins
+                # [in]xbins array of low-edges for each bin. This is an array of size nbins+1
+#                 self.num_bin = len(self.nbin) - 1
             h.Sumw2()
             for i, v in enumerate(df[self.variable]): 
                 h.Fill(v, df[self.weight].iat[i])
@@ -154,12 +163,12 @@ class HistStack(object):
     
     def get_significance(self, sig_key):
         yields=defaultdict(list)
-        for nb in range(self.nbin):
+        for nb in range(self.num_bin):
             yields["bkg"].append(self.h_bkg.GetBinContent(nb+1))
         #sigs
         for key2 in self.hist_all:
             if "Zp-" in key2:
-                for nb in range(self.nbin):
+                for nb in range(self.num_bin):
                     yields[key2].append(self.hist_all[key2].GetBinContent(nb+1))  
                     
 #         yields = self.get_yields_by_bin() # problem, why?
@@ -174,9 +183,16 @@ class HistStack(object):
             q.append(q_j)
         z = np.sqrt(np.array(q)) 
         
-        h = rt.TH1D("", "",  self.nbin, self.xl, self.xh)
-        for i in range(self.nbin):
-            h.Fill(i/self.nbin, z[i])
+#         h = rt.TH1D("", "",  self.nbin, self.xl, self.xh)
+        if isinstance(self.nbin, int):
+            h = rt.TH1D("", "",  self.nbin, self.xl, self.xh)
+            self.num_bin = self.nbin
+        else:
+            # Use self.nbin as array
+            h = rt.TH1D("", "", len(self.nbin) - 1, self.nbin)
+        for i in range(self.num_bin):
+#             h.Fill(i/self.num_bin, z[i])
+            h.Fill(h.GetXaxis().GetBinCenter(i+1), z[i])
         h.SetLineWidth(3)
         h.GetYaxis().SetTitle("Z_{A}")
         h.GetXaxis().SetLabelSize(0.08)
@@ -217,15 +233,22 @@ class HistStack(object):
         list_graphs = []
         list_legends = []
         
-        xl=np.ones(self.nbin)*self.h_bkg.GetBinWidth(1)/2          
-        xh=np.ones(self.nbin)*self.h_bkg.GetBinWidth(1)/2            
+        if isinstance(self.nbin, int):
+            xl=np.ones(self.num_bin)*self.h_bkg.GetBinWidth(1)/2          
+            xh=np.ones(self.num_bin)*self.h_bkg.GetBinWidth(1)/2   
+        else:
+            xl=np.array([(self.nbin[i + 1] - self.nbin[i]) / 2 for i in range(self.num_bin)])
+            xh=np.array([(self.nbin[i + 1] - self.nbin[i]) / 2 for i in range(self.num_bin)])
         
         x_cen, y_cen, stat_unc = ([] for i in range(3))
-        for i in range(self.nbin):
+        for i in range(self.num_bin):
             x_cen.append(self.h_bkg.GetXaxis().GetBinCenter(i+1))
             y_cen.append(self.h_bkg.GetBinContent(i+1))
             stat_unc.append(self.h_bkg.GetBinError(i+1))
-        gberr = rt.TGraphAsymmErrors(self.nbin, np.array(x_cen), np.array(y_cen), xl, xh, np.array(stat_unc), np.array(stat_unc))
+#         print( np.array(x_cen))   
+#         print( xl)   
+#         gberr = rt.TGraphAsymmErrors(self.nbin, np.array(x_cen), np.array(y_cen), xl, xh, np.array(stat_unc), np.array(stat_unc))
+        gberr = rt.TGraphAsymmErrors(self.num_bin, np.array(x_cen), np.array(y_cen), xl, xh, np.array(stat_unc), np.array(stat_unc))
         gberr.SetLineWidth(0)
         gberr.SetLineColor(0)        
         gberr.SetFillColor(14)
@@ -252,7 +275,8 @@ class HistStack(object):
             sys_up = np.divide(sys_comb_up, totsys_up, out=np.zeros(totsys_up.shape, dtype=float), where=totsys_up!=0)
             sys_down = np.divide(sys_comb_down, totsys_down, out=np.zeros(totsys_down.shape, dtype=float), where=totsys_down!=0)
 
-            gerr = rt.TGraphAsymmErrors(self.nbin, np.array(x_cen), np.ones(self.nbin), xl, xh, sys_down, sys_up)
+#             gerr = rt.TGraphAsymmErrors(self.nbin, np.array(x_cen), np.ones(self.nbin), xl, xh, sys_down, sys_up)
+            gerr = rt.TGraphAsymmErrors(self.num_bin, np.array(x_cen), np.ones(self.num_bin), xl, xh, sys_down, sys_up)
             gerr.SetLineWidth(0)
             gerr.SetLineColor(0)        
             gerr.SetFillColor(14)
@@ -277,7 +301,8 @@ class HistStack(object):
                 sys_down = np.divide(sys_comb_down, totsys_down, out=np.zeros(totsys_down.shape, dtype=float), where=totsys_down!=0)
                 
                 # gerr = rt.TGraphAsymmErrors(self.nbin, np.array(x_cen), np.ones(self.nbin), xl, xh, sys_up, sys_down) # flipped since MC is denominator
-                gerr = rt.TGraphAsymmErrors(self.nbin, np.array(x_cen), np.ones(self.nbin), xl, xh, sys_down, sys_up) # changed 1301
+#                 gerr = rt.TGraphAsymmErrors(self.nbin, np.array(x_cen), np.ones(self.nbin), xl, xh, sys_down, sys_up) # changed 1301
+                gerr = rt.TGraphAsymmErrors(self.num_bin, np.array(x_cen), np.ones(self.num_bin), xl, xh, sys_down, sys_up) # changed 1301
                 gerr.SetLineWidth(0)
                 gerr.SetLineColor(0)        
                 gerr.SetFillColor(i+2)
@@ -288,7 +313,8 @@ class HistStack(object):
                 list_legends.append(str(s))     
         else:
             sqrt_stat_rel = np.sqrt(stat_rel)
-            gerr = rt.TGraphAsymmErrors(self.nbin, np.array(x_cen), np.ones(self.nbin), xl, xh, sqrt_stat_rel, sqrt_stat_rel)
+#             gerr = rt.TGraphAsymmErrors(self.nbin, np.array(x_cen), np.ones(self.nbin), xl, xh, sqrt_stat_rel, sqrt_stat_rel)
+            gerr = rt.TGraphAsymmErrors(self.num_bin, np.array(x_cen), np.ones(self.num_bin), xl, xh, sqrt_stat_rel, sqrt_stat_rel)
             gerr.SetLineWidth(0)
             gerr.SetLineColor(0)        
             gerr.SetFillColor(14)
@@ -310,10 +336,18 @@ class HistStack(object):
 
         self.era = era
         self.sig_key = sig_key
-
+        if isinstance(self.nbin, int):
+            self.num_bin = self.nbin
+        else:
+            self.num_bin = len(self.nbin) - 1
         # stack bkgs
         hstack=rt.THStack("","")
-        h_bkg=rt.TH1D("", "",  self.nbin, self.xl, self.xh)
+#         h_bkg=rt.TH1D("", "",  self.nbin, self.xl, self.xh)
+        if isinstance(self.nbin, int):
+            h_bkg = rt.TH1D("", "",  self.nbin, self.xl, self.xh)
+        else:
+            # Use self.nbin as array
+            h_bkg = rt.TH1D("", "", self.num_bin, self.nbin)
         dic_merged=self.get_merged_hist()
         # draw in order of bkg_keys
         if "hdampUp" in self.weight:
@@ -352,13 +386,13 @@ class HistStack(object):
         h_data=self.hist_all["Data"].Clone("")
         if blind_from!=1: # blind
             if blind_from < 0:
-                for i in range(self.nbin):
-                    threshold = self.nbin*math.fabs(blind_from)
+                for i in range(self.num_bin):
+                    threshold = self.num_bin*math.fabs(blind_from)
                     if i+1 < threshold:
                         h_data.SetBinContent(i+1, 1e15)                
             else:    
-                for i in range(self.nbin):
-                    threshold = self.nbin*blind_from
+                for i in range(self.num_bin):
+                    threshold = self.num_bin*blind_from
                     if i+1 > threshold:
                         h_data.SetBinContent(i+1, 1e15)
         h_data.Draw("same EP")
@@ -420,13 +454,13 @@ class HistStack(object):
         
         if blind_from!=1: # blind
             if blind_from < 0:
-                for i in range(self.nbin):
-                    threshold = self.nbin*math.fabs(blind_from)
+                for i in range(self.num_bin):
+                    threshold = self.num_bin*math.fabs(blind_from)
                     if i+1 < threshold:
                         h_ratio.SetBinContent(i+1, 1e15) 
             else:         
-                for i in range(self.nbin):
-                    threshold = self.nbin*blind_from
+                for i in range(self.num_bin):
+                    threshold = self.num_bin*blind_from
                     if i+1 > threshold:
                         h_ratio.SetBinContent(i+1, 1e15) 
 #         if "score" in self.variable and blind_from!=1:
@@ -464,13 +498,13 @@ class HistStack(object):
         
         if blind_from!=1: # blind
             if blind_from < 0:
-                for i in range(self.nbin):
-                    threshold = self.nbin*math.fabs(blind_from)
+                for i in range(self.num_bin):
+                    threshold = self.num_bin*math.fabs(blind_from)
                     if i+1 < threshold:
                         h_ratio.SetBinContent(i+1, 1e15)        
             else:         
-                for i in range(self.nbin):
-                    threshold = self.nbin*blind_from
+                for i in range(self.num_bin):
+                    threshold = self.num_bin*blind_from
                     if i+1 > threshold:
                         h_ratio.SetBinContent(i+1, 1e15)        
 #         if "score" in self.variable and blind_from!=1:
@@ -499,13 +533,13 @@ class HistStack(object):
         #bkgs
         dic_merged=self.merged_hist #dependency: draw_hist()
         for key in dic_merged:
-            yeilds[key]=dic_merged[key].Integral(0,self.nbin) # nbin=nth+overflow
+            yeilds[key]=dic_merged[key].Integral(0,self.num_bin) # nbin=nth+overflow
         #sigs, Data
         for key2 in self.hist_all:
             if "Zp-2500_CH-345" in key2:
-                yeilds[key2]=self.hist_all[key2].Integral(0,self.nbin)  
+                yeilds[key2]=self.hist_all[key2].Integral(0,self.num_bin)  
             if key2=="Data":
-                yeilds[key2]=self.hist_all[key2].Integral(0,self.nbin) 
+                yeilds[key2]=self.hist_all[key2].Integral(0,self.num_bin) 
         self.yeilds=yeilds
         return yeilds
     
@@ -514,14 +548,14 @@ class HistStack(object):
         #bkgs
         dic_merged=self.get_merged_hist()
         for key in dic_merged:
-            for nb in range(self.nbin):
+            for nb in range(self.num_bin):
                 yields[key].append(dic_merged[key].GetBinContent(nb+1))  
-        for nb in range(self.nbin):
+        for nb in range(self.num_bin):
             yields["bkg"].append(self.h_bkg.GetBinContent(nb+1))
         #sigs
         for key2 in self.hist_all:
             if "Zp-" in key2:
-                for nb in range(self.nbin):
+                for nb in range(self.num_bin):
                     yields[key2].append(self.hist_all[key2].GetBinContent(nb+1))        
         return yields
         
