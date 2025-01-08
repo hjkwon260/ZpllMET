@@ -1,10 +1,13 @@
 variables: 
-    DATE1: 20231219GEv1SBv3
+    # DATE1: 20231219GEv1SBv3 # latest
+    # DATE1: 20250103GEv1
     # DATE1: 20231214GEv1
-    # DATE1: 20240414GEv1
+    DATE1: 20240414GEv1
     # DATE2: 20231214GEv1 # don't change it
     # DATE2: 20240414GEv1 # don't change it
-    DATE2: 20231219GEv1SBv3 # don't change it
+    # DATE2: 20231219GEv1SBv3 # don't change it # latest
+    DATE2: 20240414GEv1
+    # DATE2: 20250103GEv1
     CMS_PATH: /cvmfs/cms.cern.ch
     CMSSW_RELEASE: CMSSW_10_2_13
     CMSSW_ARCH: slc7_amd64_gcc700
@@ -17,8 +20,8 @@ variables:
     SCRIPT_DRAWLIMIT: 2Dlimit_v2
     DUMP: 'no'
     DRAW: 'no'
-    DRAW_SB: 'yes'
-    EVAL: 'no'
+    DRAW_SB: 'no'
+    EVAL: 'yes'
     EVAL_VR: 'no'
     EVAL_SB: 'no'
     SYST: "no"
@@ -27,7 +30,7 @@ variables:
     MASS: "Zp-4100_CH-845"
     LIMIT: 'no'
     DRAW_LIMIT: 'no'
-    ONLY_BENCHMARK: 'no'
+    ONLY_BENCHMARK: 'yes'
     ONLY_SR: 'no' # syst # eval
     REGION_DUMP: 'SR'
     REGION_DRAW: 'METSB'
@@ -76,4 +79,3 @@ include:
   - local: '/templates/.limit-template.yml'
 #   - local: '/templates/.draw-limit-template.yml'
 
-                                
