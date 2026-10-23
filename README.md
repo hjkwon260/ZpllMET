@@ -11,7 +11,22 @@ The core problem is a classic imbalanced classification task: find a very rare s
 - **Weighted training and evaluation.** Per-event weights for cross section and simulation corrections; weighted ROC/AUC, train vs. test overfitting checks (`Utils/CommonTrain.py`, `EvaluatePNN-*.ipynb`).
 - **Systematic uncertainties.** Model outputs re-evaluated under shifted inputs (e.g. missing-energy scale up/down) to measure how robust the classifier is (`SystematicPlots_*.ipynb`, `Utils/SystHelper.py`).
 - **Statistical inference.** Classifier output histograms fed into a binned likelihood fit to set limits over the 2D mass plane (`combine/`, `2Dlimit_*.ipynb`).
+- **Model export.** Trained network converted to ONNX for framework-independent inference (`Outputs/em/ConvertONNX.ipynb`).
 - **Reproducible runs.** Config-driven (`config/`), templated batch jobs (`templates/`, `run_selection.sh`) across 3 channels × 4 data-taking periods, and a Dockerfile (`build/`).
+
+## Start here
+
+The pipeline runs in this order. The same steps are chained as jobs in `.gitlab-ci.yml`.
+
+| Step | Notebook |
+|---|---|
+| 1. Event selection and feature building | `Preselection_v6.ipynb`, `MergeEra.ipynb` |
+| 2. Train the parameterized network | `Pnn_v1-all.ipynb` |
+| 3. Evaluate (ROC/AUC, overtraining checks) | `EvaluatePNN-v5.ipynb`, `Draw2D_ks-roc.ipynb` |
+| 4. Systematic uncertainties | `SystematicPlots_v3.ipynb` |
+| 5. Statistical fit and limits | `Dump_v2.ipynb`, `combine/`, `2Dlimit_v2.ipynb` |
+
+`Binary_v1-allyear-dedicated.ipynb` trains a separate classifier per mass point, the baseline the parameterized network was compared against. Older notebook versions are kept in `archive/`.
 
 ## Stack
 
